@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/memberPage.css}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    /></head>
+<body>
+<div class="sideBar">
+    <div class="sideBar__avatar">
+        <img src="https://i.pravatar.cc/300" alt="avatar" />
+        <h2>John Doe</h2>
+    </div>
+    <ul class="sideBar__menu">
+        <li id="personalInformation">
+            <i class="fa-solid fa-user"></i>
+            <p>Thông tin cá nhân</p>
+        </li>
+        <li id="transactionHistory">
+            <i class="fa-solid fa-pause"></i>
+            <p>Lịch sử giao dịch</p>
+        </li>
+        <li id="security">
+            <i class="fa-solid fa-lock"></i>
+            <p>Bảo mật</p>
+        </li>
+        <li id="policy">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <p>Chính sách</p>
+        </li>
+        <li id="settings">
+            <i class="fa-solid fa-gear"></i>
+            <p>Cài đặt</p>
+        </li>
+    </ul>
+</div>
+<script th:src="@{/js/memberPage.js}"></script>
+</body>
+</html>

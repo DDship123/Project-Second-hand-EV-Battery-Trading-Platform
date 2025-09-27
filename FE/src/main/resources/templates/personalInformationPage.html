@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" th:href="@{/css/personalInformationPage.css}"/>
+</head>
+<body>
+<section th:include="memberPage"></section>
+<section class="profile">
+    <button class="profile__back">
+        <i class="fa-solid fa-arrow-left"></i><span>Back</span>
+    </button>
+    <button class="profile__edit">Chỉnh sửa</button>
+    <h1 class="profile__title">Thông tin cá nhân</h1>
+    <form method="post" action="*" class="profile__container">
+        <div class="profile__avatar">
+            <img src="https://i.pravatar.cc/300" alt="avatar" />
+            <button class="profile__avatar__edit">Thay đổi ảnh</button>
+        </div>
+        <div class="profile__container__info">
+            <div class="profile__container__info__inputGroup">
+                <label for="name">Họ và tên</label>
+                <!-- class="profile__container__info__inputGroup--edit" -->
+                <input type="text" id="name" value="John Doe" disabled="true" />
+            </div>
+            <div class="profile__container__info__inputGroup">
+                <label for="birthDate">Ngày sinh</label>
+                <!-- class="profile__container__info__inputGroup--edit" -->
+                <input
+                        type="text"
+                        id="birthDate"
+                        value="01/01/2000"
+                        disabled="true"
+                />
+            </div>
+            <div class="profile__container__info__inputGroup">
+                <label for="address">Địa chỉ</label>
+                <!-- class="profile__container__info__inputGroup--edit" -->
+                <input
+                        type="text"
+                        id="address"
+                        value="16 Võ Thị Sáu, tp. Hồ Chí Minh"
+                        disabled="true"
+                />
+            </div>
+        </div>
+        <div class="profile__container__info">
+            <div class="profile__container__info__inputGroup">
+                <label for="phone">Số điện thoại</label>
+                <!-- class="profile__container__info__inputGroup--edit" -->
+                <input type="phone" id="phone" value="0123456789" disabled="true" />
+            </div>
+            <div class="profile__container__info__inputGroup">
+                <label for="email">Email</label>
+                <!-- class="profile__container__info__inputGroup--edit" -->
+                <input
+                        type="email"
+                        id="email"
+                        value="johndoe@example.com"
+                        disabled="true"
+                />
+            </div>
+        </div>
+        <input type="submit" class="profile__container__submit" value="Lưu thay đổi" />
+        <input type="button" class="profile__container__cancel" value="Hủy" />
+    </form>
+</section>
+</body>
+</html>
