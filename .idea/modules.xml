@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/CLONEGIT.iml" filepath="$PROJECT_DIR$/.idea/CLONEGIT.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/Project-Second-hand-EV-Battery-Trading-Platform.iml" filepath="$PROJECT_DIR$/.idea/Project-Second-hand-EV-Battery-Trading-Platform.iml" />
+>>>>>>> e71ae1ff7446a4a71014cabef02f120eae50f7b4
     </modules>
   </component>
 </project>
