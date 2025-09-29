@@ -2,11 +2,16 @@ package org.example.be.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "contracts")
 @Data
+@Getter
+@Setter
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

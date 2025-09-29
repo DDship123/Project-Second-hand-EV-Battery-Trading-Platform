@@ -2,12 +2,17 @@ package org.example.be.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "commissions")
 @Data
+@Getter
+@Setter
 public class Commission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
