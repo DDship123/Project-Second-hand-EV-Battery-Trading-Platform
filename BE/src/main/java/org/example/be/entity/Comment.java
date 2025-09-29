@@ -10,13 +10,13 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private int commentId;
+    private Integer commentId;
 
 
-    private int postId;
+    private Integer postId;
 
 
-    private int memberId;
+    private Integer memberId;
 
     @Column(name = "rating")
     private int rating;
@@ -28,7 +28,7 @@ public class Comment {
     private String status;
 
     @Column(name = "created_at")
-    private String created_at;
+    private String createdAt;
 
     public int getCommentId() {
         return commentId;
@@ -78,11 +78,11 @@ public class Comment {
         this.status = status;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = this.createdAt;
     }
 }

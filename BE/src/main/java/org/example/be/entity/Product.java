@@ -12,11 +12,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "products_id")
-    private int productsId;
+    private Integer productsId;
 
-    private int memberId;   // FK
-    private int vehicleId;  // FK
-    private int batteryId;  // FK
+    private Integer memberId;   // FK
+    private Integer vehicleId;  // FK
+    private Integer batteryId;  // FK
 
     @Column(name = "product_type", length = 50)
     private String productType;

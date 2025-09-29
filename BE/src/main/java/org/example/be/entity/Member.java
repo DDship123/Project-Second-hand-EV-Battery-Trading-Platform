@@ -11,7 +11,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private int memberId;
+    private Integer memberId;
 
     @Column(name = "username", length = 20, nullable = false)
     private String username;
@@ -24,7 +24,7 @@ public class Member {
     @Column(name = "phone", length = 15, nullable = false, unique = true)
     private String phone;
 
-    @Column(name = "password", length = 100, nullable = false)
+    @Column(name = "password", length = 20, nullable = false)
     private String password;
 
     @Column(name = "role", length = 20, nullable = false)
@@ -34,7 +34,7 @@ public class Member {
     private String status;
 
     @Column(name = "created_at", nullable = false)
-    private String created_at;
+    private String createdAt;
 
     public int getMemberId() {
         return memberId;
@@ -100,11 +100,11 @@ public class Member {
         this.status = status;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

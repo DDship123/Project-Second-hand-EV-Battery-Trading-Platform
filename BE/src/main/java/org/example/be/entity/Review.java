@@ -12,14 +12,14 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reviews_id")
-    private int reviewsId;
+    private Integer reviewsId;
 
-    private int sellerId;      // FK
-    private int reviewerId;    // FK
-    private int transactionId; // FK
+    private Integer sellerId;      // FK
+    private Integer reviewerId;    // FK
+    private Integer transactionId; // FK
 
     @Column(name = "rating")
-    private int rating;
+    private Integer rating;
 
     @Column(name = "comment", length = 1000)
     private String comment;
@@ -34,7 +34,7 @@ public class Review {
         return reviewsId;
     }
 
-    public void setReviewsId(int reviewsId) {
+    public void setReviewsId(Integer reviewsId) {
         this.reviewsId = reviewsId;
     }
 
