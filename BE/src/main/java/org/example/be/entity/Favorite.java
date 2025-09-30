@@ -12,30 +12,12 @@ public class Favorite {
     @Column(name = "favorites_id")
     private int favoritesId;
 
-    private int memberId; // FK
-    private int postId;   // FK
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member; // FK
 
-    public int getFavoritesId() {
-        return favoritesId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;   // FK
 
-    public void setFavoritesId(int favoritesId) {
-        this.favoritesId = favoritesId;
-    }
-
-    public int getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
-    }
-
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
 }

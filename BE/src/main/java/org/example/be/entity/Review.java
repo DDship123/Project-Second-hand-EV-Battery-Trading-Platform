@@ -14,9 +14,17 @@ public class Review {
     @Column(name = "reviews_id")
     private Integer reviewsId;
 
-    private Integer sellerId;      // FK
-    private Integer reviewerId;    // FK
-    private Integer transactionId; // FK
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private Member seller;      // FK
+
+    @ManyToOne
+    @JoinColumn(name = "reviewer_id")
+    private Member reviewer;    // FK
+
+    @OneToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction; // FK
 
     @Column(name = "rating")
     private Integer rating;
@@ -29,68 +37,4 @@ public class Review {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    public int getReviewsId() {
-        return reviewsId;
-    }
-
-    public void setReviewsId(Integer reviewsId) {
-        this.reviewsId = reviewsId;
-    }
-
-    public int getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(int sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    public int getReviewerId() {
-        return reviewerId;
-    }
-
-    public void setReviewerId(int reviewerId) {
-        this.reviewerId = reviewerId;
-    }
-
-    public int getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }

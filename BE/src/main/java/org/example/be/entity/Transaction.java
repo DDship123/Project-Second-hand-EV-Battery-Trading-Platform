@@ -2,6 +2,8 @@ package org.example.be.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,14 +15,17 @@ public class Transaction {
     @Column(name = "transactions_id")
     private Integer transactionsId;
 
-    @Column(name = "buyer_id")
-    private Integer buyerId;
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
+    private Member buyer;
 
-    @Column(name = "seller_id")
-    private Integer sellerId;
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private Member seller;
 
-    @Column(name = "post_id")
-    private Integer postId;
+    @OneToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     private String status;
 
