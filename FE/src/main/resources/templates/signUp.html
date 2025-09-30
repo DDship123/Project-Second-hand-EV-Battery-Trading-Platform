@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký - EV Second</title>
+    <link rel="stylesheet" th:href="@{/css/signUp.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="brandInfo">
+        <strong>EV Second</strong>
+        <p>Mua, bán hoặc đổi pin xe điện đã qua sử dụng dễ dàng.</p>
+    </div>
+
+    <!-- Right Section - Sign Up Form -->
+    <div class="right-section">
+        <form class="signup-form" action="/signup" method="post">
+            <div class="form-header">
+                <div class="welcome-text">
+                    Chào mừng tới <span class="brand-name">EV Second</span>
+                </div>
+                <h1 class="form-title">Đăng Ký</h1>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Nhập địa chỉ email</label>
+                <input type="email" id="email" name="email" placeholder="Địa chỉ email" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Số điện thoại</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Số điện thoại" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Nhập mật khẩu</label>
+                <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
+            </div>
+
+            <div class="form-footer">
+                <div class="login-link">
+                    Đã có tài khoản? <a href="/login">Đăng nhập</a>
+                </div>
+                <button type="submit" class="submit-btn">Đăng ký</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
