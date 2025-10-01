@@ -2,37 +2,25 @@ package org.example.be.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-<<<<<<< HEAD
-import lombok.Getter;
-import lombok.Setter;
-=======
-
->>>>>>> 29e5a4496e0d101702e24d0e7d8ea1f1ebcf3c23
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions")
 @Data
-@Getter
-@Setter
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transactions_id")
     private Integer transactionsId;
 
-    @ManyToOne
-    @JoinColumn(name = "buyer_id")
-    private Member buyer;
+    @Column(name = "buyer_id")
+    private Integer buyerId;
 
-    @ManyToOne
-    @JoinColumn(name = "seller_id")
-    private Member seller;
+    @Column(name = "seller_id")
+    private Integer sellerId;
 
-    @OneToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @Column(name = "post_id")
+    private Integer postId;
 
     private String status;
 
