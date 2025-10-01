@@ -18,11 +18,13 @@ public class MemberPlanUsage {
     @Column(name = "usage_id")
     private Integer usageId;
 
-    @Column(name = "member_id")
-    private Integer memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Column(name = "plan_id")
-    private Integer planId;
+    @ManyToOne
+    @JoinColumn(name = "plan_id")
+    private MembershipPlan membershipPlan;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;

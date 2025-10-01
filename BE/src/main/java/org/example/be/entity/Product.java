@@ -12,11 +12,18 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "products_id")
-    private int productsId;
+    private Integer productsId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;   // FK
 
-    private int memberId;   // FK
-    private int vehicleId;  // FK
-    private int batteryId;  // FK
+    @OneToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;  // FK
+
+    @OneToOne
+    @JoinColumn(name = "battery_id")
+    private Battery battery;  // FK
 
     @Column(name = "product_type", length = 50)
     private String productType;
@@ -32,76 +39,4 @@ public class Product {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    public int getProductsId() {
-        return productsId;
-    }
-
-    public void setProductsId(int productsId) {
-        this.productsId = productsId;
-    }
-
-    public int getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
-    }
-
-    public int getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(int vehicleId) {
-        this.vehicleId = vehicleId;
-    }
-
-    public int getBatteryId() {
-        return batteryId;
-    }
-
-    public void setBatteryId(int batteryId) {
-        this.batteryId = batteryId;
-    }
-
-    public String getProductType() {
-        return productType;
-    }
-
-    public void setProductType(String productType) {
-        this.productType = productType;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }

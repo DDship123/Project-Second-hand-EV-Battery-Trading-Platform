@@ -19,8 +19,9 @@ public class Commission {
     @Column(name = "comissions_id")
     private Integer commissionsId;
 
-    @Column(name = "transaction_id", unique = true)
-    private Integer transactionId;
+    @OneToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
 
     @Column(name = "commission_rate")
     private BigDecimal commissionRate;

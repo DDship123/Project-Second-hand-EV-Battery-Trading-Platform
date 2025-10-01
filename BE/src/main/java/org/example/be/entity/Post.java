@@ -19,11 +19,13 @@ public class Post {
     @Column(name = "posts_id")
     private Integer postsId;
 
-    @Column(name = "product_id", unique = true)
-    private Integer productId;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    @Column(name = "member_id")
-    private Integer memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     private String title;
 

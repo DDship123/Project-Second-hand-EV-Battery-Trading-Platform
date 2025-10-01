@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" th:href="@{/css/homePage.css}" />
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="header__container">
+        <div class="header__logo">
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+                <span class="logo__text">
+              <strong>EV Second</strong>
+              <small>SECOND LIFE, FIRST CHOICE</small>
+            </span>
+            </div>
+        </div>
+        <nav class="header__nav">
+            <a href="#" class="nav__link active">HOMES</a>
+            <a href="#" class="nav__link"
+            >SẢN PHẨM <i class="fas fa-chevron-down"></i
+            ></a>
+            <a href="#" class="nav__link">CONTACT</a>
+        </nav>
+        <div class="header__user">
+            <button class="btn__history">
+                <i class="fa-regular fa-clipboard"></i>
+            </button>
+            <button class="btn__wishlist">
+                <i class="far fa-heart"></i>
+                <span class="number">5</span>
+            </button>
+            <div class="user__dropdown">
+                <p>WELCOME</p>
+                <p><span>NGƯỜI VÀN A</span> <i class="fas fa-chevron-down"></i></p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Search Section -->
+<section class="search">
+    <div class="search__container">
+        <div class="search__form">
+            <div class="custom-dropdown">
+                <div class="dropdown-selected" id="categoryDropdown">
+                    <span class="selected-text">Danh mục</span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+                <div class="dropdown-options" id="categoryOptions">
+                    <div class="dropdown-option" data-value="all">Danh mục</div>
+                    <div class="dropdown-option" data-value="motorbike">
+                        Xe máy điện
+                    </div>
+                    <div class="dropdown-option" data-value="bicycle">
+                        Xe đạp điện
+                    </div>
+                </div>
+            </div>
+            <div class="search__input">
+                <button class="search__btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input type="text" placeholder="Tìm sản phẩm..." />
+            </div>
+            <div class="location-dropdown">
+                <div class="dropdown-selected" id="locationDropdown">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="selected-text">Tp Hồ Chí Minh</span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+                <div class="dropdown-options" id="locationOptions">
+                    <div class="dropdown-option" data-value="hcm">Tp Hồ Chí Minh</div>
+                    <div class="dropdown-option" data-value="hanoi">Hà Nội</div>
+                    <div class="dropdown-option" data-value="danang">Đà Nẵng</div>
+                    <div class="dropdown-option" data-value="haiphong">Hải Phòng</div>
+                    <div class="dropdown-option" data-value="cantho">Cần Thơ</div>
+                    <div class="dropdown-option" data-value="vungtau">Vũng Tàu</div>
+                    <div class="dropdown-option" data-value="nhatrang">Nha Trang</div>
+                    <div class="dropdown-option" data-value="hue">Huế</div>
+                    <div class="dropdown-option" data-value="dalat">Đà Lạt</div>
+                    <div class="dropdown-option" data-value="quangninh">
+                        Quảng Ninh
+                    </div>
+                </div>
+            </div>
+            <button class="search__post-btn">Tìm kiếm</button>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<main class="main">
+    <div class="main__container">
+        <!-- Filter Tabs -->
+        <div class="filter__tabs">
+            <button class="tab active">DÀNH CHO BẠN</button>
+            <button class="tab">MỚI NHẤT</button>
+            <span class="view__all">Tất cả</span>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="products">
+            <div class="product__card">
+                <div class="product__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=300&h=200&fit=crop&auto=format&q=60"
+                            alt="Feliz - biển MD: Giây tơ dày 00"
+                    />
+                    <button class="product__wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product__info">
+                    <h3 class="product__title">Feliz - biển MD: Giây tơ dây 00</h3>
+                    <p class="product__price">13.500.000 đ</p>
+                    <p class="product__location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tp Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+
+            <div class="product__card">
+                <div class="product__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=300&h=200&fit=crop&auto=format&q=60"
+                            alt="JMIPLS CÒ SẮC PIN DÀY QU"
+                    />
+                    <button class="product__wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product__info">
+                    <h3 class="product__title">JMIPLS CÒ SẮC PIN DÀY QU</h3>
+                    <p class="product__price">8.500.000 đ</p>
+                    <p class="product__location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tp Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+
+            <div class="product__card">
+                <div class="product__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=300&h=200&fit=crop&auto=format&q=60"
+                            alt="Dự định được nhanh feliz các 3 lá lần yêu kimdan"
+                    />
+                    <button class="product__wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product__info">
+                    <h3 class="product__title">
+                        Dự định được nhanh feliz các 3 lá lần yêu kimdan
+                    </h3>
+                    <p class="product__price">17.500.000 đ</p>
+                    <p class="product__location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tp Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+
+            <div class="product__card">
+                <div class="product__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1542362567-b07e54358753?w=300&h=200&fit=crop&auto=format&q=60"
+                            alt="Bán everelis siêu kẹng như mới hết iu lá một bằng lái, đủ hết"
+                    />
+                    <button class="product__wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product__info">
+                    <h3 class="product__title">
+                        Bán everelis siêu kẹng như mới hết iu lá một bằng lái, đủ hết
+                    </h3>
+                    <p class="product__price">20.000.000 đ</p>
+                    <p class="product__location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tp Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+
+            <div class="product__card">
+                <div class="product__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=300&h=200&fit=crop&auto=format&q=60"
+                            alt="Feliz - biển MD: Giây tơ dày 00"
+                    />
+                    <button class="product__wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product__info">
+                    <h3 class="product__title">Feliz - biển MD: Giây tơ dây 00</h3>
+                    <p class="product__price">13.500.000 đ</p>
+                    <p class="product__location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tp Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+
+            <div class="product__card">
+                <div class="product__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=300&h=200&fit=crop&auto=format&q=60"
+                            alt="JMIPLS CÒ SẮC PIN DÀY QU"
+                    />
+                    <button class="product__wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product__info">
+                    <h3 class="product__title">JMIPLS CÒ SẮC PIN DÀY QU</h3>
+                    <p class="product__price">8.500.000 đ</p>
+                    <p class="product__location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tp Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+
+            <div class="product__card">
+                <div class="product__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=300&h=200&fit=crop&auto=format&q=60"
+                            alt="Dự định được nhanh feliz các 3 lá lần yêu kimdan"
+                    />
+                    <button class="product__wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product__info">
+                    <h3 class="product__title">
+                        Dự định được nhanh feliz các 3 lá lần yêu kimdan
+                    </h3>
+                    <p class="product__price">17.500.000 đ</p>
+                    <p class="product__location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tp Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+
+            <div class="product__card">
+                <div class="product__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1542362567-b07e54358753?w=300&h=200&fit=crop&auto=format&q=60"
+                            alt="Bán everelis siêu kẹng như mới hết iu lá một bằng lái, đủ hết"
+                    />
+                    <button class="product__wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product__info">
+                    <h3 class="product__title">
+                        Bán everelis siêu kẹng như mới hết iu lá một bằng lái, đủ hết
+                    </h3>
+                    <p class="product__price">20.000.000 đ</p>
+                    <p class="product__location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tp Hồ Chí Minh
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main__container">
+        <div class="about">
+            <h2 class="about__title">
+                EV SECOND - NỀN TẢNG MUA BÁN XE ĐIỆN CŨ VÀ TRAO ĐỔI PIN HÀNG ĐẦU CHO
+                NGƯỜI VIỆT
+            </h2>
+            <div class="about__content">
+                <p>
+                    EV Second chính thức gia nhập thị trường Việt Nam với mục tiêu tạo
+                    ra một kênh mua bán xe điện cũ và trao đổi pin điện dễ dàng, nhanh
+                    chóng, an toàn, và tiện lợi. Chúng tôi kết nối người bán với người
+                    mua thông qua một nền tảng đơn giản và hiệu quả.
+                </p>
+                <p>
+                    Tính đến nay, EV Second đã trở thành một trong những website uy
+                    tín được nhiều người dùng ưa chuộng tại Việt Nam, chuyên cung cấp
+                    các dịch vụ mua bán, trao đổi xe điện cũ, pin EV và các thiết bị
+                    liên quan.
+                </p>
+                <p>
+                    Với EV Second, bạn có thể dễ dàng mua bán hoặc trao đổi các loại
+                    xe điện cũ và pin EV với những lĩnh vực sau:
+                </p>
+            </div>
+
+            <h3 class="section__title">DỊCH VỤ CHÍNH CỦA EV SECOND</h3>
+            <div class="rules">
+                <div class="rule__item">
+                    <h4>1. Xe Điện Cũ</h4>
+                    <p>
+                        Mua bán các loại xe điện cũ chất lượng cao, giá hợp lý, với các
+                        thông số kỹ thuật rõ ràng, giúp bạn tiết kiệm chi phí mà vẫn sở
+                        hữu phương tiện di chuyển tiện lợi, thân thiện với môi trường.
+                    </p>
+                </div>
+                <div class="rule__item">
+                    <h4>2. Pin EV</h4>
+                    <p>
+                        Cung cấp các dịch vụ trao đổi, bán pin xe điện với chất lượng
+                        đảm bảo, dung lượng tốt và giá cả phải chăng. Bạn có thể dễ dàng
+                        tìm kiếm pin EV phù hợp với xe của mình để thay thế hoặc nâng
+                        cấp.
+                    </p>
+                </div>
+                <div class="rule__item">
+                    <h4>3. Dịch Vụ Kiểm Định & Đảm Bảo Chất Lượng</h4>
+                    <p>
+                        Tất cả các xe điện và pin được đăng bán trên EV Second đều được
+                        kiểm định chất lượng và có chứng nhận rõ ràng, giúp bạn yên tâm
+                        về sản phẩm mình mua.
+                    </p>
+                </div>
+                <div class="rule__item">
+                    <h4>4. Giao Dịch An Toàn, Minh Bạch</h4>
+                    <p>
+                        Chúng tôi cung cấp hợp đồng mua bán điện tử, thanh toán trực
+                        tuyến qua các cổng thanh toán an toàn, giúp bạn thực hiện giao
+                        dịch một cách nhanh chóng và thuận tiện.
+                    </p>
+                </div>
+                <div class="rule__item">
+                    <h4>5. Cộng Đồng EV</h4>
+                    <p>
+                        EV Second cũng là nơi kết nối cộng đồng yêu thích xe điện, chia
+                        sẻ kinh nghiệm, cập nhật thông tin mới về xe điện, pin EV và các
+                        xu hướng công nghệ xanh.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main__container">
+        <div class="about">
+            <h3 class="section__title">QUY ĐỊNH MUA BÁN XE ĐIỆN TRÊN WEBSITE</h3>
+            <div class="rules">
+                <div class="rule__item">
+                    <h4>1. Quy định chung</h4>
+                    <p>
+                        Người tham gia mua/bán phải cung cấp thông tin cá nhân chính xác
+                        (họ tên, số điện thoại, email, địa chỉ).
+                    </p>
+                    <p>
+                        Mọi giao dịch chỉ hợp lệ khi được thực hiện trực tiếp qua hệ
+                        thống của website.
+                    </p>
+                    <p>
+                        Không đăng tải thông tin sai sự thật, hình ảnh không đúng sản
+                        phẩm hoặc có yếu tố vi phạm pháp luật.
+                    </p>
+                </div>
+                <div class="rule__item">
+                    <h4>2. Đối với Người Bán</h4>
+                    <p>Chỉ đăng bán xe/pin điện có nguồn gốc rõ ràng, hợp pháp.</p>
+                    <p>
+                        Cung cấp đầy đủ thông tin sản phẩm: thương hiệu, model, năm sản
+                        xuất, tình trạng, giá bán.
+                    </p>
+                    <p>
+                        Cam kết chất lượng sản phẩm đúng như mô tả và chịu trách nhiệm
+                        về giao dịch của mình.
+                    </p>
+                </div>
+                <div class="rule__item">
+                    <h4>3. Đối với Người Mua</h4>
+                    <p>
+                        Kiểm tra kỹ thông tin sản phẩm và điều kiện giao dịch trước khi
+                        thanh toán.
+                    </p>
+                    <p>
+                        Sử dụng các phương thức thanh toán an toàn mà website hỗ trợ.
+                    </p>
+                    <p>
+                        Có quyền yêu cầu người bán cung cấp thêm thông tin hoặc chứng từ
+                        liên quan đến xe điện.
+                    </p>
+                </div>
+                <div class="rule__item">
+                    <h4>4. Thanh toán & Giao nhận</h4>
+                    <p>
+                        Website hỗ trợ nhiều hình thức thanh toán an toàn (chuyển khoản,
+                        ví điện tử, COD…).
+                    </p>
+                    <p>
+                        Người mua và người bán thỏa thuận hình thức giao hàng, website
+                        sẽ hỗ trợ xác thực và lưu lại lịch sử giao dịch.
+                    </p>
+                </div>
+                <div class="rule__item">
+                    <h4>5. Bảo mật & Hỗ trợ</h4>
+                    <p>
+                        Website cam kết bảo mật tuyệt đối thông tin cá nhân và dữ liệu
+                        giao dịch.
+                    </p>
+                    <p>
+                        Bộ phận chăm sóc khách hàng luôn sẵn sàng giải quyết tranh chấp
+                        nếu có khiếu nại phát sinh.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer__container">
+        <div class="footer__section">
+            <div class="footer__logo">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span class="logo__text">
+                <strong>EV Second</strong>
+                <small>SECOND LIFE, FIRST CHOICE</small>
+              </span>
+                </div>
+            </div>
+            <p class="footer__copyright">© EV Second. All rights reserved.</p>
+        </div>
+
+        <div class="footer__section">
+            <h4>HỖ TRỢ KHÁCH HÀNG</h4>
+            <ul>
+                <li>Trung tâm trợ giúp</li>
+                <li>An toàn mua bán</li>
+                <li>Liên hệ hỗ trợ</li>
+            </ul>
+        </div>
+
+        <div class="footer__section">
+            <h4>VỀ EV Second</h4>
+            <ul>
+                <li>Giới thiệu</li>
+                <li>Quy chế hoạt động sàn</li>
+                <li>Chính sách bảo mật</li>
+                <li>Giải quyết tranh chấp</li>
+            </ul>
+        </div>
+
+        <div class="footer__section">
+            <h4>Liên hệ</h4>
+            <ul>
+                <li>Hotline: 0989939373</li>
+                <li>Email: support@EVsecond.tech</li>
+            </ul>
+        </div>
+    </div>
+</footer>
+    <script th:src="@{/js/homePage.js}"></script>
+</footer>
+</body>
+</html>

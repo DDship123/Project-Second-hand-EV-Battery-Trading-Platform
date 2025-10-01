@@ -16,8 +16,9 @@ public class PostImage {
     @Column(name = "post_images_id")
     private Integer postImagesId;
 
-    @Column(name = "post_id")
-    private Integer postId;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @Column(name = "image_url")
     private String imageUrl;
