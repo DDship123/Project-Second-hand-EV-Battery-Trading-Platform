@@ -13,8 +13,9 @@ public class Contract {
     @Column(name = "contracts_id")
     private Integer contractsId;
 
-    @Column(name = "transaction_id", unique = true)
-    private Integer transactionId;
+    @OneToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
 
     @Column(name = "contract_url")
     private String contractUrl;

@@ -30,7 +30,7 @@ public class PostImageService {
         Optional<PostImage> existingPostImage = postImageRepository.findById(id);
         if (existingPostImage.isPresent()) {
             PostImage postImage = existingPostImage.get();
-            postImage.setPostId(updatedPostImage.getPostId());
+            postImage.setPost(updatedPostImage.getPost());
             postImage.setImageUrl(updatedPostImage.getImageUrl());
             return postImageRepository.save(postImage);
         }
