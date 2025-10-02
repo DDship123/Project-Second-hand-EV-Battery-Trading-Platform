@@ -89,7 +89,7 @@ body {
     background-color: white;
     border-radius: 10px;
 }
-.profile__back {
+.back {
     display: flex;
     align-items: center;
     font-size: 18px;
@@ -101,11 +101,11 @@ body {
     top: -2%;
     transition: all 0.3s ease;
 }
-.profile__back:hover {
+.back:hover {
     background-color: #e1e9f4;
     color: #418bee;
 }
-.profile__back i {
+.back i {
     margin-right: 8px;
 }
 .profile__edit {

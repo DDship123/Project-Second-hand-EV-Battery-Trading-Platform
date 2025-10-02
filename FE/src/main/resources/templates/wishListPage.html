@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" th:href="@{/css/wishListPage.css}"/>
+
+</head>
+<body>
+<header th:include="/commonComponents/header.html"></header>
+<section class="container">
+    <div class="container__header">
+        <div class="container__header__direction">
+            <a th:href="@{/home}">Trang chủ</a>
+            <span>/</span>
+            <a href="#" class="href--active">Tin đăng lưu</a>
+        </div>
+        <h2 class="container__header__title">TIN ĐĂNG LƯU</h2>
+    </div>
+
+    <!-- Wishlist Items -->
+    <div class="container__body">
+        <!-- Wishlist Item 1 -->
+        <div class="container__body__item">
+            <div class="container__body__item__main">
+                <div class="container__body__item__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=120&h=90&fit=crop"
+                            alt="Feliz Motorcycle"
+                    />
+                </div>
+                <div class="container__body__item__details">
+                    <h3 class="container__body__item__title">
+                        Feliz - biển MD. Giấy tờ đầy đủ
+                    </h3>
+                    <div class="container__body__item__price">13.500.000 đ</div>
+                    <div class="container__body__item__seller">
+                        Người bán: Nguyễn Thế Anh
+                    </div>
+                </div>
+                <div class="container__body__item__actions">
+                    <button
+                            class="btn__heart btn__heart--active"
+                            title="Bỏ yêu thích"
+                    >
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wishlist Item 2 -->
+        <div class="container__body__item">
+            <div class="container__body__item__main">
+                <div class="container__body__item__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=120&h=90&fit=crop"
+                            alt="IMPES Scooter"
+                    />
+                </div>
+                <div class="container__body__item__details">
+                    <h3 class="container__body__item__title">
+                        IMPES CÓ SẮC PIN ĐẦY ĐỦ
+                    </h3>
+                    <div class="container__body__item__price">8.500.000 đ</div>
+                    <div class="container__body__item__seller">
+                        Người bán: Nguyễn Thế Anh
+                    </div>
+                </div>
+                <div class="container__body__item__actions">
+                    <button
+                            class="btn__heart btn__heart--active"
+                            title="Bỏ yêu thích"
+                    >
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wishlist Item 3 -->
+        <div class="container__body__item">
+            <div class="container__body__item__main">
+                <div class="container__body__item__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1607853554439-0069ec0f29b6?w=120&h=90&fit=crop"
+                            alt="Feliz Pass Motorcycle"
+                    />
+                </div>
+                <div class="container__body__item__details">
+                    <h3 class="container__body__item__title">
+                        Dự dũng pass nhanh feliz odo 1,9v lên yên kimdan
+                    </h3>
+                    <div class="container__body__item__price">17.500.000 đ</div>
+                    <div class="container__body__item__seller">
+                        Người bán: Nguyễn Thế Anh
+                    </div>
+                </div>
+                <div class="container__body__item__actions">
+                    <button
+                            class="btn__heart btn__heart--active"
+                            title="Bỏ yêu thích"
+                    >
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wishlist Item 4 -->
+        <div class="container__body__item">
+            <div class="container__body__item__main">
+                <div class="container__body__item__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=120&h=90&fit=crop"
+                            alt="Evolite Scooter"
+                    />
+                </div>
+                <div class="container__body__item__details">
+                    <h3 class="container__body__item__title">
+                        Bán evolite siêu keng như mới. Biển tp, k cần bảng lái , đủ 16t
+                    </h3>
+                    <div class="container__body__item__price">20.000.000 đ</div>
+                    <div class="container__body__item__seller">
+                        Người bán: Nguyễn Thế Anh
+                    </div>
+                </div>
+                <div class="container__body__item__actions">
+                    <button
+                            class="btn__heart btn__heart--active"
+                            title="Bỏ yêu thích"
+                    >
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wishlist Item 5 -->
+        <div class="container__body__item">
+            <div class="container__body__item__main">
+                <div class="container__body__item__image">
+                    <img
+                            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=120&h=90&fit=crop"
+                            alt="Feliz Motorcycle 2"
+                    />
+                </div>
+                <div class="container__body__item__details">
+                    <h3 class="container__body__item__title">
+                        Feliz - biển MD. Giấy tờ đầy đủ
+                    </h3>
+                    <div class="container__body__item__price">13.500.000 đ</div>
+                    <div class="container__body__item__seller">
+                        Người bán: Nguyễn Thế Anh
+                    </div>
+                </div>
+                <div class="container__body__item__actions">
+                    <button
+                            class="btn__heart btn__heart--active"
+                            title="Bỏ yêu thích"
+                    >
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:include="/commonComponents/footer.html"></footer>
+<script th:src="@{/js/wishListPage.js}"></script>
+</body>
+</html>

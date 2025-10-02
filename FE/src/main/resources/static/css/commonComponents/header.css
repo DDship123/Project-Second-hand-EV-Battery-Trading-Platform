@@ -1,0 +1,370 @@
+/* =====================================================
+   RESET AND GLOBAL STYLES
+   ===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   HEADER SECTION
+   ===================================================== */
+.header {
+    background: linear-gradient(135deg, #17bac1, #48d1cc, #30e284);
+    padding: 1rem 0 2rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 100px;
+}
+
+.header__container {
+    width: 100%;
+    min-height: 120px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* =====================================================
+   LOGO STYLES
+   ===================================================== */
+.logo {
+    display: flex;
+    align-items: center;
+    color: white;
+    gap: 0.5rem;
+}
+
+.logo i {
+    font-size: 2rem;
+    color: #ffd700;
+}
+
+.logo__text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo__text strong {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.logo__text small {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* =====================================================
+   NAVIGATION STYLES
+   ===================================================== */
+.header__nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav__link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+div.nav__link{
+    position: relative;
+}
+.nav__link__list{
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px 20px;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1004;
+    min-width: 150px;
+    list-style: none;
+}
+.nav__link__list li{
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.nav__link__list li:last-child{
+    border-bottom: none;
+}
+.nav__link__list li a{
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.nav__link__list li a:hover{
+    color: #17bac1;
+}
+
+.nav__link.active,
+.nav__link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* =====================================================
+   USER ACTIONS SECTION
+   ===================================================== */
+.header__user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+}
+
+/* Button Base Styles */
+.btn__history,
+.btn__wishlist,
+.btn__plus {
+    background: white;
+    border: none;
+    color: black;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.4rem 0.6rem;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+/* =====================================================
+   TOOLTIP STYLES
+   ===================================================== */
+/* Base Tooltip Styles */
+.btn__history .tooltip,
+.btn__wishlist .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 12px;
+    position: absolute;
+    z-index: 1000;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.85rem;
+    font-weight: 400;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Tooltip Arrows */
+.btn__history .tooltip::after,
+.btn__wishlist .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+
+/* Tooltip Hover Effects */
+.btn__history:hover .tooltip,
+.btn__wishlist:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.btn__history:hover,
+.btn__wishlist:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   WISHLIST SPECIFIC STYLES
+   ===================================================== */
+.btn__wishlist {
+    position: relative;
+}
+
+.btn__wishlist .number {
+    background-color: #14b3c7;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    position: absolute;
+    bottom: -5px;
+    right: -10px;
+}
+
+/* Disable hover effects when wishlist is active */
+.btn__wishlist.active:hover .tooltip {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.btn__wishlist.active {
+    background-color: #e0e0e0;
+}
+
+/* =====================================================
+   WISHLIST DROPDOWN
+   ===================================================== */
+.wishlist__list {
+    position: absolute;
+    top: 110px;
+    right: 6%;
+    background: white;
+    color: black;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 1rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1002;
+    min-width: 250px;
+}
+
+.wishlist__list.show {
+    display: flex;
+}
+
+.wishlist__list__title {
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wishlist__list__title h2 {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.wishlist__list__title a {
+    color: #1797f3;
+    text-decoration: none;
+}
+
+.wishlist__list__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+/* =====================================================
+   USER DROPDOWN
+   ===================================================== */
+.user__dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.user__dropdown p:first-child {
+    font-size: 0.8rem;
+}
+
+.user__dropdown:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.user__dropdown__content {
+    position: absolute;
+    list-style: none;
+    background-color: white;
+    color: black;
+    width: 14%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    top: 110px;
+    right: 10px;
+    z-index: 1003;
+    padding: 10px 20px;
+    transition: max-height 0.8s ease, visibility 0.6s ease;
+    max-height: 0;
+    visibility: hidden;
+}
+.user__dropdown__content.show {
+    visibility: visible;
+    max-height: 500px; /* Điều chỉnh theo nhu cầu */
+    opacity: 1;
+}
+.user__dropdown__content li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
+}
+.user__dropdown__content li:last-child {
+    border-bottom: none;
+}
+.user__dropdown__content li:hover a {
+    color: #17bac1;
+}
+.user__dropdown__content li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* =====================================================
+   GUEST USER ACTION BUTTONS - ĐĂNG NHẬP/ĐĂNG KÝ
+   ===================================================== */
+/* User Action Buttons - Đăng nhập/Đăng ký */
+.user__action {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    border: 2px solid white;
+    display: inline-block;
+    text-align: center;
+    min-width: 120px;
+    /* Nút Đăng nhập - nền trắng, chữ đen */
+    background-color: white;
+    color: black;
+}
+
+.user__action:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Nút Đăng ký - nền đen, chữ trắng */
+.user__action--highlighted {
+    background-color: black !important;
+    color: white !important;
+    border-color: black;
+}
+
+.user__action--highlighted:hover {
+    background-color: #333 !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
