@@ -6,7 +6,6 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
 @Table(name = "reviews")
 public class Review {
     @Id
@@ -37,4 +36,68 @@ public class Review {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public Integer getReviewsId() {
+        return reviewsId;
+    }
+
+    public void setReviewsId(Integer reviewsId) {
+        this.reviewsId = reviewsId;
+    }
+
+    public Member getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Member seller) {
+        this.seller = seller;
+    }
+
+    public Member getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(Member reviewer) {
+        this.reviewer = reviewer;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

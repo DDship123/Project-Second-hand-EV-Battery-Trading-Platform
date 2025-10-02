@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member_plan_usage")
-@Data
 public class MemberPlanUsage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +30,60 @@ public class MemberPlanUsage {
     private Integer usedPosts;
 
     private String status;
+
+    public Integer getUsageId() {
+        return usageId;
+    }
+
+    public void setUsageId(Integer usageId) {
+        this.usageId = usageId;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public MembershipPlan getMembershipPlan() {
+        return membershipPlan;
+    }
+
+    public void setMembershipPlan(MembershipPlan membershipPlan) {
+        this.membershipPlan = membershipPlan;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public Integer getUsedPosts() {
+        return usedPosts;
+    }
+
+    public void setUsedPosts(Integer usedPosts) {
+        this.usedPosts = usedPosts;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

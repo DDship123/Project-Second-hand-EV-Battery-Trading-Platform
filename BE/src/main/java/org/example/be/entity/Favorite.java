@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Table(name = "favorites")
 @Entity
-@Data
 public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +19,27 @@ public class Favorite {
     @JoinColumn(name = "post_id")
     private Post post;   // FK
 
+    public int getFavoritesId() {
+        return favoritesId;
+    }
+
+    public void setFavoritesId(int favoritesId) {
+        this.favoritesId = favoritesId;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 }

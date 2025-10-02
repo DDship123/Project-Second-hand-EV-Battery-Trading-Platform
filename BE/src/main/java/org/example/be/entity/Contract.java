@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "contracts")
-@Data
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +26,52 @@ public class Contract {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public Integer getContractsId() {
+        return contractsId;
+    }
+
+    public void setContractsId(Integer contractsId) {
+        this.contractsId = contractsId;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public String getContractUrl() {
+        return contractUrl;
+    }
+
+    public void setContractUrl(String contractUrl) {
+        this.contractUrl = contractUrl;
+    }
+
+    public LocalDateTime getSignedAt() {
+        return signedAt;
+    }
+
+    public void setSignedAt(LocalDateTime signedAt) {
+        this.signedAt = signedAt;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
