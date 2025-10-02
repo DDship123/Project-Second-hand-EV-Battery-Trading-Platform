@@ -31,9 +31,9 @@ public class ProductService {
         if (product == null) {
             return null;
         }
-        product.setMemberId(productDetails.getMemberId());
-        product.setVehicleId(productDetails.getVehicleId());
-        product.setBatteryId(productDetails.getBatteryId());
+        product.setMember(productDetails.getMember());
+        product.setVehicle(productDetails.getVehicle());
+        product.setBattery(productDetails.getBattery());
         product.setProductType(productDetails.getProductType());
         product.setName(productDetails.getName());
         product.setDescription(productDetails.getDescription());

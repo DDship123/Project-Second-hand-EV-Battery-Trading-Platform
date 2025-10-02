@@ -30,7 +30,7 @@ public class ContractService {
         Optional<Contract> existingContract = contractRepository.findById(id);
         if (existingContract.isPresent()) {
             Contract contract = existingContract.get();
-            contract.setTransactionId(updatedContract.getTransactionId());
+            contract.setTransaction(updatedContract.getTransaction());
             contract.setContractUrl(updatedContract.getContractUrl());
             contract.setSignedAt(updatedContract.getSignedAt());
             contract.setStatus(updatedContract.getStatus());

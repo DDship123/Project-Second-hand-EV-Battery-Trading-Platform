@@ -30,8 +30,8 @@ public class MemberPlanUsageService {
         Optional<MemberPlanUsage> existingMemberPlanUsage = memberPlanUsageRepository.findById(id);
         if (existingMemberPlanUsage.isPresent()) {
             MemberPlanUsage memberPlanUsage = existingMemberPlanUsage.get();
-            memberPlanUsage.setMemberId(updatedMemberPlanUsage.getMemberId());
-            memberPlanUsage.setPlanId(updatedMemberPlanUsage.getPlanId());
+            memberPlanUsage.setMember(updatedMemberPlanUsage.getMember());
+            memberPlanUsage.setMembershipPlan(updatedMemberPlanUsage.getMembershipPlan());
             memberPlanUsage.setStartDate(updatedMemberPlanUsage.getStartDate());
             memberPlanUsage.setEndDate(updatedMemberPlanUsage.getEndDate());
             memberPlanUsage.setUsedPosts(updatedMemberPlanUsage.getUsedPosts());

@@ -34,8 +34,8 @@ public class PostService {
         Optional<Post> existingPost = postRepository.findById(id);
         if (existingPost.isPresent()) {
             Post post = existingPost.get();
-            post.setProductId(updatedPost.getProductId());
-            post.setMemberId(updatedPost.getMemberId());
+            post.setProduct(updatedPost.getProduct());
+            post.setMember(updatedPost.getMember());
             post.setTitle(updatedPost.getTitle());
             post.setDescription(updatedPost.getDescription());
             post.setStatus(updatedPost.getStatus());

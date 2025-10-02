@@ -3,14 +3,16 @@ package org.example.be.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-// add avatar url column
+import java.time.LocalDateTime;
+
+
 @Entity
 @Data
 @Table(name = "members")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "members_id")
     private Integer memberId;
 
     @Column(name = "username", length = 20, nullable = false)
@@ -24,7 +26,7 @@ public class Member {
     @Column(name = "phone", length = 15, nullable = false, unique = true)
     private String phone;
 
-    @Column(name = "password", length = 20, nullable = false)
+    @Column(name = "password", length = 100, nullable = false)
     private String password;
 
     @Column(name = "role", length = 20, nullable = false)
@@ -33,7 +35,10 @@ public class Member {
     @Column(name = "status", length = 20, nullable = false)
     private String status;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
     @Column(name = "created_at", nullable = false)
-    private String createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 }
