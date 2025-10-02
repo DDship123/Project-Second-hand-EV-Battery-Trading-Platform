@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/commonComponents/footer.css}"/>
+</head>
+<body>
+<!-- =============================
+     FOOTER SECTION
+     ============================= -->
+<footer class="footer">
+    <div class="footer__container">
+        <!-- Company Info -->
+        <div class="footer__section">
+            <div class="footer__logo">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span class="logo__text">
+                <strong>EV Second</strong>
+                <small>SECOND LIFE, FIRST CHOICE</small>
+              </span>
+                </div>
+            </div>
+            <p class="footer__copyright">© EV Second. All rights reserved.</p>
+        </div>
+
+        <!-- Customer Support -->
+        <div class="footer__section">
+            <h4>HỖ TRỢ KHÁCH HÀNG</h4>
+            <ul>
+                <li>Trung tâm trợ giúp</li>
+                <li>An toàn mua bán</li>
+                <li>Liên hệ hỗ trợ</li>
+            </ul>
+        </div>
+
+        <!-- About Company -->
+        <div class="footer__section">
+            <h4>VỀ EV Second</h4>
+            <ul>
+                <li>Giới thiệu</li>
+                <li>Quy chế hoạt động sàn</li>
+                <li>Chính sách bảo mật</li>
+                <li>Giải quyết tranh chấp</li>
+            </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer__section">
+            <h4>Liên hệ</h4>
+            <ul>
+                <li>Hotline: 0989939373</li>
+                <li>Email: support@EVsecond.tech</li>
+            </ul>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,147 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-image: url("../images/Final_BG 1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 20%;
+}
+
+
+.right-section {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 3%;
+    width: 45vw;
+    padding: 2%;
+}
+
+.signup-form {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.form-header {
+    text-align: left;
+}
+
+.welcome-text {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.welcome-text .brand-name {
+    color: #0089ed;
+    font-weight: 600;
+}
+
+.form-title {
+    font-size: 42px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 35px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 18px;
+    border: 1.5px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: #f9f9f9;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #0089ed;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 137, 237, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-footer {
+    margin-top: 30px;
+}
+
+.login-link {
+    text-align: right;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #0089ed;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.submit-btn {
+    width: 100%;
+    background: #0089ed;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #0070cc;
+}
+.brandInfo {
+    width: 25vw;
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    color: white;
+    font-size: 20px;
+}
+.brandInfo strong {
+    font-size: 40px;
+}
+

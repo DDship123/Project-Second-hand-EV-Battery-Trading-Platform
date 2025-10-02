@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" th:href="@{/css/securityPage.css}" />
+</head>
+<body>
+<section th:include="memberPage"></section>
+<section class="updatePassword">
+    <button class="back">
+        <i class="fa-solid fa-arrow-left"></i><span>Back</span>
+    </button>
+    <h1 class="updatePassword__title">Đổi mật khẩu</h1>
+    <form method="post" action="*" class="updatePassword__container">
+        <div class="updatePassword__container__inputGroup">
+            <label for="currentPassword">Mật khẩu hiện tại</label>
+            <input
+                    type="password"
+                    id="currentPassword"
+                    placeholder="Nhập mật khẩu hiện tại"
+            />
+        </div>
+        <div class="updatePassword__container__inputGroup">
+            <label for="newPassword">Mật khẩu mới</label>
+            <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Nhập mật khẩu mới"
+            />
+        </div>
+        <div class="updatePassword__container__inputGroup">
+            <label for="confirmNewPassword">Xác nhận mật khẩu mới</label>
+            <input
+                    type="password"
+                    id="confirmNewPassword"
+                    placeholder="Xác nhận mật khẩu mới"
+            />
+        </div>
+        <div class="updatePassword__container__actions">
+            <input
+                    type="submit"
+                    class="updatePassword__container__submit"
+                    value="Cập nhật"
+            />
+            <input
+                    type="button"
+                    class="updatePassword__container__cancel"
+                    value="Hủy"
+            />
+        </div>
+    </form>
+</section>
+<script th:src="@{/js/commonComponents/personalPage.js}"></script>
+</body>
+</html>

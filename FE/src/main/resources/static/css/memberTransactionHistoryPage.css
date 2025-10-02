@@ -1,0 +1,327 @@
+/* =====================================================
+   RESET AND GLOBAL STYLES
+   ===================================================== */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    position: relative;
+}
+
+/* =====================================================
+   TRANSACTION CONTAINER
+   ===================================================== */
+.transaction {
+    position: absolute;
+    width: 75vw;
+    height: 95vh;
+    background-color: white;
+    top: 1vw;
+    padding: 2.5% 2%;
+    right: 1vw;
+    border-radius: 30px;
+    overflow-y: auto;
+}
+
+/* =====================================================
+   HEADER SECTION
+   ===================================================== */
+.back {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    top: -2%;
+    background-color: #f0f0f0;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.back:hover {
+    background-color: #f0f0f0;
+}
+
+.back i {
+    margin-right: 8px;
+}
+
+.transaction__title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: 700;
+    font-size: 28px;
+    transform: translateX(-8%);
+}
+
+/* =====================================================
+   TABS SECTION
+   ===================================================== */
+.transaction__tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.transaction__tab {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    color: #666;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.transaction__tab--active {
+    background-color: #007bff;
+    color: white;
+}
+
+.transaction__tab:hover {
+    background-color: #e0e0e0;
+}
+
+.transaction__tab--active:hover {
+    background-color: #0056b3;
+}
+
+/* =====================================================
+   TRANSACTION LIST
+   ===================================================== */
+.transaction__list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 20px;
+    max-height: 70vh;
+    /* overflow-y: auto; */
+}
+
+/* =====================================================
+   TRANSACTION ITEM
+   ===================================================== */
+.transaction__item {
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.transaction__item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* =====================================================
+   TRANSACTION ITEM HEADER
+   ===================================================== */
+.transaction__item__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.transaction__id {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.transaction__status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 10;
+}
+
+.transaction__status--success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.transaction__status--pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.transaction__status--failed {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* =====================================================
+   TRANSACTION ITEM STRUCTURE (3 BLOCKS LAYOUT)
+   ===================================================== */
+.transaction__item {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* =====================================================
+   BLOCK 1: TRANSACTION ITEM IMAGE
+   ===================================================== */
+.transaction__item__image {
+    width: 20%;
+}
+
+.transaction__item__image img {
+    /* width: 120px;
+    height: 90px; */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+}
+
+/* =====================================================
+   BLOCK 2: TRANSACTION ITEM INFO (ID, TITLE, PRICE, DATE)
+   ===================================================== */
+.transaction__item__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.transaction__item__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 5px;
+}
+
+.transaction__item__price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-bottom: 5px;
+}
+
+.transaction__item__date {
+    font-size: 13px;
+    color: #666;
+}
+
+/* =====================================================
+   BLOCK 3: TRANSACTION ITEM PARTIES (SELLER & BUYER)
+   ===================================================== */
+.transaction__item__parties {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 200px;
+    text-align: right;
+    justify-content: center;
+}
+
+.transaction__item__seller,
+.transaction__item__buyer {
+    font-size: 16px;
+    color: #666;
+}
+
+.transaction__item__seller {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+   ===================================================== */
+@media (max-width: 1200px) {
+    .transaction {
+        width: 85vw;
+        right: 0.5vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .transaction {
+        width: 95vw;
+        height: 98vh;
+        top: 0.5vw;
+        right: 0.25vw;
+        padding: 20px 15px;
+        border-radius: 20px;
+    }
+
+    .transaction__title {
+        font-size: 24px;
+        transform: none;
+    }
+
+    .transaction__tabs {
+        justify-content: center;
+        padding-left: 0;
+    }
+
+    .transaction__item {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .transaction__item__parties {
+        text-align: left;
+        min-width: auto;
+    }
+
+    .transaction__item__image {
+        align-self: center;
+    }
+
+    .transaction__item__image img {
+        width: 150px;
+        height: 110px;
+    }
+}
+
+@media (max-width: 480px) {
+    .transaction__item {
+        padding: 15px;
+    }
+
+    .transaction__item__header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .transaction__item__title {
+        font-size: 14px;
+    }
+
+    .transaction__item__price {
+        font-size: 16px;
+    }
+
+    .transaction__tab {
+        padding: 6px 16px;
+        font-size: 13px;
+    }
+}
