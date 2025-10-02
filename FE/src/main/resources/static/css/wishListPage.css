@@ -1,0 +1,324 @@
+/* =====================================================
+   RESET AND GLOBAL STYLES
+   ===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background-color: #e2e4eb;
+}
+
+/* =====================================================
+   CONTAINER STYLES
+   ===================================================== */
+.container {
+    padding: 30px 60px;
+    margin: 0 auto;
+}
+
+/* =====================================================
+   HEADER SECTION
+   ===================================================== */
+.container__header {
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container__header__direction {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.container__header__direction a {
+    color: #666666;
+    text-decoration: none;
+}
+
+.container__header__direction span {
+    margin: 0 10px;
+    color: #666666;
+}
+
+.container__header__direction .href--active {
+    font-weight: 600;
+    color: #060606;
+}
+
+.container__header__title {
+    font-size: 26px;
+    margin: 10px 0;
+    font-weight: 700;
+    color: #333;
+}
+
+.container__header__title::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 10px;
+    background-color: #25d69c;
+    opacity: 0.63;
+    margin-top: 25px;
+    border-radius: 4px;
+}
+
+/* =====================================================
+   WISHLIST ITEMS
+   ===================================================== */
+.container__body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.container__body__item {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.container__body__item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.container__body__item__main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* =====================================================
+   ITEM IMAGE
+   ===================================================== */
+.container__body__item__image {
+    flex-shrink: 0;
+}
+
+.container__body__item__image img {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #f0f0f0;
+}
+
+/* =====================================================
+   ITEM DETAILS
+   ===================================================== */
+.container__body__item__details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.container__body__item__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 5px;
+}
+
+.container__body__item__price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-bottom: 5px;
+}
+
+.container__body__item__seller {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* =====================================================
+   ITEM ACTIONS
+   ===================================================== */
+.container__body__item__actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.btn__heart {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+.btn__heart i {
+    font-size: 24px;
+    color: #ddd;
+    transition: color 0.3s ease;
+}
+
+.btn__heart--active i {
+    color: #e74c3c;
+}
+
+.btn__heart:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.1);
+}
+
+.btn__heart:hover i {
+    color: #e74c3c;
+}
+
+.btn__heart--active:hover i {
+    color: #c0392b;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+   ===================================================== */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 15px;
+    }
+
+    .container__header {
+        padding: 15px 20px;
+    }
+
+    .container__header__title {
+        font-size: 22px;
+    }
+
+    .container__body__item {
+        padding: 15px;
+    }
+
+    .container__body__item__main {
+        gap: 15px;
+    }
+
+    .container__body__item__image img {
+        width: 100px;
+        height: 75px;
+    }
+
+    .container__body__item__title {
+        font-size: 16px;
+    }
+
+    .container__body__item__price {
+        font-size: 18px;
+    }
+
+    .btn__heart {
+        width: 45px;
+        height: 45px;
+    }
+
+    .btn__heart i {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container__body__item__main {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .container__body__item__image img {
+        width: 150px;
+        height: 100px;
+    }
+
+    .container__body__item__actions {
+        align-self: center;
+    }
+}
+
+/* =====================================================
+   EMPTY WISHLIST STYLES
+   ===================================================== */
+.empty__wishlist {
+    background-color: white;
+    border-radius: 15px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.empty__wishlist__icon {
+    margin-bottom: 20px;
+}
+
+.empty__wishlist__icon i {
+    font-size: 64px;
+    color: #ddd;
+}
+
+.empty__wishlist__title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.empty__wishlist__message {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.empty__wishlist__button {
+    display: inline-block;
+    background: linear-gradient(135deg, #17bac1, #48d1cc, #30e284);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.empty__wishlist__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(23, 186, 193, 0.3);
+}
+
+/* =====================================================
+   NOTIFICATION STYLES
+   ===================================================== */
+.notification__content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification__content i {
+    font-size: 18px;
+}
+
+/* =====================================================
+   TITLE UPDATE
+   ===================================================== */
+.container__header__title {
+    position: relative;
+}

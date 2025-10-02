@@ -18,8 +18,9 @@
 </head>
 <body>
 <section th:include="memberPage"></section>
+
 <section class="profile">
-    <button class="profile__back">
+    <button class="back">
         <i class="fa-solid fa-arrow-left"></i><span>Back</span>
     </button>
     <button class="profile__edit">Chỉnh sửa</button>
@@ -77,5 +78,6 @@
         <input type="button" class="profile__container__cancel" value="Hủy" />
     </form>
 </section>
+<script th:src="@{/js/commonComponents/personalPage.js}"></script>
 </body>
 </html>

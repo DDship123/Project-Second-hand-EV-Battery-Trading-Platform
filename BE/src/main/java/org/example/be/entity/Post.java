@@ -10,9 +10,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "posts")
+<<<<<<< HEAD
 @Data
 @Getter
 @Setter
+=======
+>>>>>>> 1b9bb453edb01b9d874fa923b552c1d83d011243
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,4 +41,68 @@ public class Post {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public Integer getPostsId() {
+        return postsId;
+    }
+
+    public void setPostsId(Integer postsId) {
+        this.postsId = postsId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
