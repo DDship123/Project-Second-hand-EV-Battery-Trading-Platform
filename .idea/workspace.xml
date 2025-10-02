@@ -5,18 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="">
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-=======
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/entity/Review.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/repository/PostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
->>>>>>> Tan
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +47,8 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-<<<<<<< HEAD
-    "git-widget-placeholder": "main",
-=======
     "Spring Boot.BeApplication.executor": "Run",
-    "git-widget-placeholder": "Tan",
->>>>>>> Tan
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -107,14 +93,22 @@
       <option name="presentableId" value="Default" />
       <updated>1759106089267</updated>
       <workItem from="1759106091217" duration="5668000" />
-<<<<<<< HEAD
-=======
       <workItem from="1759349652759" duration="2404000" />
->>>>>>> Tan
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
