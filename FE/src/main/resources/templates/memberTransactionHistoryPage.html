@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" th:href="@{/css/memberTransactionHistoryPage.css}"/>
+</head>
+<body>
+<section th:include="memberPage"></section>
+<section class="transaction">
+    <button class="back">
+        <i class="fa-solid fa-arrow-left"></i><span>Back</span>
+    </button>
+
+    <h1 class="transaction__title">Lịch sử giao dịch</h1>
+
+    <!-- Transaction Tabs -->
+    <div class="transaction__tabs">
+        <button class="transaction__tab transaction__tab--active">Mua</button>
+        <button class="transaction__tab">Bán</button>
+    </div>
+
+    <!-- Transaction List -->
+    <div class="transaction__list">
+        <!-- Transaction Item 1 -->
+        <div class="transaction__item">
+            <!-- Status Block (Absolute Position) -->
+            <span class="transaction__status transaction__status--success">
+            Giao dịch thành công
+          </span>
+
+            <!-- Block 1: Image -->
+            <div class="transaction__item__image">
+                <img
+                        src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=120&h=90&fit=crop"
+                        alt="IMPES Scooter"
+                />
+            </div>
+
+            <!-- Block 2: Main Info (ID, Title, Price, Date) -->
+            <div class="transaction__item__info">
+                <div class="transaction__item__header">
+                    <span class="transaction__id">#039876547</span>
+                </div>
+                <h3 class="transaction__item__title">IMPES CÓ SẮC PIN ĐẦY ĐỦ</h3>
+                <div class="transaction__item__price">8.500.000 đ</div>
+                <div class="transaction__item__date">Ngày khởi tạo: 07/08/2025</div>
+            </div>
+
+            <!-- Block 3: Parties (Seller & Buyer) -->
+            <div class="transaction__item__parties">
+                <div class="transaction__item__seller">
+                    Người bán: Nguyễn Thế Anh
+                </div>
+                <div class="transaction__item__buyer">Người mua: Nguyễn Văn A</div>
+            </div>
+        </div>
+
+        <!-- Transaction Item 2 -->
+        <div class="transaction__item">
+            <!-- Status Block (Absolute Position) -->
+            <span class="transaction__status transaction__status--success">
+            Giao dịch thành công
+          </span>
+
+            <!-- Block 1: Image -->
+            <div class="transaction__item__image">
+                <img
+                        src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=120&h=90&fit=crop"
+                        alt="IMPES Scooter"
+                />
+            </div>
+
+            <!-- Block 2: Main Info (ID, Title, Price, Date) -->
+            <div class="transaction__item__info">
+                <div class="transaction__item__header">
+                    <span class="transaction__id">#039876547</span>
+                </div>
+                <h3 class="transaction__item__title">IMPES CÓ SẮC PIN ĐẦY ĐỦ</h3>
+                <div class="transaction__item__price">8.500.000 đ</div>
+                <div class="transaction__item__date">Ngày khởi tạo: 07/08/2025</div>
+            </div>
+
+            <!-- Block 3: Parties (Seller & Buyer) -->
+            <div class="transaction__item__parties">
+                <div class="transaction__item__seller">
+                    Người bán: Nguyễn Thế Anh
+                </div>
+                <div class="transaction__item__buyer">Người mua: Nguyễn Văn A</div>
+            </div>
+        </div>
+
+        <!-- Transaction Item 3 -->
+        <div class="transaction__item">
+            <!-- Status Block (Absolute Position) -->
+            <span class="transaction__status transaction__status--success">
+            Giao dịch thành công
+          </span>
+
+            <!-- Block 1: Image -->
+            <div class="transaction__item__image">
+                <img
+                        src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=120&h=90&fit=crop"
+                        alt="IMPES Scooter"
+                />
+            </div>
+
+            <!-- Block 2: Main Info (ID, Title, Price, Date) -->
+            <div class="transaction__item__info">
+                <div class="transaction__item__header">
+                    <span class="transaction__id">#039876547</span>
+                </div>
+                <h3 class="transaction__item__title">IMPES CÓ SẮC PIN ĐẦY ĐỦ</h3>
+                <div class="transaction__item__price">8.500.000 đ</div>
+                <div class="transaction__item__date">Ngày khởi tạo: 07/08/2025</div>
+            </div>
+
+            <!-- Block 3: Parties (Seller & Buyer) -->
+            <div class="transaction__item__parties">
+                <div class="transaction__item__seller">
+                    Người bán: Nguyễn Thế Anh
+                </div>
+                <div class="transaction__item__buyer">Người mua: Nguyễn Văn A</div>
+            </div>
+        </div>
+
+        <!-- Transaction Item 4 -->
+        <div class="transaction__item">
+            <!-- Status Block (Absolute Position) -->
+            <span class="transaction__status transaction__status--success">
+            Giao dịch thành công
+          </span>
+
+            <!-- Block 1: Image -->
+            <div class="transaction__item__image">
+                <img
+                        src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=120&h=90&fit=crop"
+                        alt="IMPES Scooter"
+                />
+            </div>
+
+            <!-- Block 2: Main Info (ID, Title, Price, Date) -->
+            <div class="transaction__item__info">
+                <div class="transaction__item__header">
+                    <span class="transaction__id">#039876547</span>
+                </div>
+                <h3 class="transaction__item__title">IMPES CÓ SẮC PIN ĐẦY ĐỦ</h3>
+                <div class="transaction__item__price">8.500.000 đ</div>
+                <div class="transaction__item__date">Ngày khởi tạo: 07/08/2025</div>
+            </div>
+
+            <!-- Block 3: Parties (Seller & Buyer) -->
+            <div class="transaction__item__parties">
+                <div class="transaction__item__seller">
+                    Người bán: Nguyễn Thế Anh
+                </div>
+                <div class="transaction__item__buyer">Người mua: Nguyễn Văn A</div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/js/commonComponents/personalPage.js}"></script>
+<script>
+    // Tab switching functionality
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".transaction__tab");
+
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", function () {
+                // Remove active class from all tabs
+                tabs.forEach((t) => t.classList.remove("transaction__tab--active"));
+
+                // Add active class to clicked tab
+                this.classList.add("transaction__tab--active");
+            });
+        });
+    });
+</script>
+</body>
+</html>

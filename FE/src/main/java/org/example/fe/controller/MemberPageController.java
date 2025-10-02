@@ -14,4 +14,9 @@ public class MemberPageController {
     public String security() {
         return "securityPage";
     }
+
+    @RequestMapping("/transactionHistory")
+    public String transactionHistory() {
+        return "memberTransactionHistoryPage";
+    }
 }

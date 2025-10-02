@@ -1,43 +1,49 @@
+// ========================================
+// SỰ KIỆN DOM CONTENT LOADED
+// ========================================
 document.addEventListener("DOMContentLoaded", function () {
-    // Category Dropdown
+    // ========================================
+    // CHỨC NĂNG DROPDOWN
+    // ========================================
+
+    // Các phần tử Dropdown Danh mục
     const categoryDropdownSelected =
         document.getElementById("categoryDropdown");
-
     const categoryDropdownOptions =
         document.getElementById("categoryOptions");
-
     const categorySelectedText =
         categoryDropdownSelected.querySelector(".selected-text");
-
     const categoryOptions =
         categoryDropdownOptions.querySelectorAll(".dropdown-option");
 
-    // Location Dropdown
+    // Các phần tử Dropdown Vị trí
     const locationDropdownSelected =
         document.getElementById("locationDropdown");
-
     const locationDropdownOptions =
         document.getElementById("locationOptions");
-
     const locationSelectedText =
         locationDropdownSelected.querySelector(".selected-text");
-
     const locationOptions =
         locationDropdownOptions.querySelectorAll(".dropdown-option");
 
-
-    // Function to handle dropdown toggle
+    /**
+     * Thiết lập chức năng dropdown
+     * @param {Element} dropdownSelected - Phần tử kích hoạt dropdown
+     * @param {Element} dropdownOptions - Container chứa các tùy chọn dropdown
+     * @param {Element} selectedText - Phần tử hiển thị văn bản được chọn
+     * @param {NodeList} options - Các phần tử tùy chọn dropdown
+     */
     function setupDropdown(
         dropdownSelected,
         dropdownOptions,
         selectedText,
         options
     ) {
-        // Toggle dropdown
+        // Bật/tắt dropdown khi click
         dropdownSelected.addEventListener("click", function (e) {
             e.stopPropagation();
 
-            // Close other dropdowns first
+            // Đóng các dropdown khác đang mở
             document
                 .querySelectorAll(".dropdown-selected.active")
                 .forEach((dropdown) => {
@@ -47,41 +53,49 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
 
+            // Bật/tắt dropdown hiện tại
             dropdownSelected.classList.toggle("active");
             dropdownOptions.classList.toggle("show");
         });
 
-        // Handle option selection
+        // Xử lý việc chọn tùy chọn
         options.forEach((option) => {
             option.addEventListener("click", function (e) {
                 e.stopPropagation();
 
-                // Remove selected class from all options
+                // Cập nhật trạng thái lựa chọn
                 options.forEach((opt) => opt.classList.remove("selected"));
-
-                // Add selected class to clicked option
                 this.classList.add("selected");
 
-                // Update selected text
+                // Cập nhật văn bản hiển thị
                 selectedText.textContent = this.textContent;
 
-                // Close dropdown
+                // Đóng dropdown
                 dropdownSelected.classList.remove("active");
                 dropdownOptions.classList.remove("show");
 
-                // Store selected value
+                // Lưu trữ giá trị được chọn
                 dropdownSelected.dataset.value = this.dataset.value;
+
+                // Tùy chọn: Ghi log lựa chọn để debug
+                console.log(
+                    "Selected:",
+                    this.dataset.value,
+                    ":",
+                    this.textContent
+                );
             });
         });
     }
 
-    // Setup both dropdowns
+    // Khởi tạo cả hai dropdown
     setupDropdown(
         categoryDropdownSelected,
         categoryDropdownOptions,
         categorySelectedText,
         categoryOptions
     );
+
     setupDropdown(
         locationDropdownSelected,
         locationDropdownOptions,
@@ -89,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
         locationOptions
     );
 
-    // Close dropdowns when clicking outside
+    // Đóng dropdown khi click bên ngoài
     document.addEventListener("click", function () {
         document
             .querySelectorAll(".dropdown-selected.active")
@@ -98,4 +112,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 dropdown.nextElementSibling.classList.remove("show");
             });
     });
+
+    // ========================================
+    // CHỨC NĂNG BĂT/TẮT PHẦN QUY TẮC
+    // ========================================
+
+    // Lấy các phần tử cho việc bật/tắt quy tắc
+    const aboutTitleIcon = document.querySelector(".about__title i");
+    const rulesSection = document.querySelectorAll(".rules")[1];
+
+    // Thêm event listener cho chức năng bật/tắt
+    if (aboutTitleIcon && rulesSection) {
+        aboutTitleIcon.addEventListener("click", function () {
+            // Bật/tắt các class cho animation
+            rulesSection.classList.toggle("rules--appear");
+            aboutTitleIcon.classList.toggle("playIcon--active");
+        });
+    }
 });

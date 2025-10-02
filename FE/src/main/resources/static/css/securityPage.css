@@ -47,7 +47,7 @@ body {
     outline: none;
     transition: all 0.3s ease;
 }
-.updatePassword__back {
+.back {
     display: flex;
     align-items: center;
     font-size: 18px;
@@ -60,10 +60,10 @@ body {
     top: -2%;
     transition: all 0.3s ease;
 }
-.updatePassword__back i {
+.back i {
     margin-right: 8px;
 }
-.updatePassword__back:hover {
+.back:hover {
     background-color: #e1e9f4;
     color: #418bee;
 }

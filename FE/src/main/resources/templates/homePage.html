@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- Google Fonts -->
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
     />
+
+    <!-- Font Awesome Icons -->
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -14,48 +17,24 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/css/homePage.css}" />
 </head>
 <body>
-<!-- Header -->
-<header class="header">
-    <div class="header__container">
-        <div class="header__logo">
-            <div class="logo">
-                <i class="fas fa-bolt"></i>
-                <span class="logo__text">
-              <strong>EV Second</strong>
-              <small>SECOND LIFE, FIRST CHOICE</small>
-            </span>
-            </div>
-        </div>
-        <nav class="header__nav">
-            <a href="#" class="nav__link active">HOMES</a>
-            <a href="#" class="nav__link"
-            >SẢN PHẨM <i class="fas fa-chevron-down"></i
-            ></a>
-            <a href="#" class="nav__link">CONTACT</a>
-        </nav>
-        <div class="header__user">
-            <button class="btn__history">
-                <i class="fa-regular fa-clipboard"></i>
-            </button>
-            <button class="btn__wishlist">
-                <i class="far fa-heart"></i>
-                <span class="number">5</span>
-            </button>
-            <div class="user__dropdown">
-                <p>WELCOME</p>
-                <p><span>NGƯỜI VÀN A</span> <i class="fas fa-chevron-down"></i></p>
-            </div>
-        </div>
-    </div>
-</header>
+<!-- =============================
+     HEADER SECTION
+     ============================= -->
+<header th:if="${guest.equals('false')}" th:include="/commonComponents/header.html"></header>
+<header th:if="${guest.equals('true')}" th:include="/commonComponents/guestHeader.html"></header>
 
-<!-- Search Section -->
+<!-- =============================
+     SEARCH SECTION
+     ============================= -->
 <section class="search">
     <div class="search__container">
         <div class="search__form">
+            <!-- Category Dropdown -->
             <div class="custom-dropdown">
                 <div class="dropdown-selected" id="categoryDropdown">
                     <span class="selected-text">Danh mục</span>
@@ -71,12 +50,16 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Search Input -->
             <div class="search__input">
                 <button class="search__btn">
                     <i class="fas fa-search"></i>
                 </button>
                 <input type="text" placeholder="Tìm sản phẩm..." />
             </div>
+
+            <!-- Location Dropdown -->
             <div class="location-dropdown">
                 <div class="dropdown-selected" id="locationDropdown">
                     <i class="fas fa-map-marker-alt"></i>
@@ -98,18 +81,24 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Search Button -->
             <button class="search__post-btn">Tìm kiếm</button>
         </div>
     </div>
 </section>
 
-<!-- Main Content -->
+<!-- =============================
+     MAIN CONTENT SECTION
+     ============================= -->
 <main class="main">
+    <!-- =============================
+         PRODUCTS SECTION
+         ============================= -->
     <div class="main__container">
         <!-- Filter Tabs -->
         <div class="filter__tabs">
-            <button class="tab active">DÀNH CHO BẠN</button>
-            <button class="tab">MỚI NHẤT</button>
+            <button class="tab active">TIN ĐĂNG MỚI NHẤT</button>
             <span class="view__all">Tất cả</span>
         </div>
 
@@ -284,12 +273,18 @@
             </div>
         </div>
     </div>
+
+    <!-- =============================
+         COMPANY INFORMATION SECTION
+         ============================= -->
     <div class="main__container">
         <div class="about">
             <h2 class="about__title">
                 EV SECOND - NỀN TẢNG MUA BÁN XE ĐIỆN CŨ VÀ TRAO ĐỔI PIN HÀNG ĐẦU CHO
                 NGƯỜI VIỆT
             </h2>
+
+            <!-- Company Description -->
             <div class="about__content">
                 <p>
                     EV Second chính thức gia nhập thị trường Việt Nam với mục tiêu tạo
@@ -309,6 +304,7 @@
                 </p>
             </div>
 
+            <!-- Services Section -->
             <h3 class="section__title">DỊCH VỤ CHÍNH CỦA EV SECOND</h3>
             <div class="rules">
                 <div class="rule__item">
@@ -356,9 +352,20 @@
         </div>
     </div>
 
+    <!-- =============================
+         RULES & REGULATIONS SECTION
+         ============================= -->
     <div class="main__container">
         <div class="about">
-            <h3 class="section__title">QUY ĐỊNH MUA BÁN XE ĐIỆN TRÊN WEBSITE</h3>
+            <!-- Expandable Rules Section -->
+            <div class="about__title">
+                <h3 class="about__title-text">
+                    QUY ĐỊNH MUA BÁN XE ĐIỆN TRÊN WEBSITE
+                </h3>
+                <i class="fa-solid fa-play" title="Click để xem/ẩn quy định"></i>
+            </div>
+
+            <!-- Rules Content (Initially Hidden) -->
             <div class="rules">
                 <div class="rule__item">
                     <h4>1. Quy định chung</h4>
@@ -428,51 +435,12 @@
     </div>
 </main>
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer__container">
-        <div class="footer__section">
-            <div class="footer__logo">
-                <div class="logo">
-                    <i class="fas fa-bolt"></i>
-                    <span class="logo__text">
-                <strong>EV Second</strong>
-                <small>SECOND LIFE, FIRST CHOICE</small>
-              </span>
-                </div>
-            </div>
-            <p class="footer__copyright">© EV Second. All rights reserved.</p>
-        </div>
+<!-- =============================
+     FOOTER SECTION
+     ============================= -->
 
-        <div class="footer__section">
-            <h4>HỖ TRỢ KHÁCH HÀNG</h4>
-            <ul>
-                <li>Trung tâm trợ giúp</li>
-                <li>An toàn mua bán</li>
-                <li>Liên hệ hỗ trợ</li>
-            </ul>
-        </div>
+<footer th:include="/commonComponents/footer.html"></footer>
 
-        <div class="footer__section">
-            <h4>VỀ EV Second</h4>
-            <ul>
-                <li>Giới thiệu</li>
-                <li>Quy chế hoạt động sàn</li>
-                <li>Chính sách bảo mật</li>
-                <li>Giải quyết tranh chấp</li>
-            </ul>
-        </div>
-
-        <div class="footer__section">
-            <h4>Liên hệ</h4>
-            <ul>
-                <li>Hotline: 0989939373</li>
-                <li>Email: support@EVsecond.tech</li>
-            </ul>
-        </div>
-    </div>
-</footer>
-    <script th:src="@{/js/homePage.js}"></script>
-</footer>
+<script th:src="@{/js/homePage.js}"></script>
 </body>
 </html>
