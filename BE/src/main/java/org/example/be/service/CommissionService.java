@@ -30,7 +30,7 @@ public class CommissionService {
         Optional<Commission> existingCommission = commissionRepository.findById(id);
         if (existingCommission.isPresent()) {
             Commission commission = existingCommission.get();
-            commission.setTransactionId(updatedCommission.getTransactionId());
+            commission.setTransaction(updatedCommission.getTransaction());
             commission.setCommissionRate(updatedCommission.getCommissionRate());
             commission.setAmount(updatedCommission.getAmount());
             commission.setStatus(updatedCommission.getStatus());

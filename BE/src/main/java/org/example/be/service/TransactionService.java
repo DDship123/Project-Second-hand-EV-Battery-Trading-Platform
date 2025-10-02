@@ -30,9 +30,9 @@ public class TransactionService {
         Optional<Transaction> existingTransaction = transactionRepository.findById(id);
         if (existingTransaction.isPresent()) {
             Transaction transaction = existingTransaction.get();
-            transaction.setBuyerId(updatedTransaction.getBuyerId());
-            transaction.setSellerId(updatedTransaction.getSellerId());
-            transaction.setPostId(updatedTransaction.getPostId());
+            transaction.setBuyer(updatedTransaction.getBuyer());
+            transaction.setSeller(updatedTransaction.getSeller());
+            transaction.setPost(updatedTransaction.getPost());
             transaction.setStatus(updatedTransaction.getStatus());
             transaction.setCreatedAt(updatedTransaction.getCreatedAt());
             return transactionRepository.save(transaction);

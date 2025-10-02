@@ -31,9 +31,9 @@ public class ReviewService {
         if (review == null) {
             return null;
         }
-        review.setSellerId(reviewDetails.getSellerId());
-        review.setReviewerId(reviewDetails.getReviewerId());
-        review.setTransactionId(reviewDetails.getTransactionId());
+        review.setSeller(reviewDetails.getSeller());
+        review.setReviewer(reviewDetails.getReviewer());
+        review.setTransaction(reviewDetails.getTransaction());
         review.setRating(reviewDetails.getRating());
         review.setComment(reviewDetails.getComment());
         review.setStatus(reviewDetails.getStatus());

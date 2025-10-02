@@ -31,8 +31,8 @@ public class FavoriteService {
         if (favorite == null) {
             return null;
         }
-        favorite.setMemberId(favoriteDetails.getMemberId());
-        favorite.setPostId(favoriteDetails.getPostId());
+        favorite.setMember(favoriteDetails.getMember());
+        favorite.setPost(favoriteDetails.getPost());
         return favoriteRepository.save(favorite);
     }
 

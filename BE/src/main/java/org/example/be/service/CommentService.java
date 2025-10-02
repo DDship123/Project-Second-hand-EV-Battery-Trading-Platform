@@ -33,8 +33,8 @@ public class CommentService {
             return null;
         }
         comment.setCommentId(commentDetails.getCommentId());
-        comment.setMemberId(commentDetails.getMemberId());
-        comment.setPostId(commentDetails.getPostId());
+        comment.setMember(commentDetails.getMember());
+        comment.setPost(commentDetails.getPost());
         comment.setStatus(commentDetails.getStatus());
         comment.setCreatedAt(commentDetails.getCreatedAt());
         return commentRepository.save(comment);
