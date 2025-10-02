@@ -48,4 +48,24 @@ public class PostController {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/for-you/{memberId}")
+    public ResponseEntity<List<Post>> getPostsForYou(@PathVariable Integer memberId) {
+        List<Post> posts = postService.getPostsForYou(memberId);
+        return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/for-you/{memberId}/status/{status}")
+    public ResponseEntity<List<Post>> getPostsForYouByStatus(
+            @PathVariable Integer memberId,
+            @PathVariable String status) {
+        List<Post> posts = postService.getPostsForYouByStatus(memberId, status);
+        return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<List<Post>> getPostsByMember(@PathVariable Integer memberId) {
+        List<Post> posts = postService.getPostsByMember(memberId);
+        return ResponseEntity.ok(posts);
+    }
 }
