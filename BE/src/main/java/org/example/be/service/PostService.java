@@ -50,4 +50,19 @@ public class PostService {
     public void deletePost(Integer id) {
         postRepository.deleteById(id);
     }
+
+    // Get posts for you (excluding user's own posts)
+    public List<Post> getPostsForYou(Integer memberId) {
+        return postRepository.findPostsForYou(memberId);
+    }
+
+    // Get posts for you with status filter
+    public List<Post> getPostsForYouByStatus(Integer memberId, String status) {
+        return postRepository.findPostsForYouByStatus(memberId, status);
+    }
+
+    // Get user's own posts
+    public List<Post> getPostsByMember(Integer memberId) {
+        return postRepository.findByMemberId(memberId);
+    }
 }
