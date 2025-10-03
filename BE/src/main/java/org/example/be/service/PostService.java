@@ -35,7 +35,7 @@ public class PostService {
         if (existingPost.isPresent()) {
             Post post = existingPost.get();
             post.setProduct(updatedPost.getProduct());
-            post.setMember(updatedPost.getMember());
+            post.setSeller(updatedPost.getSeller());
             post.setTitle(updatedPost.getTitle());
             post.setDescription(updatedPost.getDescription());
             post.setStatus(updatedPost.getStatus());

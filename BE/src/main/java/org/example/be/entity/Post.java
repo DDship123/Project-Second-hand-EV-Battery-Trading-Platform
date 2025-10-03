@@ -1,7 +1,6 @@
 package org.example.be.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -19,7 +18,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member seller;
 
     private String title;
 
@@ -49,12 +48,12 @@ public class Post {
         this.product = product;
     }
 
-    public Member getMember() {
-        return member;
+    public Member getSeller() {
+        return seller;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setSeller(Member seller) {
+        this.seller = seller;
     }
 
     public String getTitle() {

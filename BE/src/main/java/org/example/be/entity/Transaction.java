@@ -1,8 +1,6 @@
 package org.example.be.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 
 import java.time.LocalDateTime;
 
@@ -17,10 +15,6 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "buyer_id")
     private Member buyer;
-
-    @ManyToOne
-    @JoinColumn(name = "seller_id")
-    private Member seller;
 
     @OneToOne
     @JoinColumn(name = "post_id")
@@ -45,14 +39,6 @@ public class Transaction {
 
     public void setBuyer(Member buyer) {
         this.buyer = buyer;
-    }
-
-    public Member getSeller() {
-        return seller;
-    }
-
-    public void setSeller(Member seller) {
-        this.seller = seller;
     }
 
     public Post getPost() {
