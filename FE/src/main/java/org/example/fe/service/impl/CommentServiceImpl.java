@@ -1,8 +1,9 @@
 package org.example.fe.service.impl;
 
-import org.example.fe.entity.TransactionResponse;
+import org.example.fe.entity.CommentResponse;
+import org.example.fe.model.CommentRequest;
 import org.example.fe.model.response.ApiResponse;
-import org.example.fe.service.TransactionService;
+import org.example.fe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,22 +15,17 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Service
-public class TransactionServiceImpl implements TransactionService {
+public class CommentServiceImpl implements CommentService {
     @Autowired
     private RestTemplate restTemplate;
-    private String apiBaseUrl = "http://localhost:8080";
-    @Override
-    public ApiResponse<List<TransactionResponse>> getAllBuyTransaction(int memberId) {
-        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
-        Map<String, String> errs = new HashMap<>();
 
-//        // Validate input
-//        if (memberId <= 0) {
-//            errs.put("memberId", "Invalid member ID");
-//            response.error(errs);
-//            return response;
-//        }
+    private String apiBaseUrl = "http://localhost:8001";
+
+    @Override
+    public ApiResponse<List<CommentResponse>> getAllComments(int postID) {
+        ApiResponse<List<CommentResponse>> response = new ApiResponse<>();
 
         try {
             // Create headers
@@ -41,42 +37,35 @@ public class TransactionServiceImpl implements TransactionService {
 
             // Make API call to backend
             ResponseEntity<List> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/transactions/buy/" + memberId,
+                    apiBaseUrl + "/api/comments/post/" + postID,
                     HttpMethod.GET,
                     requestEntity,
                     List.class
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
-                // Get buy transactions successful
-                response.ok((List<TransactionResponse>) apiResponse.getBody());
+                // Get comments successful
+                response.ok((List<CommentResponse>) apiResponse.getBody());
             } else {
-                // Get buy transactions failed
+                // Get comments failed
                 Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Failed to retrieve buy transactions");
+                errorMap.put("message", "Failed to retrieve comments");
                 response.error(errorMap);
             }
         } catch (Exception e) {
             // Handle exceptions
             Map<String, String> errorMap = new HashMap<>();
-            errorMap.put("message", "Failed to get buy transactions: " + e.getMessage());
+            errorMap.put("message", "Failed to get comments: " + e.getMessage());
             response.error(errorMap);
         }
 
         return response;
     }
 
-    @Override
-    public ApiResponse<List<TransactionResponse>> getAllSellTransaction(int memberId) {
-        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
-        Map<String, String> errs = new HashMap<>();
 
-//        // Validate input
-//        if (memberId <= 0) {
-//            errs.put("memberId", "Invalid member ID");
-//            response.error(errs);
-//            return response;
-//        }
+    @Override
+    public ApiResponse<CommentResponse> createComment(CommentRequest com) {
+        ApiResponse<CommentResponse> response = new ApiResponse<>();
 
         try {
             // Create headers
@@ -84,32 +73,33 @@ public class TransactionServiceImpl implements TransactionService {
             headers.set("Content-Type", "application/json");
 
             // Create request entity
-            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+            HttpEntity<CommentRequest> requestEntity = new HttpEntity<>(com, headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/transactions/sell/" + memberId,
-                    HttpMethod.GET,
+            ResponseEntity<CommentResponse> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/comments",
+                    HttpMethod.POST,
                     requestEntity,
-                    List.class
+                    CommentResponse.class
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
-                // Get sell transactions successful
-                response.ok((List<TransactionResponse>) apiResponse.getBody());
+                // Create comment successful
+                response.ok(apiResponse.getBody());
             } else {
-                // Get sell transactions failed
+                // Create comment failed
                 Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Failed to retrieve sell transactions");
+                errorMap.put("message", "Failed to create comment");
                 response.error(errorMap);
             }
         } catch (Exception e) {
             // Handle exceptions
             Map<String, String> errorMap = new HashMap<>();
-            errorMap.put("message", "Failed to get sell transactions: " + e.getMessage());
+            errorMap.put("message", "Failed to create comment: " + e.getMessage());
             response.error(errorMap);
         }
 
         return response;
+
     }
 }

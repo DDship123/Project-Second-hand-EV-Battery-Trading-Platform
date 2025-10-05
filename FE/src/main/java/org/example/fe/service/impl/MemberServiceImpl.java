@@ -3,8 +3,8 @@ package org.example.fe.service.impl;
 
 import org.example.fe.entity.MemberResponse;
 import org.example.fe.model.response.ApiResponse;
-import org.example.fe.model.response.MemberRegister;
-import org.example.fe.model.response.MemberUpdate;
+import org.example.fe.model.MemberRegisterRequest;
+import org.example.fe.model.MemberUpdateRequest;
 import org.example.fe.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -83,7 +82,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ApiResponse<MemberResponse> register(MemberRegister memberRegister) {
+    public ApiResponse<MemberResponse> register(MemberRegisterRequest memberRegisterRequest) {
 
         ApiResponse<MemberResponse> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
@@ -116,7 +115,7 @@ public class MemberServiceImpl implements MemberService {
             headers.set("Content-Type", "application/json");
 
             // Create request entity
-            HttpEntity<MemberRegister> requestEntity = new HttpEntity<>(memberRegister, headers);
+            HttpEntity<MemberRegisterRequest> requestEntity = new HttpEntity<>(memberRegisterRequest, headers);
 
             // Make API call to backend
             ResponseEntity<MemberResponse> apiResponse = restTemplate.exchange(
@@ -193,7 +192,7 @@ public class MemberServiceImpl implements MemberService {
         return response;
     }
     @Override
-    public ApiResponse<MemberResponse> updateMember(MemberUpdate memberUpdate) {
+    public ApiResponse<MemberResponse> updateMember(MemberUpdateRequest memberUpdateRequest) {
         ApiResponse<MemberResponse> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
 
@@ -216,7 +215,7 @@ public class MemberServiceImpl implements MemberService {
             headers.set("Content-Type", "application/json");
 
             // Create request entity
-            HttpEntity<MemberUpdate> requestEntity = new HttpEntity<>(memberUpdate, headers);
+            HttpEntity<MemberUpdateRequest> requestEntity = new HttpEntity<>(memberUpdateRequest, headers);
 
             // Make API call to backend
             ResponseEntity<MemberResponse> apiResponse = restTemplate.exchange(

@@ -1,0 +1,13 @@
+Index: FE/src/main/java/org/example/fe/config/AppConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/FE/src/main/java/org/example/fe/config/AppConfig.java b/FE/src/main/java/org/example/fe/config/AppConfig.java
+new file mode 100644
+--- /dev/null	(date 1759641936475)
++++ b/FE/src/main/java/org/example/fe/config/AppConfig.java	(date 1759641936475)
+@@ -0,0 +1,3 @@
++public class AppConfig {
++    public RestTempale
++}
