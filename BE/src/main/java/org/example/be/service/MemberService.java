@@ -1,6 +1,7 @@
 package org.example.be.service;
 
 import org.example.be.dto.ApiResponse;
+import org.example.be.dto.LoginRequest;
 import org.example.be.dto.MemberRegisterRequest;
 import org.example.be.entity.Member;
 import org.example.be.repository.MemberRepository;
@@ -77,5 +78,12 @@ public class MemberService {
         Member saved = memberRepository.save(member);
 
         return ApiResponse.ok(saved);
+    }
+
+    public Optional<Member> login (LoginRequest request) {
+        return memberRepository.findByUsernameAndPassword(
+                request.getUsername(),
+                request.getPassword()
+        );
     }
 }

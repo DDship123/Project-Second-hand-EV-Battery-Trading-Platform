@@ -31,7 +31,6 @@ public class TransactionService {
         if (existingTransaction.isPresent()) {
             Transaction transaction = existingTransaction.get();
             transaction.setBuyer(updatedTransaction.getBuyer());
-            transaction.setSeller(updatedTransaction.getSeller());
             transaction.setPost(updatedTransaction.getPost());
             transaction.setStatus(updatedTransaction.getStatus());
             transaction.setCreatedAt(updatedTransaction.getCreatedAt());
