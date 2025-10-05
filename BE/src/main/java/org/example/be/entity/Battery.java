@@ -10,11 +10,26 @@ public class Battery {
     @Column(name = "battery_id")
     private Integer batteryId;
 
-    private String condition;
+    @Column(name = "name")
+    private String name;
 
+    @Column(name = "brand")
     private String brand;
 
-    private Integer capacity;
+    @Column(name = "year_at")
+    private String yearAt;
+
+    @Column(name = "voltage_v")
+    private String voltageV;
+
+    @Column(name = "capacity_ah")
+    private Integer capacityAh;
+
+    @Column(name = "condition")
+    private String condition;
+
+    @Column(name = "origin")
+    private String origin;
 
     public Integer getBatteryId() {
         return batteryId;
@@ -24,12 +39,12 @@ public class Battery {
         this.batteryId = batteryId;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getName() {
+        return name;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBrand() {
@@ -40,11 +55,43 @@ public class Battery {
         this.brand = brand;
     }
 
-    public Integer getCapacity() {
-        return capacity;
+    public String getYearAt() {
+        return yearAt;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public void setYearAt(String yearAt) {
+        this.yearAt = yearAt;
+    }
+
+    public String getVoltageV() {
+        return voltageV;
+    }
+
+    public void setVoltageV(String voltageV) {
+        this.voltageV = voltageV;
+    }
+
+    public Integer getCapacityAh() {
+        return capacityAh;
+    }
+
+    public void setCapacityAh(Integer capacityAh) {
+        this.capacityAh = capacityAh;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }

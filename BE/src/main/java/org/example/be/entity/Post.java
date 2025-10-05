@@ -17,7 +17,7 @@ public class Post {
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "seller_id")
     private Member seller;
 
     private String title;
