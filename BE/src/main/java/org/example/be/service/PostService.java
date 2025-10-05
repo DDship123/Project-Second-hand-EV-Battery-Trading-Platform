@@ -3,6 +3,7 @@ package org.example.be.service;
 import org.example.be.entity.Post;
 import org.example.be.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,18 +52,20 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    // Get posts for you (excluding user's own posts)
+    // For You
     public List<Post> getPostsForYou(Integer memberId) {
-        return postRepository.findPostsForYou(memberId);
+        return postRepository.findAllForYou(memberId);
     }
-
-    // Get posts for you with status filter
+    //by status
     public List<Post> getPostsForYouByStatus(Integer memberId, String status) {
-        return postRepository.findPostsForYouByStatus(memberId, status);
+        return postRepository.findAllForYouByStatus(memberId, status);
+    }
+    // By member
+    public List<Post> getPostsByMember(Integer memberId) {
+        return postRepository.findAllByMember(memberId);
+    }
+    public List<Post> getLatestPosts(int limit) {
+        return postRepository.findLatestPosts(PageRequest.of(0, limit));
     }
 
-    // Get user's own posts
-    public List<Post> getPostsByMember(Integer memberId) {
-        return postRepository.findByMemberId(memberId);
-    }
 }
