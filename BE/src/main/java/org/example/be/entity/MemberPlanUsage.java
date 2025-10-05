@@ -9,12 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member_plan_usage")
-<<<<<<< HEAD
-@Data
-@Getter
-@Setter
-=======
->>>>>>> 1b9bb453edb01b9d874fa923b552c1d83d011243
 public class MemberPlanUsage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
