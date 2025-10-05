@@ -98,7 +98,7 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
-<<<<<<< HEAD
+    // --- By Member ---
     @GetMapping("/member/{memberId}")
     public ResponseEntity<List<PostResponse>> getPostsByMember(@PathVariable Integer memberId) {
         List<PostResponse> posts = postService.getPostsByMember(memberId).stream()
@@ -106,19 +106,14 @@ public class PostController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(posts);
     }
-    @GetMapping("/latest")
-    public ResponseEntity<List<Post>> getLatestPosts(
-            @RequestParam(defaultValue = "5") int limit) {
-        List<Post> latestPosts = postService.getLatestPosts(limit);
-        return ResponseEntity.ok(latestPosts);
-    }
 
+    // --- Latest ---
+    @GetMapping("/latest")
+    public ResponseEntity<List<PostResponse>> getLatestPosts(
+            @RequestParam(defaultValue = "5") int limit) {
+        List<PostResponse> posts = postService.getLatestPosts(limit).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(posts);
+    }
 }
-=======
-//    @GetMapping("/member/{memberId}")
-//    public ResponseEntity<List<Post>> getPostsByMember(@PathVariable Integer memberId) {
-//        List<Post> posts = postService.getPostsByMember(memberId);
-//        return ResponseEntity.ok(posts);
-//    }
-}
->>>>>>> d0900c780a9e3d4514293f426135165559130c61

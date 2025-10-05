@@ -52,28 +52,22 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    // For You
+    // --- For You ---
     public List<Post> getPostsForYou(Integer memberId) {
         return postRepository.findAllForYou(memberId);
     }
-    //by status
+
     public List<Post> getPostsForYouByStatus(Integer memberId, String status) {
         return postRepository.findAllForYouByStatus(memberId, status);
     }
-    // By member
+
+    // --- By Member ---
     public List<Post> getPostsByMember(Integer memberId) {
         return postRepository.findAllByMember(memberId);
     }
+
+    // --- Latest Posts ---
     public List<Post> getLatestPosts(int limit) {
         return postRepository.findLatestPosts(PageRequest.of(0, limit));
     }
-
-<<<<<<< HEAD
 }
-=======
-    // Get user's own posts
-//    public List<Post> getPostsByMember(Integer memberId) {
-//        return postRepository.findByMemberId(memberId);
-//    }
-}
->>>>>>> d0900c780a9e3d4514293f426135165559130c61
