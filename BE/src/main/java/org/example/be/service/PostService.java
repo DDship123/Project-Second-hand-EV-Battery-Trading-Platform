@@ -68,4 +68,12 @@ public class PostService {
         return postRepository.findLatestPosts(PageRequest.of(0, limit));
     }
 
+<<<<<<< HEAD
 }
+=======
+    // Get user's own posts
+//    public List<Post> getPostsByMember(Integer memberId) {
+//        return postRepository.findByMemberId(memberId);
+//    }
+}
+>>>>>>> d0900c780a9e3d4514293f426135165559130c61

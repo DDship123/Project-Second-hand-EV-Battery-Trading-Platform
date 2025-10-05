@@ -1,11 +1,11 @@
-package org.example.fe.model.response;
+package org.example.fe.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MemberUpdate {
+public class MemberUpdateRequest {
     private String username;
     private String address;
     private String email;

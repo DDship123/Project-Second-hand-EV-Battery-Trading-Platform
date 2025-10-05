@@ -10,7 +10,10 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
         </processorPath>
+<<<<<<< HEAD
         <module name="FE" />
+=======
+>>>>>>> d0900c780a9e3d4514293f426135165559130c61
         <module name="BE" />
       </profile>
     </annotationProcessing>

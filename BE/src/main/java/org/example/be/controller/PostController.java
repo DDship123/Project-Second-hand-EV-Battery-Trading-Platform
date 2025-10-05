@@ -98,6 +98,7 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
+<<<<<<< HEAD
     @GetMapping("/member/{memberId}")
     public ResponseEntity<List<PostResponse>> getPostsByMember(@PathVariable Integer memberId) {
         List<PostResponse> posts = postService.getPostsByMember(memberId).stream()
@@ -113,3 +114,11 @@ public class PostController {
     }
 
 }
+=======
+//    @GetMapping("/member/{memberId}")
+//    public ResponseEntity<List<Post>> getPostsByMember(@PathVariable Integer memberId) {
+//        List<Post> posts = postService.getPostsByMember(memberId);
+//        return ResponseEntity.ok(posts);
+//    }
+}
+>>>>>>> d0900c780a9e3d4514293f426135165559130c61

@@ -16,6 +16,7 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
+<<<<<<< HEAD
     // Lấy tất cả post for you (không lấy của chính mình, status approved, product active)
     @Query("SELECT p FROM Post p " +
             "WHERE p.status = 'approved' " +
@@ -40,3 +41,16 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT p FROM Post p ORDER BY p.createdAt DESC")
     List<Post> findLatestPosts(Pageable pageable);
 }
+=======
+    // Find posts by member ID
+    //List<Post> findByMemberId(Integer memberId);
+
+    // Find posts excluding a specific member (for "For You" feed)
+    @Query("SELECT p FROM Post p WHERE p.seller.memberId != :memberId ORDER BY p.createdAt DESC")
+    List<Post> findPostsForYou(@Param("memberId") Integer memberId);
+
+    // Alternative: Find all posts except user's own, with status filter
+    @Query("SELECT p FROM Post p WHERE p.seller.memberId != :memberId AND p.status = :status ORDER BY p.createdAt DESC")
+    List<Post> findPostsForYouByStatus(@Param("memberId") Integer memberId, @Param("status") String status);
+}
+>>>>>>> d0900c780a9e3d4514293f426135165559130c61
