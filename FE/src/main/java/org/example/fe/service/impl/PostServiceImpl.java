@@ -4,6 +4,7 @@ import org.example.fe.entity.PostResponse;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -32,11 +33,11 @@ public class PostServiceImpl implements PostService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/posts/top-rated",
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {

@@ -4,6 +4,7 @@ import org.example.fe.entity.TransactionResponse;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -40,11 +41,11 @@ public class TransactionServiceImpl implements TransactionService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<TransactionResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/transactions/buy/" + memberId,
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<TransactionResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
@@ -87,11 +88,11 @@ public class TransactionServiceImpl implements TransactionService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<TransactionResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/transactions/sell/" + memberId,
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<TransactionResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {

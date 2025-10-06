@@ -4,6 +4,7 @@ import org.example.fe.entity.FavoriteResponse;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -40,16 +41,16 @@ public class WishlistServiceImpl implements WishlistService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<FavoriteResponse> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<FavoriteResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/wishlist/" + memberId + "/latest",
                     HttpMethod.GET,
                     requestEntity,
-                    FavoriteResponse.class
+                    new ParameterizedTypeReference<ApiResponse<FavoriteResponse>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get latest wishlist item successful
-                response.ok(apiResponse.getBody());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Get latest wishlist item failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -87,11 +88,11 @@ public class WishlistServiceImpl implements WishlistService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<FavoriteResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/wishlist/" + memberId,
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<FavoriteResponse>>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
@@ -145,16 +146,16 @@ public class WishlistServiceImpl implements WishlistService {
             HttpEntity<Map<String, Integer>> requestEntity = new HttpEntity<>(requestBody, headers);
 
             // Make API call to backend
-            ResponseEntity<FavoriteResponse> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<FavoriteResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/wishlist",
                     HttpMethod.POST,
                     requestEntity,
-                    FavoriteResponse.class
+                    new ParameterizedTypeReference<ApiResponse<FavoriteResponse>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Add to wishlist successful
-                response.ok(apiResponse.getBody());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Add to wishlist failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -200,16 +201,16 @@ public class WishlistServiceImpl implements WishlistService {
 
             // Make API call to backend
             // URL: /api/wishlist/{memberId}/{postId}
-            ResponseEntity<FavoriteResponse> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<FavoriteResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/wishlist/" + memberId + "/" + postId,
                     HttpMethod.DELETE,
                     requestEntity,
-                    FavoriteResponse.class
+                    new ParameterizedTypeReference<ApiResponse<FavoriteResponse>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful()) {
                 // Delete from wishlist successful
-                response.ok(apiResponse.getBody());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Delete from wishlist failed
                 Map<String, String> errorMap = new HashMap<>();

@@ -4,6 +4,7 @@ import org.example.fe.entity.CommentResponse;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -35,11 +36,11 @@ public class CommentServiceImpl implements CommentService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<CommentResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/comments/post/" + postID,
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<CommentResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
@@ -75,16 +76,16 @@ public class CommentServiceImpl implements CommentService {
             HttpEntity<CommentResponse> requestEntity = new HttpEntity<>(com, headers);
 
             // Make API call to backend
-            ResponseEntity<CommentResponse> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<CommentResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/comments",
                     HttpMethod.POST,
                     requestEntity,
-                    CommentResponse.class
+                    new ParameterizedTypeReference<ApiResponse<CommentResponse>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Create comment successful
-                response.ok(apiResponse.getBody());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Create comment failed
                 Map<String, String> errorMap = new HashMap<>();
