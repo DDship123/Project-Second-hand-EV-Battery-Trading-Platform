@@ -37,7 +37,13 @@ public class PostImageService {
         return null;
     }
 
-    public void deletePostImage(Integer id) {
-        postImageRepository.deleteById(id);
+    public boolean deletePostImage(Integer id) {
+        Optional<PostImage> existing = postImageRepository.findById(id);
+        if (existing.isPresent()) {
+            postImageRepository.delete(existing.get());
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -38,7 +38,11 @@ public class VehicleService {
         return null;
     }
 
-    public void deleteVehicle(Integer id) {
-        vehicleRepository.deleteById(id);
+    public boolean deleteVehicle(Integer id) {
+        if (vehicleRepository.existsById(id)) {
+            vehicleRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
