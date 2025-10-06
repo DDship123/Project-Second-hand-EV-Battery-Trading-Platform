@@ -32,7 +32,7 @@ public class BatteryService {
             Battery battery = existingBattery.get();
             battery.setCondition(updatedBattery.getCondition());
             battery.setBrand(updatedBattery.getBrand());
-            battery.setCapacity(updatedBattery.getCapacity());
+            battery.setCapacityAh(updatedBattery.getCapacityAh());
             return batteryRepository.save(battery);
         }
         return null;
