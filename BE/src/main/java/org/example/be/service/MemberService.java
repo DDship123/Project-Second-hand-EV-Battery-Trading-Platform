@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,19 +53,25 @@ public class MemberService {
     }
 
     public ApiResponse<Member> register(MemberRegisterRequest request) {
-        // Check email/phone đã tồn tại
+        ApiResponse<Member> response = new ApiResponse<>();
+
+        // Kiểm tra email tồn tại
         if (memberRepository.findByEmail(request.getEmail()).isPresent()) {
-            return ApiResponse.error(400, "Email already exists", new HashMap<>() {{
-                put("email", "This email is already in use");
-            }});
-        }
-        if (memberRepository.findByPhone(request.getPhone()).isPresent()) {
-            return ApiResponse.error(400, "Phone already exists", new HashMap<>() {{
-                put("phone", "This phone is already in use");
-            }});
+            Map<String, String> error = new HashMap<>();
+            error.put("email", "This email is already in use");
+            response.error(error);
+            return response;
         }
 
-        // Tạo mới Member
+        // Kiểm tra phone tồn tại
+        if (memberRepository.findByPhone(request.getPhone()).isPresent()) {
+            Map<String, String> error = new HashMap<>();
+            error.put("phone", "This phone number is already in use");
+            response.error(error);
+            return response;
+        }
+
+        // Tạo mới member
         Member member = new Member();
         member.setUsername(request.getUsername());
         member.setAddress(request.getAddress());
@@ -77,7 +84,12 @@ public class MemberService {
 
         Member saved = memberRepository.save(member);
 
-        return ApiResponse.ok(saved);
+
+        HashMap<String, Object> metadata = new HashMap<>();
+        metadata.put("registeredAt", LocalDateTime.now());
+
+        response.ok(saved, metadata);
+        return response;
     }
 
     public Optional<Member> login (LoginRequest request) {

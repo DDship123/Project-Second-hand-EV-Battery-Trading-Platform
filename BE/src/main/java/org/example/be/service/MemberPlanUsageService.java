@@ -41,7 +41,11 @@ public class MemberPlanUsageService {
         return null;
     }
 
-    public void deleteMemberPlanUsage(Integer id) {
-        memberPlanUsageRepository.deleteById(id);
+    public boolean deleteMemberPlanUsage(Integer id) {
+        if (memberPlanUsageRepository.existsById(id)) {
+            memberPlanUsageRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
