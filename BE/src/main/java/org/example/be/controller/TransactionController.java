@@ -18,7 +18,7 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    // Map entity -> DTO
+    // helper chuyển Transaction -> TransactionResponse
     private TransactionResponse mapToResponse(Transaction transaction) {
         return new TransactionResponse(
                 transaction.getTransactionsId(),
@@ -42,20 +42,21 @@ public class TransactionController {
     @GetMapping("/{id}")
     public ResponseEntity<TransactionResponse> getTransactionById(@PathVariable Integer id) {
         Optional<Transaction> transaction = transactionService.getTransactionById(id);
-        return transaction.map(t -> ResponseEntity.ok(mapToResponse(t)))
+        return transaction.map(value -> ResponseEntity.ok(mapToResponse(value)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
     public ResponseEntity<List<TransactionResponse>> getAllTransactions() {
-        List<TransactionResponse> responses = transactionService.getAllTransactions()
-                .stream().map(this::mapToResponse)
+        List<TransactionResponse> transactions = transactionService.getAllTransactions().stream()
+                .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(transactions);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TransactionResponse> updateTransaction(@PathVariable Integer id, @RequestBody Transaction transaction) {
+    public ResponseEntity<TransactionResponse> updateTransaction(@PathVariable Integer id,
+                                                                 @RequestBody Transaction transaction) {
         Transaction updated = transactionService.updateTransaction(id, transaction);
         if (updated != null) {
             return ResponseEntity.ok(mapToResponse(updated));
@@ -69,19 +70,21 @@ public class TransactionController {
         return ResponseEntity.noContent().build();
     }
 
+    // --- Buy transactions ---
     @GetMapping("/buy/completed/{buyerId}")
     public ResponseEntity<List<TransactionResponse>> getAllBuyTransactions(@PathVariable Integer buyerId) {
-        List<TransactionResponse> responses = transactionService.getAllBuyTransactions(buyerId)
-                .stream().map(this::mapToResponse)
+        List<TransactionResponse> transactions = transactionService.getAllBuyTransactions(buyerId).stream()
+                .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(transactions);
     }
 
+    // --- Sell transactions ---
     @GetMapping("/sell/completed/{sellerId}")
     public ResponseEntity<List<TransactionResponse>> getAllSellTransactions(@PathVariable Integer sellerId) {
-        List<TransactionResponse> responses = transactionService.getAllSellTransactions(sellerId)
-                .stream().map(this::mapToResponse)
+        List<TransactionResponse> transactions = transactionService.getAllSellTransactions(sellerId).stream()
+                .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(transactions);
     }
 }

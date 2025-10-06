@@ -27,6 +27,13 @@ public class TransactionResponse {
         this.status = status;
         this.createdAt = createdAt;
     }
-
-    // getters, setters
+    public Integer getTransactionId() { return transactionId; }
+    public Integer getBuyerId() { return buyerId; }
+    public String getBuyerName() { return buyerName; }
+    public Integer getSellerId() { return sellerId; }
+    public String getSellerName() { return sellerName; }
+    public Integer getPostId() { return postId; }
+    public String getPostTitle() { return postTitle; }
+    public String getStatus() { return status; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }
