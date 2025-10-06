@@ -9,7 +9,24 @@ window.addEventListener('DOMContentLoaded', function() {
         window.location.href = "/home/transactionsHistory";
     });
 
-    // Lấy các phần tử DOM
+    // =====================================================
+    //    PRODUCTS DROPDOWN MENU FUNCTIONALITY
+    // =====================================================
+    const productsDropdown = document.querySelector('.nav__link:not([href]):not(.active)');
+
+    if (productsDropdown) {
+        productsDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Toggle dropdown active class
+            this.classList.toggle('dropdown-active');
+        });
+    }
+
+    // =====================================================
+    //    WISHLIST DROPDOWN FUNCTIONALITY
+    // =====================================================
     const wishlistBtn = document.querySelector(".btn__wishlist");
     const wishlistList = document.querySelector(".wishlist__list");
 
@@ -24,29 +41,17 @@ window.addEventListener('DOMContentLoaded', function() {
         wishlistBtn.classList.toggle("active");
     });
 
-    // Đóng wishlist khi click ra ngoài
-    document.addEventListener("click", function (event) {
-        if (
-            !wishlistBtn.contains(event.target) &&
-            !wishlistList.contains(event.target)
-        ) {
-            wishlistList.classList.remove("show");
-            wishlistBtn.classList.remove("active");
-        }
-    });
-
     // Ngăn wishlist đóng khi click vào bên trong nó
     wishlistList.addEventListener("click", function (event) {
         event.stopPropagation();
     });
 
-    const header = document.querySelector(".header");
-    if (!windowHref.includes("home") || windowHref.length > 26) {
-        header.style.marginBottom = "30px";
-    }
-
+    // =====================================================
+    //    USER DROPDOWN FUNCTIONALITY
+    // =====================================================
     const userDropdown = document.querySelector(".user__dropdown");
     const userDropdownContent = document.querySelector(".user__dropdown__content");
+
     userDropdown.addEventListener("click", function(event) {
         event.stopPropagation(); // Ngăn event lan truyền lên
 
@@ -54,13 +59,50 @@ window.addEventListener('DOMContentLoaded', function() {
         userDropdownContent.classList.toggle("show");
     });
 
-    // Đóng dropdown khi click ra ngoài
+    // =====================================================
+    //    GLOBAL CLICK HANDLER - CLOSE ALL DROPDOWNS
+    // =====================================================
     document.addEventListener("click", function (event) {
+        // Close products dropdown
+        if (productsDropdown && !productsDropdown.contains(event.target)) {
+            productsDropdown.classList.remove('dropdown-active');
+        }
+
+        // Close wishlist dropdown
         if (
-            !userDropdownContent.contains(event.target)
+            !wishlistBtn.contains(event.target) &&
+            !wishlistList.contains(event.target)
         ) {
+            wishlistList.classList.remove("show");
+            wishlistBtn.classList.remove("active");
+        }
+
+        // Close user dropdown
+        if (!userDropdown.contains(event.target)) {
             userDropdownContent.classList.remove("show");
         }
     });
 
+    // // =====================================================
+    // //    KEYBOARD NAVIGATION
+    // // =====================================================
+    // document.addEventListener('keydown', function(e) {
+    //     if (e.key === 'Escape') {
+    //         // Close all dropdowns on Escape key
+    //         if (productsDropdown) {
+    //             productsDropdown.classList.remove('dropdown-active');
+    //         }
+    //         wishlistList.classList.remove("show");
+    //         wishlistBtn.classList.remove("active");
+    //         userDropdownContent.classList.remove("show");
+    //     }
+    // });
+
+    // =====================================================
+    //    HEADER MARGIN ADJUSTMENT
+    // =====================================================
+    const header = document.querySelector(".header");
+    if (!windowHref.includes("home") || windowHref.length > 26) {
+        header.style.marginBottom = "30px";
+    }
 });

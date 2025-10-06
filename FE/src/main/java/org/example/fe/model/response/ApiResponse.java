@@ -33,4 +33,36 @@ public class ApiResponse<T> {
         this.status = "ERROR";
         this.error = error;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public T getPayload() {
+        return payload;
+    }
+
+    public void setPayload(T payload) {
+        this.payload = payload;
+    }
+
+    public Map<String, String> getError() {
+        return error;
+    }
+
+    public void setError(Map<String, String> error) {
+        this.error = error;
+    }
+
+    public Map<String, Object> getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(Map<String, Object> metadata) {
+        this.metadata = metadata;
+    }
 }

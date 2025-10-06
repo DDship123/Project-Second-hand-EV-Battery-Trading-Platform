@@ -25,51 +25,85 @@
     </button>
     <button class="profile__edit">Chỉnh sửa</button>
     <h1 class="profile__title">Thông tin cá nhân</h1>
-    <form method="post" action="*" class="profile__container">
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+    <form method="post" th:action="@{/account/personalInformation}" th:object="${user}" class="profile__container">
         <div class="profile__avatar">
-            <img src="https://i.pravatar.cc/300" alt="avatar" />
+            <img th:src="${user != null && user.avatarUrl != null ? user.avatarUrl : 'https://i.pravatar.cc/300'}" alt="avatar" />
             <button class="profile__avatar__edit">Thay đổi ảnh</button>
         </div>
         <div class="profile__container__info">
             <div class="profile__container__info__inputGroup">
                 <label for="name">Họ và tên</label>
-                <!-- class="profile__container__info__inputGroup--edit" -->
-                <input type="text" id="name" value="John Doe" disabled="true" />
+                <input type="text" id="name" th:field="*{username}" disabled="true" />
             </div>
             <div class="profile__container__info__inputGroup">
-                <label for="birthDate">Ngày sinh</label>
-                <!-- class="profile__container__info__inputGroup--edit" -->
+                <label for="createdDate">Ngày tạo tài khoản</label>
                 <input
                         type="text"
-                        id="birthDate"
-                        value="01/01/2000"
+                        id="createdDate"
+                        th:field="*{createdAt}"
                         disabled="true"
                 />
+                <!-- Hidden fields for form submission -->
+                <input type="hidden" th:field="*{memberId}" />
+                <input type="hidden" th:field="*{role}" />
+                <input type="hidden" th:field="*{password}" />
+                <input type="hidden" th:field="*{avatarUrl}" />
+                <input type="hidden" th:field="*{status}" />
+                <input type="hidden" th:field="*{createdAt}" />
             </div>
             <div class="profile__container__info__inputGroup">
                 <label for="address">Địa chỉ</label>
-                <!-- class="profile__container__info__inputGroup--edit" -->
-                <input
-                        type="text"
+                <select
                         id="address"
-                        value="16 Võ Thị Sáu, tp. Hồ Chí Minh"
+                        th:field="*{address}"
                         disabled="true"
-                />
+                        class="profile__select"
+                >
+                    <option value="Chưa cập nhật">Chưa cập nhật</option>
+                    <option value="Hà Nội">Hà Nội</option>
+                    <option value="Thành phố Hồ Chí Minh">Thành phố Hồ Chí Minh</option>
+                    <option value="Đà Nẵng">Đà Nẵng</option>
+                    <option value="Hải Phòng">Hải Phòng</option>
+                    <option value="Cần Thơ">Cần Thơ</option>
+                    <option value="Biên Hòa">Biên Hòa (Đồng Nai)</option>
+                    <option value="Huế">Huế (Thừa Thiên Huế)</option>
+                    <option value="Nha Trang">Nha Trang (Khánh Hòa)</option>
+                    <option value="Buôn Ma Thuột">Buôn Ma Thuột (Đắk Lắk)</option>
+                    <option value="Quy Nhon">Quy Nhon (Bình Định)</option>
+                    <option value="Vũng Tàu">Vũng Tàu (Bà Rịa - Vũng Tàu)</option>
+                    <option value="Nam Định">Nam Định</option>
+                    <option value="Phan Thiết">Phan Thiết (Bình Thuận)</option>
+                    <option value="Long Xuyên">Long Xuyên (An Giang)</option>
+                    <option value="Thái Nguyên">Thái Nguyên</option>
+                    <option value="Thanh Hóa">Thanh Hóa</option>
+                    <option value="Rach Giá">Rach Giá (Kiên Giang)</option>
+                    <option value="Cà Mau">Cà Mau</option>
+                    <option value="Cam Ranh">Cam Ranh (Khánh Hòa)</option>
+                    <option value="Vinh">Vinh (Nghệ An)</option>
+                    <option value="Mỹ Tho">Mỹ Tho (Tiền Giang)</option>
+                    <option value="Đà Lạt">Đà Lạt (Lâm Đồng)</option>
+                    <option value="Bến Tre">Bến Tre</option>
+                    <option value="Vĩnh Long">Vĩnh Long</option>
+                    <option value="Trà Vinh">Trà Vinh</option>
+                </select>
             </div>
         </div>
         <div class="profile__container__info">
             <div class="profile__container__info__inputGroup">
                 <label for="phone">Số điện thoại</label>
-                <!-- class="profile__container__info__inputGroup--edit" -->
-                <input type="phone" id="phone" value="0123456789" disabled="true" />
+                <input type="text" id="phone" th:field="*{phone}" disabled="true" />
             </div>
             <div class="profile__container__info__inputGroup">
                 <label for="email">Email</label>
-                <!-- class="profile__container__info__inputGroup--edit" -->
                 <input
                         type="email"
                         id="email"
-                        value="johndoe@example.com"
+                        th:field="*{email}"
                         disabled="true"
                 />
             </div>

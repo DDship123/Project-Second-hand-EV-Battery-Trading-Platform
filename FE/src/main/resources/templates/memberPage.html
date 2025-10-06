@@ -20,7 +20,7 @@
 <body>
 <div class="sideBar">
     <div class="sideBar__avatar">
-        <img src="https://i.pravatar.cc/300" alt="avatar" />
+        <img th:src="${user != null && user.avatarUrl != null ? user.avatarUrl : 'https://i.pravatar.cc/300'}" alt="avatar" />
         <h2>John Doe</h2>
     </div>
     <ul class="sideBar__menu">

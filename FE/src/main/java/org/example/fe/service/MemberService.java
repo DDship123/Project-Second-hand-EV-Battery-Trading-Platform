@@ -7,8 +7,8 @@ import org.example.fe.model.MemberUpdateRequest;
 
 public interface MemberService {
     ApiResponse<MemberResponse> signIn(String userName, String password);
-    ApiResponse<MemberResponse> register(MemberRegisterRequest memberRegisterRequest);
+    ApiResponse<MemberResponse> register(MemberResponse registerMember);
     ApiResponse<MemberResponse> getMemberInfo(int memberId);
-    ApiResponse<MemberResponse> updateMember(MemberUpdateRequest memberUpdateRequest);
+    ApiResponse<MemberResponse> updateMember(MemberResponse updatedMember);
 
 }

@@ -62,7 +62,7 @@ public class PostService {
     }
 
     // Get user's own posts
-    public List<Post> getPostsByMember(Integer memberId) {
-        return postRepository.findByMemberId(memberId);
-    }
+//    public List<Post> getPostsByMember(Integer memberId) {
+//        return postRepository.findByMemberId(memberId);
+//    }
 }

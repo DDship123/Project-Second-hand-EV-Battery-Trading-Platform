@@ -40,9 +40,6 @@
         <!-- Navigation Menu -->
         <nav class="header__nav">
             <a th:href="@{/home}" class="nav__link active">HOMES</a>
-<!--            <a href="" class="nav__link">-->
-<!--                SẢN PHẨM <i class="fas fa-chevron-down"></i>-->
-<!--            </a>-->
             <div class="nav__link">
                 <span>SẢN PHẨM</span> <i class="fas fa-chevron-down"></i>
                 <ul class="nav__link__list">
@@ -95,7 +92,7 @@
             <!-- User Dropdown -->
             <div class="user__dropdown">
                 <p>WELCOME</p>
-                <p><span>NGƯỜI VÀN A</span> <i class="fas fa-chevron-down"></i></p>
+                <p><span th:text="${user.getUsername()}">NGƯỜI VÀN A</span> <i class="fas fa-chevron-down"></i></p>
                 <ul class="user__dropdown__content">
                     <li><a th:href="@{/account/personalInformation}">Hồ sơ của tôi</a></li>
                     <li><a href="">Tin đã đăng</a></li>
