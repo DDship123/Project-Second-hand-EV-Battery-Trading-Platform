@@ -42,7 +42,7 @@ public class PostServiceImpl implements PostService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get posts successful
-                response.ok((List<PostResponse>) apiResponse.getBody());
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get posts failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -72,16 +72,16 @@ public class PostServiceImpl implements PostService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/posts/latest",
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get latest posts successful
-                response.ok((List<PostResponse>) apiResponse.getBody());
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get latest posts failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -111,16 +111,16 @@ public class PostServiceImpl implements PostService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/posts/battery",
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get battery posts successful
-                response.ok((List<PostResponse>) apiResponse.getBody());
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get battery posts failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -151,16 +151,16 @@ public class PostServiceImpl implements PostService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/posts/vehicle",
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get vehicle posts successful
-                response.ok((List<PostResponse>) apiResponse.getBody());
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get vehicle posts failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -191,16 +191,16 @@ public class PostServiceImpl implements PostService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<PostResponse> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/posts/" + postID,
                     HttpMethod.GET,
                     requestEntity,
-                    PostResponse.class
+                    new ParameterizedTypeReference<ApiResponse<PostResponse>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get post detail successful
-                response.ok(apiResponse.getBody());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Get post detail failed
                 Map<String, String> errorMap = new HashMap<>();

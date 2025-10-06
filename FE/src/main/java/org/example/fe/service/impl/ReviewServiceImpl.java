@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get buyer reviews successful
-                response.ok((List<ReviewResponse>) apiResponse.getBody());
+                response.ok((List<ReviewResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get buyer reviews failed
                 Map<String, String> errorMap = new HashMap<>();

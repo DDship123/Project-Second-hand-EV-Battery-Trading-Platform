@@ -97,7 +97,7 @@ public class WishlistServiceImpl implements WishlistService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get all wishlist items successful
-                response.ok((List<FavoriteResponse>) apiResponse.getBody());
+                response.ok((List<FavoriteResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get wishlist items failed
                 Map<String, String> errorMap = new HashMap<>();

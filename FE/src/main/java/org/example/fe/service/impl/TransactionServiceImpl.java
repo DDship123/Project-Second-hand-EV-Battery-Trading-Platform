@@ -50,7 +50,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get buy transactions successful
-                response.ok((List<TransactionResponse>) apiResponse.getBody());
+                response.ok((List<TransactionResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get buy transactions failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -97,7 +97,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get sell transactions successful
-                response.ok((List<TransactionResponse>) apiResponse.getBody());
+                response.ok((List<TransactionResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get sell transactions failed
                 Map<String, String> errorMap = new HashMap<>();
