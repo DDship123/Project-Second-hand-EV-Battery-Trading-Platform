@@ -3,6 +3,8 @@ package org.example.be.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -17,7 +19,7 @@ public class Post {
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "seller_id")
     private Member seller;
 
     private String title;
@@ -31,6 +33,8 @@ public class Post {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+
 
     public Integer getPostsId() {
         return postsId;
@@ -95,4 +99,16 @@ public class Post {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostImage> postImages = new ArrayList<>();
+
+    public List<PostImage> getPostImages() {
+        return postImages;
+    }
+
+    public void setPostImages(List<PostImage> postImages) {
+        this.postImages = postImages;
+    }
+
 }
