@@ -24,9 +24,9 @@ public class CommentController {
         ApiResponse<Comment> response = new ApiResponse<>();
         try {
             Comment created = commentService.createComment(comment);
-            HashMap<String, Object> metadata = new HashMap<>();
+            Map<String, Object> metadata = new HashMap<>();
             metadata.put("timestamp", LocalDateTime.now());
-            response.ok(created, metadata);
+            response.ok(created, (HashMap<String, Object>) metadata);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
