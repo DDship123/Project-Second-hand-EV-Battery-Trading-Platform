@@ -4,6 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="" />
+=======
     <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="">
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
@@ -34,6 +37,7 @@
       <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/WishlistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/WishlistServiceImpl.java" afterDir="false" />
 >>>>>>> d0900c780a9e3d4514293f426135165559130c61
     </list>
+>>>>>>> 56d9f382ff0b00dc62eed8821eae63a04c92bf8a
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -172,7 +176,11 @@
       <workItem from="1759647454902" duration="204000" />
       <workItem from="1759649081661" duration="261000" />
       <workItem from="1759649351648" duration="12000" />
+<<<<<<< HEAD
+      <workItem from="1759711743065" duration="13000" />
+=======
 >>>>>>> d0900c780a9e3d4514293f426135165559130c61
+>>>>>>> 56d9f382ff0b00dc62eed8821eae63a04c92bf8a
     </task>
     <servers />
   </component>
