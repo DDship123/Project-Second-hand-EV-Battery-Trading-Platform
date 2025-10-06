@@ -18,7 +18,7 @@ import java.util.Map;
 public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private RestTemplate restTemplate;
-    private String apiBaseUrl = "http://localhost:8080";
+    private String apiBaseUrl = "http://localhost:8001";
     @Override
     public ApiResponse<List<TransactionResponse>> getAllBuyTransaction(int memberId) {
         ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();

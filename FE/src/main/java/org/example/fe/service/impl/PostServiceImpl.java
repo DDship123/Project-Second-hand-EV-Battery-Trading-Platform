@@ -18,7 +18,7 @@ import java.util.Map;
 public class PostServiceImpl implements PostService {
     @Autowired
     private RestTemplate restTemplate;
-    private String apiBaseUrl = "http://localhost:8080";
+    private String apiBaseUrl = "http://localhost:8001";
     @Override
     public ApiResponse<List<PostResponse>> getAllPost() {
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
