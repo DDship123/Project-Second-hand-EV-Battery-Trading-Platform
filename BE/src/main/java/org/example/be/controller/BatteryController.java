@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,61 +19,69 @@ public class BatteryController {
     private BatteryService batteryService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<?>> createBattery(@RequestBody Battery battery) {
+    public ResponseEntity<ApiResponse<Battery>> createBattery(@RequestBody Battery battery) {
         Battery saved = batteryService.createBattery(battery);
-        ApiResponse<Object> response = new ApiResponse<>();
-        response.ok(Map.of("battery", saved));
+        ApiResponse<Battery> response = new ApiResponse<>();
+        response.ok(saved);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> getBatteryById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Battery>> getBatteryById(@PathVariable Integer id) {
         Optional<Battery> b = batteryService.getBatteryById(id);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<Battery> response = new ApiResponse<>();
         if (b.isPresent()) {
-            response.ok(Map.of("battery", b.get()));
+            response.ok(b.get());
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "Battery not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Battery not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<?>> getAllBatteries() {
+    public ResponseEntity<ApiResponse<List<Battery>>> getAllBatteries() {
         List<Battery> list = batteryService.getAllBatteries();
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<List<Battery>> response = new ApiResponse<>();
         if (list.isEmpty()) {
-            response.error(Map.of("message", "No batteries found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No batteries found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         } else {
-            response.ok(Map.of("batteries", list));
+            response.ok(list);
             return ResponseEntity.ok(response);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> updateBattery(@PathVariable Integer id, @RequestBody Battery battery) {
+    public ResponseEntity<ApiResponse<Battery>> updateBattery(@PathVariable Integer id, @RequestBody Battery battery) {
         Battery updated = batteryService.updateBattery(id, battery);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<Battery> response = new ApiResponse<>();
         if (updated != null) {
-            response.ok(Map.of("battery", updated));
+            response.ok(updated);
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "Battery not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Battery not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> deleteBattery(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Void>> deleteBattery(@PathVariable Integer id) {
         boolean deleted = batteryService.deleteBattery(id);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<Void> response = new ApiResponse<>();
         if (deleted) {
-            response.ok(Map.of("message", "Battery deleted successfully"));
+            response.ok();
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "Battery not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Battery not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }

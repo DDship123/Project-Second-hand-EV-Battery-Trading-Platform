@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,61 +19,69 @@ public class PostImageController {
     private PostImageService postImageService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<?>> createPostImage(@RequestBody PostImage postImage) {
+    public ResponseEntity<ApiResponse<PostImage>> createPostImage(@RequestBody PostImage postImage) {
         PostImage saved = postImageService.createPostImage(postImage);
-        ApiResponse<Object> response = new ApiResponse<>();
-        response.ok(Map.of("postImage", saved));
+        ApiResponse<PostImage> response = new ApiResponse<>();
+        response.ok(saved);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> getPostImageById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<PostImage>> getPostImageById(@PathVariable Integer id) {
         Optional<PostImage> postImage = postImageService.getPostImageById(id);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<PostImage> response = new ApiResponse<>();
         if (postImage.isPresent()) {
-            response.ok(Map.of("postImage", postImage.get()));
+            response.ok(postImage.get());
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "PostImage not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "PostImage not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<?>> getAllPostImages() {
+    public ResponseEntity<ApiResponse<List<PostImage>>> getAllPostImages() {
         List<PostImage> postImages = postImageService.getAllPostImages();
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<List<PostImage>> response = new ApiResponse<>();
         if (postImages.isEmpty()) {
-            response.error(Map.of("message", "No PostImages found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No PostImages found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         } else {
-            response.ok(Map.of("postImages", postImages));
+            response.ok(postImages);
             return ResponseEntity.ok(response);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> updatePostImage(@PathVariable Integer id, @RequestBody PostImage postImage) {
+    public ResponseEntity<ApiResponse<PostImage>> updatePostImage(@PathVariable Integer id, @RequestBody PostImage postImage) {
         PostImage updated = postImageService.updatePostImage(id, postImage);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<PostImage> response = new ApiResponse<>();
         if (updated != null) {
-            response.ok(Map.of("postImage", updated));
+            response.ok(updated);
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "PostImage not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "PostImage not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> deletePostImage(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Void>> deletePostImage(@PathVariable Integer id) {
         boolean deleted = postImageService.deletePostImage(id);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<Void> response = new ApiResponse<>();
         if (deleted) {
-            response.ok(Map.of("message", "PostImage deleted successfully"));
+            response.ok();
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "PostImage not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "PostImage not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }

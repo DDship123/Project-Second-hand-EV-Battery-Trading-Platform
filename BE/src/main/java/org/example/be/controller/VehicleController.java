@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,61 +19,69 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<?>> createVehicle(@RequestBody Vehicle vehicle) {
+    public ResponseEntity<ApiResponse<Vehicle>> createVehicle(@RequestBody Vehicle vehicle) {
         Vehicle saved = vehicleService.createVehicle(vehicle);
-        ApiResponse<Object> response = new ApiResponse<>();
-        response.ok(Map.of("vehicle", saved));
+        ApiResponse<Vehicle> response = new ApiResponse<>();
+        response.ok(saved);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> getVehicleById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Vehicle>> getVehicleById(@PathVariable Integer id) {
         Optional<Vehicle> v = vehicleService.getVehicleById(id);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<Vehicle> response = new ApiResponse<>();
         if (v.isPresent()) {
-            response.ok(Map.of("vehicle", v.get()));
+            response.ok(v.get());
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "Vehicle not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Vehicle not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<?>> getAllVehicles() {
+    public ResponseEntity<ApiResponse<List<Vehicle>>> getAllVehicles() {
         List<Vehicle> list = vehicleService.getAllVehicles();
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<List<Vehicle>> response = new ApiResponse<>();
         if (list.isEmpty()) {
-            response.error(Map.of("message", "No vehicles found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No vehicles found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         } else {
-            response.ok(Map.of("vehicles", list));
+            response.ok(list);
             return ResponseEntity.ok(response);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> updateVehicle(@PathVariable Integer id, @RequestBody Vehicle vehicle) {
+    public ResponseEntity<ApiResponse<Vehicle>> updateVehicle(@PathVariable Integer id, @RequestBody Vehicle vehicle) {
         Vehicle updated = vehicleService.updateVehicle(id, vehicle);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<Vehicle> response = new ApiResponse<>();
         if (updated != null) {
-            response.ok(Map.of("vehicle", updated));
+            response.ok(updated);
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "Vehicle not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Vehicle not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> deleteVehicle(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Void>> deleteVehicle(@PathVariable Integer id) {
         boolean deleted = vehicleService.deleteVehicle(id);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<Void> response = new ApiResponse<>();
         if (deleted) {
-            response.ok(Map.of("message", "Vehicle deleted successfully"));
+            response.ok();
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "Vehicle not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Vehicle not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }

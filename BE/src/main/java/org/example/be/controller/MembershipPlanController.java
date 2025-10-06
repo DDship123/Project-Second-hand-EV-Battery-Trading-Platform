@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,61 +19,69 @@ public class MembershipPlanController {
     private MembershipPlanService membershipPlanService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<?>> createMembershipPlan(@RequestBody MembershipPlan plan) {
+    public ResponseEntity<ApiResponse<MembershipPlan>> createMembershipPlan(@RequestBody MembershipPlan plan) {
         MembershipPlan saved = membershipPlanService.createMembershipPlan(plan);
-        ApiResponse<Object> response = new ApiResponse<>();
-        response.ok(Map.of("membershipPlan", saved));
+        ApiResponse<MembershipPlan> response = new ApiResponse<>();
+        response.ok(saved);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> getMembershipPlanById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<MembershipPlan>> getMembershipPlanById(@PathVariable Integer id) {
         Optional<MembershipPlan> plan = membershipPlanService.getMembershipPlanById(id);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<MembershipPlan> response = new ApiResponse<>();
         if (plan.isPresent()) {
-            response.ok(Map.of("membershipPlan", plan.get()));
+            response.ok(plan.get());
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "MembershipPlan not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "MembershipPlan not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<?>> getAllMembershipPlans() {
+    public ResponseEntity<ApiResponse<List<MembershipPlan>>> getAllMembershipPlans() {
         List<MembershipPlan> list = membershipPlanService.getAllMembershipPlans();
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<List<MembershipPlan>> response = new ApiResponse<>();
         if (list.isEmpty()) {
-            response.error(Map.of("message", "No MembershipPlans found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No MembershipPlans found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         } else {
-            response.ok(Map.of("membershipPlans", list));
+            response.ok(list);
             return ResponseEntity.ok(response);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> updateMembershipPlan(@PathVariable Integer id, @RequestBody MembershipPlan plan) {
+    public ResponseEntity<ApiResponse<MembershipPlan>> updateMembershipPlan(@PathVariable Integer id, @RequestBody MembershipPlan plan) {
         MembershipPlan updated = membershipPlanService.updateMembershipPlan(id, plan);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<MembershipPlan> response = new ApiResponse<>();
         if (updated != null) {
-            response.ok(Map.of("membershipPlan", updated));
+            response.ok(updated);
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "MembershipPlan not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "MembershipPlan not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> deleteMembershipPlan(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Void>> deleteMembershipPlan(@PathVariable Integer id) {
         boolean deleted = membershipPlanService.deleteMembershipPlan(id);
-        ApiResponse<Object> response = new ApiResponse<>();
+        ApiResponse<Void> response = new ApiResponse<>();
         if (deleted) {
-            response.ok(Map.of("message", "MembershipPlan deleted successfully"));
+            response.ok();
             return ResponseEntity.ok(response);
         } else {
-            response.error(Map.of("message", "MembershipPlan not found"));
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "MembershipPlan not found");
+            response.error(error);
             return ResponseEntity.status(404).body(response);
         }
     }
