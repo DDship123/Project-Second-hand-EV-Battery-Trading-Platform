@@ -1,11 +1,13 @@
 package org.example.be.controller;
 
+import org.example.be.dto.ApiResponse;
 import org.example.be.entity.Commission;
 import org.example.be.service.CommissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,35 +19,70 @@ public class CommissionController {
     private CommissionService commissionService;
 
     @PostMapping
-    public ResponseEntity<Commission> createCommission(@RequestBody Commission commission) {
-        return ResponseEntity.ok(commissionService.createCommission(commission));
+    public ResponseEntity<ApiResponse<Commission>> createCommission(@RequestBody Commission commission) {
+        Commission saved = commissionService.createCommission(commission);
+        ApiResponse<Commission> response = new ApiResponse<>();
+        response.ok(saved);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Commission> getCommissionById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Commission>> getCommissionById(@PathVariable Integer id) {
         Optional<Commission> commission = commissionService.getCommissionById(id);
-        return commission.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        ApiResponse<Commission> response = new ApiResponse<>();
+        if (commission.isPresent()) {
+            response.ok(commission.get());
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Commission not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<Commission>> getAllCommissions() {
-        List<Commission> commissions = commissionService.getAllCommissions();
-        return ResponseEntity.ok(commissions);
+    public ResponseEntity<ApiResponse<List<Commission>>> getAllCommissions() {
+        List<Commission> list = commissionService.getAllCommissions();
+        ApiResponse<List<Commission>> response = new ApiResponse<>();
+        if (list.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No commissions found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(list);
+            return ResponseEntity.ok(response);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Commission> updateCommission(@PathVariable Integer id, @RequestBody Commission commission) {
-        Commission updatedCommission = commissionService.updateCommission(id, commission);
-        if (updatedCommission != null) {
-            return ResponseEntity.ok(updatedCommission);
+    public ResponseEntity<ApiResponse<Commission>> updateCommission(@PathVariable Integer id, @RequestBody Commission commission) {
+        Commission updated = commissionService.updateCommission(id, commission);
+        ApiResponse<Commission> response = new ApiResponse<>();
+        if (updated != null) {
+            response.ok(updated);
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Commission not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCommission(@PathVariable Integer id) {
-        commissionService.deleteCommission(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<Void>> deleteCommission(@PathVariable Integer id) {
+        boolean deleted = commissionService.deleteCommission(id);
+        ApiResponse<Void> response = new ApiResponse<>();
+        if (deleted) {
+            response.ok();
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Commission not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 }

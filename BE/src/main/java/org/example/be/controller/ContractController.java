@@ -1,11 +1,13 @@
 package org.example.be.controller;
 
+import org.example.be.dto.ApiResponse;
 import org.example.be.entity.Contract;
 import org.example.be.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,35 +19,70 @@ public class ContractController {
     private ContractService contractService;
 
     @PostMapping
-    public ResponseEntity<Contract> createContract(@RequestBody Contract contract) {
-        return ResponseEntity.ok(contractService.createContract(contract));
+    public ResponseEntity<ApiResponse<Contract>> createContract(@RequestBody Contract contract) {
+        Contract saved = contractService.createContract(contract);
+        ApiResponse<Contract> response = new ApiResponse<>();
+        response.ok(saved);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Contract> getContractById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Contract>> getContractById(@PathVariable Integer id) {
         Optional<Contract> contract = contractService.getContractById(id);
-        return contract.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        ApiResponse<Contract> response = new ApiResponse<>();
+        if (contract.isPresent()) {
+            response.ok(contract.get());
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Contract not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<Contract>> getAllContracts() {
-        List<Contract> contracts = contractService.getAllContracts();
-        return ResponseEntity.ok(contracts);
+    public ResponseEntity<ApiResponse<List<Contract>>> getAllContracts() {
+        List<Contract> list = contractService.getAllContracts();
+        ApiResponse<List<Contract>> response = new ApiResponse<>();
+        if (list.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No contracts found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(list);
+            return ResponseEntity.ok(response);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Contract> updateContract(@PathVariable Integer id, @RequestBody Contract contract) {
-        Contract updatedContract = contractService.updateContract(id, contract);
-        if (updatedContract != null) {
-            return ResponseEntity.ok(updatedContract);
+    public ResponseEntity<ApiResponse<Contract>> updateContract(@PathVariable Integer id, @RequestBody Contract contract) {
+        Contract updated = contractService.updateContract(id, contract);
+        ApiResponse<Contract> response = new ApiResponse<>();
+        if (updated != null) {
+            response.ok(updated);
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Contract not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContract(@PathVariable Integer id) {
-        contractService.deleteContract(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<Void>> deleteContract(@PathVariable Integer id) {
+        boolean deleted = contractService.deleteContract(id);
+        ApiResponse<Void> response = new ApiResponse<>();
+        if (deleted) {
+            response.ok();
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Contract not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 }
