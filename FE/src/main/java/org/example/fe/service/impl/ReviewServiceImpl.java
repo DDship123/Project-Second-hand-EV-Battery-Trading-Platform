@@ -1,7 +1,7 @@
 package org.example.fe.service.impl;
 
 import org.example.fe.entity.ReviewResponse;
-import org.example.fe.model.response.ApiResponse;
+import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

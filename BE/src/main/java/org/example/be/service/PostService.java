@@ -61,13 +61,6 @@ public class PostService {
         return postRepository.findAllForYouByStatus(memberId, status);
     }
 
-<<<<<<< HEAD
-    // Get user's own posts
-//    public List<Post> getPostsByMember(Integer memberId) {
-//        return postRepository.findByMemberId(memberId);
-//    }
-}
-=======
     // --- By Member ---
     public List<Post> getPostsByMember(Integer memberId) {
         return postRepository.findAllByMember(memberId);
@@ -78,4 +71,3 @@ public class PostService {
         return postRepository.findLatestPosts(PageRequest.of(0, limit));
     }
 }
->>>>>>> c8355d0576d3841bc5f1157f8ce69f7acc983372

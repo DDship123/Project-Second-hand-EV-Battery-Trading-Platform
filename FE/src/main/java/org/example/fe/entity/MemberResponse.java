@@ -9,6 +9,7 @@ public class MemberResponse {
     private String username;
     private String address;
     private String email;
+    private String city;
     private String phone;
     private String password;
     private String role;
@@ -16,6 +17,12 @@ public class MemberResponse {
     private String avatarUrl;
     private LocalDateTime createdAt;
 
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
     public int getMemberId() {
         return memberId;
     }

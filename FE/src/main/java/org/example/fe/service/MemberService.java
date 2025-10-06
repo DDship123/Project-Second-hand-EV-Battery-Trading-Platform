@@ -1,9 +1,7 @@
 package org.example.fe.service;
 
 import org.example.fe.entity.MemberResponse;
-import org.example.fe.model.response.ApiResponse;
-import org.example.fe.model.MemberRegisterRequest;
-import org.example.fe.model.MemberUpdateRequest;
+import org.example.fe.entity.ApiResponse;
 
 public interface MemberService {
     ApiResponse<MemberResponse> signIn(String userName, String password);

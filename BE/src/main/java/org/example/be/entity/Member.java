@@ -23,6 +23,9 @@ public class Member {
     @Column(name = "phone", length = 15, nullable = false, unique = true)
     private String phone;
 
+    @Column(name = "city", length = 30, nullable = false)
+    private String city;
+
     @Column(name = "password", length = 100, nullable = false)
     private String password;
 

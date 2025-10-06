@@ -2,9 +2,7 @@ package org.example.fe.service.impl;
 
 
 import org.example.fe.entity.MemberResponse;
-import org.example.fe.model.response.ApiResponse;
-import org.example.fe.model.MemberRegisterRequest;
-import org.example.fe.model.MemberUpdateRequest;
+import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;

@@ -1,4 +1,4 @@
-package org.example.fe.model.response;
+package org.example.fe.entity;
 
 import java.util.HashMap;
 import java.util.Map;
