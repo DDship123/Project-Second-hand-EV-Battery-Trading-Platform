@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/CommentRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/CommentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/ReviewService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/CommentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/ReviewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/FE/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/response/MemberRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/MemberRegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/response/MemberUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/MemberUpdateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/MemberService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/WishlistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/WishlistService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/MemberServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/PostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/TransactionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/WishlistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/WishlistServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,6 +103,7 @@
       <workItem from="1759647454902" duration="204000" />
       <workItem from="1759649081661" duration="261000" />
       <workItem from="1759649351648" duration="12000" />
+      <workItem from="1759711743065" duration="13000" />
     </task>
     <servers />
   </component>
