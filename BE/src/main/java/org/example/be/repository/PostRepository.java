@@ -48,4 +48,15 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "ORDER BY p.createdAt DESC")
     List<Post> findPostsForYouByStatus(@Param("memberId") Integer memberId,
                                        @Param("status") String status);
+    // Lấy 8 post mới nhất chỉ cho vehicle
+    @Query("SELECT p FROM Post p " +
+            "WHERE p.product.productType = 'vehicle' AND p.status = 'approved' " +
+            "ORDER BY p.createdAt DESC")
+    List<Post> findLatestVehiclePosts(Pageable pageable);
+
+    // Lấy 8 post mới nhất chỉ cho battery
+    @Query("SELECT p FROM Post p " +
+            "WHERE p.product.productType = 'battery' AND p.status = 'approved' " +
+            "ORDER BY p.createdAt DESC")
+    List<Post> findLatestBatteryPosts(Pageable pageable);
 }

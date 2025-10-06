@@ -73,6 +73,15 @@ public class PostService {
 
     // --- Latest Posts ---
     public List<Post> getLatestPosts(int limit) {
-        return postRepository.findLatestPosts(PageRequest.of(0, limit));
+        return postRepository.findLatestPosts(PageRequest.of(0, 8));
+    }
+    // Lấy 8 post vehicle mới nhất
+    public List<Post> getLatestVehiclePosts(int limit) {
+        return postRepository.findLatestVehiclePosts(PageRequest.of(0, 8));
+    }
+
+    // Lấy 8 post battery mới nhất
+    public List<Post> getLatestBatteryPosts(int limit) {
+        return postRepository.findLatestBatteryPosts(PageRequest.of(0, 8));
     }
 }

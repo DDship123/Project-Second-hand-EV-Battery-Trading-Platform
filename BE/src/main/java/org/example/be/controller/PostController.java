@@ -197,4 +197,41 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         }
     }
+    // --- GET LATEST VEHICLE POSTS ---
+    @GetMapping("/latest/vehicle")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestVehiclePosts() {
+        List<PostResponse> posts = postService.getLatestVehiclePosts(8).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No vehicle posts found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
+    }
+
+    // --- GET LATEST BATTERY POSTS ---
+    @GetMapping("/latest/battery")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestBatteryPosts() {
+        List<PostResponse> posts = postService.getLatestBatteryPosts(8).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No battery posts found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
+    }
 }
