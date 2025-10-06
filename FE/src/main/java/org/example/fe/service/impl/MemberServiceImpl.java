@@ -117,16 +117,16 @@ public class MemberServiceImpl implements MemberService {
             HttpEntity<MemberResponse> requestEntity = new HttpEntity<>(registerMember, headers);
 
             // Make API call to backend
-            ResponseEntity<MemberResponse> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/auth/register",
                     HttpMethod.POST,
                     requestEntity,
-                    MemberResponse.class
+                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Registration successful
-                response.ok(apiResponse.getBody());
+                return apiResponse.getBody();
             } else {
                 // Registration failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -165,21 +165,16 @@ public class MemberServiceImpl implements MemberService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<MemberResponse> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/members/" + memberId,
                     HttpMethod.GET,
                     requestEntity,
-                    MemberResponse.class
+                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get member info successful
-                response.ok(apiResponse.getBody());
-            } else {
-                // Get member info failed
-                Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Member not found");
-                response.error(errorMap);
+                return apiResponse.getBody();
             }
         } catch (Exception e) {
             // Handle exceptions

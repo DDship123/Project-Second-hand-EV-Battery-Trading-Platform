@@ -1,9 +1,7 @@
 package org.example.fe.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
+
 public class MemberResponse {
     private int memberId;
     private String username;
@@ -17,12 +15,23 @@ public class MemberResponse {
     private String avatarUrl;
     private LocalDateTime createdAt;
 
-    public String getCity() {
-        return city;
+    public MemberResponse() {
     }
-    public void setCity(String city) {
+
+    public MemberResponse(int memberId, String username, String address, String email, String city, String phone, String password, String role, String status, String avatarUrl, LocalDateTime createdAt) {
+        this.memberId = memberId;
+        this.username = username;
+        this.address = address;
+        this.email = email;
         this.city = city;
+        this.phone = phone;
+        this.password = password;
+        this.role = role;
+        this.status = status;
+        this.avatarUrl = avatarUrl;
+        this.createdAt = createdAt;
     }
+
     public int getMemberId() {
         return memberId;
     }
@@ -53,6 +62,14 @@ public class MemberResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getPhone() {
