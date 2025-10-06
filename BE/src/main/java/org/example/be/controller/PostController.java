@@ -1,6 +1,8 @@
 package org.example.be.controller;
 
+import org.example.be.dto.PostResponse;
 import org.example.be.entity.Post;
+import org.example.be.entity.PostImage;
 import org.example.be.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -16,29 +19,56 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    // helper chuyển Post -> PostResponse
+    private PostResponse mapToResponse(Post post) {
+        List<String> images = post.getPostImages() != null
+                ? post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList())
+                : List.of();
+
+        return new PostResponse(
+                post.getPostsId(),
+                post.getTitle(),
+                post.getDescription(),
+                post.getStatus(),
+                post.getPrice(),
+                post.getCreatedAt(),
+                post.getSeller().getMemberId(),
+                post.getSeller().getUsername(),
+                post.getSeller().getAvatarUrl(),
+                post.getProduct().getProductsId(),
+                post.getProduct().getName(),
+                post.getProduct().getProductType(),
+                post.getProduct().getStatus(),
+                images
+        );
+    }
+
     @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        return ResponseEntity.ok(postService.createPost(post));
+    public ResponseEntity<PostResponse> createPost(@RequestBody Post post) {
+        Post saved = postService.createPost(post);
+        return ResponseEntity.ok(mapToResponse(saved));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable Integer id) {
+    public ResponseEntity<PostResponse> getPostById(@PathVariable Integer id) {
         Optional<Post> post = postService.getPostById(id);
-        return post.map(ResponseEntity::ok)
+        return post.map(value -> ResponseEntity.ok(mapToResponse(value)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts() {
-        List<Post> posts = postService.getAllPosts();
+    public ResponseEntity<List<PostResponse>> getAllPosts() {
+        List<PostResponse> posts = postService.getAllPosts().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(posts);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Integer id, @RequestBody Post post) {
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Integer id, @RequestBody Post post) {
         Post updatedPost = postService.updatePost(id, post);
         if (updatedPost != null) {
-            return ResponseEntity.ok(updatedPost);
+            return ResponseEntity.ok(mapToResponse(updatedPost));
         }
         return ResponseEntity.notFound().build();
     }
@@ -49,23 +79,50 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 
+    // --- For You ---
     @GetMapping("/for-you/{memberId}")
-    public ResponseEntity<List<Post>> getPostsForYou(@PathVariable Integer memberId) {
-        List<Post> posts = postService.getPostsForYou(memberId);
+    public ResponseEntity<List<PostResponse>> getPostsForYou(@PathVariable Integer memberId) {
+        List<PostResponse> posts = postService.getPostsForYou(memberId).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/for-you/{memberId}/status/{status}")
-    public ResponseEntity<List<Post>> getPostsForYouByStatus(
+    public ResponseEntity<List<PostResponse>> getPostsForYouByStatus(
             @PathVariable Integer memberId,
             @PathVariable String status) {
-        List<Post> posts = postService.getPostsForYouByStatus(memberId, status);
+        List<PostResponse> posts = postService.getPostsForYouByStatus(memberId, status).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(posts);
     }
 
+<<<<<<< HEAD
 //    @GetMapping("/member/{memberId}")
 //    public ResponseEntity<List<Post>> getPostsByMember(@PathVariable Integer memberId) {
 //        List<Post> posts = postService.getPostsByMember(memberId);
 //        return ResponseEntity.ok(posts);
 //    }
 }
+=======
+    // --- By Member ---
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<List<PostResponse>> getPostsByMember(@PathVariable Integer memberId) {
+        List<PostResponse> posts = postService.getPostsByMember(memberId).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(posts);
+    }
+
+    // --- Latest ---
+    @GetMapping("/latest")
+    public ResponseEntity<List<PostResponse>> getLatestPosts(
+            @RequestParam(defaultValue = "5") int limit) {
+        List<PostResponse> posts = postService.getLatestPosts(limit).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(posts);
+    }
+}
+>>>>>>> c8355d0576d3841bc5f1157f8ce69f7acc983372
