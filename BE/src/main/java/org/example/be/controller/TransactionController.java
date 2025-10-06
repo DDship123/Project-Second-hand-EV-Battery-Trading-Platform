@@ -1,5 +1,6 @@
 package org.example.be.controller;
 
+import org.example.be.dto.ApiResponse;
 import org.example.be.dto.TransactionResponse;
 import org.example.be.entity.Transaction;
 import org.example.be.service.TransactionService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,73 +20,119 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    // helper chuyển Transaction -> TransactionResponse
-    private TransactionResponse mapToResponse(Transaction transaction) {
+    private TransactionResponse mapToResponse(Transaction t) {
         return new TransactionResponse(
-                transaction.getTransactionsId(),
-                transaction.getBuyer().getMemberId(),
-                transaction.getBuyer().getUsername(),
-                transaction.getPost().getSeller().getMemberId(),
-                transaction.getPost().getSeller().getUsername(),
-                transaction.getPost().getPostsId(),
-                transaction.getPost().getTitle(),
-                transaction.getStatus(),
-                transaction.getCreatedAt()
+                t.getTransactionsId(),
+                t.getBuyer().getMemberId(),
+                t.getBuyer().getUsername(),
+                t.getPost().getSeller().getMemberId(),
+                t.getPost().getSeller().getUsername(),
+                t.getPost().getPostsId(),
+                t.getPost().getTitle(),
+                t.getStatus(),
+                t.getCreatedAt()
         );
     }
 
     @PostMapping
-    public ResponseEntity<TransactionResponse> createTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<ApiResponse<TransactionResponse>> createTransaction(@RequestBody Transaction transaction) {
         Transaction saved = transactionService.createTransaction(transaction);
-        return ResponseEntity.ok(mapToResponse(saved));
+        ApiResponse<TransactionResponse> response = new ApiResponse<>();
+        response.ok(mapToResponse(saved));
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TransactionResponse> getTransactionById(@PathVariable Integer id) {
-        Optional<Transaction> transaction = transactionService.getTransactionById(id);
-        return transaction.map(value -> ResponseEntity.ok(mapToResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<TransactionResponse>> getTransactionById(@PathVariable Integer id) {
+        Optional<Transaction> t = transactionService.getTransactionById(id);
+        ApiResponse<TransactionResponse> response = new ApiResponse<>();
+        if (t.isPresent()) {
+            response.ok(mapToResponse(t.get()));
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Transaction not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<TransactionResponse>> getAllTransactions() {
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactions() {
         List<TransactionResponse> transactions = transactionService.getAllTransactions().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(transactions);
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (transactions.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No transactions found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(transactions);
+            return ResponseEntity.ok(response);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TransactionResponse> updateTransaction(@PathVariable Integer id,
-                                                                 @RequestBody Transaction transaction) {
+    public ResponseEntity<ApiResponse<TransactionResponse>> updateTransaction(@PathVariable Integer id, @RequestBody Transaction transaction) {
         Transaction updated = transactionService.updateTransaction(id, transaction);
+        ApiResponse<TransactionResponse> response = new ApiResponse<>();
         if (updated != null) {
-            return ResponseEntity.ok(mapToResponse(updated));
+            response.ok(mapToResponse(updated));
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Transaction not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTransaction(@PathVariable Integer id) {
-        transactionService.deleteTransaction(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<Void>> deleteTransaction(@PathVariable Integer id) {
+        boolean deleted = transactionService.deleteTransaction(id);
+        ApiResponse<Void> response = new ApiResponse<>();
+        if (deleted) {
+            response.ok();
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Transaction not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 
-    // --- Buy transactions ---
     @GetMapping("/buy/completed/{buyerId}")
-    public ResponseEntity<List<TransactionResponse>> getAllBuyTransactions(@PathVariable Integer buyerId) {
-        List<TransactionResponse> transactions = transactionService.getAllBuyTransactions(buyerId).stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(transactions);
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllBuyTransactions(@PathVariable Integer buyerId) {
+        List<TransactionResponse> list = transactionService.getAllBuyTransactions(buyerId).stream()
+                .map(this::mapToResponse).collect(Collectors.toList());
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (list.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No buy transactions found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(list);
+            return ResponseEntity.ok(response);
+        }
     }
 
-    // --- Sell transactions ---
     @GetMapping("/sell/completed/{sellerId}")
-    public ResponseEntity<List<TransactionResponse>> getAllSellTransactions(@PathVariable Integer sellerId) {
-        List<TransactionResponse> transactions = transactionService.getAllSellTransactions(sellerId).stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(transactions);
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllSellTransactions(@PathVariable Integer sellerId) {
+        List<TransactionResponse> list = transactionService.getAllSellTransactions(sellerId).stream()
+                .map(this::mapToResponse).collect(Collectors.toList());
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (list.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No sell transactions found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(list);
+            return ResponseEntity.ok(response);
+        }
     }
 }
