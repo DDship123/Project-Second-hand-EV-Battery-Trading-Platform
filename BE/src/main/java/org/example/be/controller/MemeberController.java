@@ -85,12 +85,6 @@ public class MemeberController {
     // ------------------- UPDATE -------------------
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Member>> updateMember(@PathVariable Integer id, @RequestBody Member member) {
-<<<<<<< HEAD
-        Member updatedMember = memberService.updateMember(id, member);
-        ApiResponse<Member> response = new ApiResponse<>();
-        response.ok(updatedMember);
-        return ResponseEntity.ok(response);
-=======
         ApiResponse<Member> response = new ApiResponse<>();
         try {
             Member updated = memberService.updateMember(id, member);
@@ -107,7 +101,6 @@ public class MemeberController {
             response.error(error);
             return ResponseEntity.badRequest().body(response);
         }
->>>>>>> bd93a44bc1c61ab434c63e51828eba5e277be5a3
     }
 
     @DeleteMapping("/{id}")

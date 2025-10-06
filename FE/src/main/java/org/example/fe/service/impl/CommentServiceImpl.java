@@ -1,7 +1,6 @@
 package org.example.fe.service.impl;
 
 import org.example.fe.entity.CommentResponse;
-import org.example.fe.model.CommentRequest;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public ApiResponse<CommentResponse> createComment(CommentRequest com) {
+    public ApiResponse<CommentResponse> createComment(CommentResponse com) {
         ApiResponse<CommentResponse> response = new ApiResponse<>();
 
         try {
@@ -73,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
             headers.set("Content-Type", "application/json");
 
             // Create request entity
-            HttpEntity<CommentRequest> requestEntity = new HttpEntity<>(com, headers);
+            HttpEntity<CommentResponse> requestEntity = new HttpEntity<>(com, headers);
 
             // Make API call to backend
             ResponseEntity<CommentResponse> apiResponse = restTemplate.exchange(
