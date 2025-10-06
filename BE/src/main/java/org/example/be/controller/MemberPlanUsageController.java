@@ -1,11 +1,13 @@
 package org.example.be.controller;
 
+import org.example.be.dto.ApiResponse;
 import org.example.be.entity.MemberPlanUsage;
 import org.example.be.service.MemberPlanUsageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,35 +19,70 @@ public class MemberPlanUsageController {
     private MemberPlanUsageService memberPlanUsageService;
 
     @PostMapping
-    public ResponseEntity<MemberPlanUsage> createMemberPlanUsage(@RequestBody MemberPlanUsage memberPlanUsage) {
-        return ResponseEntity.ok(memberPlanUsageService.createMemberPlanUsage(memberPlanUsage));
+    public ResponseEntity<ApiResponse<MemberPlanUsage>> createMemberPlanUsage(@RequestBody MemberPlanUsage usage) {
+        MemberPlanUsage saved = memberPlanUsageService.createMemberPlanUsage(usage);
+        ApiResponse<MemberPlanUsage> response = new ApiResponse<>();
+        response.ok(saved);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberPlanUsage> getMemberPlanUsageById(@PathVariable Integer id) {
-        Optional<MemberPlanUsage> memberPlanUsage = memberPlanUsageService.getMemberPlanUsageById(id);
-        return memberPlanUsage.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<MemberPlanUsage>> getMemberPlanUsageById(@PathVariable Integer id) {
+        Optional<MemberPlanUsage> usage = memberPlanUsageService.getMemberPlanUsageById(id);
+        ApiResponse<MemberPlanUsage> response = new ApiResponse<>();
+        if (usage.isPresent()) {
+            response.ok(usage.get());
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "MemberPlanUsage not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberPlanUsage>> getAllMemberPlanUsages() {
-        List<MemberPlanUsage> memberPlanUsages = memberPlanUsageService.getAllMemberPlanUsages();
-        return ResponseEntity.ok(memberPlanUsages);
+    public ResponseEntity<ApiResponse<List<MemberPlanUsage>>> getAllMemberPlanUsages() {
+        List<MemberPlanUsage> list = memberPlanUsageService.getAllMemberPlanUsages();
+        ApiResponse<List<MemberPlanUsage>> response = new ApiResponse<>();
+        if (list.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No MemberPlanUsages found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(list);
+            return ResponseEntity.ok(response);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MemberPlanUsage> updateMemberPlanUsage(@PathVariable Integer id, @RequestBody MemberPlanUsage memberPlanUsage) {
-        MemberPlanUsage updatedMemberPlanUsage = memberPlanUsageService.updateMemberPlanUsage(id, memberPlanUsage);
-        if (updatedMemberPlanUsage != null) {
-            return ResponseEntity.ok(updatedMemberPlanUsage);
+    public ResponseEntity<ApiResponse<MemberPlanUsage>> updateMemberPlanUsage(@PathVariable Integer id, @RequestBody MemberPlanUsage usage) {
+        MemberPlanUsage updated = memberPlanUsageService.updateMemberPlanUsage(id, usage);
+        ApiResponse<MemberPlanUsage> response = new ApiResponse<>();
+        if (updated != null) {
+            response.ok(updated);
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "MemberPlanUsage not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMemberPlanUsage(@PathVariable Integer id) {
-        memberPlanUsageService.deleteMemberPlanUsage(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<Void>> deleteMemberPlanUsage(@PathVariable Integer id) {
+        boolean deleted = memberPlanUsageService.deleteMemberPlanUsage(id);
+        ApiResponse<Void> response = new ApiResponse<>();
+        if (deleted) {
+            response.ok();
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "MemberPlanUsage not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 }
