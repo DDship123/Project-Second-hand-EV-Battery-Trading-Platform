@@ -17,6 +17,7 @@ public class PostImage {
     @Column(name = "image_url")
     private String imageUrl;
 
+
     public Integer getPostImagesId() {
         return postImagesId;
     }
@@ -40,4 +41,5 @@ public class PostImage {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
 }

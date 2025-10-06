@@ -83,6 +83,11 @@ body {
     font-size: 16px;
     outline: none;
 }
+.profile__container__info__inputGroup input.active{
+    border: 1px solid grey;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
 .profile__container__info__inputGroup--edit {
     padding: 8px 20px;
     border-color: black;
@@ -109,14 +114,17 @@ body {
     margin-right: 8px;
 }
 .profile__edit {
+    color: black;
+    padding: 10px 20px;
     border: none;
-    background-color: transparent;
-    color: #5999f1;
+    border-radius: 10px;
+    cursor: pointer;
     font-size: 18px;
     font-weight: 500;
     position: relative;
     left: 85%;
     top: 7%;
+    z-index: 1000;
 }
 .profile__container__submit,
 .profile__container__cancel {
@@ -133,6 +141,10 @@ body {
     bottom: 15%;
     display: none;
 }
+.profile__container__submit.show,
+.profile__container__cancel.show {
+    display: block;
+}
 .profile__container__submit {
     left: 5%;
 }
@@ -141,3 +153,35 @@ body {
     background-color: #ddd;
     color: black;
 }
+
+/* Style for select dropdown */
+.profile__select {
+    padding: 8px 20px;
+    padding-left: 0;
+    color: black;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+}
+
+.profile__select:disabled {
+    background-color: transparent;
+}
+
+/* Style select when enabled (edit mode) */
+select:not([disabled]) {
+    border: 2px solid grey !important;
+    /*background-color: #f8f9fa !important;*/
+    border-radius: 5px;
+    padding: 8px 12px !important;
+}
+
+/*select:not([disabled]):focus {*/
+/*    outline: none;*/
+/*    border-color: #14a0a6 !important;*/
+/*    box-shadow: 0 0 8px rgba(23, 186, 193, 0.3) !important;*/
+/*}*/
+

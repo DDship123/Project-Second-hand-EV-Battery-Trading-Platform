@@ -1,12 +1,9 @@
-package org.example.be.dto;
+package org.example.fe.entity;
 
-import lombok.*;
-
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ApiResponse <T>{
+public class ApiResponse<T> {
     private String status;
     private T payload;
     private Map<String, String> error;

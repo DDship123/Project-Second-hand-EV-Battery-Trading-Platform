@@ -16,7 +16,7 @@ public class Transaction {
     @JoinColumn(name = "buyer_id")
     private Member buyer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
 

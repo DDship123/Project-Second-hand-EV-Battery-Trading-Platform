@@ -1,6 +1,8 @@
 package org.example.be.service;
 
 import org.example.be.entity.Favorite;
+import org.example.be.entity.Member;
+import org.example.be.entity.Post;
 import org.example.be.repository.FavoriteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +40,9 @@ public class FavoriteService {
 
     public void deleteFavorite(Integer id) {
         favoriteRepository.deleteById(id);
+    }
+
+    public List<Post> getLatestFavoritesPosts(Member member){
+        return favoriteRepository.findLatestPostsByMember(member);
     }
 }

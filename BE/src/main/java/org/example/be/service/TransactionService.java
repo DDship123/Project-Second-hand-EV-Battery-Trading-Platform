@@ -42,4 +42,11 @@ public class TransactionService {
     public void deleteTransaction(Integer id) {
         transactionRepository.deleteById(id);
     }
+
+    public List<Transaction> getAllBuyTransactions(Integer buyerId) {
+        return transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "completed");
+    }
+    public List<Transaction> getAllSellTransactions(Integer sellerId) {
+        return transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "completed");
+    }
 }

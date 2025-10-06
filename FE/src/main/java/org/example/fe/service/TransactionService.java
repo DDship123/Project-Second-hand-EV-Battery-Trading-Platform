@@ -1,7 +1,7 @@
 package org.example.fe.service;
 
 import org.example.fe.entity.TransactionResponse;
-import org.example.fe.model.response.ApiResponse;
+import org.example.fe.entity.ApiResponse;
 
 import java.util.List;
 

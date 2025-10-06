@@ -2,11 +2,10 @@ package org.example.fe.service.impl;
 
 
 import org.example.fe.entity.MemberResponse;
-import org.example.fe.model.response.ApiResponse;
-import org.example.fe.model.MemberRegisterRequest;
-import org.example.fe.model.MemberUpdateRequest;
+import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private RestTemplate restTemplate;
-    private String apiBaseUrl = "http://localhost:8080";
+    private String apiBaseUrl = "http://localhost:8001";
 
     @Override
     public ApiResponse<MemberResponse> signIn(String userName, String password) {
@@ -54,16 +53,16 @@ public class MemberServiceImpl implements MemberService {
             HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
 
             // Make API call to backend
-            ResponseEntity<MemberResponse> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/auth/signin",
+            ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/auth/login",
                     HttpMethod.POST,
                     requestEntity,
-                    MemberResponse.class
+                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Authentication successful
-                response.ok(apiResponse.getBody());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Authentication failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -82,7 +81,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ApiResponse<MemberResponse> register(MemberRegisterRequest memberRegisterRequest) {
+    public ApiResponse<MemberResponse> register(MemberResponse registerMember) {
 
         ApiResponse<MemberResponse> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
@@ -115,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
             headers.set("Content-Type", "application/json");
 
             // Create request entity
-            HttpEntity<MemberRegisterRequest> requestEntity = new HttpEntity<>(memberRegisterRequest, headers);
+            HttpEntity<MemberResponse> requestEntity = new HttpEntity<>(registerMember, headers);
 
             // Make API call to backend
             ResponseEntity<MemberResponse> apiResponse = restTemplate.exchange(
@@ -192,7 +191,7 @@ public class MemberServiceImpl implements MemberService {
         return response;
     }
     @Override
-    public ApiResponse<MemberResponse> updateMember(MemberUpdateRequest memberUpdateRequest) {
+    public ApiResponse<MemberResponse> updateMember(MemberResponse updatedMember) {
         ApiResponse<MemberResponse> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
 
@@ -215,19 +214,19 @@ public class MemberServiceImpl implements MemberService {
             headers.set("Content-Type", "application/json");
 
             // Create request entity
-            HttpEntity<MemberUpdateRequest> requestEntity = new HttpEntity<>(memberUpdateRequest, headers);
+            HttpEntity<MemberResponse> requestEntity = new HttpEntity<>(updatedMember, headers);
 
             // Make API call to backend
-            ResponseEntity<MemberResponse> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/members",
+            ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/members/"+ updatedMember.getMemberId(),
                     HttpMethod.PUT,
                     requestEntity,
-                    MemberResponse.class
+                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Update successful
-                response.ok(apiResponse.getBody());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Update failed
                 Map<String, String> errorMap = new HashMap<>();
