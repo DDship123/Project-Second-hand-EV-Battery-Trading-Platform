@@ -1,5 +1,6 @@
 package org.example.be.controller;
 
+import org.example.be.dto.ApiResponse;
 import org.example.be.dto.PostResponse;
 import org.example.be.entity.Post;
 import org.example.be.entity.PostImage;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,7 +21,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    // helper chuyển Post -> PostResponse
+    // --- Helper chuyển Post -> PostResponse ---
     private PostResponse mapToResponse(Post post) {
         List<String> images = post.getPostImages() != null
                 ? post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList())
@@ -43,77 +45,193 @@ public class PostController {
         );
     }
 
+    // --- CREATE POST ---
     @PostMapping
-    public ResponseEntity<PostResponse> createPost(@RequestBody Post post) {
+    public ResponseEntity<ApiResponse<PostResponse>> createPost(@RequestBody Post post) {
         Post saved = postService.createPost(post);
-        return ResponseEntity.ok(mapToResponse(saved));
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+        response.ok(mapToResponse(saved));
+        return ResponseEntity.ok(response);
     }
 
+    // --- GET POST BY ID ---
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getPostById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<PostResponse>> getPostById(@PathVariable Integer id) {
         Optional<Post> post = postService.getPostById(id);
-        return post.map(value -> ResponseEntity.ok(mapToResponse(value)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+        if (post.isPresent()) {
+            response.ok(mapToResponse(post.get()));
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Post not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
     }
 
+    // --- GET ALL POSTS ---
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getAllPosts() {
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getAllPosts() {
         List<PostResponse> posts = postService.getAllPosts().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(posts);
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Integer id, @RequestBody Post post) {
-        Post updatedPost = postService.updatePost(id, post);
-        if (updatedPost != null) {
-            return ResponseEntity.ok(mapToResponse(updatedPost));
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No posts found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
         }
-        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
-        postService.deletePost(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    // --- For You ---
+    // --- GET POSTS FOR YOU ---
     @GetMapping("/for-you/{memberId}")
-    public ResponseEntity<List<PostResponse>> getPostsForYou(@PathVariable Integer memberId) {
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getPostsForYou(@PathVariable Integer memberId) {
         List<PostResponse> posts = postService.getPostsForYou(memberId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(posts);
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No posts found for this member");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
     }
 
     @GetMapping("/for-you/{memberId}/status/{status}")
-    public ResponseEntity<List<PostResponse>> getPostsForYouByStatus(
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getPostsForYouByStatus(
             @PathVariable Integer memberId,
             @PathVariable String status) {
         List<PostResponse> posts = postService.getPostsForYouByStatus(memberId, status).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(posts);
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No posts found for this member with status: " + status);
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
     }
 
-    // --- By Member ---
+    // --- GET POSTS BY MEMBER ---
     @GetMapping("/member/{memberId}")
-    public ResponseEntity<List<PostResponse>> getPostsByMember(@PathVariable Integer memberId) {
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getPostsByMember(@PathVariable Integer memberId) {
         List<PostResponse> posts = postService.getPostsByMember(memberId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(posts);
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No posts found for this member");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
     }
 
-    // --- Latest ---
+    // --- GET LATEST POSTS ---
     @GetMapping("/latest")
-    public ResponseEntity<List<PostResponse>> getLatestPosts(
-            @RequestParam(defaultValue = "5") int limit) {
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestPosts(@RequestParam(defaultValue = "5") int limit) {
         List<PostResponse> posts = postService.getLatestPosts(limit).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(posts);
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No latest posts found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
+    }
+
+    // --- UPDATE POST ---
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable Integer id, @RequestBody Post post) {
+        Post updatedPost = postService.updatePost(id, post);
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+        if (updatedPost != null) {
+            response.ok(mapToResponse(updatedPost));
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Post not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
+    }
+
+    // --- DELETE POST ---
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deletePost(@PathVariable Integer id) {
+        boolean deleted = postService.deletePost(id);
+        ApiResponse<Void> response = new ApiResponse<>();
+        if (deleted) {
+            response.ok(); // thành công không cần message
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Post not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
+    }
+    // --- GET LATEST VEHICLE POSTS ---
+    @GetMapping("/latest/vehicle")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestVehiclePosts() {
+        List<PostResponse> posts = postService.getLatestVehiclePosts(8).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No vehicle posts found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
+    }
+
+    // --- GET LATEST BATTERY POSTS ---
+    @GetMapping("/latest/battery")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestBatteryPosts() {
+        List<PostResponse> posts = postService.getLatestBatteryPosts(8).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No battery posts found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
     }
 }
