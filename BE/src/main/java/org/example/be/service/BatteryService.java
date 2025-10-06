@@ -38,7 +38,11 @@ public class BatteryService {
         return null;
     }
 
-    public void deleteBattery(Integer id) {
-        batteryRepository.deleteById(id);
+    public boolean deleteBattery(Integer id) {
+        if (batteryRepository.existsById(id)) {
+            batteryRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

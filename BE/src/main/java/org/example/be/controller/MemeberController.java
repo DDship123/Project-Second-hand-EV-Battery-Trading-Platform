@@ -31,12 +31,15 @@ public class MemeberController {
         return memberService.getMemberById(id);
     }
 
-    @PutMapping("/{id}")
+    @ PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Member>> updateMember(@PathVariable Integer id, @RequestBody Member member) {
         Member updatedMember = memberService.updateMember(id, member);
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.ok(updatedMember);
         if (updatedMember != null) {
-            return ResponseEntity.ok(ApiResponse.ok(updatedMember));
+            return ResponseEntity.ok(apiResponse);
         } else {
+
             return ResponseEntity.status(404).body(ApiResponse.failure(404, "Member not found"));
         }
     }

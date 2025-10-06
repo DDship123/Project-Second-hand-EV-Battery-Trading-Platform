@@ -48,9 +48,14 @@ public class PostService {
     }
 
     // Delete
-    public void deletePost(Integer id) {
-        postRepository.deleteById(id);
+    public boolean deletePost(Integer id) {
+        if (postRepository.existsById(id)) {
+            postRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
+
 
     // --- For You ---
     public List<Post> getPostsForYou(Integer memberId) {

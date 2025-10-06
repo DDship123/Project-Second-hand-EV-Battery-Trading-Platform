@@ -39,9 +39,16 @@ public class TransactionService {
         return null;
     }
 
-    public void deleteTransaction(Integer id) {
-        transactionRepository.deleteById(id);
+    public boolean deleteTransaction(Integer id) {
+        Optional<Transaction> existing = transactionRepository.findById(id);
+        if (existing.isPresent()) {
+            transactionRepository.delete(existing.get());
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
     public List<Transaction> getAllBuyTransactions(Integer buyerId) {
         return transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "completed");

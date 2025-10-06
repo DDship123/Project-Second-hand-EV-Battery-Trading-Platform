@@ -40,7 +40,11 @@ public class ContractService {
         return null;
     }
 
-    public void deleteContract(Integer id) {
-        contractRepository.deleteById(id);
+    public boolean deleteContract(Integer id) {
+        if (contractRepository.existsById(id)) {
+            contractRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
