@@ -34,11 +34,9 @@ public class MemeberController {
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Member>> updateMember(@PathVariable Integer id, @RequestBody Member member) {
         Member updatedMember = memberService.updateMember(id, member);
-        if (updatedMember != null) {
-            return ResponseEntity.ok(ApiResponse.ok(updatedMember));
-        } else {
-            return ResponseEntity.status(404).body(ApiResponse.failure(404, "Member not found"));
-        }
+        ApiResponse<Member> response = new ApiResponse<>();
+        response.ok(updatedMember);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
