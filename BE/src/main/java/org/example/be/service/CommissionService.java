@@ -40,7 +40,13 @@ public class CommissionService {
         return null;
     }
 
-    public void deleteCommission(Integer id) {
-        commissionRepository.deleteById(id);
+    public boolean deleteCommission(Integer id) {
+        if (commissionRepository.existsById(id)) {
+            commissionRepository.deleteById(id);
+            return true; // xóa thành công
+        } else {
+            return false; // không tìm thấy, xóa thất bại
+        }
     }
+
 }
