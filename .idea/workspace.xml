@@ -4,7 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="" />
+=======
+    <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="">
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/entity/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/repository/PostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/service/PostService.java" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/CommentRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/CommentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/ReviewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/CommentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/ReviewServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/FE/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/response/MemberRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/MemberRegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/response/MemberUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/MemberUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/WishlistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/WishlistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/MemberServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/PostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/TransactionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/WishlistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/WishlistServiceImpl.java" afterDir="false" />
+>>>>>>> d0900c780a9e3d4514293f426135165559130c61
+    </list>
+>>>>>>> 56d9f382ff0b00dc62eed8821eae63a04c92bf8a
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +76,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.BeApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Documents\CLONEGIT\BE\src\main\java\org\example\be\entity" />
+    </key>
+  </component>
+=======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
@@ -65,6 +129,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+>>>>>>> d0900c780a9e3d4514293f426135165559130c61
   <component name="RunManager" selected="Spring Boot.BeApplication">
     <configuration name="BeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -100,10 +165,22 @@
       <updated>1759106089267</updated>
       <workItem from="1759106091217" duration="5668000" />
       <workItem from="1759349652759" duration="2404000" />
+<<<<<<< HEAD
+      <workItem from="1759460826865" duration="1102000" />
+      <workItem from="1759647471175" duration="132000" />
+      <workItem from="1759647696698" duration="76000" />
+      <workItem from="1759647815018" duration="112000" />
+      <workItem from="1759647938244" duration="190000" />
+      <workItem from="1759648198001" duration="1309000" />
+=======
       <workItem from="1759647454902" duration="204000" />
       <workItem from="1759649081661" duration="261000" />
       <workItem from="1759649351648" duration="12000" />
+<<<<<<< HEAD
       <workItem from="1759711743065" duration="13000" />
+=======
+>>>>>>> d0900c780a9e3d4514293f426135165559130c61
+>>>>>>> 56d9f382ff0b00dc62eed8821eae63a04c92bf8a
     </task>
     <servers />
   </component>
