@@ -45,7 +45,7 @@ public class CommentServiceImpl implements CommentService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get comments successful
-                response.ok((List<CommentResponse>) apiResponse.getBody());
+                response.ok((List<CommentResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get comments failed
                 Map<String, String> errorMap = new HashMap<>();

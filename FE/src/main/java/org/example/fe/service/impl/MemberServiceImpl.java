@@ -126,7 +126,7 @@ public class MemberServiceImpl implements MemberService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Registration successful
-                return apiResponse.getBody();
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Registration failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -174,7 +174,7 @@ public class MemberServiceImpl implements MemberService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get member info successful
-                return apiResponse.getBody();
+                response.ok(apiResponse.getBody().getPayload());
             }
         } catch (Exception e) {
             // Handle exceptions
