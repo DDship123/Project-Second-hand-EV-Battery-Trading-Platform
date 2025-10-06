@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -27,18 +28,20 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<Member>> register(@RequestBody MemberRegisterRequest request) {
         ApiResponse<Member> response = memberService.register(request);
-        return ResponseEntity.status(response.getStatusCode()).body(response);
+        return ResponseEntity.status(response.getStatus().equals("SUCCESS") ? 201 : 400).body(response);
     }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<?>> login(@RequestBody LoginRequest request) {
         Optional<Member> user = memberService.login(request);
         if (user.isPresent()) {
-            return ResponseEntity.ok(ApiResponse.ok(user.get()));
+            ApiResponse<Member> response = new ApiResponse<>();
+            response.ok(user.get());
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity
-                    .status(401)
-                    .body(ApiResponse.failure(401, "Invalid username or password"));
+            ApiResponse<String> response = new ApiResponse<>();
+            response.error(Map.of("message", "Invalid username or password"));
+            return ResponseEntity.status(401).body(response);
         }
     }
 }
