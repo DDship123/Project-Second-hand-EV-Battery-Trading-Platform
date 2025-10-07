@@ -42,7 +42,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             // Make API call to backend
             ResponseEntity<ApiResponse<List<TransactionResponse>>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/transactions/buy/" + memberId,
+                    apiBaseUrl + "/api/transactions/buy/completed/" + memberId,
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<List<TransactionResponse>>>(){}
@@ -89,7 +89,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             // Make API call to backend
             ResponseEntity<ApiResponse<List<TransactionResponse>>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/transactions/sell/" + memberId,
+                    apiBaseUrl + "/api/transactions/sell/completed/" + memberId,
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<List<TransactionResponse>>>(){}
