@@ -10,25 +10,25 @@ public class Battery {
     @Column(name = "battery_id")
     private Integer batteryId;
 
-    @Column(name = "name")
+    @Column(name = "name", columnDefinition = "NVARCHAR(100)")
     private String name;
 
-    @Column(name = "brand")
+    @Column(name = "brand", columnDefinition = "NVARCHAR(50)")
     private String brand;
 
-    @Column(name = "year_at")
+    @Column(name = "year_at", columnDefinition = "NVARCHAR(4)")
     private String yearAt;
 
-    @Column(name = "voltage_v")
+    @Column(name = "voltage_v", columnDefinition = "NVARCHAR(10)")
     private String voltageV;
 
     @Column(name = "capacity_ah")
     private Integer capacityAh;
 
-    @Column(name = "condition")
+    @Column(name = "condition", columnDefinition = "NVARCHAR(20)")
     private String condition;
 
-    @Column(name = "origin")
+    @Column(name = "origin", columnDefinition = "NVARCHAR(50)")
     private String origin;
 
     public Integer getBatteryId() {

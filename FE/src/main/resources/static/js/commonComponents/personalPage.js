@@ -1,37 +1,64 @@
-window.addEventListener('load', function() {
-    const goBackButton = document.querySelector(".back");
-    goBackButton.addEventListener('click', function() {
-        window.location.href = "/home";
-    });
-});
 // =====================================================
-//    GET INPUT ELEMENTS
+//    PERSONAL PAGE MANAGEMENT
+// =====================================================
+
+// =====================================================
+//    INITIALIZATION
+// =====================================================
+
+// Initialize when page loads
+window.addEventListener('load', function() {
+    handleBackButton();
+});
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize form editing functionality
+    handleEditButton();
+
+    // Initialize alert auto-hide
+    handleAlertMessages();
+
+    // Initialize avatar upload functionality
+    handleAvatarUpload();
+
+    // Store initial form values
+    storeOriginalValues();
+
+    // Debug logging
+    console.log('Input elements found:', getInputElements());
+    console.log('Current values:', getInputValues());
+});
+
+
+
+// Global variables
+let originalValues = {};
+
+// =====================================================
+//    UTILITY FUNCTIONS
 // =====================================================
 
 // Function to get all specified input elements
 function getInputElements() {
-    const nameInput = document.getElementById('name');
-    const addressSelect = document.getElementById('address');
-    const phoneInput = document.getElementById('phone');
-    const emailInput = document.getElementById('email');
-
     return {
-        name: nameInput,
-        address: addressSelect,
-        phone: phoneInput,
-        email: emailInput
+        name: document.getElementById('name'),
+        address: document.getElementById('address'),
+        phone: document.getElementById('phone'),
+        email: document.getElementById('email'),
+        city: document.getElementById('city')
     };
 }
 
 // Function to get values from all inputs
 function getInputValues() {
     const elements = getInputElements();
-
     return {
         name: elements.name?.value || '',
         address: elements.address?.value || '',
         phone: elements.phone?.value || '',
-        email: elements.email?.value || ''
+        email: elements.email?.value || '',
+        city: elements.city?.value || ''
     };
 }
 
@@ -39,18 +66,11 @@ function getInputValues() {
 function setInputValues(values) {
     const elements = getInputElements();
 
-    if (elements.name && values.name !== undefined) {
-        elements.name.value = values.name;
-    }
-    if (elements.address && values.address !== undefined) {
-        elements.address.value = values.address;
-    }
-    if (elements.phone && values.phone !== undefined) {
-        elements.phone.value = values.phone;
-    }
-    if (elements.email && values.email !== undefined) {
-        elements.email.value = values.email;
-    }
+    Object.keys(values).forEach(key => {
+        if (elements[key] && values[key] !== undefined) {
+            elements[key].value = values[key];
+        }
+    });
 }
 
 // Function to enable/disable inputs
@@ -58,8 +78,9 @@ function toggleInputsEnabled(enabled) {
     const elements = getInputElements();
 
     Object.values(elements).forEach(element => {
-        if (element && element.id !== 'createdDate') { // Skip createdDate field
+        if (element && element.id !== 'createdDate') {
             element.disabled = !enabled;
+
             if (enabled) {
                 element.removeAttribute('disabled');
                 element.classList.add("active");
@@ -71,30 +92,38 @@ function toggleInputsEnabled(enabled) {
     });
 }
 
+// Store initial values
+function storeOriginalValues() {
+    originalValues = getInputValues();
+    console.log('Original values stored:', originalValues);
+}
+
 // =====================================================
-//    EDIT BUTTON FUNCTIONALITY
+//    EVENT HANDLERS
 // =====================================================
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Get elements
+// Back button handler
+function handleBackButton() {
+    const goBackButton = document.querySelector(".back");
+    if (goBackButton) {
+        goBackButton.addEventListener('click', function() {
+            window.location.href = "/home";
+        });
+    }
+}
+
+// Edit button handler
+function handleEditButton() {
     const editButton = document.querySelector('.profile__edit');
     const submitButton = document.querySelector('.profile__container__submit');
     const cancelButton = document.querySelector('.profile__container__cancel');
 
-    // Get all editable form elements using the function above
+    if (!editButton || !submitButton || !cancelButton) return;
+
     const inputElements = getInputElements();
     const editableElements = Object.values(inputElements).filter(element => element !== null);
 
-    // Store original values
-    let originalValues = {};
-
-    // Store initial values
-    function storeOriginalValues() {
-        originalValues = getInputValues();
-        console.log('Original values stored:', originalValues);
-    }
-
-    // Edit button click handler
+    // Edit button click
     editButton.addEventListener('click', function(e) {
         e.preventDefault();
 
@@ -104,11 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Enable all editable elements
         toggleInputsEnabled(true);
 
-        // Add 'show' class to both buttons
+        // Show action buttons, hide edit button
         submitButton.classList.add('show');
         cancelButton.classList.add('show');
-
-        // Hide edit button
         editButton.style.display = 'none';
 
         // Focus on first editable element
@@ -119,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Edit mode enabled');
     });
 
-    // Cancel button click handler
+    // Cancel button click
     cancelButton.addEventListener('click', function(e) {
         e.preventDefault();
 
@@ -129,29 +156,56 @@ document.addEventListener('DOMContentLoaded', function() {
         // Disable all elements
         toggleInputsEnabled(false);
 
-        // Remove 'show' class from both buttons
+        // Hide action buttons, show edit button
         submitButton.classList.remove('show');
         cancelButton.classList.remove('show');
-
-        // Show edit button again
         editButton.style.display = 'block';
 
         console.log('Edit cancelled, values restored:', originalValues);
     });
 
-    // Submit button - just let form submit naturally
+    // Submit button click
     submitButton.addEventListener('click', function(e) {
         const currentValues = getInputValues();
         console.log('Form submitted with values:', currentValues);
-        // Form will submit normally
-        // You can add validation here if needed
+        // Form will submit normally - validation can be added here if needed
     });
+}
 
-    // Initialize
-    storeOriginalValues();
+// Auto-hide alert messages
+function handleAlertMessages() {
+    const alerts = document.querySelectorAll('.alert');
 
-    // Debug: Log all elements on page load
-    console.log('Input elements found:', inputElements);
-    console.log('Current values:', getInputValues());
-});
+    alerts.forEach(function(alert) {
+        // Set timeout to fade out after 2.5 seconds
+        setTimeout(function() {
+            alert.classList.add('fade-out');
+
+            // Remove element from DOM after animation completes
+            setTimeout(function() {
+                alert.remove();
+            }, 300); // Wait for CSS transition to complete
+        }, 2500);
+    });
+}
+
+// Avatar upload form handler
+function handleAvatarUpload() {
+    const avatarEditButton = document.querySelector('.profile__avatar__edit');
+    const avatarForm = document.querySelector('.profile__avatar__form');
+
+    if (avatarEditButton && avatarForm) {
+        avatarEditButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            avatarForm.classList.toggle('show');
+        });
+
+        // Close form when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!avatarForm.contains(e.target) && !avatarEditButton.contains(e.target)) {
+                avatarForm.classList.remove('show');
+            }
+        });
+    }
+}
 

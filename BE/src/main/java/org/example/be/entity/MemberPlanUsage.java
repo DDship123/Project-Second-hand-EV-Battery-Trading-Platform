@@ -28,6 +28,7 @@ public class MemberPlanUsage {
     @Column(name = "used_posts")
     private Integer usedPosts;
 
+    @Column(columnDefinition = "NVARCHAR(20)")
     private String status;
 
     public Integer getUsageId() {

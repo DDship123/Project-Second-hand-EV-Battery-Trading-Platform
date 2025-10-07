@@ -1,10 +1,13 @@
 package org.example.be.controller;
 
-import org.example.be.dto.ApiResponse;
+import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.request.FavoriteRequest;
 import org.example.be.entity.Favorite;
 import org.example.be.entity.Member;
 import org.example.be.entity.Post;
 import org.example.be.service.FavoriteService;
+import org.example.be.service.MemberService;
+import org.example.be.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +22,20 @@ import java.util.Map;
 public class FavoriteController {
     @Autowired
     private FavoriteService favoriteService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private PostService postService;
 
     // ------------------- CREATE -------------------
     @PostMapping
-    public ResponseEntity<ApiResponse<Favorite>> createFavorite(@RequestBody Favorite favorite) {
+    public ResponseEntity<ApiResponse<Favorite>> createFavorite(@RequestBody FavoriteRequest request) {
         ApiResponse<Favorite> response = new ApiResponse<>();
         try {
+            Favorite favorite = new Favorite();
+            favorite.setMember(memberService.getMemberById(request.getMemberId()));
+            favorite.setPost(postService.getPostById(request.getPostId()).orElse(null));
+
             Favorite created = favoriteService.createFavorite(favorite);
 
             Map<String, Object> metadata = new HashMap<>();
@@ -113,11 +124,7 @@ public class FavoriteController {
         try {
             favoriteService.deleteFavorite(id);
 
-            Map<String, Object> metadata = new HashMap<>();
-            metadata.put("deletedId", id);
-            metadata.put("timestamp", LocalDateTime.now());
-
-            response.ok(true, (HashMap<String, Object>) metadata);
+            response.ok(true);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
@@ -133,9 +140,6 @@ public class FavoriteController {
         ApiResponse<List<Post>> response = new ApiResponse<>();
         try {
             List<Post> latestFavorites = favoriteService.getLatestFavoritesPosts(member);
-
-
-            response.ok();
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
@@ -145,4 +149,36 @@ public class FavoriteController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    @GetMapping("/first/{memberId}")
+    public ResponseEntity<ApiResponse<Favorite>> getFirstFavoriteByMemberId(@PathVariable int memberId) {
+        ApiResponse<Favorite> response = new ApiResponse<>();
+        try {
+            Favorite favorite = favoriteService.getFistFavoriteByMemberID(memberId);
+            response.ok(favorite);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+
+        }
+    }
+    @GetMapping("/all/{memberId}")
+    public ResponseEntity<ApiResponse<List<Favorite>>> getAllFavoriteByMemberId(@PathVariable int memberId) {
+        ApiResponse<List<Favorite>> response = new ApiResponse<>();
+        try {
+            List<Favorite> favorites = favoriteService.getAllFavoriteByMemberID(memberId);
+            response.ok(favorites);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+
+        }
+    }
+
 }

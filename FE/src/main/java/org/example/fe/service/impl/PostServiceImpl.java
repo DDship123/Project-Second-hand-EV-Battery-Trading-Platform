@@ -59,6 +59,8 @@ public class PostServiceImpl implements PostService {
         return response;
     }
 
+
+
     @Override
     public ApiResponse<List<PostResponse>> getLatestPost() {
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
@@ -216,5 +218,33 @@ public class PostServiceImpl implements PostService {
 
         return response;
 
+    }
+
+    @Override
+    public ApiResponse<List<PostResponse>> getLatestPosts() {
+        ApiResponse<List<PostResponse>> apiResponse = new ApiResponse<>();
+        try {
+            ResponseEntity<ApiResponse<List<PostResponse>>> response = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/latest",
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>() {}
+            );
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                apiResponse.ok(response.getBody().getPayload());
+                return apiResponse;
+            }else {
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve latest posts");
+                apiResponse.error(errorMap);
+                return apiResponse;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get latest posts: " + e.getMessage());
+            apiResponse.error(errorMap);
+            return apiResponse;
+        }
     }
 }

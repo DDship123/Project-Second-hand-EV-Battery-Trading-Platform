@@ -22,11 +22,13 @@ public class Post {
     @JoinColumn(name = "seller_id")
     private Member seller;
 
+    @Column(columnDefinition = "NVARCHAR(200)")
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "NTEXT")
     private String description;
 
+    @Column(columnDefinition = "NVARCHAR(20)")
     private String status;
 
     private BigDecimal price;

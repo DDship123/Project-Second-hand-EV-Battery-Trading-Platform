@@ -1,40 +1,38 @@
 package org.example.fe.entity;
 
 public class FavoriteResponse {
-    private int favoriteId;
-    private int memberId;
-    private int postId;
-
+    private int favoritesId;
+    private MemberResponse member;
+    private PostResponse post;
+    // Constructors
     public FavoriteResponse() {
     }
-
-    public FavoriteResponse(int favoriteId, int memberId, int postId) {
-        this.favoriteId = favoriteId;
-        this.memberId = memberId;
-        this.postId = postId;
+    public FavoriteResponse(int favoritesId, MemberResponse member, PostResponse post) {
+        this.favoritesId = favoritesId;
+        this.member = member;
+        this.post = post;
     }
-
-    public int getFavoriteId() {
-        return favoriteId;
+    // Getters and Setters
+    public int getFavoritesId() {
+        return favoritesId;
     }
-
-    public void setFavoriteId(int favoriteId) {
-        this.favoriteId = favoriteId;
+    public void setFavoritesId(int favoritesId) {
+        this.favoritesId = favoritesId;
     }
-
-    public int getMemberId() {
-        return memberId;
+    public MemberResponse getMember() {
+        return member;
     }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public void setMember(MemberResponse member) {
+        this.member = member;
     }
-
-    public int getPostId() {
-        return postId;
+    public PostResponse getPost() {
+        return post;
     }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPost(PostResponse post) {
+        this.post = post;
     }
 }
+
+
+
+

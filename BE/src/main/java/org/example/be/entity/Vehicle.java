@@ -10,28 +10,28 @@ public class Vehicle {
     @Column(name = "vehicle_id")
     private Integer vehicleId;
 
-    @Column(name = "name")
+    @Column(name = "name", columnDefinition = "NVARCHAR(100)")
     private String name;
 
-    @Column(name = "brand")
+    @Column(name = "brand", columnDefinition = "NVARCHAR(50)")
     private String brand;
 
-    @Column(name = "model")
+    @Column(name = "model", columnDefinition = "NVARCHAR(50)")
     private String model;
 
     @Column(name = "mileage")
     private Integer mileage;
 
-    @Column(name = "condition")
+    @Column(name = "condition", columnDefinition = "NVARCHAR(20)")
     private String condition;
 
-    @Column(name = "register_year")
+    @Column(name = "register_year", columnDefinition = "NVARCHAR(4)")
     private String registerYear;
 
-    @Column(name = "battery_capacity")
+    @Column(name = "battery_capacity", columnDefinition = "NVARCHAR(20)")
     private String batteryCapacity;
 
-    @Column(name = "origin")
+    @Column(name = "origin", columnDefinition = "NVARCHAR(50)")
     private String origin;
 
     public Integer getVehicleId() {

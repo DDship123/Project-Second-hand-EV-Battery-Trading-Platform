@@ -26,6 +26,10 @@ public class ReviewService {
         return review.orElse(null);
     }
 
+    public Review getReviewByTransactionId(Integer transactionId) {
+        return reviewRepository.findByTransaction_TransactionsId(transactionId).orElse(null);
+    }
+
     public Review updateReview(Integer id, Review reviewDetails) {
         Review review = getReviewById(id);
         if (review == null) {

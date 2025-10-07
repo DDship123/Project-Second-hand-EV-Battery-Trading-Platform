@@ -12,34 +12,43 @@ public class Member {
     @Column(name = "members_id")
     private Integer memberId;
 
-    @Column(name = "username", length = 20, nullable = false)
+    @Column(name = "username", length = 20, nullable = false, columnDefinition = "NVARCHAR(20)")
     private String username;
 
-    @Column(name = "address", length = 50, nullable = false)
+    @Column(name = "address", length = 50, columnDefinition = "NVARCHAR(50)")
     private String address;
 
-    @Column(name = "email", length = 50, nullable = false, unique = true)
+    @Column(name = "email", length = 50, nullable = false, unique = true, columnDefinition = "NVARCHAR(50)")
     private String email;
-    @Column(name = "phone", length = 15, nullable = false, unique = true)
+
+    @Column(name = "phone", length = 15, unique = true, columnDefinition = "NVARCHAR(15)")
     private String phone;
 
-    @Column(name = "city", length = 30, nullable = false)
+    @Column(name = "city", length = 30, columnDefinition = "NVARCHAR(30)")
     private String city;
 
-    @Column(name = "password", length = 100, nullable = false)
+    @Column(name = "password", length = 100, nullable = false, columnDefinition = "NVARCHAR(100)")
     private String password;
 
-    @Column(name = "role", length = 20, nullable = false)
+    @Column(name = "role", length = 20, nullable = false, columnDefinition = "NVARCHAR(20)")
     private String role;
 
-    @Column(name = "status", length = 20, nullable = false)
+    @Column(name = "status", length = 20, nullable = false, columnDefinition = "NVARCHAR(20)")
     private String status;
 
-    @Column(name = "avatar_url")
+    @Column(name = "avatar_url", columnDefinition = "NVARCHAR(500)")
     private String avatarUrl;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public Integer getMemberId() {
         return memberId;

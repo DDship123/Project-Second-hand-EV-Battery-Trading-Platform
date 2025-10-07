@@ -11,6 +11,7 @@ public class MembershipPlan {
     @Column(name = "plan_id")
     private Integer planId;
 
+    @Column(columnDefinition = "NVARCHAR(50)")
     private String name;
 
     private BigDecimal price;
@@ -20,6 +21,7 @@ public class MembershipPlan {
     @Column(name = "max_posts")
     private Integer maxPosts;
 
+    @Column(columnDefinition = "NVARCHAR(20)")
     private String priority;
 
     public Integer getPlanId() {

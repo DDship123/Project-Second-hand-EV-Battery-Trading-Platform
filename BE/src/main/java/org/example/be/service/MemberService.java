@@ -1,8 +1,8 @@
 package org.example.be.service;
 
-import org.example.be.dto.ApiResponse;
-import org.example.be.dto.LoginRequest;
-import org.example.be.dto.MemberRegisterRequest;
+import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.LoginRequest;
+import org.example.be.dto.reponse.MemberRegisterRequest;
 import org.example.be.entity.Member;
 import org.example.be.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +45,8 @@ public class MemberService {
         member.setRole(memberDetails.getRole());
         member.setStatus(memberDetails.getStatus());
         member.setCreatedAt(memberDetails.getCreatedAt());
+        member.setCity(memberDetails.getCity());
+        member.setAvatarUrl(memberDetails.getAvatarUrl());
         return memberRepository.save(member);
     }
 
@@ -74,7 +76,6 @@ public class MemberService {
         // Tạo mới member
         Member member = new Member();
         member.setUsername(request.getUsername());
-        member.setAddress(request.getAddress());
         member.setEmail(request.getEmail());
         member.setPhone(request.getPhone());
         member.setPassword(request.getPassword());

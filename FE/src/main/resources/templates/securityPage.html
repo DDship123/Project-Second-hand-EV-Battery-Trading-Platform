@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảo mật - EV Second</title>
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
@@ -18,18 +19,26 @@
 </head>
 <body>
 <section th:include="memberPage"></section>
+
 <section class="updatePassword">
     <button class="back">
         <i class="fa-solid fa-arrow-left"></i><span>Back</span>
     </button>
     <h1 class="updatePassword__title">Đổi mật khẩu</h1>
-    <form method="post" action="*" class="updatePassword__container">
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+    <form method="post" th:action="@{/account/security}" class="updatePassword__container">
         <div class="updatePassword__container__inputGroup">
             <label for="currentPassword">Mật khẩu hiện tại</label>
             <input
                     type="password"
                     id="currentPassword"
+                    name="currentPassword"
                     placeholder="Nhập mật khẩu hiện tại"
+                    required
             />
         </div>
         <div class="updatePassword__container__inputGroup">
@@ -37,31 +46,28 @@
             <input
                     type="password"
                     id="newPassword"
+                    name="newPassword"
                     placeholder="Nhập mật khẩu mới"
+                    required
             />
         </div>
         <div class="updatePassword__container__inputGroup">
-            <label for="confirmNewPassword">Xác nhận mật khẩu mới</label>
+            <label for="confirmPassword">Xác nhận mật khẩu mới</label>
             <input
                     type="password"
-                    id="confirmNewPassword"
-                    placeholder="Xác nhận mật khẩu mới"
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    placeholder="Nhập lại mật khẩu mới"
+                    required
             />
         </div>
         <div class="updatePassword__container__actions">
-            <input
-                    type="submit"
-                    class="updatePassword__container__submit"
-                    value="Cập nhật"
-            />
-            <input
-                    type="button"
-                    class="updatePassword__container__cancel"
-                    value="Hủy"
-            />
+            <input type="submit" class="updatePassword__container__submit" value="Đổi mật khẩu" />
+            <input type="button" class="updatePassword__container__cancel" value="Hủy" />
         </div>
     </form>
 </section>
-<script th:src="@{/js/commonComponents/personalPage.js}"></script>
+
+<script th:src="@{/js/securityPage.js}"></script>
 </body>
 </html>

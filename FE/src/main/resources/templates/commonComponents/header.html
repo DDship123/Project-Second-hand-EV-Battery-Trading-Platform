@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header - EV Second</title>
     <!-- Google Fonts -->
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -67,7 +68,7 @@
             <!-- Wishlist Button -->
             <button class="btn__wishlist" title="Yêu thích">
                 <i class="far fa-heart"></i>
-                <span class="number">5</span>
+<!--                <span class="number">5</span>-->
                 <span class="tooltip">Danh sách yêu thích</span>
             </button>
 
@@ -79,12 +80,12 @@
                 </div>
                 <div class="wishlist__list__item">
                     <img
-                            src="https://images.unsplash.com/photo-1607853554439-0069ec0f29b6?w=80&h=60&fit=crop"
+                            th:src="${firstFavorite.getPost().getPostImages().get(0).getImageUrl()}"
                             alt="Feliz Motorcycle"
                     />
                     <div class="wishlist__list__item__infor">
-                        <p>Feliz Motorcycle</p>
-                        <p>Giá: 100.000.000 VNĐ</p>
+                        <p th:text="${firstFavorite.getPost().getTitle()}">Undefined</p>
+                        <p th:text="${firstFavorite.getPost().getPrice() + ' vnđ'}">Undefined</p>
                     </div>
                 </div>
             </div>

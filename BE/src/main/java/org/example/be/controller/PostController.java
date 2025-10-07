@@ -1,7 +1,9 @@
 package org.example.be.controller;
 
-import org.example.be.dto.ApiResponse;
-import org.example.be.dto.PostResponse;
+import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.MemberResponse;
+import org.example.be.dto.reponse.PostResponse;
+import org.example.be.dto.reponse.ProductResponse;
 import org.example.be.entity.Post;
 import org.example.be.entity.PostImage;
 import org.example.be.service.PostService;
@@ -23,26 +25,40 @@ public class PostController {
 
     // --- Helper chuyển Post -> PostResponse ---
     private PostResponse mapToResponse(Post post) {
-        List<String> images = post.getPostImages() != null
-                ? post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList())
-                : List.of();
+        if (post == null) {
+            return null;
+        }
 
-        return new PostResponse(
-                post.getPostsId(),
-                post.getTitle(),
-                post.getDescription(),
-                post.getStatus(),
-                post.getPrice(),
-                post.getCreatedAt(),
-                post.getSeller().getMemberId(),
-                post.getSeller().getUsername(),
-                post.getSeller().getAvatarUrl(),
-                post.getProduct().getProductsId(),
-                post.getProduct().getName(),
-                post.getProduct().getProductType(),
-                post.getProduct().getStatus(),
-                images
-        );
+        // Xử lý images - chỉ lấy URL string
+        List<String> images = post.getPostImages() != null && !post.getPostImages().isEmpty()
+                ? post.getPostImages().stream()
+                    .map(PostImage::getImageUrl)
+                    .filter(url -> url != null && !url.trim().isEmpty()) // Lọc bỏ URL null hoặc empty
+                    .collect(Collectors.toList())
+                : List.of();
+        MemberResponse sellerResponse = new MemberResponse();
+        sellerResponse.setMemberId(post.getSeller().getMemberId());
+        sellerResponse.setCity(post.getSeller().getCity());
+        sellerResponse.setUsername(post.getSeller().getUsername());
+        sellerResponse.setAvatarUrl(post.getSeller().getAvatarUrl());
+
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setProductId(post.getProduct().getProductsId());
+        productResponse.setProductName(post.getProduct().getName());
+        productResponse.setProductType(post.getProduct().getProductType());
+        productResponse.setStatus(post.getProduct().getStatus());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setPostsId(post.getPostsId());
+        postResponse.setTitle(post.getTitle());
+        postResponse.setDescription(post.getDescription());
+        postResponse.setStatus(post.getStatus());
+        postResponse.setPrice(post.getPrice());
+        postResponse.setCreatedAt(post.getCreatedAt());
+        postResponse.setSeller(sellerResponse);
+        postResponse.setProduct(productResponse);
+        postResponse.setImages(images);
+        return postResponse;
     }
 
     // --- CREATE POST ---
@@ -149,7 +165,7 @@ public class PostController {
 
     // --- GET LATEST POSTS ---
     @GetMapping("/latest")
-    public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestPosts(@RequestParam(defaultValue = "5") int limit) {
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestPosts(@RequestParam(defaultValue = "8",required = false) int limit) {
         List<PostResponse> posts = postService.getLatestPosts(limit).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());

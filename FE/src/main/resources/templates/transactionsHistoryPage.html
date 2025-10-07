@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử giao dịch - EV Second</title>
     <!-- Google Fonts -->
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -31,8 +32,8 @@
         </div>
         <h2 class="container__header__title">Lịch Sử Giao Dịch</h2>
         <div class="container__header__category">
-            <button>Mua</button>
-            <button>Bán</button>
+            <button><a th:href="@{/home/transactionsHistory}">Mua</a></button>
+            <button><a th:href="@{/home/transactionsHistory/seller}">Bán</a></button>
             <div class="container__header__category__status">
                 <div class="container__header__category__status__title">
                     <span>Trạng thái</span><i class="fa-solid fa-play"></i>
@@ -54,11 +55,12 @@
     <!-- Transaction List -->
     <div class="container__body">
         <!-- Transaction Item 1 -->
-        <div class="container__body__item">
+        <div th:each="transaction: ${transactions}" class="container__body__item">
             <div class="container__body__item__header">
-                <div class="container__body__item__id">#039876547</div>
+                <div th:text="${transaction.getTransactionId()}" class="container__body__item__id">#039876547</div>
                 <div
                         class="container__body__item__status container__body__item__status--success"
+                        th:text="${transaction.getStatus()}"
                 >
                     Giao dịch thành công
                 </div>
@@ -66,193 +68,29 @@
             <div class="container__body__item__main">
                 <div class="container__body__item__image">
                     <img
-                            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=60&fit=crop"
-                            alt="Feliz Motorcycle"
+                            th:src="${transaction.getImageUrl()}"
+                            th:alt="${transaction.getPostTitle()}"
                     />
                 </div>
                 <div class="container__body__item__details">
-                    <h3 class="container__body__item__title">
+                    <h3 th:text="${transaction.getPostTitle()}" class="container__body__item__title">
                         Feliz - biển MD. Giấy tờ đầy đủ
                     </h3>
-                    <div class="container__body__item__price">13.500.000 đ</div>
-                    <div class="container__body__item__date">
+                    <div th:text="${transaction.getPrice()}+' đ'" class="container__body__item__price">13.500.000 đ</div>
+                    <div th:text="'Ngày Khởi tạo: '+${transaction.getCreatedAt()}" class="container__body__item__date">
                         Ngày khởi tạo: 07/08/2025
                     </div>
                 </div>
                 <div class="container__body__item__info">
-                    <div class="container__body__item__seller">
+                    <div th:text="'Người bán: '+${transaction.getSellerName()}" class="container__body__item__seller">
                         Người bán: Nguyễn Thế Anh
                     </div>
-                    <div class="container__body__item__buyer">
+                    <div th:text="'Người mua: '+${transaction.getBuyerName()}" class="container__body__item__buyer">
                         Người mua: Nguyễn Văn A
                     </div>
                 </div>
                 <div class="container__body__item__rating">
-                    <span class="container__body__item__rating__score">4.5</span>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Transaction Item 2 -->
-        <div class="container__body__item">
-            <div class="container__body__item__header">
-                <div class="container__body__item__id">#039876547</div>
-                <div
-                        class="container__body__item__status container__body__item__status--success"
-                >
-                    Giao dịch thành công
-                </div>
-            </div>
-            <div class="container__body__item__main">
-                <div class="container__body__item__image">
-                    <img
-                            src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=80&h=60&fit=crop"
-                            alt="IMPES Scooter"
-                    />
-                </div>
-                <div class="container__body__item__details">
-                    <h3 class="container__body__item__title">
-                        IMPES CÓ SÁC PIN ĐẦY ĐỦ
-                    </h3>
-                    <div class="container__body__item__price">8.500.000 đ</div>
-                    <div class="container__body__item__date">
-                        Ngày khởi tạo: 07/08/2025
-                    </div>
-                </div>
-                <div class="container__body__item__info">
-                    <div class="container__body__item__seller">
-                        Người bán: Nguyễn Thế Anh
-                    </div>
-                    <div class="container__body__item__buyer">
-                        Người mua: Nguyễn Văn A
-                    </div>
-                </div>
-                <div class="container__body__item__rating">
-                    <span class="container__body__item__rating__score">5</span>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Transaction Item 3 -->
-        <div class="container__body__item">
-            <div class="container__body__item__header">
-                <div class="container__body__item__id">#039876547</div>
-                <div
-                        class="container__body__item__status container__body__item__status--failed"
-                >
-                    Giao dịch thất bại
-                </div>
-            </div>
-            <div class="container__body__item__main">
-                <div class="container__body__item__image">
-                    <img
-                            src="https://images.unsplash.com/photo-1607853554439-0069ec0f29b6?w=80&h=60&fit=crop"
-                            alt="Feliz Motorcycle"
-                    />
-                </div>
-                <div class="container__body__item__details">
-                    <h3 class="container__body__item__title">
-                        Dự dụng pass nhanh feliz odo 1,9v lên yên kimdan
-                    </h3>
-                    <div class="container__body__item__price">17.500.000 đ</div>
-                    <div class="container__body__item__date">
-                        Ngày khởi tạo: 07/08/2025
-                    </div>
-                </div>
-                <div class="container__body__item__info">
-                    <div class="container__body__item__seller">
-                        Người bán: Nguyễn Thế Anh
-                    </div>
-                    <div class="container__body__item__buyer">
-                        Người mua: Nguyễn Văn A
-                    </div>
-                </div>
-                <div class="container__body__item__rating">
-                    <span class="container__body__item__rating__score">3.5</span>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Transaction Item 4 -->
-        <div class="container__body__item">
-            <div class="container__body__item__header">
-                <div class="container__body__item__id">#039876547</div>
-                <div
-                        class="container__body__item__status container__body__item__status--success"
-                >
-                    Giao dịch thành công
-                </div>
-            </div>
-            <div class="container__body__item__main">
-                <div class="container__body__item__image">
-                    <img
-                            src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=80&h=60&fit=crop"
-                            alt="Evolite Motorcycle"
-                    />
-                </div>
-                <div class="container__body__item__details">
-                    <h3 class="container__body__item__title">
-                        Bán evolite siêu keng như mới. Biến tp, k cần bảng lái , đủ 16t
-                    </h3>
-                    <div class="container__body__item__price">20.000.000 đ</div>
-                    <div class="container__body__item__date">
-                        Ngày khởi tạo: 07/08/2025
-                    </div>
-                </div>
-                <div class="container__body__item__info">
-                    <div class="container__body__item__seller">
-                        Người bán: Nguyễn Thế Anh
-                    </div>
-                    <div class="container__body__item__buyer">
-                        Người mua: Nguyễn Văn A
-                    </div>
-                </div>
-                <div class="container__body__item__rating">
-                    <span class="container__body__item__rating__score">4.5</span>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Transaction Item 5 -->
-        <div class="container__body__item">
-            <div class="container__body__item__header">
-                <div class="container__body__item__id">#039876547</div>
-                <div
-                        class="container__body__item__status container__body__item__status--success"
-                >
-                    Giao dịch thành công
-                </div>
-            </div>
-            <div class="container__body__item__main">
-                <div class="container__body__item__image">
-                    <img
-                            src="https://images.unsplash.com/photo-1607853554439-0069ec0f29b6?w=80&h=60&fit=crop"
-                            alt="Feliz Motorcycle"
-                    />
-                </div>
-                <div class="container__body__item__details">
-                    <h3 class="container__body__item__title">
-                        Feliz - biển MD. Giấy tờ đầy đủ
-                    </h3>
-                    <div class="container__body__item__price">13.500.000 đ</div>
-                    <div class="container__body__item__date">
-                        Ngày khởi tạo: 07/08/2025
-                    </div>
-                </div>
-                <div class="container__body__item__info">
-                    <div class="container__body__item__seller">
-                        Người bán: Nguyễn Thế Anh
-                    </div>
-                    <div class="container__body__item__buyer">
-                        Người mua: Nguyễn Văn A
-                    </div>
-                </div>
-                <div class="container__body__item__rating">
-                    <span class="container__body__item__rating__score">4.5</span>
+                    <span class="container__body__item__rating__score" th:text="${transaction.getRate()}">4.5</span>
                     <i class="fa-solid fa-star"></i>
                 </div>
             </div>

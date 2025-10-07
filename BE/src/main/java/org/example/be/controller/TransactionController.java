@@ -1,8 +1,10 @@
 package org.example.be.controller;
 
-import org.example.be.dto.ApiResponse;
-import org.example.be.dto.TransactionResponse;
+import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.TransactionResponse;
+import org.example.be.entity.Review;
 import org.example.be.entity.Transaction;
+import org.example.be.service.ReviewService;
 import org.example.be.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,20 +21,31 @@ public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private ReviewService reviewService;
 
     private TransactionResponse mapToResponse(Transaction t) {
-        return new TransactionResponse(
-                t.getTransactionsId(),
-                t.getBuyer().getMemberId(),
-                t.getBuyer().getUsername(),
-                t.getPost().getSeller().getMemberId(),
-                t.getPost().getSeller().getUsername(),
-                t.getPost().getPostsId(),
-                t.getPost().getTitle(),
-                t.getStatus(),
-                t.getCreatedAt()
-        );
+        TransactionResponse response = new TransactionResponse();
+        response.setTransactionId(t.getTransactionsId());
+        response.setBuyerId(t.getBuyer().getMemberId());
+        response.setBuyerName(t.getBuyer().getUsername());
+        response.setSellerId(t.getPost().getSeller().getMemberId());
+        response.setSellerName(t.getPost().getSeller().getUsername());
+        response.setPostId(t.getPost().getPostsId());
+        response.setPostTitle(t.getPost().getTitle());
+        response.setStatus(t.getStatus());
+        response.setPrice(t.getPost().getPrice());
+        response.setCreatedAt(t.getCreatedAt());
+        response.setImageUrl(t.getPost().getPostImages().get(0).getImageUrl());
+        Review review = reviewService.getReviewByTransactionId(t.getTransactionsId());
+        if (review != null) {
+            response.setRate(review.getRating());
+        }
+
+        return response;
     }
+
+
 
     @PostMapping
     public ResponseEntity<ApiResponse<TransactionResponse>> createTransaction(@RequestBody Transaction transaction) {

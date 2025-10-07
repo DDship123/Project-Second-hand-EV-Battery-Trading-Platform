@@ -1,4 +1,4 @@
-package org.example.be.dto;
+package org.example.be.dto.reponse;
 
 
 import jakarta.validation.constraints.NotBlank;
