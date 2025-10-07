@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang thành viên - EV Second</title>
     <link rel="stylesheet" th:href="@{/css/memberPage.css}"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,8 +21,8 @@
 <body>
 <div class="sideBar">
     <div class="sideBar__avatar">
-        <img th:src="${user != null && user.avatarUrl != null ? user.avatarUrl : 'https://i.pravatar.cc/300'}" alt="avatar" />
-        <h2>John Doe</h2>
+        <img th:src="${user != null && user.avatarUrl != null ? user.avatarUrl : 'https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI1LTA5L3NyLWltYWdlLTI5MDgyNS1oaS1zLTU5Mi5qcGc.jpg'}" alt="avatar" />
+        <h2 th:text="${user.getUsername()}" >undefined</h2>
     </div>
     <ul class="sideBar__menu">
         <li id="personalInformation">

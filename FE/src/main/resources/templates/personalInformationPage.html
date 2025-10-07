@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin cá nhân</title>
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
@@ -30,10 +31,15 @@
     <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
     <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
 
+    <form method="post" th:action="@{/account/personalInformation/uploadAvatar}" enctype="multipart/form-data" class="profile__avatar__form">
+        <input type="file" name="avatar" accept="image/*"/>
+        <input type="submit" value="Tải lên" />
+    </form>
+
     <form method="post" th:action="@{/account/personalInformation}" th:object="${user}" class="profile__container">
         <div class="profile__avatar">
-            <img th:src="${user != null && user.avatarUrl != null ? user.avatarUrl : 'https://i.pravatar.cc/300'}" alt="avatar" />
-            <button class="profile__avatar__edit">Thay đổi ảnh</button>
+            <img th:src="${user != null && user.avatarUrl != null ? user.avatarUrl : 'https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI1LTA5L3NyLWltYWdlLTI5MDgyNS1oaS1zLTU5Mi5qcGc.jpg'}" alt="avatar" />
+            <button type="button" class="profile__avatar__edit">Thay đổi ảnh</button>
         </div>
         <div class="profile__container__info">
             <div class="profile__container__info__inputGroup">
@@ -57,14 +63,15 @@
                 <input type="hidden" th:field="*{createdAt}" />
             </div>
             <div class="profile__container__info__inputGroup">
-                <label for="address">Địa chỉ</label>
+                <label for="city">Thành Phố</label>
                 <select
-                        id="address"
-                        th:field="*{address}"
+                        id="city"
+                        th:field="*{city}"
                         disabled="true"
                         class="profile__select"
                 >
-                    <option value="Chưa cập nhật">Chưa cập nhật</option>
+                    <option th:if="${user.getCity() != null}" th:value="${user.getCity()}" th:text="${user.getCity()}"></option>
+                    <option value="Chưa cập nhật" th:if="${user.getCity() == null}">Chưa cập nhật</option>
                     <option value="Hà Nội">Hà Nội</option>
                     <option value="Thành phố Hồ Chí Minh">Thành phố Hồ Chí Minh</option>
                     <option value="Đà Nẵng">Đà Nẵng</option>
@@ -97,6 +104,10 @@
             <div class="profile__container__info__inputGroup">
                 <label for="phone">Số điện thoại</label>
                 <input type="text" id="phone" th:field="*{phone}" disabled="true" />
+            </div>
+            <div class="profile__container__info__inputGroup">
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" th:field="*{address}" disabled="true" />
             </div>
             <div class="profile__container__info__inputGroup">
                 <label for="email">Email</label>

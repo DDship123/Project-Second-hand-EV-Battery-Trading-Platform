@@ -1,10 +1,10 @@
 package org.example.fe.service.impl;
 
 import org.example.fe.entity.CommentResponse;
-import org.example.fe.model.CommentRequest;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -36,16 +36,16 @@ public class CommentServiceImpl implements CommentService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<CommentResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/comments/post/" + postID,
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<CommentResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get comments successful
-                response.ok((List<CommentResponse>) apiResponse.getBody());
+                response.ok((List<CommentResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get comments failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -64,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public ApiResponse<CommentResponse> createComment(CommentRequest com) {
+    public ApiResponse<CommentResponse> createComment(CommentResponse com) {
         ApiResponse<CommentResponse> response = new ApiResponse<>();
 
         try {
@@ -73,19 +73,19 @@ public class CommentServiceImpl implements CommentService {
             headers.set("Content-Type", "application/json");
 
             // Create request entity
-            HttpEntity<CommentRequest> requestEntity = new HttpEntity<>(com, headers);
+            HttpEntity<CommentResponse> requestEntity = new HttpEntity<>(com, headers);
 
             // Make API call to backend
-            ResponseEntity<CommentResponse> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<CommentResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/comments",
                     HttpMethod.POST,
                     requestEntity,
-                    CommentResponse.class
+                    new ParameterizedTypeReference<ApiResponse<CommentResponse>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Create comment successful
-                response.ok(apiResponse.getBody());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Create comment failed
                 Map<String, String> errorMap = new HashMap<>();

@@ -50,10 +50,11 @@ public class TransactionService {
     }
 
 
+
     public List<Transaction> getAllBuyTransactions(Integer buyerId) {
-        return transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "completed");
+        return transactionRepository.findByBuyer_MemberId(buyerId);
     }
     public List<Transaction> getAllSellTransactions(Integer sellerId) {
-        return transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "completed");
+        return transactionRepository.findByPost_Seller_MemberId(sellerId);
     }
 }

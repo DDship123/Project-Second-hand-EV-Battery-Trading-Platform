@@ -14,7 +14,7 @@ public class PostImage {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Column(name = "image_url")
+    @Column(name = "image_url", columnDefinition = "NVARCHAR(500)")
     private String imageUrl;
 
 

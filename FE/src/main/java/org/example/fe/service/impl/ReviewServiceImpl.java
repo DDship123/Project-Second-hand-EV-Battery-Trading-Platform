@@ -4,6 +4,7 @@ import org.example.fe.entity.ReviewResponse;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,16 +34,16 @@ public class ReviewServiceImpl implements ReviewService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<List> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<ReviewResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/reviews/buyer/" + postID,
                     HttpMethod.GET,
                     requestEntity,
-                    List.class
+                    new ParameterizedTypeReference<ApiResponse<List<ReviewResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get buyer reviews successful
-                response.ok((List<ReviewResponse>) apiResponse.getBody());
+                response.ok((List<ReviewResponse>) apiResponse.getBody().getPayload());
             } else {
                 // Get buyer reviews failed
                 Map<String, String> errorMap = new HashMap<>();

@@ -274,6 +274,19 @@ div.nav__link{
     gap: 0.5rem;
     padding: 0.5rem 0;
 }
+.wishlist__list__item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.wishlist__list__item__infor p{
+    font-size: 16px;
+}
+.wishlist__list__item__infor p:last-child{
+    color: red;
+    font-size: 13px;
+}
 
 /* =====================================================
    USER DROPDOWN

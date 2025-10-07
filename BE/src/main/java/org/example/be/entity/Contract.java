@@ -15,12 +15,13 @@ public class Contract {
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
 
-    @Column(name = "contract_url")
+    @Column(name = "contract_url", columnDefinition = "NVARCHAR(500)")
     private String contractUrl;
 
     @Column(name = "signed_at")
     private LocalDateTime signedAt;
 
+    @Column(columnDefinition = "NVARCHAR(20)")
     private String status;
 
     @Column(name = "created_at")

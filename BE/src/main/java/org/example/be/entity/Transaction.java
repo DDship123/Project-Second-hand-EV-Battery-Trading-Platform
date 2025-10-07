@@ -20,6 +20,7 @@ public class Transaction {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @Column(columnDefinition = "NVARCHAR(20)")
     private String status;
 
     @Column(name = "created_at")

@@ -21,6 +21,7 @@ public class Commission {
 
     private BigDecimal amount;
 
+    @Column(columnDefinition = "NVARCHAR(20)")
     private String status;
 
     @Column(name = "created_at")

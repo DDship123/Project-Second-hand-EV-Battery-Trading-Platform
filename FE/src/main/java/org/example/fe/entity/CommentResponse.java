@@ -1,6 +1,5 @@
 package org.example.fe.entity;
 
-
 import java.time.LocalDateTime;
 
 public class CommentResponse {

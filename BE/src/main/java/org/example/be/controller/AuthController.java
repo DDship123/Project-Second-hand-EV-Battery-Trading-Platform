@@ -1,9 +1,9 @@
 package org.example.be.controller;
 
 
-import org.example.be.dto.ApiResponse;
-import org.example.be.dto.LoginRequest;
-import org.example.be.dto.MemberRegisterRequest;
+import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.LoginRequest;
+import org.example.be.dto.reponse.MemberRegisterRequest;
 import org.example.be.entity.Member;
 import org.example.be.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;

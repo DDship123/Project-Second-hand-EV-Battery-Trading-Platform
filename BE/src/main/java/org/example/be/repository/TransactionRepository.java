@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
-    List<Transaction> findByBuyer_MemberIdAndStatus(Integer buyerId, String status);
+    List<Transaction> findByBuyer_MemberId(Integer buyerId);
 
-    List<Transaction> findByPost_Seller_MemberIdAndStatus(Integer sellerId, String status);
+    List<Transaction> findByPost_Seller_MemberId(Integer sellerId);
 }

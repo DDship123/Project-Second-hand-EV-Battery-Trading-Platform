@@ -1,8 +1,5 @@
-package org.example.be.dto;
+package org.example.be.dto.reponse;
 
-import lombok.*;
-
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 

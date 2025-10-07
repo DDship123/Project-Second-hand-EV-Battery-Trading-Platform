@@ -25,16 +25,16 @@ public class Product {
     @JoinColumn(name = "battery_id")
     private Battery battery;  // FK
 
-    @Column(name = "product_type", length = 50)
+    @Column(name = "product_type", length = 50, columnDefinition = "NVARCHAR(50)")
     private String productType;
 
-    @Column(name = "name", length = 20, nullable = false)
+    @Column(name = "name", length = 20, nullable = false, columnDefinition = "NVARCHAR(20)")
     private String name;
 
-    @Column(name = "description", length = 500)
+    @Column(name = "description", length = 500, columnDefinition = "NVARCHAR(500)")
     private String description;
 
-    @Column(name = "status", length = 20)
+    @Column(name = "status", length = 20, columnDefinition = "NVARCHAR(20)")
     private String status; // active, sold, removed
 
     @Column(name = "created_at")

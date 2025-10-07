@@ -101,12 +101,11 @@ body {
    ITEM IMAGE
    ===================================================== */
 .container__body__item__image {
-    flex-shrink: 0;
+    width: 15%;
 }
 
 .container__body__item__image img {
-    width: 120px;
-    height: 90px;
+    width: 100%;
     object-fit: cover;
     border-radius: 10px;
     border: 2px solid #f0f0f0;
@@ -120,10 +119,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    justify-content: space-between;
 }
 
 .container__body__item__title {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 600;
     color: #333;
     line-height: 1.4;
@@ -138,7 +138,7 @@ body {
 }
 
 .container__body__item__seller {
-    font-size: 14px;
+    font-size: 18px;
     color: #666;
     font-weight: 500;
 }

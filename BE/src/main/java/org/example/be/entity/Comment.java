@@ -21,13 +21,13 @@ public class Comment {
     @Column(name = "rating")
     private int rating;
 
-    @Column(name = "comment", length = 1000)
+    @Column(name = "comment", length = 1000, columnDefinition = "NVARCHAR(1000)")
     private String comment;
 
-    @Column(name = "status", length = 20)
+    @Column(name = "status", length = 20, columnDefinition = "NVARCHAR(20)")
     private String status;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", columnDefinition = "NVARCHAR(50)")
     private String createdAt;
 
     public Integer getCommentId() {
