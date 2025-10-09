@@ -26,16 +26,26 @@ public class transactionsHistoryController {
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllBuyTransaction(memberResponse.getMemberId());
-        model.addAttribute("transactions", apiResponse.getPayload());
+        if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {
+            model.addAttribute("noTransactions", true);
+        } else {
+            model.addAttribute("noTransactions", false);
+            model.addAttribute("transactions", apiResponse.getPayload());
+        }
         return "transactionsHistoryPage";
     }
-    @GetMapping("/sell")
+    @GetMapping("/seller")
     public String getSellTransactionsHistory(Model model, HttpSession session) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllSellTransaction(memberResponse.getMemberId());
-        model.addAttribute("transactions", apiResponse.getPayload());
+        if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {
+            model.addAttribute("noTransactions", true);
+        } else {
+            model.addAttribute("noTransactions", false);
+            model.addAttribute("transactions", apiResponse.getPayload());
+        }
         return "transactionsHistoryPage";
     }
 }

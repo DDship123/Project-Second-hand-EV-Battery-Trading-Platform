@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/packagePage.css}" />
+</head>
+<body>
+<!-- =============================
+     HEADER SECTION
+     ============================= -->
+<header th:include="/commonComponents/header.html"></header>
+<!-- =============================
+     MAIN CONTENT SECTION
+     ============================= -->
+<!-- Package Registration Section -->
+<div class="packages">
+    <div class="packages__breadcrumb">
+        <span>Trang chủ</span><span>/</span><span>Đăng ký gói thành viên</span>
+        <h1 class="packages__title">ĐĂNG KÝ GÓI THÀNH VIÊN</h1>
+    </div>
+
+    <div class="packages__wrapper">
+        <!-- Gói Cơ Bản -->
+        <div class="packages__card">
+            <h3 class="packages__card-title">GÓI CƠ BẢN</h3>
+            <p class="packages__card-description">
+                Dành cho người dùng mới bắt đầu, cá nhân bán lẻ với sản phẩm.
+            </p>
+
+            <div class="packages__price-section">
+                <span class="packages__price">160.000đ</span>
+                <span class="packages__period">/ tháng</span>
+            </div>
+
+            <div class="packages__savings">
+                Tiết kiệm hơn <strong>60.000đ</strong> so với đăng tin và đăng tin
+                lẻ (*)
+            </div>
+
+            <ul class="packages__features">
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Đăng lại đã 3
+                    tin rao bán mỗi tháng (xe máy điện, ô tô điện hoặc pin).
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Tự nhập thù ở
+                    danh mục công khai.
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Quản lý, chỉnh
+                    sửa, xóa tin đăng trong trang cá nhân.
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Theo dõi liên
+                    trang giao dịch cơ bản (đăng chờ / hoàn tất).
+                </li>
+            </ul>
+
+            <button class="packages__button">MUA NGAY</button>
+        </div>
+
+        <!-- Gói Chuyên Nghiệp -->
+        <div class="packages__card packages__card--featured">
+            <h3 class="packages__card-title">GÓI CHUYÊN NGHIỆP</h3>
+            <p class="packages__card-description">
+                Dành người bán thương xuyên hoặc của hàng nhỏ muốn tăng khả năng
+                tiếp cận.
+            </p>
+
+            <div class="packages__price-section">
+                <span class="packages__price">360.000đ</span>
+                <span class="packages__period">/ tháng</span>
+            </div>
+
+            <div class="packages__savings">
+                Tiết kiệm hơn <strong>100.000đ</strong> so với đăng tin và đăng tin
+                lẻ (*)
+            </div>
+
+            <ul class="packages__features">
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Đăng lại đã 15
+                    tin rao bán mỗi tháng (xe máy điện, ô tô điện hoặc pin).
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Tín dụng ưu
+                    tiên hiển thị trên kết quả tìm kiếm và trang chủ.
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Tài liệu nhiều
+                    hình ảnh.
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Quản lý giao
+                    dịch, liệt kể mua bán chi tiết.
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Giảm 2% phí
+                    giao dịch.
+                </li>
+            </ul>
+
+            <button class="packages__button">MUA NGAY</button>
+        </div>
+
+        <!-- Gói Doanh Nghiệp -->
+        <div class="packages__card packages__card--premium">
+            <h3 class="packages__card-title">GÓI DOANH NGHIỆP</h3>
+            <p class="packages__card-description">
+                Dành đại lý, doanh nghiệp hoặc người bán chuyên nghiệp cần nhiều sản
+                phẩm.
+            </p>
+
+            <div class="packages__price-section">
+                <span class="packages__price">460.000đ</span>
+                <span class="packages__period">/ tháng</span>
+            </div>
+
+            <div class="packages__savings">
+                Tiết kiệm hơn <strong>200.000đ</strong> so với đăng tin và đăng tin
+                lẻ (*)
+            </div>
+
+            <ul class="packages__features">
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Đăng lại đã 30
+                    tin rao bán mỗi tháng (xe máy điện, ô tô điện hoặc pin).
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Quản lý toàn
+                    bộ sản phẩm, giao dịch, hợp đồng số.
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Được cập quyển
+                    quảng cáo banner / sản phẩm nổi bật.
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Hỗ trợ kỹ
+                    thuật ưu tiên 24/7.
+                </li>
+                <li class="packages__feature">
+                    <i class="packages__feature-icon fas fa-check"></i> Giảm 5% phí
+                    giao dịch.
+                </li>
+            </ul>
+
+            <button class="packages__button">MUA NGAY</button>
+        </div>
+    </div>
+</div>
+<!-- =============================
+     FOOTER SECTION
+     ============================= -->
+<footer th:include="/commonComponents/footer.html"></footer>
+</body>
+</html>

@@ -1,6 +1,9 @@
 package org.example.be.controller;
 
-import org.example.be.dto.reponse.*;
+import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.MemberResponse;
+import org.example.be.dto.reponse.PostResponse;
+import org.example.be.dto.reponse.ProductResponse;
 import org.example.be.entity.Post;
 import org.example.be.entity.PostImage;
 import org.example.be.service.PostService;
@@ -20,6 +23,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    // --- Helper chuyển Post -> PostResponse ---
     private PostResponse mapToResponse(Post post) {
         if (post == null) {
             return null;
@@ -29,7 +33,7 @@ public class PostController {
         List<String> images = post.getPostImages() != null && !post.getPostImages().isEmpty()
                 ? post.getPostImages().stream()
                 .map(PostImage::getImageUrl)
-                .filter(url -> url != null && !url.trim().isEmpty())
+                .filter(url -> url != null && !url.trim().isEmpty()) // Lọc bỏ URL null hoặc empty
                 .collect(Collectors.toList())
                 : List.of();
 
@@ -49,33 +53,6 @@ public class PostController {
             productResponse.setProductName(post.getProduct().getName());
             productResponse.setProductType(post.getProduct().getProductType());
             productResponse.setStatus(post.getProduct().getStatus());
-            productResponse.setDescription(post.getProduct().getDescription());
-            productResponse.setCreatedAt(post.getProduct().getCreatedAt());
-
-            // Sửa: truy cập memberId thông qua relationship
-            if (post.getProduct().getMember() != null) {
-                productResponse.setMemberId(post.getProduct().getMember().getMemberId());
-            }
-
-            // Tạo VehicleResponse nếu có vehicle
-            if (post.getProduct().getVehicle() != null) {
-                VehicleResponse vehicleResponse = new VehicleResponse();
-                vehicleResponse.setVehicleId(post.getProduct().getVehicle().getVehicleId());
-                vehicleResponse.setBrand(post.getProduct().getVehicle().getBrand());
-                vehicleResponse.setModel(post.getProduct().getVehicle().getModel());
-                vehicleResponse.setMileage(post.getProduct().getVehicle().getMileage());
-                productResponse.setVehicle(vehicleResponse);
-            }
-
-            // Tạo BatteryResponse nếu có battery
-            if (post.getProduct().getBattery() != null) {
-                BatteryResponse batteryResponse = new BatteryResponse();
-                batteryResponse.setBatteryId(post.getProduct().getBattery().getBatteryId());
-                batteryResponse.setCondition(post.getProduct().getBattery().getCondition());
-                batteryResponse.setBrand(post.getProduct().getBattery().getBrand());
-                batteryResponse.setCapacity(post.getProduct().getBattery().getCapacityAh());
-                productResponse.setBattery(batteryResponse);
-            }
         }
 
         PostResponse postResponse = new PostResponse();
@@ -100,21 +77,6 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    // --- GET POST BY ID ---
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<PostResponse>> getPostById(@PathVariable Integer id) {
-        Optional<Post> post = postService.getPostById(id);
-        ApiResponse<PostResponse> response = new ApiResponse<>();
-        if (post.isPresent()) {
-            response.ok(mapToResponse(post.get()));
-            return ResponseEntity.ok(response);
-        } else {
-            HashMap<String, String> error = new HashMap<>();
-            error.put("message", "Post not found");
-            response.error(error);
-            return ResponseEntity.status(404).body(response);
-        }
-    }
 
     // --- GET ALL POSTS ---
     @GetMapping
@@ -141,7 +103,6 @@ public class PostController {
         List<PostResponse> posts = postService.getPostsForYou(memberId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
@@ -243,13 +204,13 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         }
     }
+
     // --- GET LATEST VEHICLE POSTS ---
     @GetMapping("/latest/vehicle")
     public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestVehiclePosts() {
         List<PostResponse> posts = postService.getLatestVehiclePosts(8).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();

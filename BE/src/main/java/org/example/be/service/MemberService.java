@@ -1,8 +1,8 @@
 package org.example.be.service;
 
 import org.example.be.dto.reponse.ApiResponse;
-import org.example.be.dto.reponse.LoginRequest;
-import org.example.be.dto.reponse.MemberRegisterRequest;
+import org.example.be.dto.request.LoginRequest;
+import org.example.be.dto.request.MemberRegisterRequest;
 import org.example.be.entity.Member;
 import org.example.be.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;

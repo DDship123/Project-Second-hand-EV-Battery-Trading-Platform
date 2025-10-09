@@ -69,6 +69,11 @@ body {
     transition: all 0.3s ease;
     position: relative;
 }
+.container__header__category button a{
+    text-decoration: none;
+    color: #23d49e;
+}
+
 .container__header__category button:hover {
     background-color: rgba(35, 214, 158, 0.1);
     transform: translateY(-2px);
@@ -78,9 +83,15 @@ body {
     transform: translateY(-2px);
 }
 .container__header__category__status {
+.container__header__category button.active a {
+    color: white !important;
+}
     display: flex;
     position: relative;
     margin-right: 15px;
+}
+.container__header__category button.active:hover a {
+    color: white !important;
 }
 .container__header__category__status:after{
     content: "";
