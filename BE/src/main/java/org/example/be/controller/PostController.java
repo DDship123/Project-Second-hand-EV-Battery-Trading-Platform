@@ -111,7 +111,6 @@ public class PostController {
         List<PostResponse> posts = postService.getPostsForYou(memberId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
@@ -219,7 +218,6 @@ public class PostController {
         List<PostResponse> posts = postService.getLatestVehiclePosts(8).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();

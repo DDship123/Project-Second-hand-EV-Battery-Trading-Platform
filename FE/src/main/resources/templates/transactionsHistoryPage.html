@@ -55,6 +55,7 @@
     <!-- Transaction List -->
     <div class="container__body">
         <!-- Transaction Item 1 -->
+        <h2 class="container__body__empty" th:if="${noTransactions == false}">Không có giao dịch</h2>
         <div th:each="transaction: ${transactions}" class="container__body__item">
             <div class="container__body__item__header">
                 <div th:text="${transaction.getTransactionId()}" class="container__body__item__id">#039876547</div>

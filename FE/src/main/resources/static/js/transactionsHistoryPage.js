@@ -64,10 +64,44 @@ document.addEventListener("DOMContentLoaded", function () {
         playIcon.style.transform = "rotate(90deg)";
         playIcon.style.transition = "transform 0.3s ease-in-out";
     }
-    const categoryBtn = document.querySelectorAll(".container__header__category button");
-    categoryBtn.forEach((btn) => {
+
+    // URL-based active state logic
+    const currentPath = window.location.pathname;
+    const categoryBtns = document.querySelectorAll(".container__header__category button");
+
+    // Find specific buttons by their href attributes
+    let buyButton = null;
+    let sellButton = null;
+
+    categoryBtns.forEach(btn => {
+        const link = btn.querySelector('a');
+        if (link) {
+            const href = link.getAttribute('href');
+            if (href && href.includes('/transactionsHistory')) {
+                if (href.includes('/seller')) {
+                    sellButton = btn;
+                } else {
+                    buyButton = btn;
+                }
+            }
+        }
+    });
+
+    // Remove all active classes first
+    categoryBtns.forEach(btn => btn.classList.remove("active"));
+
+    // Add active class based on URL
+    if (currentPath.includes('/seller') && sellButton) {
+        sellButton.classList.add("active");
+    } else if (buyButton) {
+        buyButton.classList.add("active");
+    }
+
+    // Handle manual button clicks
+    categoryBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
-            categoryBtn.forEach((b) => b.classList.remove("active"));
+            // Don't prevent navigation, just update visual state
+            categoryBtns.forEach((b) => b.classList.remove("active"));
             btn.classList.add("active");
         });
     });
