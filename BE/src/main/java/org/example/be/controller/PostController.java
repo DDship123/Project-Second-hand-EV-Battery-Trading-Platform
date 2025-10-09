@@ -32,21 +32,28 @@ public class PostController {
         // Xử lý images - chỉ lấy URL string
         List<String> images = post.getPostImages() != null && !post.getPostImages().isEmpty()
                 ? post.getPostImages().stream()
-                    .map(PostImage::getImageUrl)
-                    .filter(url -> url != null && !url.trim().isEmpty()) // Lọc bỏ URL null hoặc empty
-                    .collect(Collectors.toList())
+                .map(PostImage::getImageUrl)
+                .filter(url -> url != null && !url.trim().isEmpty()) // Lọc bỏ URL null hoặc empty
+                .collect(Collectors.toList())
                 : List.of();
-        MemberResponse sellerResponse = new MemberResponse();
-        sellerResponse.setMemberId(post.getSeller().getMemberId());
-        sellerResponse.setCity(post.getSeller().getCity());
-        sellerResponse.setUsername(post.getSeller().getUsername());
-        sellerResponse.setAvatarUrl(post.getSeller().getAvatarUrl());
 
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setProductId(post.getProduct().getProductsId());
-        productResponse.setProductName(post.getProduct().getName());
-        productResponse.setProductType(post.getProduct().getProductType());
-        productResponse.setStatus(post.getProduct().getStatus());
+        MemberResponse sellerResponse = null;
+        if (post.getSeller() != null) {
+            sellerResponse = new MemberResponse();
+            sellerResponse.setMemberId(post.getSeller().getMemberId());
+            sellerResponse.setCity(post.getSeller().getCity());
+            sellerResponse.setUsername(post.getSeller().getUsername());
+            sellerResponse.setAvatarUrl(post.getSeller().getAvatarUrl());
+        }
+
+        ProductResponse productResponse = null;
+        if (post.getProduct() != null) {
+            productResponse = new ProductResponse();
+            productResponse.setProductId(post.getProduct().getProductsId());
+            productResponse.setProductName(post.getProduct().getName());
+            productResponse.setProductType(post.getProduct().getProductType());
+            productResponse.setStatus(post.getProduct().getStatus());
+        }
 
         PostResponse postResponse = new PostResponse();
         postResponse.setPostsId(post.getPostsId());
@@ -70,22 +77,9 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    // --- GET POST BY ID ---
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<PostResponse>> getPostById(@PathVariable Integer id) {
-        Optional<Post> post = postService.getPostById(id);
-        ApiResponse<PostResponse> response = new ApiResponse<>();
-        if (post.isPresent()) {
-            response.ok(mapToResponse(post.get()));
-            return ResponseEntity.ok(response);
-        } else {
-            HashMap<String, String> error = new HashMap<>();
-            error.put("message", "Post not found");
-            response.error(error);
-            return ResponseEntity.status(404).body(response);
-        }
-    }
+    // ... các endpoint khác không đổi ...
 
+<<<<<<< HEAD
     // --- GET ALL POSTS ---
     @GetMapping
     public ResponseEntity<ApiResponse<List<PostResponse>>> getAllPosts() {
@@ -212,6 +206,8 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         }
     }
+=======
+>>>>>>> 9f12ded9524e6888c0387444ac63c3fedaf96ea8
     // --- GET LATEST VEHICLE POSTS ---
     @GetMapping("/latest/vehicle")
     public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestVehiclePosts() {

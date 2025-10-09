@@ -73,15 +73,15 @@ public class PostService {
 
     // --- Latest Posts ---
     public List<Post> getLatestPosts(int limit) {
-        return postRepository.findLatestPosts(PageRequest.of(0, limit));
+        return postRepository.findLatestPosts(PageRequest.of(0, Math.max(1, limit)));
     }
-    // Lấy 8 post vehicle mới nhất
+    // Lấy post mới nhất theo loại (vehicle/battery) với limit động
     public List<Post> getLatestVehiclePosts(int limit) {
-        return postRepository.findLatestVehiclePosts(PageRequest.of(0, 8));
+        return postRepository.findLatestPostsByType("vehicle", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
     }
 
-    // Lấy 8 post battery mới nhất
+    // Lấy latest battery posts
     public List<Post> getLatestBatteryPosts(int limit) {
-        return postRepository.findLatestBatteryPosts(PageRequest.of(0, 8));
+        return postRepository.findLatestPostsByType("battery", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
     }
 }
