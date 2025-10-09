@@ -77,9 +77,7 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    // ... các endpoint khác không đổi ...
 
-<<<<<<< HEAD
     // --- GET ALL POSTS ---
     @GetMapping
     public ResponseEntity<ApiResponse<List<PostResponse>>> getAllPosts() {
@@ -206,8 +204,7 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         }
     }
-=======
->>>>>>> 9f12ded9524e6888c0387444ac63c3fedaf96ea8
+
     // --- GET LATEST VEHICLE POSTS ---
     @GetMapping("/latest/vehicle")
     public ResponseEntity<ApiResponse<List<PostResponse>>> getLatestVehiclePosts() {
