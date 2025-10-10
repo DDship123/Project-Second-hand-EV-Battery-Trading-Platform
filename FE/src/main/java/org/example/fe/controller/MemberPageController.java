@@ -1,19 +1,19 @@
 package org.example.fe.controller;
 
-import com.cloudinary.Cloudinary;
 import jakarta.servlet.http.HttpSession;
 import org.example.fe.config.CloudinaryService;
 import org.example.fe.entity.MemberResponse;
 import org.example.fe.entity.ApiResponse;
+import org.example.fe.entity.TransactionResponse;
 import org.example.fe.service.MemberService;
+import org.example.fe.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/account")
@@ -22,8 +22,10 @@ public class MemberPageController {
     private MemberService memberService;
     @Autowired
     private CloudinaryService cloudinaryService;
+    @Autowired
+    private TransactionService transactionService;
 
-    @RequestMapping({"/personalInformation",""})
+    @GetMapping({"/personalInformation",""})
     public String personalInformation(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         model.addAttribute("user", user);
@@ -60,7 +62,7 @@ public class MemberPageController {
         }
     }
 
-    @RequestMapping("/security")
+    @GetMapping("/security")
     public String security(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         model.addAttribute("user", user);
@@ -94,10 +96,30 @@ public class MemberPageController {
         return "securityPage";
     }
 
-    @RequestMapping("/transactionHistory")
-    public String transactionHistory(Model model, HttpSession session) {
+    @GetMapping("/transactionHistory")
+    public String transactionHistoryBuyer(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         model.addAttribute("user", user);
+        ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllBuyTransaction(user.getMemberId());
+        if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {
+            model.addAttribute("noTransactions", true);
+        } else {
+            model.addAttribute("noTransactions", false);
+            model.addAttribute("transactions", apiResponse.getPayload());
+        }
+        return "memberTransactionHistoryPage";
+    }
+    @GetMapping("/transactionHistory/seller")
+    public String transactionHistorySeller(Model model, HttpSession session) {
+        MemberResponse user = (MemberResponse) session.getAttribute("user");
+        model.addAttribute("user", user);
+        ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllSellTransaction(user.getMemberId());
+        if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {
+            model.addAttribute("noTransactions", true);
+        } else {
+            model.addAttribute("noTransactions", false);
+            model.addAttribute("transactions", apiResponse.getPayload());
+        }
         return "memberTransactionHistoryPage";
     }
 }

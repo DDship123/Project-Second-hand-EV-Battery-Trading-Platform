@@ -48,11 +48,35 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "ORDER BY p.createdAt DESC")
     List<Post> findPostsForYouByStatus(@Param("memberId") Integer memberId,
                                        @Param("status") String status);
+<<<<<<< HEAD
 
     // Lấy 8 post mới nhất chỉ cho vehicle (case-insensitive)
     @Query("SELECT p FROM Post p " +
             "WHERE LOWER(p.product.productType) = LOWER(:productType) " +
             "AND LOWER(p.status) = LOWER(:status) " +
+=======
+//    // Lấy 8 post mới nhất chỉ cho vehicle
+//    @Query("SELECT p FROM Post p " +
+//            "WHERE p.product.productType = 'vehicle' AND p.status = 'approved' " +
+//            "ORDER BY p.createdAt DESC")
+//    List<Post> findLatestVehiclePosts(Pageable pageable);
+
+    // Lấy 8 post mới nhất chỉ cho vehicle
+    @Query("SELECT p FROM Post p " +
+            "WHERE p.product.productType = 'vehicle' AND p.status = 'ACTIVE' " +
+            "ORDER BY p.createdAt DESC")
+    List<Post> findLatestVehiclePosts(Pageable pageable);
+
+//    // Lấy 8 post mới nhất chỉ cho battery
+//    @Query("SELECT p FROM Post p " +
+//            "WHERE p.product.productType = 'battery' AND p.status = 'approved' " +
+//            "ORDER BY p.createdAt DESC")
+//    List<Post> findLatestBatteryPosts(Pageable pageable);
+
+    // Lấy 8 post mới nhất chỉ cho battery
+    @Query("SELECT p FROM Post p " +
+            "WHERE p.product.productType = 'battery' AND p.status = 'ACTIVE' " +
+>>>>>>> duong
             "ORDER BY p.createdAt DESC")
     List<Post> findLatestPostsByType(@Param("productType") String productType,
                                      @Param("status") String status,

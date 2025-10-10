@@ -16,8 +16,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
     if (productsDropdown) {
         productsDropdown.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+            // e.preventDefault();
+            // e.stopPropagation();
 
             // Toggle dropdown active class
             this.classList.toggle('dropdown-active');
