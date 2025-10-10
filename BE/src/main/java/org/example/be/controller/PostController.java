@@ -57,7 +57,7 @@ public class PostController {
                 productResponse.setMemberId(post.getProduct().getMember().getMemberId());
             }
 
-            // Tạo VehicleResponse nếu có vehicle
+
             if (post.getProduct().getVehicle() != null) {
                 VehicleResponse vehicleResponse = new VehicleResponse();
                 vehicleResponse.setVehicleId(post.getProduct().getVehicle().getVehicleId());
@@ -67,7 +67,7 @@ public class PostController {
                 productResponse.setVehicle(vehicleResponse);
             }
 
-            // Tạo BatteryResponse nếu có battery
+
             if (post.getProduct().getBattery() != null) {
                 BatteryResponse batteryResponse = new BatteryResponse();
                 batteryResponse.setBatteryId(post.getProduct().getBattery().getBatteryId());
