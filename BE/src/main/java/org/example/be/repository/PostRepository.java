@@ -65,4 +65,29 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                                      @Param("status") String status,
                                      Pageable pageable);
 
+    // Lấy tất cả post dựa vào member city
+    @Query("SELECT p " +
+            "FROM Post p " +
+            "WHERE p.seller.city = :city")
+    List<Post> findAllPostByMemberCity(@Param("city") String city);
+
+    // Lấy tất cả post dựa vào member city và product type
+    @Query("SELECT p " +
+            "FROM Post p " +
+            "WHERE p.seller.city = :city " +
+            "AND p.product.productType = :productType")
+    List<Post> findAllPostsByMemberCityAndProductType(@Param("productType") String productType,
+                                                      @Param("city") String city);
+
+    // Lấy tất cả post dựa vào member city và product type và status
+    @Query("SELECT p " +
+            "FROM Post p " +
+            "WHERE p.seller.city = :city " +
+            "AND p.product.productType = :productType " +
+            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+    List<Post> findAllPostsByMemberCityAndProductTypeAndStatus(@Param("productType") String productType,
+                                                               @Param("city") String city,
+                                                               @Param("title") String title);
+
 }
+

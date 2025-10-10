@@ -93,4 +93,19 @@ public class PostService {
         return postRepository.findLatestPostsByType("battery", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
     }
 
+    // Lấy tất cả post theo city
+    public List<Post> findAllByMemberCity(String city) {
+        return postRepository.findAllPostByMemberCity(city);
+    }
+
+    // Lấy tất cả post theo city và productType
+    public List<Post> findAllByMemberCityAndProductType(String city, String productType) {
+        return postRepository.findAllPostsByMemberCityAndProductType(productType, city);
+    }
+
+    // Lấy tất cả post theo city, productType và title
+    public List<Post> findAllByMemberCityAndProductTypeAndTitle(String city, String productType, String title) {
+        return postRepository.findAllPostsByMemberCityAndProductTypeAndStatus(productType, city, title);
+    }
+
 }

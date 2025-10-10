@@ -298,4 +298,50 @@ public class PostController {
             return ResponseEntity.ok(response);
         }
     }
+
+
+    // -- GET ALL POST BY MEMBER CITY --
+    @GetMapping("/city")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> findAllPostByMember(@RequestParam String city) {
+        List<PostResponse> posts = postService.findAllByMemberCity(city).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        response.ok(posts);
+        return ResponseEntity.ok(response);
+    }
+
+    // -- GET ALL POST BY MEMBER CITY AND PRODUCT TYPE --
+    @GetMapping("/city-type")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> findAllPostsByMemberCityAndProductType(
+            @RequestParam String productType,
+            @RequestParam String city) {
+
+        List<PostResponse> posts = postService.findAllByMemberCityAndProductType(city, productType).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        response.ok(posts);
+        return ResponseEntity.ok(response);
+    }
+
+    // -- GET ALL POST BY MEMBER CITY AND PRODUCT TYPE AND TITLE --
+    @GetMapping("/city-type-title")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> findAllPostsByMemberCityAndProductTypeAndTitle(
+            @RequestParam String productType,
+            @RequestParam String city,
+            @RequestParam String title) {
+
+        List<PostResponse> posts = postService.findAllByMemberCityAndProductTypeAndTitle(city, productType, title)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        response.ok(posts);
+        return ResponseEntity.ok(response);
+    }
+
 }
