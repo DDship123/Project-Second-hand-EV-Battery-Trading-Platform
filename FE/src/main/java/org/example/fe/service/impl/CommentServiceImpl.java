@@ -102,4 +102,44 @@ public class CommentServiceImpl implements CommentService {
         return response;
 
     }
+
+    @Override
+    public ApiResponse<List<CommentResponse>> FindAllCommentByPostId(int postId) {
+        ApiResponse<List<CommentResponse>> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend with postId parameter
+            ResponseEntity<ApiResponse<List<CommentResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/comments/post/" + postId,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<CommentResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get comments by postId successful
+                response.ok((List<CommentResponse>) apiResponse.getBody().getPayload());
+            } else {
+                // Get comments by postId failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve comments for post: " + postId);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get comments by postId: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+
+    }
 }

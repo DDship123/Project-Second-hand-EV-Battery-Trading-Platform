@@ -1,9 +1,6 @@
 package org.example.be.controller;
 
-import org.example.be.dto.reponse.ApiResponse;
-import org.example.be.dto.reponse.MemberResponse;
-import org.example.be.dto.reponse.PostResponse;
-import org.example.be.dto.reponse.ProductResponse;
+import org.example.be.dto.reponse.*;
 import org.example.be.entity.Post;
 import org.example.be.entity.PostImage;
 import org.example.be.service.PostService;
@@ -23,7 +20,6 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    // --- Helper chuyển Post -> PostResponse ---
     private PostResponse mapToResponse(Post post) {
         if (post == null) {
             return null;
@@ -33,7 +29,7 @@ public class PostController {
         List<String> images = post.getPostImages() != null && !post.getPostImages().isEmpty()
                 ? post.getPostImages().stream()
                 .map(PostImage::getImageUrl)
-                .filter(url -> url != null && !url.trim().isEmpty()) // Lọc bỏ URL null hoặc empty
+                .filter(url -> url != null && !url.trim().isEmpty())
                 .collect(Collectors.toList())
                 : List.of();
 
@@ -53,6 +49,33 @@ public class PostController {
             productResponse.setProductName(post.getProduct().getName());
             productResponse.setProductType(post.getProduct().getProductType());
             productResponse.setStatus(post.getProduct().getStatus());
+            productResponse.setDescription(post.getProduct().getDescription());
+            productResponse.setCreatedAt(post.getProduct().getCreatedAt());
+
+            // Sửa: truy cập memberId thông qua relationship
+            if (post.getProduct().getMember() != null) {
+                productResponse.setMemberId(post.getProduct().getMember().getMemberId());
+            }
+
+
+            if (post.getProduct().getVehicle() != null) {
+                VehicleResponse vehicleResponse = new VehicleResponse();
+                vehicleResponse.setVehicleId(post.getProduct().getVehicle().getVehicleId());
+                vehicleResponse.setBrand(post.getProduct().getVehicle().getBrand());
+                vehicleResponse.setModel(post.getProduct().getVehicle().getModel());
+                vehicleResponse.setMileage(post.getProduct().getVehicle().getMileage());
+                productResponse.setVehicle(vehicleResponse);
+            }
+
+
+            if (post.getProduct().getBattery() != null) {
+                BatteryResponse batteryResponse = new BatteryResponse();
+                batteryResponse.setBatteryId(post.getProduct().getBattery().getBatteryId());
+                batteryResponse.setCondition(post.getProduct().getBattery().getCondition());
+                batteryResponse.setBrand(post.getProduct().getBattery().getBrand());
+                batteryResponse.setCapacity(post.getProduct().getBattery().getCapacityAh());
+                productResponse.setBattery(batteryResponse);
+            }
         }
 
         PostResponse postResponse = new PostResponse();

@@ -14,5 +14,8 @@ public interface PostService {
     ApiResponse<List<PostResponse>> getLatestPosts();
     ApiResponse<List<PostResponse>> getLatestVehiclePosts();
     ApiResponse<List<PostResponse>> getLatestBatteryPosts();
+    ApiResponse<List<PostResponse>> findAllPostByMemberCity(String city);
+    ApiResponse<List<PostResponse>> findAllPostByMemberCityAndProductType(String city,String productType);
+    ApiResponse<List<PostResponse>> findAllPostByMemberCityAndProductTypeAndTitle(String productType,String city,String title);
 
 }
