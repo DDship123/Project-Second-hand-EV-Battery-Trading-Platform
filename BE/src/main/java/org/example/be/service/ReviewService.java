@@ -48,4 +48,8 @@ public class ReviewService {
     public void deleteReview(Integer id) {
         reviewRepository.deleteById(id);
     }
+
+    public List<Review> findAllReviewBySellerId(Integer sellerId) {
+        return reviewRepository.findAllBySeller_MemberId(sellerId);
+    }
 }

@@ -44,4 +44,7 @@ public class CommentService {
         commentRepository.deleteById(id);
     }
 
+    public List<Comment> findAllCommentByPostId(Integer postId) {
+        return commentRepository.findAllByPost_PostsId(postId);
+    }
 }

@@ -84,4 +84,13 @@ public class PostService {
     public List<Post> getLatestBatteryPosts(int limit) {
         return postRepository.findLatestPostsByType("battery", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
     }
+    // Lấy tất cả post vehicle (không giới hạn)
+    public List<Post> findAllVehiclePosts() {
+        return postRepository.findLatestPostsByType("vehicle", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
+    }
+    // Lấy tất cả post battery (không giới hạn)
+    public List<Post> findAllBatteryPosts() {
+        return postRepository.findLatestPostsByType("battery", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
+    }
+
 }

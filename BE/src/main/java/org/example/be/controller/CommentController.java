@@ -100,5 +100,19 @@ public class CommentController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-
+    // Lấy tất cả bình luận theo ID bài viết
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<ApiResponse<List<Comment>>> findAllCommentByPostId(@PathVariable Integer postId) {
+        ApiResponse<List<Comment>> response = new ApiResponse<>();
+        try {
+            List<Comment> comments = commentService.findAllCommentByPostId(postId);
+            response.ok(comments);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 }

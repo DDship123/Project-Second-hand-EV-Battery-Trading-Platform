@@ -124,5 +124,18 @@ public class ReviewController {
             return ResponseEntity.internalServerError().body(response);
         }
     }
-
+    @GetMapping("/seller/{sellerId}")
+    public ResponseEntity<ApiResponse<List<Review>>> findAllReviewBySellerId(@PathVariable Integer sellerId) {
+        ApiResponse<List<Review>> response = new ApiResponse<>();
+        try {
+            List<Review> reviews = reviewService.findAllReviewBySellerId(sellerId);
+            response.ok(reviews);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
 }
