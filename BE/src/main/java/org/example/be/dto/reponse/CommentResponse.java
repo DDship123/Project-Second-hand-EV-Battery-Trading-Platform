@@ -1,11 +1,14 @@
 package org.example.be.dto.reponse;
 
+import org.example.be.entity.Member;
+import org.example.be.entity.Post;
+
 import java.time.LocalDateTime;
 
 public class CommentResponse {
     private int commentId;
-    private int postId;
-    private int memberId;
+    private Post post;
+    private Member member;
     private int rating;
     private String comment;
     private String status;
@@ -14,10 +17,10 @@ public class CommentResponse {
     public CommentResponse() {
     }
 
-    public CommentResponse(int commentId, int postId, int memberId, int rating, String comment, String status, LocalDateTime createdAt) {
+    public CommentResponse(int commentId, Post post, Member member, int rating, String comment, String status, LocalDateTime createdAt) {
         this.commentId = commentId;
-        this.postId = postId;
-        this.memberId = memberId;
+        this.post = post;
+        this.member = member;
         this.rating = rating;
         this.comment = comment;
         this.status = status;
@@ -32,20 +35,20 @@ public class CommentResponse {
         this.commentId = commentId;
     }
 
-    public int getPostId() {
-        return postId;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
-    public int getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public int getRating() {

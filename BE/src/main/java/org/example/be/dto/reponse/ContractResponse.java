@@ -1,10 +1,12 @@
 package org.example.be.dto.reponse;
 
+import org.example.be.entity.Transaction;
+
 import java.time.LocalDateTime;
 
 public class ContractResponse {
     private int contractId;
-    private int transactionId;
+    private Transaction transaction;
     private String contractUrl;
     private LocalDateTime signedAt;
     private String status;
@@ -13,9 +15,9 @@ public class ContractResponse {
     public ContractResponse() {
     }
 
-    public ContractResponse(int contractId, int transactionId, String contractUrl, LocalDateTime signedAt, String status, LocalDateTime createdAt) {
+    public ContractResponse(int contractId, Transaction transaction, String contractUrl, LocalDateTime signedAt, String status, LocalDateTime createdAt) {
         this.contractId = contractId;
-        this.transactionId = transactionId;
+        this.transaction = transaction;
         this.contractUrl = contractUrl;
         this.signedAt = signedAt;
         this.status = status;
@@ -30,12 +32,12 @@ public class ContractResponse {
         this.contractId = contractId;
     }
 
-    public int getTransactionId() {
-        return transactionId;
+    public Transaction getTransaction() {
+        return transaction;
     }
 
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 
     public String getContractUrl() {

@@ -1,11 +1,14 @@
 package org.example.be.dto.reponse;
 
+import org.example.be.entity.Member;
+import org.example.be.entity.MembershipPlan;
+
 import java.time.LocalDateTime;
 
 public class MemberPlanUsage {
     private int usageId;
-    private int memberId;
-    private int planId;
+    private Member member;
+    private MembershipPlan plan;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private int usedPosts;
@@ -14,10 +17,10 @@ public class MemberPlanUsage {
     public MemberPlanUsage() {
     }
 
-    public MemberPlanUsage(int usageId, int memberId, int planId, LocalDateTime startDate, LocalDateTime endDate, int usedPosts, String status) {
+    public MemberPlanUsage(int usageId, Member member, MembershipPlan plan, LocalDateTime startDate, LocalDateTime endDate, int usedPosts, String status) {
         this.usageId = usageId;
-        this.memberId = memberId;
-        this.planId = planId;
+        this.member = member;
+        this.plan = plan;
         this.startDate = startDate;
         this.endDate = endDate;
         this.usedPosts = usedPosts;
@@ -32,20 +35,20 @@ public class MemberPlanUsage {
         this.usageId = usageId;
     }
 
-    public int getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
-    public int getPlanId() {
-        return planId;
+    public MembershipPlan getPlan() {
+        return plan;
     }
 
-    public void setPlanId(int planId) {
-        this.planId = planId;
+    public void setPlan(MembershipPlan plan) {
+        this.plan = plan;
     }
 
     public LocalDateTime getStartDate() {
