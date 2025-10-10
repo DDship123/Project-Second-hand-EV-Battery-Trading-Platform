@@ -12,5 +12,6 @@ public interface PostService {
     ApiResponse<List<PostResponse>> getAllPostVehicle();
     ApiResponse<PostResponse>getPostDetail(int postID);
     ApiResponse<List<PostResponse>> getLatestPosts();
+    ApiResponse<List<PostResponse>> findAllPostByMemberCity(String city);
 
 }
