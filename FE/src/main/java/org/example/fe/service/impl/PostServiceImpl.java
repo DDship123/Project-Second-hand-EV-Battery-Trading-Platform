@@ -297,8 +297,6 @@ public class PostServiceImpl implements PostService {
         }
         return response;
     }
-}
-
     @Override
     public ApiResponse<List<PostResponse>> findAllPostByMemberCity(String city) {
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
@@ -421,4 +419,7 @@ public class PostServiceImpl implements PostService {
     }
 
 }
+
+
+
 
