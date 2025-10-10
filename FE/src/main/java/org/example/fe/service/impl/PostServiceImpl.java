@@ -101,7 +101,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ApiResponse<List<PostResponse>> getAllPostBatery() {
+    public ApiResponse<List<PostResponse>> getAllPostBattery() {
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
 
         try {
@@ -250,6 +250,124 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ApiResponse<List<PostResponse>> findAllPostByMemberCity(String city) {
-        return null;
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend with city parameter
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/by-city?city=" + city,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get posts by city successful
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+            } else {
+                // Get posts by city failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve posts by city: " + city);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get posts by city: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
     }
+
+    @Override
+    public ApiResponse<List<PostResponse>> findAllPostByMemberCityAndProductType(String city, String productType) {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend with city and productType parameters
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/by-city-and-type?city=" + city + "&productType=" + productType,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get posts by city and productType successful
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+            } else {
+                // Get posts by city and productType failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve posts by city: " + city + " and productType: " + productType);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get posts by city and productType: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+
+    }
+
+    @Override
+    public ApiResponse<List<PostResponse>> findAllPostByMemberCityAndProductTypeAndTitle(String productType, String city, String title) {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+            // create Url
+            String url = apiBaseUrl + "/api/posts/search?city=" + city + "&productType=" + productType + "&title=" + title;
+
+            // Make API call to backend with city, productType and title parameters
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get posts by city, productType and title successful
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+            } else {
+                // Get posts by city, productType and title failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve posts by city: " + city + ", productType: " + productType + " and title: " + title);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get posts by search criteria: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+
+    }
+
 }
+

@@ -9,4 +9,5 @@ import java.util.List;
 public interface CommentService {
     ApiResponse<List<CommentResponse>> getAllComments(int postID);
     ApiResponse<CommentResponse> createComment(CommentResponse com);
+    ApiResponse<List<CommentResponse>> FindAllCommentByPostId(int postId);
 }
