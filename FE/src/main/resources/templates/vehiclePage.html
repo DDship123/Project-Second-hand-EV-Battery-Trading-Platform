@@ -98,30 +98,30 @@
     <h2 class="vehicle__title">DANH SÁCH PHƯƠNG TIỆN</h2>
     <div class="vehicle__container">
         <!-- Vehicle Item 1 -->
-        <div class="vehicle__item">
+        <div th:each="post :${posts}" class="vehicle__item">
             <div class="vehicle__item__image">
                 <img
-                        src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=300&h=200&fit=crop"
+                        th:src="${post.getImages()[0]}"
                         alt="IMPES Scooter"
                 />
             </div>
             <div class="vehicle__item__details">
-                <h3 class="vehicle__item__details__title">
+                <h3 th:text="${post.getTitle()}" class="vehicle__item__details__title">
                     IMPES CÓ SẮC PIN ĐẦY ĐỦ
                 </h3>
                 <p class="vehicle__item__details__date">2023 - 30000km</p>
-                <p class="vehicle__item__details__price">8.500.000 đ</p>
+                <p class="vehicle__item__details__price" th:text="${post.getPrice()}">8.500.000 đ</p>
                 <div class="vehicle__item__details__location">
-                    <i class="fas fa-map-marker-alt"></i> Tp Hồ Chí Minh
+                    <i class="fas fa-map-marker-alt"></i> <span th:text="${post.getSeller().getCity()}">Tp Hồ Chí Minh</span>
                 </div>
                 <div class="vehicle__item__details__seller">
                     <img
-                            src="https://wallpapers.com/images/hd/dark-medium-grey-background-3qgbvsl1pgc4cb5q.jpg"
+                            th:src="${post.getSeller().getAvatarUrl()}"
                             alt="Seller Image"
                     />
-                    <p class="vehicle__item__details__seller__name">Nguyễn Thế Anh</p>
+                    <p class="vehicle__item__details__seller__name" th:text="${post.getSeller().getUsername()}">Nguyễn Thế Anh</p>
                     <p class="vehicle__item__details__seller__rating">
-                        5 <i class="fas fa-star"></i>
+                        <span>5</span> <i class="fas fa-star"></i>
                     </p>
                 </div>
             </div>
@@ -129,165 +129,12 @@
                 <a href="#" class="vehicle__item__actions__buy"
                 ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
                 >
-                <a href="#" class="vehicle__item__actions__heart">
+                <a th:href="@{'/home/wishList/add/' + ${post.getPostsId()}}" th:if="${guest.equals('false')}" class="vehicle__item__actions__heart">
                     <i class="far fa-heart"></i>
                 </a>
             </div>
         </div>
 
-        <!-- Vehicle Item 2 -->
-        <div class="vehicle__item">
-            <div class="vehicle__item__image">
-                <img
-                        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop"
-                        alt="Xe máy điện VinFast"
-                />
-            </div>
-            <div class="vehicle__item__details">
-                <h3 class="vehicle__item__details__title">
-                    VinFast Feliz - Xe máy điện thông minh
-                </h3>
-                <p class="vehicle__item__details__date">2024 - 15000km</p>
-                <p class="vehicle__item__details__price">12.800.000 đ</p>
-                <div class="vehicle__item__details__location">
-                    <i class="fas fa-map-marker-alt"></i> Hà Nội
-                </div>
-                <div class="vehicle__item__details__seller">
-                    <img
-                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"
-                            alt="Seller Image"
-                    />
-                    <p class="vehicle__item__details__seller__name">
-                        Trần Minh Hoàng
-                    </p>
-                    <p class="vehicle__item__details__seller__rating">
-                        4.8 <i class="fas fa-star"></i>
-                    </p>
-                </div>
-            </div>
-            <div class="vehicle__item__actions">
-                <a href="#" class="vehicle__item__actions__buy"
-                ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
-                >
-                <a href="#" class="vehicle__item__actions__heart">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Vehicle Item 3 -->
-        <div class="vehicle__item">
-            <div class="vehicle__item__image">
-                <img
-                        src="https://images.unsplash.com/photo-1607853554439-0069ec0f29b6?w=300&h=200&fit=crop"
-                        alt="Xe đạp điện"
-                />
-            </div>
-            <div class="vehicle__item__details">
-                <h3 class="vehicle__item__details__title">
-                    Xe đạp điện Yamaha EC-05
-                </h3>
-                <p class="vehicle__item__details__date">2023 - 8000km</p>
-                <p class="vehicle__item__details__price">18.500.000 đ</p>
-                <div class="vehicle__item__details__location">
-                    <i class="fas fa-map-marker-alt"></i> Đà Nẵng
-                </div>
-                <div class="vehicle__item__details__seller">
-                    <img
-                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"
-                            alt="Seller Image"
-                    />
-                    <p class="vehicle__item__details__seller__name">Lê Thị Mai</p>
-                    <p class="vehicle__item__details__seller__rating">
-                        4.9 <i class="fas fa-star"></i>
-                    </p>
-                </div>
-            </div>
-            <div class="vehicle__item__actions">
-                <a href="#" class="vehicle__item__actions__buy"
-                ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
-                >
-                <a href="#" class="vehicle__item__actions__heart">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Vehicle Item 4 -->
-        <div class="vehicle__item">
-            <div class="vehicle__item__image">
-                <img
-                        src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=300&h=200&fit=crop"
-                        alt="Xe máy điện Honda"
-                />
-            </div>
-            <div class="vehicle__item__details">
-                <h3 class="vehicle__item__details__title">
-                    Honda PCX Electric - Xe ga điện cao cấp
-                </h3>
-                <p class="vehicle__item__details__date">2024 - 5000km</p>
-                <p class="vehicle__item__details__price">25.000.000 đ</p>
-                <div class="vehicle__item__details__location">
-                    <i class="fas fa-map-marker-alt"></i> Cần Thơ
-                </div>
-                <div class="vehicle__item__details__seller">
-                    <img
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
-                            alt="Seller Image"
-                    />
-                    <p class="vehicle__item__details__seller__name">Phạm Văn Đức</p>
-                    <p class="vehicle__item__details__seller__rating">
-                        4.7 <i class="fas fa-star"></i>
-                    </p>
-                </div>
-            </div>
-            <div class="vehicle__item__actions">
-                <a href="#" class="vehicle__item__actions__buy"
-                ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
-                >
-                <a href="#" class="vehicle__item__actions__heart">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Vehicle Item 5 -->
-        <div class="vehicle__item">
-            <div class="vehicle__item__image">
-                <img
-                        src="https://images.unsplash.com/photo-1609630875171-b1321377ee65?w=300&h=200&fit=crop"
-                        alt="Xe máy điện Gogoro"
-                />
-            </div>
-            <div class="vehicle__item__details">
-                <h3 class="vehicle__item__details__title">
-                    Gogoro 2 Premium - Pin rời tiện lợi
-                </h3>
-                <p class="vehicle__item__details__date">2023 - 12000km</p>
-                <p class="vehicle__item__details__price">22.300.000 đ</p>
-                <div class="vehicle__item__details__location">
-                    <i class="fas fa-map-marker-alt"></i> Nha Trang
-                </div>
-                <div class="vehicle__item__details__seller">
-                    <img
-                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
-                            alt="Seller Image"
-                    />
-                    <p class="vehicle__item__details__seller__name">Nguyễn Thị Lan</p>
-                    <p class="vehicle__item__details__seller__rating">
-                        4.6 <i class="fas fa-star"></i>
-                    </p>
-                </div>
-            </div>
-            <div class="vehicle__item__actions">
-                <a href="#" class="vehicle__item__actions__buy"
-                ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
-                >
-                <a href="#" class="vehicle__item__actions__heart">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-        </div>
     </div>
     <div class="vehicle__page">
         <a href="#">&laquo;</a>

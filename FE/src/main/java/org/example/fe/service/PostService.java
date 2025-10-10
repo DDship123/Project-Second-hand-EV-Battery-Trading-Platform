@@ -12,5 +12,7 @@ public interface PostService {
     ApiResponse<List<PostResponse>> getAllPostVehicle();
     ApiResponse<PostResponse>getPostDetail(int postID);
     ApiResponse<List<PostResponse>> getLatestPosts();
+    ApiResponse<List<PostResponse>> getLatestVehiclePosts();
+    ApiResponse<List<PostResponse>> getLatestBatteryPosts();
 
 }

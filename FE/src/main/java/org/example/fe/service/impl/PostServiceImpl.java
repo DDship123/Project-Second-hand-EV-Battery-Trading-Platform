@@ -247,4 +247,54 @@ public class PostServiceImpl implements PostService {
             return apiResponse;
         }
     }
+
+    @Override
+    public ApiResponse<List<PostResponse>> getLatestVehiclePosts() {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        try {
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/latest/vehicle",
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>() {}
+            );
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve latest vehicle posts");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get latest vehicle posts: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
+
+    @Override
+    public ApiResponse<List<PostResponse>> getLatestBatteryPosts() {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        try {
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/latest/battery",
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>() {}
+            );
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve latest battery posts");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get latest battery posts: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
 }
