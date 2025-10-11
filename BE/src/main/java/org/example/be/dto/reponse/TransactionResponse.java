@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 
 public class TransactionResponse {
     private Integer transactionId;
-    private Integer buyerId;
+    private MemberResponse buyer;
     private String buyerName;
-    private Integer sellerId;
+    private MemberResponse seller;
     private String sellerName;
-    private Integer postId;
+    private PostResponse post;
     private String postTitle;
     private BigDecimal price;
     private String status;
@@ -18,6 +18,21 @@ public class TransactionResponse {
     private int rate;
 
     public TransactionResponse() {
+    }
+
+    public TransactionResponse(Integer transactionId, MemberResponse buyer, String buyerName, MemberResponse seller, String sellerName, PostResponse post, String postTitle, BigDecimal price, String status, LocalDateTime createdAt, String imageUrl, int rate) {
+        this.transactionId = transactionId;
+        this.buyer = buyer;
+        this.buyerName = buyerName;
+        this.seller = seller;
+        this.sellerName = sellerName;
+        this.post = post;
+        this.postTitle = postTitle;
+        this.price = price;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.imageUrl = imageUrl;
+        this.rate = rate;
     }
 
 
@@ -29,12 +44,12 @@ public class TransactionResponse {
         this.transactionId = transactionId;
     }
 
-    public Integer getBuyerId() {
-        return buyerId;
+    public MemberResponse getBuyer() {
+        return buyer;
     }
 
-    public void setBuyerId(Integer buyerId) {
-        this.buyerId = buyerId;
+    public void setBuyer(MemberResponse buyer) {
+        this.buyer = buyer;
     }
 
     public String getBuyerName() {
@@ -45,12 +60,12 @@ public class TransactionResponse {
         this.buyerName = buyerName;
     }
 
-    public Integer getSellerId() {
-        return sellerId;
+    public MemberResponse getSeller() {
+        return seller;
     }
 
-    public void setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
+    public void setSeller(MemberResponse seller) {
+        this.seller = seller;
     }
 
     public String getSellerName() {
@@ -61,12 +76,12 @@ public class TransactionResponse {
         this.sellerName = sellerName;
     }
 
-    public Integer getPostId() {
-        return postId;
+    public PostResponse getPost() {
+        return post;
     }
 
-    public void setPostId(Integer postId) {
-        this.postId = postId;
+    public void setPost(PostResponse post) {
+        this.post = post;
     }
 
     public String getPostTitle() {
@@ -108,9 +123,11 @@ public class TransactionResponse {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
     public int getRate() {
         return rate;
     }
+
     public void setRate(int rate) {
         this.rate = rate;
     }

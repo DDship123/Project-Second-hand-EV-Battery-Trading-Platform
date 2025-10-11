@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class CommentResponse {
     private int commentId;
     private Post post;
-    private Member member;
+    private MemberResponse member;
     private int rating;
     private String comment;
     private String status;
@@ -17,7 +17,7 @@ public class CommentResponse {
     public CommentResponse() {
     }
 
-    public CommentResponse(int commentId, Post post, Member member, int rating, String comment, String status, LocalDateTime createdAt) {
+    public CommentResponse(int commentId, Post post, MemberResponse member, int rating, String comment, String status, LocalDateTime createdAt) {
         this.commentId = commentId;
         this.post = post;
         this.member = member;
@@ -26,7 +26,6 @@ public class CommentResponse {
         this.status = status;
         this.createdAt = createdAt;
     }
-
     public int getCommentId() {
         return commentId;
     }
@@ -43,11 +42,11 @@ public class CommentResponse {
         this.post = post;
     }
 
-    public Member getMember() {
+    public MemberResponse getMember() {
         return member;
     }
 
-    public void setMember(Member member) {
+    public void setMember(MemberResponse member) {
         this.member = member;
     }
 

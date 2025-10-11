@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class ContractResponse {
     private int contractId;
-    private Transaction transaction;
+    private TransactionResponse transaction;
     private String contractUrl;
     private LocalDateTime signedAt;
     private String status;
@@ -14,8 +14,7 @@ public class ContractResponse {
 
     public ContractResponse() {
     }
-
-    public ContractResponse(int contractId, Transaction transaction, String contractUrl, LocalDateTime signedAt, String status, LocalDateTime createdAt) {
+    public ContractResponse(int contractId, TransactionResponse transaction, String contractUrl, LocalDateTime signedAt, String status, LocalDateTime createdAt) {
         this.contractId = contractId;
         this.transaction = transaction;
         this.contractUrl = contractUrl;
@@ -23,7 +22,6 @@ public class ContractResponse {
         this.status = status;
         this.createdAt = createdAt;
     }
-
     public int getContractId() {
         return contractId;
     }
@@ -32,11 +30,11 @@ public class ContractResponse {
         this.contractId = contractId;
     }
 
-    public Transaction getTransaction() {
+    public TransactionResponse getTransaction() {
         return transaction;
     }
 
-    public void setTransaction(Transaction transaction) {
+    public void setTransaction(TransactionResponse transaction) {
         this.transaction = transaction;
     }
 
