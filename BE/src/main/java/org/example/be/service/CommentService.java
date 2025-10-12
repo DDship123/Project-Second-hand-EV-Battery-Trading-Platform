@@ -1,6 +1,7 @@
 package org.example.be.service;
 
 import org.example.be.dto.reponse.CommentResponse;
+import org.example.be.dto.reponse.MemberResponse;
 import org.example.be.entity.Comment;
 import org.example.be.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class CommentService {
             return comments.stream().map(c -> new CommentResponse(
                     c.getCommentId(),
                     null,
-                    c.getMember(),
+                    null,
                     c.getRating(),
                     c.getComment(),
                     c.getStatus(),
