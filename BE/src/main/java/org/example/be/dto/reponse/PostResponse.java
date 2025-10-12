@@ -13,6 +13,7 @@ public class PostResponse {
     private LocalDateTime createdAt;
     private MemberResponse seller;
     private ProductResponse product;
+    private List<CommentResponse> comments;
 
 
     // images
@@ -22,7 +23,11 @@ public class PostResponse {
     public PostResponse() {
     }
 
-    public PostResponse(Integer postsId, String title, String description, String status, BigDecimal price, LocalDateTime createdAt, MemberResponse seller, ProductResponse product, List<String> images, List<PostImageResponse> postImages) {
+    public PostResponse(Integer postsId, String title, String description,
+                        String status, BigDecimal price, LocalDateTime createdAt,
+                        MemberResponse seller, ProductResponse product,
+                        List<String> images, List<PostImageResponse> postImages,List<CommentResponse>  comments) {
+        this.comments = comments;
         this.postsId = postsId;
         this.title = title;
         this.description = description;
@@ -33,6 +38,14 @@ public class PostResponse {
         this.product = product;
         this.images = images;
         this.postImages = postImages;
+    }
+
+    public List<CommentResponse>  getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentResponse>  comments) {
+        this.comments = comments;
     }
 
     public MemberResponse getSeller() {

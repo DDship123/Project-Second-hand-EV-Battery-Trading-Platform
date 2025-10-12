@@ -7,17 +7,18 @@ import java.time.LocalDateTime;
 
 public class CommentResponse {
     private int commentId;
-    private Post post;
+    private PostResponse post;
     private Member member;
     private int rating;
     private String comment;
     private String status;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     public CommentResponse() {
     }
 
-    public CommentResponse(int commentId, Post post, Member member, int rating, String comment, String status, LocalDateTime createdAt) {
+    public CommentResponse(int commentId, PostResponse post, Member member,
+                           int rating, String comment, String status, String createdAt) {
         this.commentId = commentId;
         this.post = post;
         this.member = member;
@@ -35,11 +36,11 @@ public class CommentResponse {
         this.commentId = commentId;
     }
 
-    public Post getPost() {
+    public PostResponse getPost() {
         return post;
     }
 
-    public void setPost(Post post) {
+    public void setPost(PostResponse post) {
         this.post = post;
     }
 
@@ -75,11 +76,11 @@ public class CommentResponse {
         this.status = status;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 }

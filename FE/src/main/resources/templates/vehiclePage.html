@@ -109,7 +109,7 @@
                 <h3 th:text="${post.getTitle()}" class="vehicle__item__details__title">
                     IMPES CÓ SẮC PIN ĐẦY ĐỦ
                 </h3>
-                <p class="vehicle__item__details__date">2023 - 30000km</p>
+                <p class="vehicle__item__details__date" th:text="${post.getProduct().getVehicle().getMileage()*1.6(Double)}" >2023 - 30000km</p>
                 <p class="vehicle__item__details__price" th:text="${post.getPrice()}">8.500.000 đ</p>
                 <div class="vehicle__item__details__location">
                     <i class="fas fa-map-marker-alt"></i> <span th:text="${post.getSeller().getCity()}">Tp Hồ Chí Minh</span>

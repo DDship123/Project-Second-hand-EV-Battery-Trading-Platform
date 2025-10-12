@@ -1,5 +1,6 @@
 package org.example.be.service;
 
+import org.example.be.dto.reponse.CommentResponse;
 import org.example.be.entity.Comment;
 import org.example.be.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,19 @@ public class CommentService {
         commentRepository.deleteById(id);
     }
 
-    public List<Comment> findAllCommentByPostId(Integer postId) {
-        return commentRepository.findAllByPost_PostsId(postId);
+    public List<CommentResponse> findAllCommentByPostId(Integer postId) {
+        List<Comment> comments = commentRepository.findAllByPost_PostsId(postId);
+        if (comments != null) {
+            return comments.stream().map(c -> new CommentResponse(
+                    c.getCommentId(),
+                    null,
+                    c.getMember(),
+                    c.getRating(),
+                    c.getComment(),
+                    c.getStatus(),
+                    c.getCreatedAt()
+            )).toList();
+        }
+        return null;
     }
 }

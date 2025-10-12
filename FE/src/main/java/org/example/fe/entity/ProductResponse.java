@@ -6,8 +6,8 @@ public class ProductResponse {
     private int productId;
     private int memberId;
     private String productType;
-    private int vehicleId;
-    private int batteryId;
+    private VehicleResponse vehicle;
+    private BatteryResponse battery;
     private String productName;
     private String description;
     private String status;
@@ -16,12 +16,15 @@ public class ProductResponse {
     public ProductResponse() {
     }
 
-    public ProductResponse(int productId, int memberId, String productType, int vehicleId, int batteryId, String productName, String description, String status, LocalDateTime createdAt) {
+    public ProductResponse(int productId, int memberId, String productType,
+                           VehicleResponse vehicle, BatteryResponse battery,
+                           String productName, String description, String status,
+                           LocalDateTime createdAt) {
         this.productId = productId;
         this.memberId = memberId;
         this.productType = productType;
-        this.vehicleId = vehicleId;
-        this.batteryId = batteryId;
+        this.vehicle = vehicle;
+        this.battery = battery;
         this.productName = productName;
         this.description = description;
         this.status = status;
@@ -52,20 +55,20 @@ public class ProductResponse {
         this.productType = productType;
     }
 
-    public int getVehicleId() {
-        return vehicleId;
+    public VehicleResponse getVehicle() {
+        return vehicle;
     }
 
-    public void setVehicleId(int vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setVehicle(VehicleResponse vehicle) {
+        this.vehicle = vehicle;
     }
 
-    public int getBatteryId() {
-        return batteryId;
+    public BatteryResponse getBattery() {
+        return battery;
     }
 
-    public void setBatteryId(int batteryId) {
-        this.batteryId = batteryId;
+    public void setBattery(BatteryResponse battery) {
+        this.battery = battery;
     }
 
     public String getProductName() {

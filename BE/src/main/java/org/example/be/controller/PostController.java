@@ -3,6 +3,7 @@ package org.example.be.controller;
 import org.example.be.dto.reponse.*;
 import org.example.be.entity.Post;
 import org.example.be.entity.PostImage;
+import org.example.be.service.CommentService;
 import org.example.be.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
 
     private PostResponse mapToResponse(Post post) {
         if (post == null) {
@@ -78,6 +82,7 @@ public class PostController {
             }
         }
 
+        List<CommentResponse> commentResponses = commentService.findAllCommentByPostId(post.getPostsId());
         PostResponse postResponse = new PostResponse();
         postResponse.setPostsId(post.getPostsId());
         postResponse.setTitle(post.getTitle());
@@ -88,6 +93,7 @@ public class PostController {
         postResponse.setSeller(sellerResponse);
         postResponse.setProduct(productResponse);
         postResponse.setImages(images);
+        postResponse.setComments(commentResponses);
         return postResponse;
     }
 

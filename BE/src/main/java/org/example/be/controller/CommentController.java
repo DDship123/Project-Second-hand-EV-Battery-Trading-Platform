@@ -1,6 +1,7 @@
 package org.example.be.controller;
 
 import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.CommentResponse;
 import org.example.be.entity.Comment;
 import org.example.be.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,10 +103,10 @@ public class CommentController {
     }
     // Lấy tất cả bình luận theo ID bài viết
     @GetMapping("/post/{postId}")
-    public ResponseEntity<ApiResponse<List<Comment>>> findAllCommentByPostId(@PathVariable Integer postId) {
-        ApiResponse<List<Comment>> response = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<List<CommentResponse>>> findAllCommentByPostId(@PathVariable Integer postId) {
+        ApiResponse<List<CommentResponse>> response = new ApiResponse<>();
         try {
-            List<Comment> comments = commentService.findAllCommentByPostId(postId);
+            List<CommentResponse> comments = commentService.findAllCommentByPostId(postId);
             response.ok(comments);
             return ResponseEntity.ok(response);
         } catch (Exception e) {

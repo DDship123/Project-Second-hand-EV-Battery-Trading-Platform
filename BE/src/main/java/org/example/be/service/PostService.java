@@ -77,20 +77,20 @@ public class PostService {
     }
     // Lấy post mới nhất theo loại (vehicle/battery) với limit động
     public List<Post> getLatestVehiclePosts(int limit) {
-        return postRepository.findLatestPostsByType("vehicle", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
+        return postRepository.findLatestPostsByType("VEHICLE", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
     }
 
     // Lấy latest battery posts
     public List<Post> getLatestBatteryPosts(int limit) {
-        return postRepository.findLatestPostsByType("battery", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
+        return postRepository.findLatestPostsByType("BATTERY", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
     }
     // Lấy tất cả post vehicle (không giới hạn)
     public List<Post> findAllVehiclePosts() {
-        return postRepository.findLatestPostsByType("vehicle", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
+        return postRepository.findLatestPostsByType("VEHICLE", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
     }
     // Lấy tất cả post battery (không giới hạn)
     public List<Post> findAllBatteryPosts() {
-        return postRepository.findLatestPostsByType("battery", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
+        return postRepository.findLatestPostsByType("BATTERY", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
     }
 
     // Lấy tất cả post theo city
