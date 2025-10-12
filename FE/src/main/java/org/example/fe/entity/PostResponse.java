@@ -47,6 +47,11 @@ public class PostResponse {
     public void setComments(List<CommentResponse>  comments) {
         this.comments = comments;
     }
+
+    public MemberResponse getSeller() {
+        return seller;
+    }
+
     public double getAverageRating() {
         if (comments == null || comments.isEmpty()) {
             return 0.0;
@@ -56,10 +61,6 @@ public class PostResponse {
             sum += comment.getRating();
         }
         return sum / comments.size();
-    }
-
-    public MemberResponse getSeller() {
-        return seller;
     }
 
     public void setSeller(MemberResponse seller) {

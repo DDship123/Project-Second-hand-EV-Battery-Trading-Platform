@@ -1,7 +1,7 @@
 package org.example.fe.service;
 
-import org.example.fe.entity.FavoriteResponse;
 import org.example.fe.entity.ApiResponse;
+import org.example.fe.entity.FavoriteResponse;
 import org.example.fe.entity.MemberResponse;
 
 import java.util.List;

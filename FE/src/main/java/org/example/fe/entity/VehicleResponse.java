@@ -40,8 +40,8 @@ public class VehicleResponse {
         this.model = model;
     }
 
-    public int getMileage() {
-        return mileage;
+    public double getMileage() {
+        return mileage*1.6;
     }
 
     public void setMileage(int mileage) {

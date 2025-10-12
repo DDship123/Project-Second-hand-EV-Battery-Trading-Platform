@@ -111,9 +111,9 @@
           Thương hiệu: <span th:text="${post.getProduct().getBattery().getBrand()}">Samsung SDI</span>
         </p>
         <p class="battery__item__details__capacity">
-          Dung tích: <span th:text="${post.getProduct().getBattery().getCapacity()}">48V - 20Ah</span>
+          Dung tích: <span th:text="${post.getProduct().getBattery().getCapacity()} +V">48V - 20Ah</span>
         </p>
-        <p class="battery__item__details__price" th:text="${post.getPrice()}">4.500.000 đ</p>
+        <p class="battery__item__details__price" th:text="${post.getPrice()}+'vnđ'">4.500.000 đ</p>
         <div class="battery__item__details__location">
           <i class="fas fa-map-marker-alt"></i> <span th:text="${post.getSeller().getCity()}"></span>
         </div>
@@ -123,12 +123,12 @@
                   alt="Seller Image"
           />
           <p class="battery__item__details__seller__name" th:text="${post.getSeller().getUsername()}">Nguyễn Văn An</p>
-          <p class="battery__item__details__seller__rating" th:text="${post.getAverageRating()}">
-            4.8 <i class="fas fa-star"></i>
+          <p class="battery__item__details__seller__rating">
+            <span th:text="${post.getAverageRating()}"></span> <i class="fas fa-star"></i>
           </p>
         </div>
       </div>
-      <div class="battery__item__actions">
+      <div class="battery__item__actions"  th:if="${post.getSeller().getMemberId() != user.getMemberId()}">
         <a href="#" class="battery__item__actions__buy"
         ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
         >

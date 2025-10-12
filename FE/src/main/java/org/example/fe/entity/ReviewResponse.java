@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public class ReviewResponse {
     private int reviewId;
-    private int sellerId;
-    private int reviewerId;
-    private int transactionId;
+    private MemberResponse seller;
+    private ReviewResponse reviewer;
+    private TransactionResponse transaction;
     private int rating;
     private String comment;
     private String status;
@@ -15,11 +15,11 @@ public class ReviewResponse {
     public ReviewResponse() {
     }
 
-    public ReviewResponse(int reviewId, int sellerId, int reviewerId, int transactionId, int rating, String comment, String status, LocalDateTime createdAt) {
+    public ReviewResponse(int reviewId, MemberResponse seller, ReviewResponse reviewer, TransactionResponse transaction, int rating, String comment, String status, LocalDateTime createdAt) {
         this.reviewId = reviewId;
-        this.sellerId = sellerId;
-        this.reviewerId = reviewerId;
-        this.transactionId = transactionId;
+        this.seller = seller;
+        this.reviewer = reviewer;
+        this.transaction = transaction;
         this.rating = rating;
         this.comment = comment;
         this.status = status;
@@ -34,28 +34,28 @@ public class ReviewResponse {
         this.reviewId = reviewId;
     }
 
-    public int getSellerId() {
-        return sellerId;
+    public MemberResponse getSeller() {
+        return seller;
     }
 
-    public void setSellerId(int sellerId) {
-        this.sellerId = sellerId;
+    public void setSeller(MemberResponse seller) {
+        this.seller = seller;
     }
 
-    public int getReviewerId() {
-        return reviewerId;
+    public ReviewResponse getReviewer() {
+        return reviewer;
     }
 
-    public void setReviewerId(int reviewerId) {
-        this.reviewerId = reviewerId;
+    public void setReviewer(ReviewResponse reviewer) {
+        this.reviewer = reviewer;
     }
 
-    public int getTransactionId() {
-        return transactionId;
+    public TransactionResponse getTransaction() {
+        return transaction;
     }
 
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
+    public void setTransaction(TransactionResponse transaction) {
+        this.transaction = transaction;
     }
 
     public int getRating() {
