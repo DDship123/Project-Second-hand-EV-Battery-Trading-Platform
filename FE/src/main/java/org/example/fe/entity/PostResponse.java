@@ -13,25 +13,49 @@ public class PostResponse {
     private LocalDateTime createdAt;
     private MemberResponse seller;
     private ProductResponse product;
+    private List<CommentResponse> comments;
 
-    // seller info
-//    private Integer sellerId;
-//    private String sellerName;
-//    private String sellerAvatar;
-//    private String sellerAddress;
-//    private String sellerCity;
-
-    // product info
-//    private Integer productId;
-//    private String productName;
-//    private String productType;
-//    private String productStatus;
 
     // images
     private List<String> images;
     private List<PostImageResponse> postImages;
 
     public PostResponse() {
+    }
+
+    public PostResponse(Integer postsId, String title, String description,
+                        String status, BigDecimal price, LocalDateTime createdAt,
+                        MemberResponse seller, ProductResponse product,
+                        List<String> images, List<PostImageResponse> postImages,List<CommentResponse>  comments) {
+        this.comments = comments;
+        this.postsId = postsId;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.price = price;
+        this.createdAt = createdAt;
+        this.seller = seller;
+        this.product = product;
+        this.images = images;
+        this.postImages = postImages;
+    }
+
+    public List<CommentResponse>  getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentResponse>  comments) {
+        this.comments = comments;
+    }
+    public double getAverageRating() {
+        if (comments == null || comments.isEmpty()) {
+            return 0.0;
+        }
+        double sum = 0.0;
+        for (CommentResponse comment : comments) {
+            sum += comment.getRating();
+        }
+        return sum / comments.size();
     }
 
     public MemberResponse getSeller() {

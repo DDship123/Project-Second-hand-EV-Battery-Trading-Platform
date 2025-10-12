@@ -6,9 +6,7 @@ import java.time.LocalDateTime;
 public class TransactionResponse {
     private Integer transactionId;
     private MemberResponse buyer;
-    private String buyerName;
     private MemberResponse seller;
-    private String sellerName;
     private PostResponse post;
     private String postTitle;
     private BigDecimal price;
@@ -20,12 +18,13 @@ public class TransactionResponse {
     public TransactionResponse() {
     }
 
-    public TransactionResponse(Integer transactionId, MemberResponse buyer, String buyerName, MemberResponse seller, String sellerName, PostResponse post, String postTitle, BigDecimal price, String status, LocalDateTime createdAt, String imageUrl, int rate) {
+    public TransactionResponse(Integer transactionId, MemberResponse buyer
+            , String buyerName, MemberResponse seller
+            , PostResponse post, String postTitle, BigDecimal price
+            , String status, LocalDateTime createdAt, String imageUrl, int rate) {
         this.transactionId = transactionId;
         this.buyer = buyer;
-        this.buyerName = buyerName;
         this.seller = seller;
-        this.sellerName = sellerName;
         this.post = post;
         this.postTitle = postTitle;
         this.price = price;
@@ -52,28 +51,12 @@ public class TransactionResponse {
         this.buyer = buyer;
     }
 
-    public String getBuyerName() {
-        return buyerName;
-    }
-
-    public void setBuyerName(String buyerName) {
-        this.buyerName = buyerName;
-    }
-
     public MemberResponse getSeller() {
         return seller;
     }
 
     public void setSeller(MemberResponse seller) {
         this.seller = seller;
-    }
-
-    public String getSellerName() {
-        return sellerName;
-    }
-
-    public void setSellerName(String sellerName) {
-        this.sellerName = sellerName;
     }
 
     public PostResponse getPost() {

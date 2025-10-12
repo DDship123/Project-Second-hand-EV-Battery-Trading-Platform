@@ -121,7 +121,7 @@
                     />
                     <p class="vehicle__item__details__seller__name" th:text="${post.getSeller().getUsername()}">Nguyễn Thế Anh</p>
                     <p class="vehicle__item__details__seller__rating">
-                        <span>5</span> <i class="fas fa-star"></i>
+                        <span th:text="${post.getAverageRating()}" >5</span> <i class="fas fa-star"></i>
                     </p>
                 </div>
             </div>

@@ -36,14 +36,6 @@ public class CommentResponse {
         this.commentId = commentId;
     }
 
-    public PostResponse getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
     public MemberResponse getMember() {
         return member;
     }

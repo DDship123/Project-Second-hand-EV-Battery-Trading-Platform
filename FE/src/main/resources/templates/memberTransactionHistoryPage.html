@@ -62,10 +62,10 @@
 
             <!-- Block 3: Parties (Seller & Buyer) -->
             <div class="transaction__item__parties">
-                <div th:text="'Người bán:'+${transaction.getSellerName()}" class="transaction__item__seller">
+                <div th:text="'Người bán:'+${transaction.getSeller().getUsername()}" class="transaction__item__seller">
                     Người bán: Nguyễn Thế Anh
                 </div>
-                <div th:text="'Người mua::'+${transaction.getBuyerName()}" class="transaction__item__buyer">Người mua: Nguyễn Văn A</div>
+                <div th:text="'Người mua::'+${transaction.getBuyer().getUsername()}" class="transaction__item__buyer">Người mua: Nguyễn Văn A</div>
             </div>
         </div>
     </div>
