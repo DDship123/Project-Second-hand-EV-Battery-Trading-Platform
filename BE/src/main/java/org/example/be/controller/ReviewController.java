@@ -1,6 +1,8 @@
 package org.example.be.controller;
 
 import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.MemberResponse;
+import org.example.be.dto.reponse.ReviewResponse;
 import org.example.be.entity.Review;
 import org.example.be.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +63,19 @@ public class ReviewController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Review>> getReviewById(@PathVariable Integer id) {
-        ApiResponse<Review> response = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<ReviewResponse>> getReviewById(@PathVariable Integer id) {
+        ApiResponse<ReviewResponse> response = new ApiResponse<>();
         try {
             Review review = reviewService.getReviewById(id);
             if (review != null) {
+                ReviewResponse reviewResponse = new ReviewResponse();
+                reviewResponse.setReviewId(review.getReviewsId());
+                reviewResponse.setComment(review.getComment());
+                reviewResponse.setRating(review.getRating());
+                reviewResponse.setCreatedAt(review.getCreatedAt());
                 HashMap<String, Object> metadata = new HashMap<>();
                 metadata.put("timestamp", LocalDateTime.now());
-                response.ok(review, metadata);
+                response.ok(reviewResponse, metadata);
                 return ResponseEntity.ok(response);
             } else {
                 Map<String, String> error = new HashMap<>();
@@ -125,11 +132,24 @@ public class ReviewController {
         }
     }
     @GetMapping("/seller/{sellerId}")
-    public ResponseEntity<ApiResponse<List<Review>>> findAllReviewBySellerId(@PathVariable Integer sellerId) {
-        ApiResponse<List<Review>> response = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<List<ReviewResponse>>> findAllReviewBySellerId(@PathVariable Integer sellerId) {
+        ApiResponse<List<ReviewResponse>> response = new ApiResponse<>();
         try {
             List<Review> reviews = reviewService.findAllReviewBySellerId(sellerId);
-            response.ok(reviews);
+            List<ReviewResponse> reviewResponses = reviews.stream().map(review -> {
+                ReviewResponse reviewResponse = new ReviewResponse();
+                reviewResponse.setReviewId(review.getReviewsId());
+                reviewResponse.setComment(review.getComment());
+                reviewResponse.setRating(review.getRating());
+                reviewResponse.setCreatedAt(review.getCreatedAt());
+                MemberResponse reviewer = new MemberResponse();
+                reviewer.setMemberId(review.getReviewer().getMemberId());
+                reviewer.setUsername(review.getReviewer().getUsername());
+                reviewer.setAvatarUrl(review.getReviewer().getAvatarUrl());
+                reviewResponse.setReviewer(reviewer);
+                return reviewResponse;
+            }).toList();
+            response.ok(reviewResponses);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();

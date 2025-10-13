@@ -1,6 +1,8 @@
 package org.example.fe.entity;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -107,8 +109,11 @@ public class PostResponse {
         this.status = status;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getPrice() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("###,###", symbols);
+        return decimalFormat.format(price);
     }
 
     public void setPrice(BigDecimal price) {

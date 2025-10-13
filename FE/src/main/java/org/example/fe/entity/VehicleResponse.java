@@ -5,15 +5,36 @@ public class VehicleResponse {
     private String brand;
     private String model;
     private int mileage;
+    private String registrationYear;
+    private String origin;
+    private String batteryCapacity;
 
     public VehicleResponse() {
     }
 
-    public VehicleResponse(int vehicleId, String brand, String model, int mileage) {
-        this.vehicleId = vehicleId;
-        this.brand = brand;
-        this.model = model;
-        this.mileage = mileage;
+
+    public String getRegistrationYear() {
+        return registrationYear;
+    }
+
+    public void setRegistrationYear(String registrationYear) {
+        this.registrationYear = registrationYear;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getBatteryCapacity() {
+        return batteryCapacity;
+    }
+
+    public void setBatteryCapacity(String batteryCapacity) {
+        this.batteryCapacity = batteryCapacity;
     }
 
     public int getVehicleId() {

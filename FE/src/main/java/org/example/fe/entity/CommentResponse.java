@@ -1,5 +1,7 @@
 package org.example.fe.entity;
 
+import java.time.LocalDateTime;
+
 public class CommentResponse {
     private int commentId;
     private PostResponse post;
@@ -7,13 +9,13 @@ public class CommentResponse {
     private int rating;
     private String comment;
     private String status;
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     public CommentResponse() {
     }
 
     public CommentResponse(int commentId, PostResponse post, MemberResponse member,
-                           int rating, String comment, String status, String createdAt) {
+                           int rating, String comment, String status, LocalDateTime createdAt) {
         this.commentId = commentId;
         this.post = post;
         this.member = member;
@@ -63,11 +65,11 @@ public class CommentResponse {
         this.status = status;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

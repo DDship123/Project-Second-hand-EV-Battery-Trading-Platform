@@ -7,6 +7,8 @@ import org.example.be.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +40,7 @@ public class CommentService {
         comment.setMember(commentDetails.getMember());
         comment.setPost(commentDetails.getPost());
         comment.setStatus(commentDetails.getStatus());
-        comment.setCreatedAt(commentDetails.getCreatedAt());
+        comment.setCreatedAt(commentDetails.getCreatedAt().toString());
         return commentRepository.save(comment);
     }
 
@@ -52,7 +54,12 @@ public class CommentService {
             return comments.stream().map(c -> new CommentResponse(
                     c.getCommentId(),
                     null,
-                    null,
+                    new MemberResponse(
+                            c.getMember().getMemberId(),
+                            c.getMember().getUsername(),
+                            c.getMember().getAvatarUrl(),
+                            c.getMember().getCreatedAt()
+                    ),
                     c.getRating(),
                     c.getComment(),
                     c.getStatus(),

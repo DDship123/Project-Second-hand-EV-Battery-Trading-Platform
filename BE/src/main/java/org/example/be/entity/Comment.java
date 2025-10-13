@@ -2,6 +2,10 @@ package org.example.be.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Table(name = "comments")
 public class Comment {
@@ -78,7 +82,12 @@ public class Comment {
         this.status = status;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
+        LocalDateTime createdAt = null;
+        if (this.createdAt != null && !this.createdAt.isEmpty()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            createdAt = LocalDateTime.parse(this.createdAt, formatter);
+        }
         return createdAt;
     }
 

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/productDetailsPage.css}" />
+</head>
+<body>
+<!-- =============================
+     HEADER SECTION
+     ============================= -->
+<header th:if="${guest.equals('false')}" th:include="/commonComponents/header.html"></header>
+<header th:if="${guest.equals('true')}" th:include="/commonComponents/guestHeader.html"></header>
+<!-- =============================
+     MAIN SECTION
+     ============================= -->
+<section class="container">
+    <div class="container__header">
+        <div class="container__header__direction">
+            <a href="/home">Trang Chủ</a>
+            <span>/</span>
+            <a href="" th:if="${post.getProduct().getProductType().equals('VEHICLE')}">Xe điện</a>
+            <a href="" th:if="${post.getProduct().getProductType().equals('BATTERY')}">Pin</a>
+            <span>/</span>
+            <a href="#" class="href--active">Xe máy điện Thành Phố Hồ Chí Minh</a>
+        </div>
+        <h2 class="container__header__title">Thông tin xe</h2>
+    </div>
+    <div class="container__item">
+        <div class="container__item__infor">
+            <div class="container__item__infor__image">
+                <div class="container__item__infor__image__main">
+                    <img
+                            th:src="${post.getImages()[0]}"
+                            alt="IMPES Scooter"
+                    />
+                    <i class="fa-solid fa-angle-left"></i>
+                    <i class="fa-solid fa-angle-right"></i>
+                </div>
+                <div class="container__item__infor__image__list" th:if="${post.getImages().size() > 1}">
+                    <img th:each="image, start : ${post.getImages()}"
+                         th:src="${image}"
+                            alt="Electric motorcycle side view"
+                    />
+                </div>
+            </div>
+            <div class="container__item__infor__details">
+                <h1 class="container__item__infor__details__title" th:text="${post.getTitle()}">
+                    Feliz - biển MĐ. Giấy tờ đầy đủ
+                </h1>
+                <p th:if="${post.getProduct().getProductType().equals('VEHICLE')}" class="container__item__infor__details__year&Odo">
+                    <span  th:text="${post.getProduct().getVehicle().getRegistrationYear()}">2020</span> - <span th:text="${post.getProduct().getVehicle().getMileage()}+'km'">24000km</span>
+                </p>
+                <p class="container__item__infor__details__location">
+                    <i class="fa-solid fa-location-dot"></i
+                    ><span th:text="${post.getSeller().getCity()}">Thành Phố Hồ Chí Minh</span>
+                </p>
+                <p class="container__item__infor__details__price" th:text="${post.getPrice()}+'đ'">13.500.000 đ</p>
+                <div class="container__item__infor__details__commitments">
+                    <h3 class="container__item__infor__details__commitments__title">
+                        Chính sách & cam kết:
+                    </h3>
+                    <ul class="container__item__infor__details__commitments__list">
+                        <li>Cam kết: Xe chính chủ, không đâm đụng, không ngập nước.</li>
+                        <li>Bao test xe (bao nhiêu ngày).</li>
+                        <li>Hỗ trợ sang tên, thủ tục giấy tờ.</li>
+                    </ul>
+                </div>
+                <button class="container__item__infor__details__action">
+                    Yêu cầu giao dịch
+                </button>
+            </div>
+        </div>
+        <div class="container__item__wishlist" style="color: grey">
+            <i class="fa-solid fa-heart"></i>
+        </div>
+    </div>
+
+    <div class="container__sideInfor">
+        <div class="container__sideInfor__description">
+            <h2 class="container__sideInfor__description__title">
+                MÔ TẢ CHI TIẾT
+            </h2>
+            <p class="container__sideInfor__description__content" th:text="${post.getDescription()}">
+                Xe còn rất mới, máy móc nguyên bản, đi cực êm, không có tiếng động
+                lạ. Xe có giấy tờ đầy đủ, biển số MĐ (Thành Phố Hồ Chí Minh). Ai có
+                nhu cầu liên hệ mình nhé. Xin cảm ơn!
+            </p>
+        </div>
+        <div class="container__sideInfor__owner">
+            <img
+                    class="container__sideInfor__owner__avatar"
+                    th:src="${post.getSeller().getAvatarUrl()}"
+                    alt="avatar"
+            />
+            <div class="container__sideInfor__owner__info">
+                <h3 class="container__sideInfor__owner__info__name" th:text="${post.getSeller().getUsername()}">
+                    Nguyễn Thế Anh
+                </h3>
+<!--                <p class="container__sideInfor__owner__info__other">-->
+<!--                    <span>53 đã bán</span> - <span>1 đang bán </span>-->
+<!--                </p>-->
+            </div>
+        </div>
+        <div class="container__sideInfor__specifications">
+            <h2 class="container__sideInfor__specifications__title">
+                THÔNG SỐ KỸ THUẬT
+            </h2>
+            <div class="container__sideInfor__specifications__grid">
+                <div class="container__sideInfor__specifications__row">
+                    <div class="container__sideInfor__specifications__cell">
+                        <span class="label"
+                              th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                        >Hãng xe:</span>
+                        <span class="label"
+                              th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                        >Hãng pin:</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                              th:text="${post.getProduct().getVehicle().getBrand()}"
+                              class="value">Vinfast</span>
+                        <span th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                              th:text="${post.getProduct().getBattery().getBrand()}"
+                              class="value">Vinfast</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                              class="label">Dòng xe:</span>
+                        <span th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                              class="label">Tên pin:</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                              th:text="${post.getProduct().getVehicle().getModel()}"
+                              class="value">Feliz</span>
+                        <span th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                              th:text="${post.getProduct().getBattery().getName()}"
+                              class="value">Feliz</span>
+                    </div>
+                </div>
+                <div class="container__sideInfor__specifications__row">
+                    <div class="container__sideInfor__specifications__cell">
+                        <span class="label">Năm đăng ký:</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                              th:text="${post.getProduct().getVehicle().getRegistrationYear()}"
+                              class="value">2024</span>
+                        <span th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                              th:text="${post.getProduct().getBattery().getYearOfManufacture()}"
+                              class="value">2024</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}" class="label">Số Km đã đi:</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                              th:text="${post.getProduct().getVehicle().getMileage()}+' km'"
+                              class="value">24000 km</span>
+                    </div>
+                </div>
+                <div class="container__sideInfor__specifications__row">
+                    <div class="container__sideInfor__specifications__cell">
+                        <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                                class="label">Tình trạng xe:</span>
+                        <span th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                              class="label">Tình trạng pin:</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                              th:text="${post.getProduct().getVehicle().getOrigin()}"
+                              class="value">Đã qua sử dụng</span>
+                        <span th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                              th:text="${post.getProduct().getBattery().getCondition()}"
+                              class="value">Đã qua sử dụng</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span class="label">Dung tích bình:</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span
+                                th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                                th:text="${post.getProduct().getVehicle().getBatteryCapacity()}"
+                                class="value">2.4 kWh</span>
+                        <span
+                                th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                                th:text="${post.getProduct().getBattery().getCapacity()}+'ah'+' - '+ ${post.getProduct().getBattery().getVoltage()}"
+                                class="value">2.4 kWh</span>
+                    </div>
+                </div>
+                <div class="container__sideInfor__specifications__row">
+                    <div class="container__sideInfor__specifications__cell">
+                        <span class="label">Xuất xứ:</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span class="value" th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+                              th:text="${post.getProduct().getVehicle().getOrigin()}">Việt Nam</span>
+                        <span class="value" th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+                              th:text="${post.getProduct().getBattery().getOrigin()}">Việt Nam</span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span class="label"></span>
+                    </div>
+                    <div class="container__sideInfor__specifications__cell">
+                        <span class="value"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container__sideInfor__reviews">
+            <h2 class="container__sideInfor__reviews__title">
+                Đánh giá người bán
+            </h2>
+            <div class="container__sideInfor__reviews__content">
+                <div th:each="review :${reviews}" class="container__sideInfor__reviews__content__reviewer">
+                    <img
+                            th:src="${review.getReviewer().getAvatarUrl()}"
+                            alt="reviewer avatar"
+                    />
+                    <div
+                            class="container__sideInfor__reviews__content__reviewer__info"
+                    >
+                        <h3
+                                class="container__sideInfor__reviews__content__reviewer__info__name"
+                                th:text="${review.getReviewer().getUsername()}"
+                        >
+                            Nguyễn Văn A
+                        </h3>
+                        <p
+                                class="container__sideInfor__reviews__content__reviewer__info__comment"
+                                th:text="${review.getComment()}"
+                        >
+                            "Sản phẩm rất tốt, tôi rất hài lòng!"
+                        </p>
+                        <div
+                                class="container__sideInfor__reviews__content__reviewer__stars"
+                        >
+                            <span th:text="${review.getRating()}"></span>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container__sideInfor__comment">
+            <h2 class="container__sideInfor__comment__title">Bình luận</h2>
+            <div class="container__sideInfor__comment__list">
+                <div th:each="comment : ${post.getComments()}" class="container__sideInfor__comment__list__item">
+                    <img
+                            th:src="${comment.getMember().getAvatarUrl()}"
+                            alt="avatar"
+                    />
+                    <div class="container__sideInfor__comment__list__item__content">
+                        <h3
+                                class="container__sideInfor__comment__list__item__content__name"
+                                th:text="${comment.getMember().getUsername()}"
+                        >
+                            Nguyễn Văn A
+                        </h3>
+                        <p
+                                class="container__sideInfor__comment__list__item__content__text"
+                                th:text="${comment.getComment()}+' - '+ ${#temporals.format(comment.getCreatedAt(), 'dd-MM-yyyy HH:mm')}"
+                        >
+                            Xe còn rất mới, máy móc nguyên bản, đi cực êm, không có tiếng
+                            động lạ. Xe có giấy tờ đầy đủ, biển số MĐ (Thành Phố Hồ Chí
+                            Minh). Ai có nhu cầu liên hệ mình nhé. Xin cảm ơn!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="container__sideInfor__comment__input">
+                <input
+                        type="text"
+                        placeholder="Viết bình luận..."
+                        class="container__sideInfor__comment__input__field"
+                />
+                <button class="container__sideInfor__comment__input__button">
+                    Gửi
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- =============================
+     FOOTER SECTION
+     ============================= -->
+<footer th:include="/commonComponents/footer.html"></footer>
+
+<!-- Custom JS -->
+<script th:src="@{/js/productDetailsPage.js}"></script>
+</body>
+</html>

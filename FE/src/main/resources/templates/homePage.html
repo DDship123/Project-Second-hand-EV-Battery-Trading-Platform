@@ -105,6 +105,7 @@
         <!-- Product Grid -->
         <div class="products">
             <div th:each="post : ${posts}" class="product__card">
+                <input type="hidden" th:value="${post.getPostsId()}" />
                 <div class="product__image">
                     <img
                             th:src="${post.getImages()[0]}"
@@ -114,14 +115,14 @@
                         <a  style="color: grey" href="" th:if="${!guest.equals('false')}">
                             <i class="fas fa-heart"></i>
                         </a>
-                        <a style="color: grey" th:href="@{'/home/wishList/add/' + ${post.getPostsId()}}" th:if="${guest.equals('false')}">
+                        <a style="color: grey" th:href="@{'/home/wishList/add/' + ${post.getPostsId()}}"  th:if="${guest.equals('false')}">
                             <i class="fas fa-heart"></i>
                         </a>
                     </button>
                 </div>
                 <div class="product__info">
                     <h3 class="product__title" th:text="${post.getProduct().getProductName()}">Undefined</h3>
-                    <p class="product__price" th:text="${post.getPrice()+'vnđ'}">Undefined</p>
+                    <p class="product__price" th:text="${post.getPrice()+'đ'}">Undefined</p>
                     <p class="product__location">
                         <i class="fas fa-map-marker-alt"></i>
                         <span th:text="${post.getSeller().getCity()}"></span>

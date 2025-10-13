@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class ReviewResponse {
     private int reviewId;
     private MemberResponse seller;
-    private ReviewResponse reviewer;
+    private MemberResponse reviewer;
     private TransactionResponse transaction;
     private int rating;
     private String comment;
@@ -15,7 +15,7 @@ public class ReviewResponse {
     public ReviewResponse() {
     }
 
-    public ReviewResponse(int reviewId, MemberResponse seller, ReviewResponse reviewer, TransactionResponse transaction, int rating, String comment, String status, LocalDateTime createdAt) {
+    public ReviewResponse(int reviewId, MemberResponse seller, MemberResponse reviewer, TransactionResponse transaction, int rating, String comment, String status, LocalDateTime createdAt) {
         this.reviewId = reviewId;
         this.seller = seller;
         this.reviewer = reviewer;
@@ -42,11 +42,11 @@ public class ReviewResponse {
         this.seller = seller;
     }
 
-    public ReviewResponse getReviewer() {
+    public MemberResponse getReviewer() {
         return reviewer;
     }
 
-    public void setReviewer(ReviewResponse reviewer) {
+    public void setReviewer(MemberResponse reviewer) {
         this.reviewer = reviewer;
     }
 

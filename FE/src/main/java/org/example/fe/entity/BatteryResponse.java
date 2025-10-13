@@ -5,15 +5,25 @@ public class BatteryResponse {
     private String condition;
     private String brand;
     private int capacity;
+    private String voltage;
+    private String yearOfManufacture;
+    private String origin;
+    private String name;
 
     public BatteryResponse() {
     }
 
-    public BatteryResponse(int batteryId, String condition, String brand, int capacity) {
+    public BatteryResponse(int batteryId, String condition, String brand,
+                           int capacity, String voltage, String yearOfManufacture,
+                           String origin, String name) {
         this.batteryId = batteryId;
         this.condition = condition;
         this.brand = brand;
         this.capacity = capacity;
+        this.voltage = voltage;
+        this.yearOfManufacture = yearOfManufacture;
+        this.origin = origin;
+        this.name = name;
     }
 
     public int getBatteryId() {
@@ -46,5 +56,37 @@ public class BatteryResponse {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public String getVoltage() {
+        return voltage;
+    }
+
+    public void setVoltage(String voltage) {
+        this.voltage = voltage;
+    }
+
+    public String getYearOfManufacture() {
+        return yearOfManufacture;
+    }
+
+    public void setYearOfManufacture(String yearOfManufacture) {
+        this.yearOfManufacture = yearOfManufacture;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

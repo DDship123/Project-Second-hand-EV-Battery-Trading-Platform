@@ -40,16 +40,16 @@
 
         <!-- Navigation Menu -->
         <nav class="header__nav">
-            <a th:href="@{/home}" class="nav__link active">HOMES</a>
+            <a th:href="@{/home}" class="nav__link active">Trang chủ</a>
             <div class="nav__link">
                 <span>SẢN PHẨM</span> <i class="fas fa-chevron-down"></i>
                 <ul class="nav__link__list">
-                    <li><a style="text-decoration: none;color: black" th:href="@{/home/vehicle}">Ô tô điện</a></li>
+                    <li><a style="text-decoration: none;color: black" th:href="@{/home/vehicle}">Xe điện</a></li>
 <!--                    <li><a>Xe máy điện</a></li>-->
                     <li><a style="text-decoration: none;color: black" th:href="@{/home/battery}">Pin xe</a></li>
                 </ul>
             </div>
-            <a href="" class="nav__link">CONTACT</a>
+            <a href="" class="nav__link">Thông tin liên hệ</a>
         </nav>
 
         <!-- User Actions -->
@@ -92,7 +92,7 @@
 
             <!-- User Dropdown -->
             <div class="user__dropdown">
-                <p>WELCOME</p>
+                <p>Xin Chào</p>
                 <p><span th:text="${user.getUsername()}">NGƯỜI VÀN A</span> <i class="fas fa-chevron-down"></i></p>
                 <ul class="user__dropdown__content">
                     <li><a th:href="@{/account/personalInformation}">Hồ sơ của tôi</a></li>
