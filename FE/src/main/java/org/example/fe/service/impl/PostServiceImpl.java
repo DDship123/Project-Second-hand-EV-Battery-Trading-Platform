@@ -418,6 +418,121 @@ public class PostServiceImpl implements PostService {
 
     }
 
+    @Override
+    public ApiResponse<List<PostResponse>> getAllPostByMemberId(int memberId) {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        try {
+            //create header
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("content-type", "application/json");
+            //create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+            //make api call backend
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/for-you" + memberId,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>() {
+                    }
+            );
+            //check response
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve posts by member id: " + memberId);
+                response.error(errorMap);
+
+            }
+        } catch(Exception e){
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get posts for member: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+    }
+
+    @Override
+    public ApiResponse<PostResponse> create(PostResponse post) {
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity with post data
+            HttpEntity<PostResponse> requestEntity = new HttpEntity<>(post, headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts",
+                    HttpMethod.POST,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Create post successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Create post failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to create post");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to create post: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+
+    }
+
+    @Override
+    public ApiResponse<PostResponse> delete(int postId) {
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/" + postId,
+                    HttpMethod.DELETE,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Delete post successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Delete post failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to delete post");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to delete post: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+
+    }
+
 }
 
 
