@@ -129,4 +129,14 @@ document.addEventListener("DOMContentLoaded", function () {
             aboutTitleIcon.classList.toggle("playIcon--active");
         });
     }
+
+    const products = document.querySelectorAll('.product__card');
+    console.log(products);
+    products.forEach(product => {
+        product.addEventListener('click', function() {
+            const productId = product.querySelector("input[type='hidden']").value;
+            console.log('Product ID:', productId);
+            window.location.href = `/home/product/detail/${productId}`;
+        });
+    });
 });

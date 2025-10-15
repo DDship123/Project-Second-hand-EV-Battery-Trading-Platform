@@ -108,12 +108,12 @@
           Pin Lithium 48V 20Ah - Chính hãng
         </h3>
         <p class="battery__item__details__brand">
-          Thương hiệu: <span>Samsung SDI</span>
+          Thương hiệu: <span th:text="${post.getProduct().getBattery().getBrand()}">Samsung SDI</span>
         </p>
         <p class="battery__item__details__capacity">
-          Dung tích: <span>48V - 20Ah</span>
+          Dung tích: <span th:text="${post.getProduct().getBattery().getCapacity()} +V">48V - 20Ah</span>
         </p>
-        <p class="battery__item__details__price" th:text="${post.getPrice()}">4.500.000 đ</p>
+        <p class="battery__item__details__price" th:text="${post.getPrice()}+'đ'">4.500.000 đ</p>
         <div class="battery__item__details__location">
           <i class="fas fa-map-marker-alt"></i> <span th:text="${post.getSeller().getCity()}"></span>
         </div>
@@ -124,11 +124,11 @@
           />
           <p class="battery__item__details__seller__name" th:text="${post.getSeller().getUsername()}">Nguyễn Văn An</p>
           <p class="battery__item__details__seller__rating">
-            4.8 <i class="fas fa-star"></i>
+            <span th:text="${post.getAverageRating()}"></span> <i class="fas fa-star"></i>
           </p>
         </div>
       </div>
-      <div class="battery__item__actions">
+      <div class="battery__item__actions"  th:if="${post.getSeller().getMemberId() != user.getMemberId()}">
         <a href="#" class="battery__item__actions__buy"
         ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
         >
@@ -137,178 +137,6 @@
         </a>
       </div>
     </div>
-
-<!--    &lt;!&ndash; Battery Item 2 &ndash;&gt;-->
-<!--    <div class="battery__item">-->
-<!--      <div class="battery__item__image">-->
-<!--        <img-->
-<!--                src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?w=300&h=200&fit=crop"-->
-<!--                alt="Pin Lithium 48V"-->
-<!--        />-->
-<!--      </div>-->
-<!--      <div class="battery__item__details">-->
-<!--        <h3 class="battery__item__details__title">-->
-<!--          Pin Lithium 48V 20Ah - Chính hãng-->
-<!--        </h3>-->
-<!--        <p class="battery__item__details__brand">-->
-<!--          Thương hiệu: <span>Samsung SDI</span>-->
-<!--        </p>-->
-<!--        <p class="battery__item__details__capacity">-->
-<!--          Dung tích: <span>48V - 20Ah</span>-->
-<!--        </p>-->
-<!--        <p class="battery__item__details__price">4.500.000 đ</p>-->
-<!--        <div class="battery__item__details__location">-->
-<!--          <i class="fas fa-map-marker-alt"></i> Tp Hồ Chí Minh-->
-<!--        </div>-->
-<!--        <div class="battery__item__details__seller">-->
-<!--          <img-->
-<!--                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"-->
-<!--                  alt="Seller Image"-->
-<!--          />-->
-<!--          <p class="battery__item__details__seller__name">Nguyễn Văn An</p>-->
-<!--          <p class="battery__item__details__seller__rating">-->
-<!--            4.8 <i class="fas fa-star"></i>-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="battery__item__actions">-->
-<!--        <a href="#" class="battery__item__actions__buy"-->
-<!--        ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a-->
-<!--        >-->
-<!--        <a href="#" class="battery__item__actions__heart">-->
-<!--          <i class="far fa-heart"></i>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Battery Item 3 &ndash;&gt;-->
-<!--    <div class="battery__item">-->
-<!--      <div class="battery__item__image">-->
-<!--        <img-->
-<!--                src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?w=300&h=200&fit=crop"-->
-<!--                alt="Pin Lithium 48V"-->
-<!--        />-->
-<!--      </div>-->
-<!--      <div class="battery__item__details">-->
-<!--        <h3 class="battery__item__details__title">-->
-<!--          Pin Lithium 48V 20Ah - Chính hãng-->
-<!--        </h3>-->
-<!--        <p class="battery__item__details__brand">-->
-<!--          Thương hiệu: <span>Samsung SDI</span>-->
-<!--        </p>-->
-<!--        <p class="battery__item__details__capacity">-->
-<!--          Dung tích: <span>48V - 20Ah</span>-->
-<!--        </p>-->
-<!--        <p class="battery__item__details__price">4.500.000 đ</p>-->
-<!--        <div class="battery__item__details__location">-->
-<!--          <i class="fas fa-map-marker-alt"></i> Tp Hồ Chí Minh-->
-<!--        </div>-->
-<!--        <div class="battery__item__details__seller">-->
-<!--          <img-->
-<!--                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"-->
-<!--                  alt="Seller Image"-->
-<!--          />-->
-<!--          <p class="battery__item__details__seller__name">Nguyễn Văn An</p>-->
-<!--          <p class="battery__item__details__seller__rating">-->
-<!--            4.8 <i class="fas fa-star"></i>-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="battery__item__actions">-->
-<!--        <a href="#" class="battery__item__actions__buy"-->
-<!--        ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a-->
-<!--        >-->
-<!--        <a href="#" class="battery__item__actions__heart">-->
-<!--          <i class="far fa-heart"></i>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Battery Item 4 &ndash;&gt;-->
-<!--    <div class="battery__item">-->
-<!--      <div class="battery__item__image">-->
-<!--        <img-->
-<!--                src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?w=300&h=200&fit=crop"-->
-<!--                alt="Pin Lithium 48V"-->
-<!--        />-->
-<!--      </div>-->
-<!--      <div class="battery__item__details">-->
-<!--        <h3 class="battery__item__details__title">-->
-<!--          Pin Lithium 48V 20Ah - Chính hãng-->
-<!--        </h3>-->
-<!--        <p class="battery__item__details__brand">-->
-<!--          Thương hiệu: <span>Samsung SDI</span>-->
-<!--        </p>-->
-<!--        <p class="battery__item__details__capacity">-->
-<!--          Dung tích: <span>48V - 20Ah</span>-->
-<!--        </p>-->
-<!--        <p class="battery__item__details__price">4.500.000 đ</p>-->
-<!--        <div class="battery__item__details__location">-->
-<!--          <i class="fas fa-map-marker-alt"></i> Tp Hồ Chí Minh-->
-<!--        </div>-->
-<!--        <div class="battery__item__details__seller">-->
-<!--          <img-->
-<!--                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"-->
-<!--                  alt="Seller Image"-->
-<!--          />-->
-<!--          <p class="battery__item__details__seller__name">Nguyễn Văn An</p>-->
-<!--          <p class="battery__item__details__seller__rating">-->
-<!--            4.8 <i class="fas fa-star"></i>-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="battery__item__actions">-->
-<!--        <a href="#" class="battery__item__actions__buy"-->
-<!--        ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a-->
-<!--        >-->
-<!--        <a href="#" class="battery__item__actions__heart">-->
-<!--          <i class="far fa-heart"></i>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Battery Item 5 &ndash;&gt;-->
-<!--    <div class="battery__item">-->
-<!--      <div class="battery__item__image">-->
-<!--        <img-->
-<!--                src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?w=300&h=200&fit=crop"-->
-<!--                alt="Pin Lithium 48V"-->
-<!--        />-->
-<!--      </div>-->
-<!--      <div class="battery__item__details">-->
-<!--        <h3 class="battery__item__details__title">-->
-<!--          Pin Lithium 48V 20Ah - Chính hãng-->
-<!--        </h3>-->
-<!--        <p class="battery__item__details__brand">-->
-<!--          Thương hiệu: <span>Samsung SDI</span>-->
-<!--        </p>-->
-<!--        <p class="battery__item__details__capacity">-->
-<!--          Dung tích: <span>48V - 20Ah</span>-->
-<!--        </p>-->
-<!--        <p class="battery__item__details__price">4.500.000 đ</p>-->
-<!--        <div class="battery__item__details__location">-->
-<!--          <i class="fas fa-map-marker-alt"></i> Tp Hồ Chí Minh-->
-<!--        </div>-->
-<!--        <div class="battery__item__details__seller">-->
-<!--          <img-->
-<!--                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"-->
-<!--                  alt="Seller Image"-->
-<!--          />-->
-<!--          <p class="battery__item__details__seller__name">Nguyễn Văn An</p>-->
-<!--          <p class="battery__item__details__seller__rating">-->
-<!--            4.8 <i class="fas fa-star"></i>-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="battery__item__actions">-->
-<!--        <a href="#" class="battery__item__actions__buy"-->
-<!--        ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a-->
-<!--        >-->
-<!--        <a href="#" class="battery__item__actions__heart">-->
-<!--          <i class="far fa-heart"></i>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--    </div>-->
   </div>
   <div class="battery__page">
     <a href="#">&laquo;</a>

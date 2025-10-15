@@ -59,7 +59,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     // Lấy 8 post mới nhất chỉ cho battery
     @Query("SELECT p FROM Post p " +
-            "WHERE p.product.productType = 'battery' AND p.status = 'ACTIVE' " +
+            "WHERE p.product.productType = :productType AND p.status = :status " +
             "ORDER BY p.createdAt DESC")
     List<Post> findLatestPostsByType(@Param("productType") String productType,
                                      @Param("status") String status,

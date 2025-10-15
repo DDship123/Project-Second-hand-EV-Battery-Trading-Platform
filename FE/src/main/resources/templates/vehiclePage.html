@@ -109,8 +109,8 @@
                 <h3 th:text="${post.getTitle()}" class="vehicle__item__details__title">
                     IMPES CÓ SẮC PIN ĐẦY ĐỦ
                 </h3>
-                <p class="vehicle__item__details__date">2023 - 30000km</p>
-                <p class="vehicle__item__details__price" th:text="${post.getPrice()}">8.500.000 đ</p>
+                <p class="vehicle__item__details__date" th:text="${post.getProduct().getVehicle().getMileage()} +' km'" >2023 - 30000km</p>
+                <p class="vehicle__item__details__price" th:text="${post.getPrice()}+'đ'">8.500.000 đ</p>
                 <div class="vehicle__item__details__location">
                     <i class="fas fa-map-marker-alt"></i> <span th:text="${post.getSeller().getCity()}">Tp Hồ Chí Minh</span>
                 </div>
@@ -121,11 +121,11 @@
                     />
                     <p class="vehicle__item__details__seller__name" th:text="${post.getSeller().getUsername()}">Nguyễn Thế Anh</p>
                     <p class="vehicle__item__details__seller__rating">
-                        <span>5</span> <i class="fas fa-star"></i>
+                        <span th:text="${post.getAverageRating()}" >5</span> <i class="fas fa-star"></i>
                     </p>
                 </div>
             </div>
-            <div class="vehicle__item__actions">
+            <div class="vehicle__item__actions" th:if="${post.getSeller().getMemberId() != user.getMemberId()}">
                 <a href="#" class="vehicle__item__actions__buy"
                 ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
                 >

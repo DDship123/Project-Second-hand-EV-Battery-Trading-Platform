@@ -3,6 +3,7 @@ package org.example.be.controller;
 import org.example.be.dto.reponse.*;
 import org.example.be.entity.Post;
 import org.example.be.entity.PostImage;
+import org.example.be.service.CommentService;
 import org.example.be.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
 
     private PostResponse mapToResponse(Post post) {
         if (post == null) {
@@ -64,6 +68,9 @@ public class PostController {
                 vehicleResponse.setBrand(post.getProduct().getVehicle().getBrand());
                 vehicleResponse.setModel(post.getProduct().getVehicle().getModel());
                 vehicleResponse.setMileage(post.getProduct().getVehicle().getMileage());
+                vehicleResponse.setRegistrationYear(post.getProduct().getVehicle().getRegisterYear());
+                vehicleResponse.setOrigin(post.getProduct().getVehicle().getOrigin());
+                vehicleResponse.setBatteryCapacity(post.getProduct().getVehicle().getBatteryCapacity());
                 productResponse.setVehicle(vehicleResponse);
             }
 
@@ -74,9 +81,15 @@ public class PostController {
                 batteryResponse.setCondition(post.getProduct().getBattery().getCondition());
                 batteryResponse.setBrand(post.getProduct().getBattery().getBrand());
                 batteryResponse.setCapacity(post.getProduct().getBattery().getCapacityAh());
+                batteryResponse.setVoltage(post.getProduct().getBattery().getVoltageV());
+                batteryResponse.setYearOfManufacture(post.getProduct().getBattery().getYearAt());
+                batteryResponse.setOrigin(post.getProduct().getBattery().getOrigin());
+                batteryResponse.setName(post.getProduct().getBattery().getName());
                 productResponse.setBattery(batteryResponse);
             }
         }
+
+        List<CommentResponse> commentResponses = commentService.findAllCommentByPostId(post.getPostsId());
 
         PostResponse postResponse = new PostResponse();
         postResponse.setPostsId(post.getPostsId());
@@ -88,6 +101,7 @@ public class PostController {
         postResponse.setSeller(sellerResponse);
         postResponse.setProduct(productResponse);
         postResponse.setImages(images);
+        postResponse.setComments(commentResponses);
         return postResponse;
     }
 
@@ -281,6 +295,22 @@ public class PostController {
             return ResponseEntity.ok(response);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<PostResponse>> getPostById(@PathVariable Integer id) {
+        Optional<Post> postOpt = postService.getPostById(id);
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+        if (postOpt.isPresent()) {
+            response.ok(mapToResponse(postOpt.get()));
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Post not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
+    }
+
     // --- GET ALL BATTERY POSTS ---
     @GetMapping("/all/battery")
     public ResponseEntity<ApiResponse<List<PostResponse>>> findAllBatteryPosts() {

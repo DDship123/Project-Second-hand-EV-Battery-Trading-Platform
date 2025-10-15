@@ -1,10 +1,14 @@
 package org.example.be.service;
 
+import org.example.be.dto.reponse.CommentResponse;
+import org.example.be.dto.reponse.MemberResponse;
 import org.example.be.entity.Comment;
 import org.example.be.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +40,7 @@ public class CommentService {
         comment.setMember(commentDetails.getMember());
         comment.setPost(commentDetails.getPost());
         comment.setStatus(commentDetails.getStatus());
-        comment.setCreatedAt(commentDetails.getCreatedAt());
+        comment.setCreatedAt(commentDetails.getCreatedAt().toString());
         return commentRepository.save(comment);
     }
 
@@ -44,7 +48,24 @@ public class CommentService {
         commentRepository.deleteById(id);
     }
 
-    public List<Comment> findAllCommentByPostId(Integer postId) {
-        return commentRepository.findAllByPost_PostsId(postId);
+    public List<CommentResponse> findAllCommentByPostId(Integer postId) {
+        List<Comment> comments = commentRepository.findAllByPost_PostsId(postId);
+        if (comments != null) {
+            return comments.stream().map(c -> new CommentResponse(
+                    c.getCommentId(),
+                    null,
+                    new MemberResponse(
+                            c.getMember().getMemberId(),
+                            c.getMember().getUsername(),
+                            c.getMember().getAvatarUrl(),
+                            c.getMember().getCreatedAt()
+                    ),
+                    c.getRating(),
+                    c.getComment(),
+                    c.getStatus(),
+                    c.getCreatedAt()
+            )).toList();
+        }
+        return null;
     }
 }

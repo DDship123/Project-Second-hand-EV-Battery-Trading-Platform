@@ -78,15 +78,15 @@
                         Feliz - biển MD. Giấy tờ đầy đủ
                     </h3>
                     <div th:text="${transaction.getPrice()}+' đ'" class="container__body__item__price">13.500.000 đ</div>
-                    <div th:text="'Ngày Khởi tạo: '+${transaction.getCreatedAt()}" class="container__body__item__date">
+                    <div th:text="'Ngày Khởi tạo: '+${transaction.getCreatedAt() != null ? #temporals.format(transaction.getCreatedAt(), 'dd-MM-yyyy') : 'N/A'}" class="container__body__item__date">
                         Ngày khởi tạo: 07/08/2025
                     </div>
                 </div>
                 <div class="container__body__item__info">
-                    <div th:text="'Người bán: '+${transaction.getSellerName()}" class="container__body__item__seller">
+                    <div th:text="'Người bán: '+${transaction.getSeller().getUsername()}" class="container__body__item__seller">
                         Người bán: Nguyễn Thế Anh
                     </div>
-                    <div th:text="'Người mua: '+${transaction.getBuyerName()}" class="container__body__item__buyer">
+                    <div th:text="'Người mua: '+${transaction.getBuyer().getUsername()}" class="container__body__item__buyer">
                         Người mua: Nguyễn Văn A
                     </div>
                 </div>

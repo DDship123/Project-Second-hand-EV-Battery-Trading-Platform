@@ -1,7 +1,7 @@
 package org.example.fe.service.impl;
 
-import org.example.fe.entity.PostResponse;
 import org.example.fe.entity.ApiResponse;
+import org.example.fe.entity.PostResponse;
 import org.example.fe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -64,15 +64,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public ApiResponse<List<PostResponse>> getLatestPost() {
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
-
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
             headers.set("Content-Type", "application/json");
-
             // Create request entity
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-
             // Make API call to backend
             ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/posts/latest",
@@ -80,10 +77,9 @@ public class PostServiceImpl implements PostService {
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
             );
-
-            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+            if (apiResponse.getStatusCode().is2xxSuccessful() || apiResponse.getBody() != null) {
                 // Get latest posts successful
-                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+                response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Get latest posts failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -91,7 +87,7 @@ public class PostServiceImpl implements PostService {
                 response.error(errorMap);
             }
         } catch (Exception e) {
-            // Handle exceptions
+            e.printStackTrace(); // Log the exception for debugging
             Map<String, String> errorMap = new HashMap<>();
             errorMap.put("message", "Failed to get latest posts: " + e.getMessage());
             response.error(errorMap);
@@ -534,7 +530,3 @@ public class PostServiceImpl implements PostService {
     }
 
 }
-
-
-
-

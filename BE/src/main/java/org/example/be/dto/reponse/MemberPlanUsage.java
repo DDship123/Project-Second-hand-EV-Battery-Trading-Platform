@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class MemberPlanUsage {
     private int usageId;
-    private Member member;
+    private MemberResponse member;
     private MembershipPlan plan;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -17,7 +17,7 @@ public class MemberPlanUsage {
     public MemberPlanUsage() {
     }
 
-    public MemberPlanUsage(int usageId, Member member, MembershipPlan plan, LocalDateTime startDate, LocalDateTime endDate, int usedPosts, String status) {
+    public MemberPlanUsage(int usageId, MemberResponse member, MembershipPlan plan, LocalDateTime startDate, LocalDateTime endDate, int usedPosts, String status) {
         this.usageId = usageId;
         this.member = member;
         this.plan = plan;
@@ -35,11 +35,11 @@ public class MemberPlanUsage {
         this.usageId = usageId;
     }
 
-    public Member getMember() {
+    public MemberResponse getMember() {
         return member;
     }
 
-    public void setMember(Member member) {
+    public void setMember(MemberResponse member) {
         this.member = member;
     }
 

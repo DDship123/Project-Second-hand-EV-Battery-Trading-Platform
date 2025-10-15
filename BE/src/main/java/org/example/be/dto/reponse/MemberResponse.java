@@ -1,5 +1,6 @@
 package org.example.be.dto.reponse;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class MemberResponse {
@@ -18,7 +19,8 @@ public class MemberResponse {
     public MemberResponse() {
     }
 
-    public MemberResponse(int memberId, String username, String address, String email, String city, String phone, String password, String role, String status, String avatarUrl, LocalDateTime createdAt) {
+    public MemberResponse(int memberId, String username, String address, String email, String city
+            , String phone, String password, String role, String status, String avatarUrl, LocalDateTime createdAt) {
         this.memberId = memberId;
         this.username = username;
         this.address = address;
@@ -28,6 +30,13 @@ public class MemberResponse {
         this.password = password;
         this.role = role;
         this.status = status;
+        this.avatarUrl = avatarUrl;
+        this.createdAt = createdAt;
+    }
+
+    public MemberResponse(int memberId, String username,String avatarUrl, LocalDateTime createdAt) {
+        this.memberId = memberId;
+        this.username = username;
         this.avatarUrl = avatarUrl;
         this.createdAt = createdAt;
     }

@@ -1,6 +1,7 @@
 package org.example.be.controller;
 
 import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.MemberResponse;
 import org.example.be.dto.reponse.TransactionResponse;
 import org.example.be.entity.Review;
 import org.example.be.entity.Transaction;
@@ -27,11 +28,14 @@ public class TransactionController {
     private TransactionResponse mapToResponse(Transaction t) {
         TransactionResponse response = new TransactionResponse();
         response.setTransactionId(t.getTransactionsId());
-        response.setBuyerId(t.getBuyer().getMemberId());
-        response.setBuyerName(t.getBuyer().getUsername());
-        response.setSellerId(t.getPost().getSeller().getMemberId());
-        response.setSellerName(t.getPost().getSeller().getUsername());
-        response.setPostId(t.getPost().getPostsId());
+        MemberResponse buyer = new MemberResponse();
+        buyer.setMemberId(t.getBuyer().getMemberId());
+        buyer.setUsername(t.getBuyer().getUsername());
+        response.setBuyer(buyer);
+        MemberResponse seller = new MemberResponse();
+        seller.setMemberId(t.getPost().getSeller().getMemberId());
+        seller.setUsername(t.getPost().getSeller().getUsername());
+        response.setSeller(seller);
         response.setPostTitle(t.getPost().getTitle());
         response.setStatus(t.getStatus());
         response.setPrice(t.getPost().getPrice());

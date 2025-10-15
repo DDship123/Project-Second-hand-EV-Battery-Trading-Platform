@@ -1,6 +1,8 @@
 package org.example.fe.entity;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,19 +15,8 @@ public class PostResponse {
     private LocalDateTime createdAt;
     private MemberResponse seller;
     private ProductResponse product;
+    private List<CommentResponse> comments;
 
-    // seller info
-//    private Integer sellerId;
-//    private String sellerName;
-//    private String sellerAvatar;
-//    private String sellerAddress;
-//    private String sellerCity;
-
-    // product info
-//    private Integer productId;
-//    private String productName;
-//    private String productType;
-//    private String productStatus;
 
     // images
     private List<String> images;
@@ -34,8 +25,44 @@ public class PostResponse {
     public PostResponse() {
     }
 
+    public PostResponse(Integer postsId, String title, String description,
+                        String status, BigDecimal price, LocalDateTime createdAt,
+                        MemberResponse seller, ProductResponse product,
+                        List<String> images, List<PostImageResponse> postImages,List<CommentResponse>  comments) {
+        this.comments = comments;
+        this.postsId = postsId;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.price = price;
+        this.createdAt = createdAt;
+        this.seller = seller;
+        this.product = product;
+        this.images = images;
+        this.postImages = postImages;
+    }
+
+    public List<CommentResponse>  getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentResponse>  comments) {
+        this.comments = comments;
+    }
+
     public MemberResponse getSeller() {
         return seller;
+    }
+
+    public double getAverageRating() {
+        if (comments == null || comments.isEmpty()) {
+            return 0.0;
+        }
+        double sum = 0.0;
+        for (CommentResponse comment : comments) {
+            sum += comment.getRating();
+        }
+        return sum / comments.size();
     }
 
     public void setSeller(MemberResponse seller) {
@@ -82,8 +109,11 @@ public class PostResponse {
         this.status = status;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getPrice() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("###,###", symbols);
+        return decimalFormat.format(price);
     }
 
     public void setPrice(BigDecimal price) {

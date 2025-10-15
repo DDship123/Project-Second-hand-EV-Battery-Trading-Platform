@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class CommissionResponse {
     private int commissionId;
-    private Transaction transaction;
+    private TransactionResponse transaction;
     private double commissionRate;
     private double amount;
     private String status;
@@ -15,7 +15,7 @@ public class CommissionResponse {
     public CommissionResponse() {
     }
 
-    public CommissionResponse(int commissionId, Transaction transaction, double commissionRate, double amount, String status, LocalDateTime createdAt) {
+    public CommissionResponse(int commissionId, TransactionResponse transaction, double commissionRate, double amount, String status, LocalDateTime createdAt) {
         this.commissionId = commissionId;
         this.transaction = transaction;
         this.commissionRate = commissionRate;
@@ -32,11 +32,11 @@ public class CommissionResponse {
         this.commissionId = commissionId;
     }
 
-    public Transaction getTransaction() {
+    public TransactionResponse getTransaction() {
         return transaction;
     }
 
-    public void setTransaction(Transaction transaction) {
+    public void setTransaction(TransactionResponse transaction) {
         this.transaction = transaction;
     }
 
