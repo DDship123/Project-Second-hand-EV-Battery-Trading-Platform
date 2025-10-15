@@ -1,10 +1,450 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="overflow: hidden" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="adminPage.css" />
 </head>
+
 <body>
-$END$
+<div class="container">
+    <div class="sideBar">
+        <div class="sideBar__avatar">
+            <img src="https://i.pravatar.cc/300" alt="avatar" />
+            <div>
+                <h2>Nguyen Van L</h2>
+                <small>Admin</small>
+            </div>
+        </div>
+        <ul class="sideBar__menu">
+            <li>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fa-solid fa-user"></i>
+                        <p>Thông tin cá nhân</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fa-solid fa-lock"></i>
+                        <p>Bảo mật</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="menu-item" id="permissionMenu">
+                    <div class="menu-item-content">
+                        <i class="fa-solid fa-table-cells"></i>
+                        <p>Quyền & Phạm vi</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                </div>
+                <ul class="submenu" id="submenu">
+                    <li class="submenu-item" data-submenu="post">
+                        <i class="fa-solid fa-border-all"></i>
+                        <span>Quản lí đăng bài</span>
+                    </li>
+                    <li class="submenu-item active" data-submenu="transaction">
+                        <i class="fa-solid fa-file-invoice"></i>
+                        <span>Quản lí giao dịch</span>
+                    </li>
+                    <li class="submenu-item" data-submenu="user">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>Quản lí người dùng</span>
+                    </li>
+                    <li class="submenu-item" data-submenu="fee">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                        <span>Cấu hình phí & Hoa hồng</span>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-divider">
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <p>Policy</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fa-solid fa-gear"></i>
+                        <p>Settings</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content" id="mainContent">
+        <!--================ 1. Quản lí đăng bài Content =======================-->
+        <div class="content-section" data-section="post">
+            <div class="content-header">
+                <div class="filter-tabs">
+                    <button class="tab-btn active">Đợi duyệt <span class="badge">15</span></button>
+                    <button class="tab-btn">Đã duyệt</button>
+                    <button class="tab-btn">Từ chối <span class="badge">8</span></button>
+                </div>
+                <div class="result-info">Showing 1 - 8 of 100 results</div>
+            </div>
+
+            <div class="content-toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+                <div class="toolbar-actions">
+                    <div class="view-toggle">
+                        <button class="view-btn"><i class="fa-solid fa-list"></i></button>
+                        <button class="view-btn active"><i class="fa-solid fa-grip"></i></button>
+                    </div>
+                    <button class="filter-btn">
+                        <i class="fa-solid fa-filter"></i> Lọc
+                    </button>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Thời gian duyệt</th>
+                        <th>Mô tả</th>
+                        <th>Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Nguyen Tien Linh</td>
+                        <td>nguyentienlinh@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nguyen Van An</td>
+                        <td>nguyenvanae@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tran Trung Tam</td>
+                        <td>trungtamtran@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Huan Hoa Hong</td>
+                        <td>huanrose@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tran Trung Tien</td>
+                        <td>tienbjp@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Do Giam Doc</td>
+                        <td>giamdoc@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nguyen Gan Gui</td>
+                        <td>gangui@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>The Tinh Thon</td>
+                        <td>tinhthon@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">5</button>
+            </div>
+        </div>
+
+        <!--===================== 2. Quản lí giao dịch Content ====================-->
+        <div class="content-section active" data-section="transaction">
+            <div class="section-title">
+                <i class="fa-solid fa-file-invoice"></i>
+                <h2>Quản lí giao dịch</h2>
+            </div>
+            <div class="content-toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+            </div>
+            <div class="data-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Mã yêu cầu</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Người mua</th>
+                        <th>Người bán</th>
+                        <th>Ngày yêu cầu</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>REQ12345</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Van A</td>
+                        <td>Nguyen Van B</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge pending">Đang đợi</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                            <button class="action-btn-small success">Duyệt</button>
+                            <button class="action-btn-small danger">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REQ12346</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Tan C</td>
+                        <td>Nguyen Van D</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge approved">Đã duyệt</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REQ12347</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Van E</td>
+                        <td>Nguyen Van G</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge approved">Đã duyệt</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REQ12347</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Van E</td>
+                        <td>Nguyen Van G</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge approved">Đã duyệt</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REQ12347</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Van E</td>
+                        <td>Nguyen Van G</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge rejected">Từ chối</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--================== 3. Quản lí người dùng Content =================== -->
+        <div class="content-section" data-section="user">
+            <div class="section-title">
+                <i class="fa-solid fa-user-group"></i>
+                <h2>Quản lí người dùng</h2>
+            </div>
+            <div class="content-toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Tìm kiếm người dùng...">
+                </div>
+            </div>
+            <div class="data-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Giới thiệu viên</th>
+                        <th>Ngày đăng ký</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>U001</td>
+                        <td>Nguyen Van A</td>
+                        <td>nguyenvana@gmail.com</td>
+                        <td>Chưa đăng ký</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge active">Hoạt động</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>U002</td>
+                        <td>Nguyen Van A</td>
+                        <td>nguyenvana@gmail.com</td>
+                        <td>Chuyên nghiệp</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge suspended">Tạm khóa</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>U003</td>
+                        <td>Nguyen Van A</td>
+                        <td>nguyenvana@gmail.com</td>
+                        <td>Doanh nghiệp</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge banned">Cấm vĩnh viễn</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>U004</td>
+                        <td>Nguyen Van A</td>
+                        <td>nguyenvana@gmail.com</td>
+                        <td>Chuyên nghiệp</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge active">Hoạt động</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--================= 4. Cấu hình phí & Hoa hồng Content =====================-->
+        <div class="content-section" data-section="fee">
+            <div class="section-title">
+                <i class="fa-solid fa-dollar-sign"></i>
+                <h2>Cấu hình phí & Hoa hồng</h2>
+            </div>
+            <div class="fee-config-container">
+                <div class="fee-card">
+                    <h3>Phí giao dịch</h3>
+                    <div class="fee-input-group">
+                        <label>Phí cố định (VNĐ)</label>
+                        <input type="number" value="10000" class="fee-input">
+                    </div>
+                    <div class="fee-input-group">
+                        <label>Phí theo % giao dịch</label>
+                        <input type="number" value="2.5" class="fee-input">
+                        <span class="input-suffix">%</span>
+                    </div>
+                    <button class="save-btn">Lưu thay đổi</button>
+                </div>
+
+                <div class="fee-card">
+                    <h3>Hoa hồng người giới thiệu</h3>
+                    <div class="fee-input-group">
+                        <label>Hoa hồng cấp 1 (%)</label>
+                        <input type="number" value="5" class="fee-input">
+                        <span class="input-suffix">%</span>
+                    </div>
+                    <div class="fee-input-group">
+                        <label>Hoa hồng cấp 2 (%)</label>
+                        <input type="number" value="3" class="fee-input">
+                        <span class="input-suffix">%</span>
+                    </div>
+                    <button class="save-btn">Lưu thay đổi</button>
+                </div>
+
+                <div class="fee-card">
+                    <h3>Phí đăng tin</h3>
+                    <div class="fee-input-group">
+                        <label>Gói cơ bản (VNĐ/tháng)</label>
+                        <input type="number" value="50000" class="fee-input">
+                    </div>
+                    <div class="fee-input-group">
+                        <label>Gói nâng cao (VNĐ/tháng)</label>
+                        <input type="number" value="100000" class="fee-input">
+                    </div>
+                    <div class="fee-input-group">
+                        <label>Gói VIP (VNĐ/tháng)</label>
+                        <input type="number" value="200000" class="fee-input">
+                    </div>
+                    <button class="save-btn">Lưu thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/adminPage.js}"></script>
+
 </body>
+
 </html>
