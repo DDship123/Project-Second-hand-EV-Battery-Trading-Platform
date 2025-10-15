@@ -239,6 +239,7 @@ body {
     position: relative;
     min-height: 240px;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .battery__item:last-child {

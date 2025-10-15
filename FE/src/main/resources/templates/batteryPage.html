@@ -97,6 +97,7 @@
   <div class="battery__container">
     <!-- Battery Item 1 -->
     <div th:each="post :${posts}" class="battery__item">
+      <input type="hidden" th:value="${post.getPostsId()}" class="postId"/>
       <div class="battery__item__image">
         <img
                 th:src="${post.getImages()[0]}"
@@ -157,5 +158,6 @@
      JAVASCRIPT
      ============================= -->
 <script th:src="@{/js/commonComponents/searchBar.js}"></script>
+<script th:src="@{/js/batteryPage.js}"></script>
 </body>
 </html>

@@ -39,6 +39,7 @@
     <!-- Wishlist Items -->
     <div class="container__body">
         <div th:each="favorite: ${wishlists}" class="container__body__item">
+            <input type="hidden" th:value="${favorite.getPost().getPostsId()}"/>
             <div class="container__body__item__main">
                 <div class="container__body__item__image">
                     <img
@@ -70,6 +71,6 @@
     </div>
 </section>
 <footer th:include="/commonComponents/footer.html"></footer>
-<!--<script th:src="@{/js/wishListPage.js}"></script>-->
+<script th:src="@{/js/wishListPage.js}"></script>
 </body>
 </html>

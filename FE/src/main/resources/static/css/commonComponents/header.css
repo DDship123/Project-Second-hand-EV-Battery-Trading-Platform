@@ -154,7 +154,8 @@ div.nav__link{
    ===================================================== */
 /* Base Tooltip Styles */
 .btn__history .tooltip,
-.btn__wishlist .tooltip {
+.btn__wishlist .tooltip,
+.btn__plus .tooltip {
     visibility: hidden;
     opacity: 0;
     background-color: rgba(0, 0, 0, 0.8);
@@ -175,7 +176,8 @@ div.nav__link{
 
 /* Tooltip Arrows */
 .btn__history .tooltip::after,
-.btn__wishlist .tooltip::after {
+.btn__wishlist .tooltip::after,
+.btn__plus .tooltip::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -188,13 +190,15 @@ div.nav__link{
 
 /* Tooltip Hover Effects */
 .btn__history:hover .tooltip,
-.btn__wishlist:hover .tooltip {
+.btn__wishlist:hover .tooltip ,
+.btn__plus:hover .tooltip {
     visibility: visible;
     opacity: 1;
 }
 
 .btn__history:hover,
-.btn__wishlist:hover {
+.btn__wishlist:hover,
+.btn__plus:hover {
     background-color: #f0f0f0;
     transform: translateY(-2px);
 }

@@ -232,6 +232,7 @@ body {
     position: relative;
     min-height: 240px;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 .vehicle__item__image {
     width: 20%;

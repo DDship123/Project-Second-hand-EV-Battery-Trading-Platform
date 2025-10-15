@@ -99,6 +99,7 @@
     <div class="vehicle__container">
         <!-- Vehicle Item 1 -->
         <div th:each="post :${posts}" class="vehicle__item">
+            <input type="hidden" th:value="${post.getPostsId()}" class="postId"/>
             <div class="vehicle__item__image">
                 <img
                         th:src="${post.getImages()[0]}"
@@ -155,5 +156,6 @@
      JAVASCRIPT
      ============================= -->
 <script th:src="@{/js/commonComponents/searchBar.js}"></script>
+<script th:src="@{/js/vehiclePage.js}"></script>
 </body>
 </html>
