@@ -42,7 +42,7 @@
         <div class="registration__divider"></div>
     </div>
 
-    <form action="*" method="post" class="registration__content">
+    <form th:action="@{/home/postForm/submit/vehicle}" method="post" enctype="multipart/form-data" class="registration__content">
         <div class="registration__left">
             <div class="registration__upload-section">
                 <label class="registration__label">
@@ -73,6 +73,10 @@
                         Phần ảnh chính, thêm tối đa 1 ảnh
                         <span class="registration__required">*</span>
                     </p>
+                    <div class="registration__file-upload-form">
+                        <input type="file" name="mainImage" id="mainImage" class="registration__file-input" accept="image/*"  />
+                    </div>
+                    <p th:if="${mainImageError != null}" style="color: red" th:text="${mainImageError}"></p>
                 </div>
                 <button class="registration__upload-button">Thêm ảnh</button>
             </div>
@@ -106,6 +110,10 @@
                         Phần ảnh phụ, thêm tối đa 4 ảnh
                         <span class="registration__required">*</span>
                     </p>
+                    <div class="registration__file-upload-form">
+                        <input type="file" name="subImage" id="subImage" class="registration__file-input" accept="image/*" multiple/>
+                    </div>
+                    <p th:if="${subImagesError != null}" style="color: red" th:text="${subImagesError}"></p>
                 </div>
                 <button class="registration__upload-button">Thêm ảnh</button>
             </div>
@@ -123,6 +131,7 @@
                             class="registration__input"
                             placeholder="Tiêu đề *"
                             required
+                            name="postTitle"
                     />
                 </div>
 
@@ -131,7 +140,7 @@
                       class="registration__textarea"
                       placeholder="Mô tả chi tiết *"
                       rows="4"
-                      required
+                      name="postDescription"
               ></textarea>
                 </div>
             </div>
@@ -140,16 +149,33 @@
                 <h2 class="registration__section-title">THÔNG TIN CHI TIẾT</h2>
 
                 <div class="registration__form-group">
-                    <select class="registration__select" required>
-                        <option value="vehicle">Xe cộ</option>
-                        <option value="battery">Pin</option>
+                    <select class="registration__select" name="productType" required>
+                        <option value="VEHICLE">Xe cộ</option>
+                        <option value="BATTERY">Pin</option>
                     </select>
+                </div>
+                <div class="registration__form-group">
+                    <input
+                            type="text"
+                            class="registration__input"
+                            placeholder="Tên sản phẩm *"
+                            required
+                            name="productName"
+                    />
+                </div>
+                <div class="registration__form-group">
+                <textarea
+                        class="registration__textarea"
+                        placeholder="Mô tả sản phẩm *"
+                        rows="4"
+                        name="productDescription"
+                ></textarea>
                 </div>
                 <div class="vehicle active">
                     <div class="registration__form-group">
-                        <select class="registration__select" required>
-                            <option value="Đã qua sử dụng">Đã qua sử dụng</option>
-                            <option value="Mới">Mới</option>
+                        <select class="registration__select" name="vehicleStatus" required>
+                            <option value="USED">Đã qua sử dụng</option>
+                            <option value="NEW">Mới</option>
                         </select>
                     </div>
 
@@ -159,6 +185,7 @@
                                 class="registration__input"
                                 placeholder="Hãng xe *"
                                 required
+                                name="vehicleBrand"
                         />
                     </div>
 
@@ -168,6 +195,7 @@
                                 class="registration__input"
                                 placeholder="Năm sản xuất *"
                                 required
+                                name="vehicleRegistrationYear"
                         />
                     </div>
 
@@ -180,6 +208,7 @@
                                     class="registration__input"
                                     placeholder="Xuất xứ *"
                                     required
+                                    name="vehicleOrigin"
                             />
                         </div>
                         <div
@@ -189,6 +218,7 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Số Km đã di *"
+                                    name="VehicleMileage"
                                     required
                             />
                         </div>
@@ -201,8 +231,9 @@
                             <input
                                     type="text"
                                     class="registration__input"
-                                    placeholder="Năm đăng ký *"
+                                    placeholder="Dung tích pin *"
                                     required
+                                    name="vehicleBatteryCapacity"
                             />
                         </div>
                         <div
@@ -211,8 +242,9 @@
                             <input
                                     type="text"
                                     class="registration__input"
-                                    placeholder="Dung tích pin *"
+                                    placeholder="Dòng xe *"
                                     required
+                                    name="vehicleModel"
                             />
                         </div>
                     </div>
@@ -221,16 +253,8 @@
                         <input
                                 type="text"
                                 class="registration__input"
-                                placeholder="Số Km đã đi *"
-                                required
-                        />
-                    </div>
-
-                    <div class="registration__form-group">
-                        <input
-                                type="text"
-                                class="registration__input"
                                 placeholder="Giá tiền *"
+                                name="productPrice"
                                 required
                         />
                     </div>
@@ -238,8 +262,8 @@
                 <div class="battery">
                     <div class="registration__form-group">
                         <select class="registration__select" required>
-                            <option value="Đã qua sử dụng">Đã qua sử dụng</option>
-                            <option value="Mới">Mới</option>
+                            <option value="USED">Đã qua sử dụng</option>
+                            <option value="NEW">Mới</option>
                         </select>
                     </div>
 
@@ -249,6 +273,7 @@
                                 class="registration__input"
                                 placeholder="Hãng pin *"
                                 required
+                                disabled
                         />
                     </div>
 
@@ -258,6 +283,7 @@
                                 class="registration__input"
                                 placeholder="Năm sản xuất *"
                                 required
+                                disabled
                         />
                     </div>
 
@@ -270,6 +296,7 @@
                                     class="registration__input"
                                     placeholder="Xuất xứ *"
                                     required
+                                    disabled
                             />
                         </div>
                         <div
@@ -280,6 +307,7 @@
                                     class="registration__input"
                                     placeholder="Dung lượng(Ah)*"
                                     required
+                                    disabled
                             />
                         </div>
                     </div>
@@ -293,6 +321,7 @@
                                     class="registration__input"
                                     placeholder="Năm sản xuất *"
                                     required
+                                    disabled
                             />
                         </div>
                         <div
@@ -303,6 +332,7 @@
                                     class="registration__input"
                                     placeholder="Điện áp(V) *"
                                     required
+                                    disabled
                             />
                         </div>
                     </div>
@@ -313,14 +343,16 @@
                                 class="registration__input"
                                 placeholder="Giá tiền *"
                                 required
+                                disabled
                         />
                     </div>
                 </div>
             </div>
         </div>
-        <button type="submit" class="registration__submit-button">
-            ĐĂNG TIN
-        </button>
+        <input type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
+<!--        <button type="submit" class="registration__submit-button">-->
+<!--            ĐĂNG TIN-->
+<!--        </button>-->
     </form>
 </div>
 <!-- =============================

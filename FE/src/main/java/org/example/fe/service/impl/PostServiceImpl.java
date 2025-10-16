@@ -445,7 +445,6 @@ public class PostServiceImpl implements PostService {
             errorMap.put("message", "Failed to get posts for member: " + e.getMessage());
             response.error(errorMap);
         }
-
         return response;
     }
 
@@ -460,10 +459,11 @@ public class PostServiceImpl implements PostService {
 
             // Create request entity with post data
             HttpEntity<PostResponse> requestEntity = new HttpEntity<>(post, headers);
+            requestEntity.getBody();
 
             // Make API call to backend
             ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts",
+                    apiBaseUrl + "/api/posts/create",
                     HttpMethod.POST,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
@@ -484,9 +484,7 @@ public class PostServiceImpl implements PostService {
             errorMap.put("message", "Failed to create post: " + e.getMessage());
             response.error(errorMap);
         }
-
         return response;
-
     }
 
     @Override
