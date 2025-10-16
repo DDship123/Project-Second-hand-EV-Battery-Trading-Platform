@@ -1,5 +1,6 @@
 package org.example.be.controller;
 
+import jakarta.validation.Valid;
 import org.example.be.dto.reponse.ApiResponse;
 import org.example.be.entity.Member;
 import org.example.be.service.MemberService;
@@ -82,6 +83,7 @@ public class MemeberController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
     // ------------------- UPDATE -------------------
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Member>> updateMember(@PathVariable Integer id, @RequestBody Member member) {
@@ -119,4 +121,26 @@ public class MemeberController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    // ------------------- Get members by status -------------------
+    @GetMapping("/status/{status}")
+    public ResponseEntity<ApiResponse<List<Member>>> getMembersByStatus(@PathVariable String status) {
+        ApiResponse<List<Member>> response = new ApiResponse<>();
+        try {
+            List<Member> members = memberService.getMembersByStatus(status);
+
+            Map<String, Object> metadata = new HashMap<>();
+            metadata.put("timestamp", LocalDateTime.now());
+
+            response.ok(members, (HashMap<String, Object>) metadata);
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 }
+
