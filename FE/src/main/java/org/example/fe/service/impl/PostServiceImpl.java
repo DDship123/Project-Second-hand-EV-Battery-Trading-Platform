@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -459,7 +460,6 @@ public class PostServiceImpl implements PostService {
 
             // Create request entity with post data
             HttpEntity<PostResponse> requestEntity = new HttpEntity<>(post, headers);
-            requestEntity.getBody();
 
             // Make API call to backend
             ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(

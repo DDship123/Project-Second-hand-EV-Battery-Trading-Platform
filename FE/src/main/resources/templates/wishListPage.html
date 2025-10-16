@@ -51,7 +51,7 @@
                     <h3 th:text="${favorite.getPost().getTitle()}" class="container__body__item__title">
                         Undefined
                     </h3>
-                    <div class="container__body__item__price" th:text="${favorite.getPost().getPrice()}">Undefined</div>
+                    <div class="container__body__item__price" th:text="${favorite.getPost().getPriceFormated()}">Undefined</div>
                     <div class="container__body__item__seller" th:text="'Người bán: '+${favorite.getPost().getSeller().getUsername()}">
                         Undefined
                     </div>

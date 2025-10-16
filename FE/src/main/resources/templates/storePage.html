@@ -103,7 +103,7 @@
           <h3 class="product-card__title" th:text="${post.getTitle()}">
             Feliz - biển MD. Giấy tờ đầy đủ
           </h3>
-          <p class="product-card__price" th:text="${post.getPrice()}">13.000.000 đ</p>
+          <p class="product-card__price" th:text="${post.getPriceFormated()}">13.000.000 đ</p>
           <p class="product-card__location" th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}
           +' - '+${post.getSeller().getCity()}">9 giờ trước - Hồ Chí Minh</p>
         </article>

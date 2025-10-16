@@ -109,7 +109,10 @@ public class PostResponse {
         this.status = status;
     }
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
+        return price;
+    }
+    public String getPriceFormated() {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat("###,###", symbols);

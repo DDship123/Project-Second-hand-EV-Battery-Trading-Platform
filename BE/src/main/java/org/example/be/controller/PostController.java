@@ -2,9 +2,7 @@ package org.example.be.controller;
 
 import org.example.be.dto.reponse.*;
 import org.example.be.entity.*;
-import org.example.be.service.CommentService;
-import org.example.be.service.PostImageService;
-import org.example.be.service.PostService;
+import org.example.be.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +25,15 @@ public class PostController {
 
     @Autowired
     private PostImageService postImageService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private BatteryService batteryService;
+
+    @Autowired
+    private VehicleService vehicleService;
 
     private PostResponse mapToResponse(Post post) {
         if (post == null) {
@@ -124,9 +131,19 @@ public class PostController {
         post.setDescription(postRequest.getDescription());
         post.setStatus(postRequest.getStatus());
         post.setPrice(postRequest.getPrice());
+        post.setCreatedAt(postRequest.getCreatedAt());
 
         Member seller = new Member();
         seller.setMemberId(postRequest.getSeller().getMemberId());
+        seller.setUsername(postRequest.getSeller().getUsername());
+        seller.setCity(postRequest.getSeller().getCity());
+        seller.setAvatarUrl(postRequest.getSeller().getAvatarUrl());
+        seller.setCreatedAt(postRequest.getSeller().getCreatedAt());
+        seller.setEmail(postRequest.getSeller().getEmail());
+        seller.setPhone(postRequest.getSeller().getPhone());
+        seller.setRole(postRequest.getSeller().getRole());
+        seller.setStatus(postRequest.getSeller().getStatus());
+        seller.setPassword(postRequest.getSeller().getPassword());
         post.setSeller(seller);
 
         Product product = new Product();
@@ -146,7 +163,7 @@ public class PostController {
                 vehicle.setRegisterYear(postRequest.getProduct().getVehicle().getRegistrationYear());
                 vehicle.setOrigin(postRequest.getProduct().getVehicle().getOrigin());
                 vehicle.setBatteryCapacity(postRequest.getProduct().getVehicle().getBatteryCapacity());
-                product.setVehicle(vehicle);
+                product.setVehicle(vehicleService.createVehicle(vehicle));
             }
         } else if (product.getProductType().equals("BATTERY"))
         {
@@ -159,23 +176,23 @@ public class PostController {
                 battery.setYearAt(postRequest.getProduct().getBattery().getYearOfManufacture());
                 battery.setOrigin(postRequest.getProduct().getBattery().getOrigin());
                 battery.setName(postRequest.getProduct().getBattery().getName());
-                product.setBattery(battery);
+                product.setBattery(batteryService.createBattery(battery));
             }
         }
-         post.setProduct(product);
-        List<PostImage> postImages = new ArrayList<>();
+         post.setProduct(productService.createProduct(product));
 
         Post savedPost = postService.createPost(post);
 
-        if (postRequest.getImages() != null) {
+        if (postRequest.getImages() != null && !postRequest.getImages().isEmpty()) {
             for (String imageUrl : postRequest.getImages()) {
                 PostImage postImage = new PostImage();
                 postImage.setImageUrl(imageUrl);
-                postImage.setPost(savedPost); // Thiết lập quan hệ hai chiều
-                postImages.add(postImage);
+                postImage.setPost(savedPost); // Thiết lập quan hệ với Post
                 postImageService.createPostImage(postImage);
             }
         }
+
+
 
 
         ApiResponse<PostResponse> response = new ApiResponse<>();

@@ -79,28 +79,6 @@ public class MemberServiceImpl implements MemberService {
         ApiResponse<MemberResponse> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
 
-//        // Validate input
-//        if (!StringUtils.hasText(memberRegister.getUsername())) {
-//            errs.put("username", "Username cannot be empty");
-//        }
-//        if (!StringUtils.hasText(memberRegister.getPassword())) {
-//            errs.put("password", "Password cannot be empty");
-//        }
-//        if (!StringUtils.hasText(memberRegister.getEmail())) {
-//            errs.put("email", "Email cannot be empty");
-//        }
-//        if (!StringUtils.hasText(memberRegister.getPhoneNumber())) {
-//            errs.put("phoneNumber", "Phone number cannot be empty");
-//        }
-//        if (!StringUtils.hasText(memberRegister.getAddress())) {
-//            errs.put("phoneNumber", "Address cannot be empty");
-//        }
-//
-//        if (!errs.isEmpty()) {
-//            response.error(errs);
-//            return response;
-//        }
-
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
