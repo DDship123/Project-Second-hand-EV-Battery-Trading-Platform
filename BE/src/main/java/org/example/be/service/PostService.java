@@ -56,12 +56,13 @@ public class PostService {
         return false;
     }
 
-
     // --- For You ---
+// Lấy các bài post mà chính member đó đăng (APPROVED)
     public List<Post> getPostsForYou(Integer memberId) {
         return postRepository.findAllForYou(memberId);
     }
 
+    // Lấy các bài post của chính member đó theo trạng thái tùy chọn
     public List<Post> getPostsForYouByStatus(Integer memberId, String status) {
         return postRepository.findAllForYouByStatus(memberId, status);
     }
@@ -75,22 +76,25 @@ public class PostService {
     public List<Post> getLatestPosts(int limit) {
         return postRepository.findLatestPosts(PageRequest.of(0, Math.max(1, limit)));
     }
-    // Lấy post mới nhất theo loại (vehicle/battery) với limit động
+
+    // Lấy post mới nhất theo loại vehicle (không lọc status)
     public List<Post> getLatestVehiclePosts(int limit) {
-        return postRepository.findLatestPostsByType("VEHICLE", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
+        return postRepository.findLatestVehiclePosts(PageRequest.of(0, Math.max(1, limit)));
     }
 
-    // Lấy latest battery posts
+    // Lấy latest battery posts (không lọc status)
     public List<Post> getLatestBatteryPosts(int limit) {
-        return postRepository.findLatestPostsByType("BATTERY", "ACTIVE", PageRequest.of(0, Math.max(1, limit)));
+        return postRepository.findLatestPostsByType("battery", PageRequest.of(0, Math.max(1, limit)));
     }
-    // Lấy tất cả post vehicle (không giới hạn)
+
+    // Lấy tất cả post vehicle (không giới hạn, không lọc status)
     public List<Post> findAllVehiclePosts() {
-        return postRepository.findLatestPostsByType("VEHICLE", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
+        return postRepository.findLatestPostsByType("vehicle", PageRequest.of(0, Integer.MAX_VALUE));
     }
-    // Lấy tất cả post battery (không giới hạn)
+
+    // Lấy tất cả post battery (không giới hạn, không lọc status)
     public List<Post> findAllBatteryPosts() {
-        return postRepository.findLatestPostsByType("BATTERY", "ACTIVE", PageRequest.of(0, Integer.MAX_VALUE));
+        return postRepository.findLatestPostsByType("battery", PageRequest.of(0, Integer.MAX_VALUE));
     }
 
     // Lấy tất cả post theo city
@@ -108,13 +112,12 @@ public class PostService {
         return postRepository.findAllPostsByMemberCityAndProductTypeAndStatus(productType, city, title);
     }
 
-
-    // Lấy tất cả post theo trạng thái (chờ,duyệt,xóa) sắp xếp mới nhất lên đầu(Tân)
+    // Lấy tất cả post theo trạng thái (chờ, duyệt, xóa) sắp xếp mới nhất lên đầu (Tân)
     public List<Post> getAllPostsByStatus(String status) {
         return postRepository.findAllByStatusOrderByCreatedAtDesc(status);
     }
 
-    // Lấy tất cả post theo nhiều trạng thái (truyền danh sách)(Tân)
+    // Lấy tất cả post theo nhiều trạng thái (truyền danh sách) (Tân)
     public List<Post> getAllPostsByStatuses(List<String> statuses) {
         return postRepository.findAllByStatusInOrderByCreatedAtDesc(statuses);
     }
