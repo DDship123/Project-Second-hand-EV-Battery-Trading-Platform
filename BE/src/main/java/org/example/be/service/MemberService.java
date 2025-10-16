@@ -99,4 +99,8 @@ public class MemberService {
                 request.getPassword()
         );
     }
+
+    public List<Member> getMembersByStatus(String status) {
+        return memberRepository.getMembersByStatus(status);
+    }
 }

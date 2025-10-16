@@ -374,4 +374,42 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
+    // --- ADMIN: GET ALL POSTS BY STATUS ---(Tân)
+    @GetMapping("/admin/status/{status}")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getAllPostsByStatusForAdmin(@PathVariable String status) {
+        List<PostResponse> posts = postService.getAllPostsByStatus(status).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No posts found with status: " + status);
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
+    }
+
+    // --- ADMIN: GET ALL POSTS BY MULTIPLE STATUS ---(Tân)
+    @GetMapping("/admin/statuses")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getAllPostsByStatusesForAdmin(@RequestParam List<String> statuses) {
+        List<PostResponse> posts = postService.getAllPostsByStatuses(statuses).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No posts found for statuses: " + statuses);
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
+    }
+
 }
