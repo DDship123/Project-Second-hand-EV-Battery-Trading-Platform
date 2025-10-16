@@ -152,4 +152,41 @@ public class TransactionController {
             return ResponseEntity.ok(response);
         }
     }
+    // --- ADMIN: GET ALL TRANSACTIONS BY STATUS ---
+    @GetMapping("/admin/status/{status}")
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatusForAdmin(@PathVariable String status) {
+        List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatus(status).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (transactions.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No transactions found with status: " + status);
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(transactions);
+            return ResponseEntity.ok(response);
+        }
+    }
+
+    // --- ADMIN: GET ALL TRANSACTIONS BY MULTIPLE STATUS ---
+    @GetMapping("/admin/statuses")
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatusesForAdmin(@RequestParam List<String> statuses) {
+        List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatuses(statuses).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (transactions.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No transactions found for statuses: " + statuses);
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(transactions);
+            return ResponseEntity.ok(response);
+        }
+    }
 }

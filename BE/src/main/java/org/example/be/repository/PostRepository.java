@@ -89,5 +89,14 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                                                                @Param("city") String city,
                                                                @Param("title") String title);
 
+
+    // Lấy tất cả post theo trạng thái (truyền 1 trạng thái), sắp xếp giảm dần(Tân)
+    @Query("SELECT p FROM Post p WHERE p.status = :status ORDER BY p.createdAt DESC")
+    List<Post> findAllByStatusOrderByCreatedAtDesc(@Param("status") String status);
+
+    // Lấy tất cả post theo nhiều trạng thái (truyền list), sắp xếp giảm dần(Tân)
+    @Query("SELECT p FROM Post p WHERE p.status IN :statuses ORDER BY p.createdAt DESC")
+    List<Post> findAllByStatusInOrderByCreatedAtDesc(@Param("statuses") List<String> statuses);
+
 }
 

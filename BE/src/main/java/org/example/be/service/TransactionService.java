@@ -57,4 +57,14 @@ public class TransactionService {
     public List<Transaction> getAllSellTransactions(Integer sellerId) {
         return transactionRepository.findByPost_Seller_MemberId(sellerId);
     }
+
+    // Lấy tất cả transaction theo trạng thái (yêu cầu giao dịch, chấp nhận, chuyển tiền cho admin, giao, hoàn thành)(Tân)
+    public List<Transaction> getAllTransactionsByStatus(String status) {
+        return transactionRepository.findAllByStatusOrderByCreatedAtDesc(status);
+    }
+
+    // Lấy tất cả transaction theo nhiều trạng thái (truyền danh sách)(Tân)
+    public List<Transaction> getAllTransactionsByStatuses(List<String> statuses) {
+        return transactionRepository.findAllByStatusInOrderByCreatedAtDesc(statuses);
+    }
 }

@@ -108,4 +108,14 @@ public class PostService {
         return postRepository.findAllPostsByMemberCityAndProductTypeAndStatus(productType, city, title);
     }
 
+
+    // Lấy tất cả post theo trạng thái (chờ,duyệt,xóa) sắp xếp mới nhất lên đầu(Tân)
+    public List<Post> getAllPostsByStatus(String status) {
+        return postRepository.findAllByStatusOrderByCreatedAtDesc(status);
+    }
+
+    // Lấy tất cả post theo nhiều trạng thái (truyền danh sách)(Tân)
+    public List<Post> getAllPostsByStatuses(List<String> statuses) {
+        return postRepository.findAllByStatusInOrderByCreatedAtDesc(statuses);
+    }
 }
