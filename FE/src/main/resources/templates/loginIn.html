@@ -30,6 +30,10 @@
         <p>Chưa có tài khoản ? <a href="/signup">Đăng ký</a></p>
     </div>
     <input type="submit" value="Đăng Nhập" class="submitBtn" />
+<!--    <p th:if="${errorMessage != null}" style="color: red"-->
+<!--       th:each="error :  ${errorMessage}" th:text="${error.getValue()}" ></p>-->
+    <p th:if="${errorMessage != null}" style="color: red"
+       th:text="${errorMessage}" ></p>
 </form>
 </body>
 </html>

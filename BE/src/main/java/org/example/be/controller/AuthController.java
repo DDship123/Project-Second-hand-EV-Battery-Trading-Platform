@@ -39,9 +39,9 @@ public class AuthController {
             response.ok(user.get());
             return ResponseEntity.ok(response);
         } else {
-            ApiResponse<String> response = new ApiResponse<>();
+            ApiResponse<Member> response = new ApiResponse<>();
             response.error(Map.of("message", "Invalid username or password"));
-            return ResponseEntity.status(401).body(response);
+            return ResponseEntity.ok(response);
         }
     }
 }
