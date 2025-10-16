@@ -6,6 +6,7 @@ import org.example.fe.entity.MemberResponse;
 import org.example.fe.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ public class LoginInController {
     @PostMapping("/submit")
     public String submitLogin(@RequestParam(name = "username") String userName,
                               @RequestParam(name = "password") String password,
-                              HttpSession session) {
+                              HttpSession session, Model model) {
         ApiResponse<MemberResponse> isAuthenticated = memberService.signIn(userName, password);
         if (isAuthenticated.getStatus().equals("SUCCESS")) {
             // Store user information in session
@@ -33,6 +34,7 @@ public class LoginInController {
             return "redirect:/home";
         } else {
             // Redirect back to login with an error message
+            model.addAttribute("errorMessage", isAuthenticated.getError().get("message"));
             return "loginIn";
         }
     }
