@@ -4,40 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="" />
-=======
     <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="">
-<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_5_2025_12_28_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_5_2025_12_28_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_5_2025_12_35_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_5_2025_12_35_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/entity/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/repository/PostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/org/example/be/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/org/example/be/service/PostService.java" afterDir="false" />
-=======
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/CommentRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/CommentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/ReviewService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/CommentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/ReviewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/FE/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/response/MemberRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/MemberRegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/response/MemberUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/model/MemberUpdateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/MemberService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/WishlistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/WishlistService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/MemberServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/PostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/TransactionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/WishlistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main/java/org/example/fe/service/impl/WishlistServiceImpl.java" afterDir="false" />
->>>>>>> d0900c780a9e3d4514293f426135165559130c61
     </list>
->>>>>>> 56d9f382ff0b00dc62eed8821eae63a04c92bf8a
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,6 +41,18 @@
     </favorite-branches>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dientran0410-dotcom&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DDship123/Project-Second-hand-EV-Battery-Trading-Platform.git&quot;,
+    &quot;accountId&quot;: &quot;67cab204-755c-4c82-aa24-dc7bb48fad5b&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
@@ -76,37 +62,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.BeApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
-  }
-}]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\LENOVO\Documents\CLONEGIT\BE\src\main\java\org\example\be\entity" />
-    </key>
-  </component>
-=======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
@@ -117,7 +72,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Spring Boot.BeApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Dien04102005&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/workplace/Project-Second-hand-EV-Battery-Trading-Platform&quot;,
@@ -129,7 +84,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
->>>>>>> d0900c780a9e3d4514293f426135165559130c61
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Documents\CLONEGIT\BE\src\main\java\org\example\be\entity" />
+    </key>
+  </component>
   <component name="RunManager" selected="Spring Boot.BeApplication">
     <configuration name="BeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -151,8 +110,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
@@ -165,22 +124,17 @@
       <updated>1759106089267</updated>
       <workItem from="1759106091217" duration="5668000" />
       <workItem from="1759349652759" duration="2404000" />
-<<<<<<< HEAD
       <workItem from="1759460826865" duration="1102000" />
       <workItem from="1759647471175" duration="132000" />
       <workItem from="1759647696698" duration="76000" />
       <workItem from="1759647815018" duration="112000" />
       <workItem from="1759647938244" duration="190000" />
       <workItem from="1759648198001" duration="1309000" />
-=======
       <workItem from="1759647454902" duration="204000" />
       <workItem from="1759649081661" duration="261000" />
       <workItem from="1759649351648" duration="12000" />
-<<<<<<< HEAD
       <workItem from="1759711743065" duration="13000" />
-=======
->>>>>>> d0900c780a9e3d4514293f426135165559130c61
->>>>>>> 56d9f382ff0b00dc62eed8821eae63a04c92bf8a
+      <workItem from="1760449911157" duration="30000" />
     </task>
     <servers />
   </component>
