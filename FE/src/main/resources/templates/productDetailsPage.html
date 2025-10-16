@@ -71,7 +71,7 @@
                     <i class="fa-solid fa-location-dot"></i
                     ><span th:text="${post.getSeller().getCity()}">Thành Phố Hồ Chí Minh</span>
                 </p>
-                <p class="container__item__infor__details__price" th:text="${post.getPrice()}+'đ'">13.500.000 đ</p>
+                <p class="container__item__infor__details__price" th:text="${post.getPriceFormated()}+'đ'">13.500.000 đ</p>
                 <div class="container__item__infor__details__commitments">
                     <h3 class="container__item__infor__details__commitments__title">
                         Chính sách & cam kết:

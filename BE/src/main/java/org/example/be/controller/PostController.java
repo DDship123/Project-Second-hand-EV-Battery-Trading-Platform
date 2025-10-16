@@ -1,14 +1,13 @@
 package org.example.be.controller;
 
 import org.example.be.dto.reponse.*;
-import org.example.be.entity.Post;
-import org.example.be.entity.PostImage;
-import org.example.be.service.CommentService;
-import org.example.be.service.PostService;
+import org.example.be.entity.*;
+import org.example.be.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +22,18 @@ public class PostController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private PostImageService postImageService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private BatteryService batteryService;
+
+    @Autowired
+    private VehicleService vehicleService;
 
     private PostResponse mapToResponse(Post post) {
         if (post == null) {
@@ -106,11 +117,86 @@ public class PostController {
     }
 
     // --- CREATE POST ---
-    @PostMapping
-    public ResponseEntity<ApiResponse<PostResponse>> createPost(@RequestBody Post post) {
-        Post saved = postService.createPost(post);
+    @PostMapping("/create")
+    public ResponseEntity<ApiResponse<PostResponse>> createPost(@RequestBody PostResponse postRequest) {
+        if (postRequest == null) {
+            ApiResponse<PostResponse> response = new ApiResponse<>();
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Post data is required");
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+        Post post = new Post();
+        post.setTitle(postRequest.getTitle());
+        post.setDescription(postRequest.getDescription());
+        post.setStatus(postRequest.getStatus());
+        post.setPrice(postRequest.getPrice());
+        post.setCreatedAt(postRequest.getCreatedAt());
+
+        Member seller = new Member();
+        seller.setMemberId(postRequest.getSeller().getMemberId());
+        seller.setUsername(postRequest.getSeller().getUsername());
+        seller.setCity(postRequest.getSeller().getCity());
+        seller.setAvatarUrl(postRequest.getSeller().getAvatarUrl());
+        seller.setCreatedAt(postRequest.getSeller().getCreatedAt());
+        seller.setEmail(postRequest.getSeller().getEmail());
+        seller.setPhone(postRequest.getSeller().getPhone());
+        seller.setRole(postRequest.getSeller().getRole());
+        seller.setStatus(postRequest.getSeller().getStatus());
+        seller.setPassword(postRequest.getSeller().getPassword());
+        post.setSeller(seller);
+
+        Product product = new Product();
+        product.setName(postRequest.getProduct().getProductName());
+        product.setProductType(postRequest.getProduct().getProductType());
+        product.setDescription(postRequest.getProduct().getDescription());
+        product.setStatus(postRequest.getProduct().getStatus());
+        product.setCreatedAt(postRequest.getProduct().getCreatedAt());
+
+        if (product.getProductType().equals("VEHICLE"))
+        {
+            if (postRequest.getProduct().getVehicle() != null) {
+                Vehicle vehicle = new Vehicle();
+                vehicle.setBrand(postRequest.getProduct().getVehicle().getBrand());
+                vehicle.setModel(postRequest.getProduct().getVehicle().getModel());
+                vehicle.setMileage(postRequest.getProduct().getVehicle().getMileage());
+                vehicle.setRegisterYear(postRequest.getProduct().getVehicle().getRegistrationYear());
+                vehicle.setOrigin(postRequest.getProduct().getVehicle().getOrigin());
+                vehicle.setBatteryCapacity(postRequest.getProduct().getVehicle().getBatteryCapacity());
+                product.setVehicle(vehicleService.createVehicle(vehicle));
+            }
+        } else if (product.getProductType().equals("BATTERY"))
+        {
+            if (postRequest.getProduct().getBattery() != null) {
+                Battery battery = new Battery();
+                battery.setCondition(postRequest.getProduct().getBattery().getCondition());
+                battery.setBrand(postRequest.getProduct().getBattery().getBrand());
+                battery.setCapacityAh(postRequest.getProduct().getBattery().getCapacity());
+                battery.setVoltageV(postRequest.getProduct().getBattery().getVoltage());
+                battery.setYearAt(postRequest.getProduct().getBattery().getYearOfManufacture());
+                battery.setOrigin(postRequest.getProduct().getBattery().getOrigin());
+                battery.setName(postRequest.getProduct().getBattery().getName());
+                product.setBattery(batteryService.createBattery(battery));
+            }
+        }
+         post.setProduct(productService.createProduct(product));
+
+        Post savedPost = postService.createPost(post);
+
+        if (postRequest.getImages() != null && !postRequest.getImages().isEmpty()) {
+            for (String imageUrl : postRequest.getImages()) {
+                PostImage postImage = new PostImage();
+                postImage.setImageUrl(imageUrl);
+                postImage.setPost(savedPost); // Thiết lập quan hệ với Post
+                postImageService.createPostImage(postImage);
+            }
+        }
+
+
+
+
         ApiResponse<PostResponse> response = new ApiResponse<>();
-        response.ok(mapToResponse(saved));
+        response.ok(mapToResponse(savedPost));
         return ResponseEntity.ok(response);
     }
 

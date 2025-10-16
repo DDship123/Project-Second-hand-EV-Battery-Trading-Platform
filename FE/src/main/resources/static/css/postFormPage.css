@@ -119,6 +119,20 @@ body {
     font-size: 13px;
     line-height: 1.6;
 }
+.registration__file-upload-form {
+    padding: 20px 40px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    width: 90%;
+    margin: 25px auto 0px auto;
+    display: none;
+}
+.registration__file-upload-form.active {
+    display: block;
+}
 
 .registration__upload-button {
     background-color: white;

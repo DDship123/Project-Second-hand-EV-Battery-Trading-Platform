@@ -24,7 +24,7 @@
      HEADER SECTION
      ============================= -->
 <header th:include="/commonComponents/header.html"></header>
-<button class="create"><a href="#">Tạo bài đăng</a></button>
+<button class="create"><a th:href="@{/home/postForm}">Tạo bài đăng</a></button>
 <div class="page">
   <!-- Breadcrumb -->
   <div class="page__header">
@@ -92,7 +92,7 @@
         <button class="tabs__item">Đã bán</button>
       </div>
 
-      <div class="product-list">
+      <div class="product-list active">
         <!-- Product Card 1 -->
         <article class="product-card" th:each="post : ${posts}">
           <img
@@ -103,80 +103,27 @@
           <h3 class="product-card__title" th:text="${post.getTitle()}">
             Feliz - biển MD. Giấy tờ đầy đủ
           </h3>
-          <p class="product-card__price" th:text="${post.getPrice()}">13.000.000 đ</p>
+          <p class="product-card__price" th:text="${post.getPriceFormated()}">13.000.000 đ</p>
           <p class="product-card__location" th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}
           +' - '+${post.getSeller().getCity()}">9 giờ trước - Hồ Chí Minh</p>
         </article>
-
-<!--        &lt;!&ndash; Product Card 2 &ndash;&gt;-->
-<!--        <article class="product-card">-->
-<!--          <img-->
-<!--                  src="https://i.pravatar.cc/300"-->
-<!--                  alt="Feliz - biển MD"-->
-<!--                  class="product-card__image"-->
-<!--          />-->
-<!--          <h3 class="product-card__title">-->
-<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
-<!--          </h3>-->
-<!--          <p class="product-card__price">13.000.000 đ</p>-->
-<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
-<!--        </article>-->
-
-<!--        &lt;!&ndash; Product Card 3 &ndash;&gt;-->
-<!--        <article class="product-card">-->
-<!--          <img-->
-<!--                  src="https://i.pravatar.cc/300"-->
-<!--                  alt="Feliz - biển MD"-->
-<!--                  class="product-card__image"-->
-<!--          />-->
-<!--          <h3 class="product-card__title">-->
-<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
-<!--          </h3>-->
-<!--          <p class="product-card__price">13.000.000 đ</p>-->
-<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
-<!--        </article>-->
-
-<!--        &lt;!&ndash; Product Card 4 &ndash;&gt;-->
-<!--        <article class="product-card">-->
-<!--          <img-->
-<!--                  src="https://i.pravatar.cc/300"-->
-<!--                  alt="Feliz - biển MD"-->
-<!--                  class="product-card__image"-->
-<!--          />-->
-<!--          <h3 class="product-card__title">-->
-<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
-<!--          </h3>-->
-<!--          <p class="product-card__price">13.000.000 đ</p>-->
-<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
-<!--        </article>-->
-
-<!--        &lt;!&ndash; Product Card 5 &ndash;&gt;-->
-<!--        <article class="product-card">-->
-<!--          <img-->
-<!--                  src="https://i.pravatar.cc/300"-->
-<!--                  alt="Feliz - biển MD"-->
-<!--                  class="product-card__image"-->
-<!--          />-->
-<!--          <h3 class="product-card__title">-->
-<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
-<!--          </h3>-->
-<!--          <p class="product-card__price">13.000.000 đ</p>-->
-<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
-<!--        </article>-->
-
-<!--        &lt;!&ndash; Product Card 6 &ndash;&gt;-->
-<!--        <article class="product-card">-->
-<!--          <img-->
-<!--                  src="https://i.pravatar.cc/300"-->
-<!--                  alt="Feliz - biển MD"-->
-<!--                  class="product-card__image"-->
-<!--          />-->
-<!--          <h3 class="product-card__title">-->
-<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
-<!--          </h3>-->
-<!--          <p class="product-card__price">13.000.000 đ</p>-->
-<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
-<!--        </article>-->
+        <div class="product-list" th:each="transaction : ${transactions}">
+          <!-- Product Card 1 -->
+          <article class="product-card">
+            <img
+                    th:src="${transaction.getImageUrl()}"
+                    alt="Feliz - biển MD"
+                    class="product-card__image"
+            />
+            <h3 class="product-card__title" th:text="${transaction.getPostTitle()}">
+              Feliz - biển MD. Giấy tờ đầy đủwdbawjdwabjkwadjkawnawjkd
+            </h3>
+            <p class="product-card__price" th:text="${transaction.getPrice()}">13.000.000 đ</p>
+            <p class="product-card__location" th:text="'Ngày khởi tạo: ' + ${transaction.getCreatedAt() != null ? #temporals.format(transaction.getCreatedAt(), 'dd-MM-yyyy') : 'N/A'}">9 giờ trước - Hồ Chí Minh</p>
+            <p class="product-card__buyer" th:text="'Người mua: '+${transaction.getBuyer().getUsername()}">dawdaw</p>
+            <p class="product-card__rating" th:text="'Đánh giá: '+${transaction.getRate()}+'⭐'">5⭐</p>
+          </article>
+        </div>
       </div>
     </main>
   </div>
@@ -185,5 +132,6 @@
      FOOTER SECTION
      ============================= -->
 <footer th:include="/commonComponents/footer.html"></footer>
+<script th:src="@{/js/storePage.js}"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -445,7 +446,6 @@ public class PostServiceImpl implements PostService {
             errorMap.put("message", "Failed to get posts for member: " + e.getMessage());
             response.error(errorMap);
         }
-
         return response;
     }
 
@@ -463,7 +463,7 @@ public class PostServiceImpl implements PostService {
 
             // Make API call to backend
             ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts",
+                    apiBaseUrl + "/api/posts/create",
                     HttpMethod.POST,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
@@ -484,9 +484,7 @@ public class PostServiceImpl implements PostService {
             errorMap.put("message", "Failed to create post: " + e.getMessage());
             response.error(errorMap);
         }
-
         return response;
-
     }
 
     @Override
