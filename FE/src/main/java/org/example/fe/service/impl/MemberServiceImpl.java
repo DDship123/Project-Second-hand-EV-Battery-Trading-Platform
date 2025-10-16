@@ -1,6 +1,7 @@
 package org.example.fe.service.impl;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.entity.MemberResponse;
 import org.example.fe.service.MemberService;
@@ -60,13 +61,16 @@ public class MemberServiceImpl implements MemberService {
                     new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );
 
-            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+            if (apiResponse.getBody().getStatus().equals("SUCCESS") && apiResponse.getBody() != null) {
                 // Authentication successful
                 response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Authentication failed
-                Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Invalid username or password");
+                Map<String, String> errorMap = apiResponse.getBody().getError();
+                if (errorMap == null) {
+                    errorMap = new HashMap<>();
+                    errorMap.put("message", "Authentication failed");
+                }
                 response.error(errorMap);
             }
         } catch (Exception e) {
