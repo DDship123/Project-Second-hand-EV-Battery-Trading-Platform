@@ -1,6 +1,7 @@
 package org.example.fe.service.impl;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.entity.MemberResponse;
 import org.example.fe.service.MemberService;
