@@ -12,91 +12,71 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    // Lấy tất cả post for you (không lấy của chính mình, status = approved, product active)
+    // --- FOR YOU ---
+    // Lấy tất cả post mà CHÍNH member đó đăng (status = APPROVED)
     @Query("SELECT p FROM Post p " +
-            "WHERE p.status = 'approved' " +
-            "AND p.product.status = 'active' " +
-            "AND p.seller.memberId <> :memberId " +
+            "WHERE p.seller.memberId = :memberId " +
+            "AND p.status = 'APPROVED' " +
             "ORDER BY p.createdAt DESC")
     List<Post> findAllForYou(@Param("memberId") Integer memberId);
 
-    // Lọc thêm theo status cho for-you feed
+    // Lọc thêm theo status nếu cần (APPROVED / PENDING / REJECTED ...)
     @Query("SELECT p FROM Post p " +
-            "WHERE p.status = :status " +
-            "AND p.product.status = 'active' " +
-            "AND p.seller.memberId <> :memberId " +
+            "WHERE p.seller.memberId = :memberId " +
+            "AND p.status = :status " +
             "ORDER BY p.createdAt DESC")
     List<Post> findAllForYouByStatus(@Param("memberId") Integer memberId,
                                      @Param("status") String status);
 
-    // Lấy tất cả post của 1 member
+
+    // --- MEMBER POSTS (tổng quát, không lọc status) ---
     @Query("SELECT p FROM Post p WHERE p.seller.memberId = :memberId ORDER BY p.createdAt DESC")
     List<Post> findAllByMember(@Param("memberId") Integer memberId);
 
-    // Lấy các post mới nhất (giới hạn bằng Pageable)
-    @Query("SELECT p FROM Post p ORDER BY p.createdAt DESC")
+
+    // --- LATEST POSTS (chỉ lấy bài APPROVED) ---
+    @Query("SELECT p FROM Post p WHERE p.status = 'APPROVED' ORDER BY p.createdAt DESC")
     List<Post> findLatestPosts(Pageable pageable);
 
-    // Alternative: Find posts for you (không cần filter product/status)
-    @Query("SELECT p FROM Post p WHERE p.seller.memberId <> :memberId ORDER BY p.createdAt DESC")
-    List<Post> findPostsForYou(@Param("memberId") Integer memberId);
-
-    // Alternative: Find posts for you + filter theo status
     @Query("SELECT p FROM Post p " +
-            "WHERE p.seller.memberId <> :memberId " +
-            "AND p.status = :status " +
-            "ORDER BY p.createdAt DESC")
-    List<Post> findPostsForYouByStatus(@Param("memberId") Integer memberId,
-                                       @Param("status") String status);
-
-
-    // Lấy 8 post mới nhất chỉ cho vehicle
-    @Query("SELECT p FROM Post p " +
-            "WHERE p.product.productType = 'vehicle' AND p.status = 'ACTIVE' " +
+            "WHERE p.product.productType = 'vehicle' " +
+            "AND p.status = 'APPROVED' " +
             "ORDER BY p.createdAt DESC")
     List<Post> findLatestVehiclePosts(Pageable pageable);
 
-
-    // Lấy 8 post mới nhất chỉ cho battery
     @Query("SELECT p FROM Post p " +
-            "WHERE p.product.productType = :productType AND p.status = :status " +
+            "WHERE p.product.productType = :productType " +
+            "AND p.status = 'APPROVED' " +
             "ORDER BY p.createdAt DESC")
     List<Post> findLatestPostsByType(@Param("productType") String productType,
-                                     @Param("status") String status,
                                      Pageable pageable);
 
-    // Lấy tất cả post dựa vào member city
-    @Query("SELECT p " +
-            "FROM Post p " +
-            "WHERE p.seller.city = :city")
+
+    // --- FILTER BY LOCATION ---
+    @Query("SELECT p FROM Post p WHERE p.seller.city = :city AND p.status = 'APPROVED'")
     List<Post> findAllPostByMemberCity(@Param("city") String city);
 
-    // Lấy tất cả post dựa vào member city và product type
-    @Query("SELECT p " +
-            "FROM Post p " +
+    @Query("SELECT p FROM Post p " +
             "WHERE p.seller.city = :city " +
-            "AND p.product.productType = :productType")
+            "AND p.product.productType = :productType " +
+            "AND p.status = 'APPROVED'")
     List<Post> findAllPostsByMemberCityAndProductType(@Param("productType") String productType,
                                                       @Param("city") String city);
 
-    // Lấy tất cả post dựa vào member city và product type và status
-    @Query("SELECT p " +
-            "FROM Post p " +
+    @Query("SELECT p FROM Post p " +
             "WHERE p.seller.city = :city " +
             "AND p.product.productType = :productType " +
-            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :title, '%')) " +
+            "AND p.status = 'APPROVED'")
     List<Post> findAllPostsByMemberCityAndProductTypeAndStatus(@Param("productType") String productType,
                                                                @Param("city") String city,
                                                                @Param("title") String title);
 
 
-    // Lấy tất cả post theo trạng thái (truyền 1 trạng thái), sắp xếp giảm dần(Tân)
+    // --- ADMIN / STATUS FILTER ---
     @Query("SELECT p FROM Post p WHERE p.status = :status ORDER BY p.createdAt DESC")
     List<Post> findAllByStatusOrderByCreatedAtDesc(@Param("status") String status);
 
-    // Lấy tất cả post theo nhiều trạng thái (truyền list), sắp xếp giảm dần(Tân)
     @Query("SELECT p FROM Post p WHERE p.status IN :statuses ORDER BY p.createdAt DESC")
     List<Post> findAllByStatusInOrderByCreatedAtDesc(@Param("statuses") List<String> statuses);
-
 }
-
