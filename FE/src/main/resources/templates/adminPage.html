@@ -20,29 +20,29 @@
 <div class="container">
     <div class="sideBar">
         <div class="sideBar__avatar">
-            <img src="https://i.pravatar.cc/300" alt="avatar" />
+            <img th:src="${admin.getAvatarUrl()}" alt="avatar" />
             <div>
-                <h2>Nguyen Van L</h2>
+                <h2 th:text="${admin.getUsername()}">Nguyen Van L</h2>
                 <small>Admin</small>
             </div>
         </div>
         <ul class="sideBar__menu">
-            <li>
-                <div class="menu-item">
-                    <div class="menu-item-content">
-                        <i class="fa-solid fa-user"></i>
-                        <p>Thông tin cá nhân</p>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="menu-item">
-                    <div class="menu-item-content">
-                        <i class="fa-solid fa-lock"></i>
-                        <p>Bảo mật</p>
-                    </div>
-                </div>
-            </li>
+<!--            <li>-->
+<!--                <div class="menu-item">-->
+<!--                    <div class="menu-item-content">-->
+<!--                        <i class="fa-solid fa-user"></i>-->
+<!--                        <p>Thông tin cá nhân</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <div class="menu-item">-->
+<!--                    <div class="menu-item-content">-->
+<!--                        <i class="fa-solid fa-lock"></i>-->
+<!--                        <p>Bảo mật</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </li>-->
             <li>
                 <div class="menu-item" id="permissionMenu">
                     <div class="menu-item-content">

@@ -27,17 +27,6 @@ public class MemberServiceImpl implements MemberService {
 
         ApiResponse<MemberResponse> response = new ApiResponse<>();
         Map<String,String> errs = new HashMap<>();
-//        //validate input
-//        if(!StringUtils.hasText(userName)){     //check emty, blank username
-//            errs.put("username","Username cannot be empty");
-//        }
-//        if(!StringUtils.hasText(password)){     //check emty, blank password
-//            errs.put("password","Password cannot be empty");
-//        }
-//        if(!errs.isEmpty()){
-//            response.error(errs);
-//            return response;
-//        }
 
         try {
             // Create headers
@@ -60,13 +49,16 @@ public class MemberServiceImpl implements MemberService {
                     new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );
 
-            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+            if (apiResponse.getBody().getStatus().equals("SUCCESS") && apiResponse.getBody() != null) {
                 // Authentication successful
                 response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Authentication failed
-                Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Invalid username or password");
+                Map<String, String> errorMap = apiResponse.getBody().getError();
+                if (errorMap == null) {
+                    errorMap = new HashMap<>();
+                    errorMap.put("message", "Authentication failed");
+                }
                 response.error(errorMap);
             }
         } catch (Exception e) {

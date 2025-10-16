@@ -425,7 +425,7 @@ public class PostServiceImpl implements PostService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
             //make api call backend
             ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts/for-you" + memberId,
+                    apiBaseUrl + "/api/posts/member/" + memberId,
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>() {

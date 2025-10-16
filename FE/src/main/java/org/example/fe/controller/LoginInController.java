@@ -33,7 +33,7 @@ public class LoginInController {
             return "redirect:/home";
         } else {
             // Redirect back to login with an error message
-            return "redirect:/login";
+            return "loginIn";
         }
     }
 }

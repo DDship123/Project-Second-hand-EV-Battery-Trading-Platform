@@ -9,6 +9,14 @@ window.addEventListener('DOMContentLoaded', function() {
         window.location.href = "/home/transactionsHistory";
     });
 
+    const addPostBtn = document.querySelector(".btn__plus");
+    addPostBtn.addEventListener("click", function() {
+        if(windowHref.includes("postForm")) {
+            return;
+        }
+        window.location.href = "/home/postForm";
+    });
+
     // =====================================================
     //    PRODUCTS DROPDOWN MENU FUNCTIONALITY
     // =====================================================

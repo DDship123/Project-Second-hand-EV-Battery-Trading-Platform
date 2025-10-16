@@ -55,6 +55,13 @@
         <!-- User Actions -->
         <div class="header__user">
             <!-- Add Post Button -->
+            <button class="btn__store">
+                <a th:href="@{/home/store}" style="color: black; text-decoration: none;">
+                    Cửa hàng
+                </a>
+            </button>
+
+            <!-- Add Post Button -->
             <button class="btn__plus" title="Đăng tin">
                 <i class="fa-solid fa-plus"></i>
                 <span class="tooltip">Đăng tin</span>
@@ -69,7 +76,6 @@
             <!-- Wishlist Button -->
             <button class="btn__wishlist" title="Yêu thích">
                 <i class="far fa-heart"></i>
-<!--                <span class="number">5</span>-->
                 <span class="tooltip">Danh sách yêu thích</span>
             </button>
 
@@ -79,7 +85,7 @@
                     <h2>TIN ĐĂNG ĐÃ LƯU</h2>
                     <a th:href="@{/home/wishList}">Tất cả</a>
                 </div>
-                <div class="wishlist__list__item">
+                <div class="wishlist__list__item" th:if="${firstFavorite != null}">
                     <img
                             th:src="${firstFavorite.getPost().getPostImages().get(0).getImageUrl()}"
                             alt="Feliz Motorcycle"
@@ -97,8 +103,9 @@
                 <p><span th:text="${user.getUsername()}">NGƯỜI VÀN A</span> <i class="fas fa-chevron-down"></i></p>
                 <ul class="user__dropdown__content">
                     <li><a th:href="@{/account/personalInformation}">Hồ sơ của tôi</a></li>
-                    <li><a href="">Tin đã đăng</a></li>
-                    <li><a th:href="@{/home/wishList}">Tin đã lưu</a></li>
+                    <li th:if="${user.getRole() == 'ADMIN'}"><a th:href="@{/home/admin}">Quản lí trang</a></li>
+<!--                    <li><a href="">Tin đã đăng</a></li>-->
+<!--                    <li><a th:href="@{/home/wishList}">Tin đã lưu</a></li>-->
                     <li><a th:href="@{/login}">Đăng xuất</a></li>
                 </ul>
             </div>

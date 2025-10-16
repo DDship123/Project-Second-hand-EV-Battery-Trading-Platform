@@ -2,6 +2,7 @@ package org.example.be.controller;
 
 
 import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.MemberResponse;
 import org.example.be.dto.request.LoginRequest;
 import org.example.be.dto.request.MemberRegisterRequest;
 import org.example.be.entity.Member;
@@ -39,9 +40,9 @@ public class AuthController {
             response.ok(user.get());
             return ResponseEntity.ok(response);
         } else {
-            ApiResponse<String> response = new ApiResponse<>();
+            ApiResponse<MemberResponse> response = new ApiResponse<>();
             response.error(Map.of("message", "Invalid username or password"));
-            return ResponseEntity.status(401).body(response);
+            return ResponseEntity.ok(response);
         }
     }
 }

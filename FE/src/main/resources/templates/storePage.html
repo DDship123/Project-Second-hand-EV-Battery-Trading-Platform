@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -31,7 +31,7 @@
     <nav class="breadcrumb">
       <a href="#" class="breadcrumb__link">Trang chủ</a>
       <span class="breadcrumb__separator">/</span>
-      <span class="breadcrumb__current">Cửa hàng của Nguyen Van A</span>
+      <span class="breadcrumb__current" th:text="${user.getUsername()}">Cửa hàng của Nguyen Van A</span>
     </nav>
 
     <!-- Header -->
@@ -51,54 +51,40 @@
       <div class="profile__sidebar__user">
         <div class="profile__avatar">
           <img
-                  src="https://i.pravatar.cc/300"
+                  th:src="${user.avatarUrl}"
                   alt="User Avatar"
                   class="profile__avatar-image"
           />
         </div>
         <div class="profile__info">
-          <h2 class="profile__name">Nguyen Van A</h2>
-          <p class="profile__rating">Đánh Gía: 4.7 ⭐</p>
+          <h2 class="profile__name" th:text="${user.getUsername()}">Nguyen Van A</h2>
+<!--          <p class="profile__rating">Đánh Gía: 4.7 ⭐</p>-->
         </div>
       </div>
 
       <div class="reviews">
         <div class="reviews__rating">
-          <p class="reviews__rating-number">4.7⭐</p>
+          <p class="reviews__rating-number" th:text="${averageRating}+'⭐'">4.7⭐</p>
           <p class="reviews__rating-text">Đánh giá từ người mua</p>
           <p class="reviews__rating-detail">Tất cả</p>
         </div>
-        <div class="reviwer">
+        <div class="reviwer" th:each="review : ${reviews}">
           <img
-                  src="https://i.pravatar.cc/300"
+                  th:src="${review.getReviewer().getAvatarUrl()}"
                   alt="Reviewer Avatar"
                   class="reviwer__avatar"
           />
           <div class="reviwer__content">
-            <h3 class="reviwer__name">Nguyen Van B</h3>
-            <p class="reviwer__text">
+              <h3 class="reviwer__name" th:text="${review.getReviewer().getUsername()}">Nguyen Van B</h3>
+            <p class="reviwer__text" th:text="${review.getComment()}">
               Người bán hàng rất nhiệt tình, sản phẩm đúng như mô tả. Sẽ ủng
               hộ shop lần sau.
             </p>
-          </div>
-        </div>
-        <div class="reviwer">
-          <img
-                  src="https://i.pravatar.cc/300"
-                  alt="Reviewer Avatar"
-                  class="reviwer__avatar"
-          />
-          <div class="reviwer__content">
-            <h3 class="reviwer__name">Nguyen Van C</h3>
-            <p class="reviwer__text">
-              Giao hàng nhanh, đóng gói cẩn thận. Sản phẩm chất lượng tốt.
-              Rất hài lòng với dịch vụ của shop.
-            </p>
+            <span class="reviwer__time" th:text="${#temporals.format(review.getCreatedAt(), 'dd-MM-yyyy HH:mm')}">10/10/2023</span>
           </div>
         </div>
       </div>
     </aside>
-
     <!-- Product Grid -->
     <main class="profile__content">
       <div class="tabs">
@@ -108,88 +94,89 @@
 
       <div class="product-list">
         <!-- Product Card 1 -->
-        <article class="product-card">
+        <article class="product-card" th:each="post : ${posts}">
           <img
-                  src="https://i.pravatar.cc/300"
+                  th:src="${post.getImages()[0]}"
                   alt="Feliz - biển MD"
                   class="product-card__image"
           />
-          <h3 class="product-card__title">
+          <h3 class="product-card__title" th:text="${post.getTitle()}">
             Feliz - biển MD. Giấy tờ đầy đủ
           </h3>
-          <p class="product-card__price">13.000.000 đ</p>
-          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>
+          <p class="product-card__price" th:text="${post.getPrice()}">13.000.000 đ</p>
+          <p class="product-card__location" th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}
+          +' - '+${post.getSeller().getCity()}">9 giờ trước - Hồ Chí Minh</p>
         </article>
 
-        <!-- Product Card 2 -->
-        <article class="product-card">
-          <img
-                  src="https://i.pravatar.cc/300"
-                  alt="Feliz - biển MD"
-                  class="product-card__image"
-          />
-          <h3 class="product-card__title">
-            Feliz - biển MD. Giấy tờ đầy đủ
-          </h3>
-          <p class="product-card__price">13.000.000 đ</p>
-          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>
-        </article>
+<!--        &lt;!&ndash; Product Card 2 &ndash;&gt;-->
+<!--        <article class="product-card">-->
+<!--          <img-->
+<!--                  src="https://i.pravatar.cc/300"-->
+<!--                  alt="Feliz - biển MD"-->
+<!--                  class="product-card__image"-->
+<!--          />-->
+<!--          <h3 class="product-card__title">-->
+<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
+<!--          </h3>-->
+<!--          <p class="product-card__price">13.000.000 đ</p>-->
+<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
+<!--        </article>-->
 
-        <!-- Product Card 3 -->
-        <article class="product-card">
-          <img
-                  src="https://i.pravatar.cc/300"
-                  alt="Feliz - biển MD"
-                  class="product-card__image"
-          />
-          <h3 class="product-card__title">
-            Feliz - biển MD. Giấy tờ đầy đủ
-          </h3>
-          <p class="product-card__price">13.000.000 đ</p>
-          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>
-        </article>
+<!--        &lt;!&ndash; Product Card 3 &ndash;&gt;-->
+<!--        <article class="product-card">-->
+<!--          <img-->
+<!--                  src="https://i.pravatar.cc/300"-->
+<!--                  alt="Feliz - biển MD"-->
+<!--                  class="product-card__image"-->
+<!--          />-->
+<!--          <h3 class="product-card__title">-->
+<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
+<!--          </h3>-->
+<!--          <p class="product-card__price">13.000.000 đ</p>-->
+<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
+<!--        </article>-->
 
-        <!-- Product Card 4 -->
-        <article class="product-card">
-          <img
-                  src="https://i.pravatar.cc/300"
-                  alt="Feliz - biển MD"
-                  class="product-card__image"
-          />
-          <h3 class="product-card__title">
-            Feliz - biển MD. Giấy tờ đầy đủ
-          </h3>
-          <p class="product-card__price">13.000.000 đ</p>
-          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>
-        </article>
+<!--        &lt;!&ndash; Product Card 4 &ndash;&gt;-->
+<!--        <article class="product-card">-->
+<!--          <img-->
+<!--                  src="https://i.pravatar.cc/300"-->
+<!--                  alt="Feliz - biển MD"-->
+<!--                  class="product-card__image"-->
+<!--          />-->
+<!--          <h3 class="product-card__title">-->
+<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
+<!--          </h3>-->
+<!--          <p class="product-card__price">13.000.000 đ</p>-->
+<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
+<!--        </article>-->
 
-        <!-- Product Card 5 -->
-        <article class="product-card">
-          <img
-                  src="https://i.pravatar.cc/300"
-                  alt="Feliz - biển MD"
-                  class="product-card__image"
-          />
-          <h3 class="product-card__title">
-            Feliz - biển MD. Giấy tờ đầy đủ
-          </h3>
-          <p class="product-card__price">13.000.000 đ</p>
-          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>
-        </article>
+<!--        &lt;!&ndash; Product Card 5 &ndash;&gt;-->
+<!--        <article class="product-card">-->
+<!--          <img-->
+<!--                  src="https://i.pravatar.cc/300"-->
+<!--                  alt="Feliz - biển MD"-->
+<!--                  class="product-card__image"-->
+<!--          />-->
+<!--          <h3 class="product-card__title">-->
+<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
+<!--          </h3>-->
+<!--          <p class="product-card__price">13.000.000 đ</p>-->
+<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
+<!--        </article>-->
 
-        <!-- Product Card 6 -->
-        <article class="product-card">
-          <img
-                  src="https://i.pravatar.cc/300"
-                  alt="Feliz - biển MD"
-                  class="product-card__image"
-          />
-          <h3 class="product-card__title">
-            Feliz - biển MD. Giấy tờ đầy đủ
-          </h3>
-          <p class="product-card__price">13.000.000 đ</p>
-          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>
-        </article>
+<!--        &lt;!&ndash; Product Card 6 &ndash;&gt;-->
+<!--        <article class="product-card">-->
+<!--          <img-->
+<!--                  src="https://i.pravatar.cc/300"-->
+<!--                  alt="Feliz - biển MD"-->
+<!--                  class="product-card__image"-->
+<!--          />-->
+<!--          <h3 class="product-card__title">-->
+<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
+<!--          </h3>-->
+<!--          <p class="product-card__price">13.000.000 đ</p>-->
+<!--          <p class="product-card__location">9 giờ trước - Hồ Chí Minh</p>-->
+<!--        </article>-->
       </div>
     </main>
   </div>

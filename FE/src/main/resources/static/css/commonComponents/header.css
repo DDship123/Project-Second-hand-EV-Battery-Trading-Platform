@@ -136,7 +136,8 @@ div.nav__link{
 /* Button Base Styles */
 .btn__history,
 .btn__wishlist,
-.btn__plus {
+.btn__plus,
+.btn__store {
     background: white;
     border: none;
     color: black;
@@ -148,14 +149,18 @@ div.nav__link{
     transition: background-color 0.3s ease;
     position: relative;
 }
-
+.btn__store{
+    font-size: 1rem;
+    border-radius: 25px;
+    padding: 0.6rem 1rem;
+}
 /* =====================================================
    TOOLTIP STYLES
    ===================================================== */
 /* Base Tooltip Styles */
 .btn__history .tooltip,
 .btn__wishlist .tooltip,
-.btn__plus .tooltip {
+.btn__plus .tooltip  {
     visibility: hidden;
     opacity: 0;
     background-color: rgba(0, 0, 0, 0.8);
@@ -198,7 +203,8 @@ div.nav__link{
 
 .btn__history:hover,
 .btn__wishlist:hover,
-.btn__plus:hover {
+.btn__plus:hover,
+.btn__store:hover {
     background-color: #f0f0f0;
     transform: translateY(-2px);
 }
