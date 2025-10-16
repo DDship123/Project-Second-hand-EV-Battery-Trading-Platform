@@ -1,12 +1,10 @@
 package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.fe.entity.ApiResponse;
-import org.example.fe.entity.MemberResponse;
-import org.example.fe.entity.PostResponse;
-import org.example.fe.entity.ReviewResponse;
+import org.example.fe.entity.*;
 import org.example.fe.service.PostService;
 import org.example.fe.service.ReviewService;
+import org.example.fe.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +20,9 @@ public class StorePageController {
     private PostService postService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private TransactionService transactionService;
+
     @GetMapping
     public String storePage(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
@@ -37,6 +38,9 @@ public class StorePageController {
         }
         model.addAttribute("averageRating", averageRating);
         model.addAttribute("reviews", reviews);
+
+        ApiResponse<List<TransactionResponse>> transactionResponse = transactionService.getAllSellTransaction(user.getMemberId());
+        model.addAttribute("transactions", transactionResponse.getPayload());
         return "storePage";
     }
 }
