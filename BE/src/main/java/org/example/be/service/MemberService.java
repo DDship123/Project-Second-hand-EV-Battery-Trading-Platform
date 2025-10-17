@@ -7,6 +7,7 @@ import org.example.be.entity.Member;
 import org.example.be.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.View;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -18,6 +19,8 @@ import java.util.Optional;
 public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private View error;
 
     public Member createMember(Member member) {
         return memberRepository.save(member);
@@ -56,19 +59,29 @@ public class MemberService {
 
     public ApiResponse<Member> register(MemberRegisterRequest request) {
         ApiResponse<Member> response = new ApiResponse<>();
+        Map<String, String> error = new HashMap<>();
 
-        // Kiểm tra email tồn tại
+        // Email Exists
         if (memberRepository.findByEmail(request.getEmail()).isPresent()) {
-            Map<String, String> error = new HashMap<>();
+
             error.put("email", "This email is already in use");
             response.error(error);
-            return response;
         }
 
-        // Kiểm tra phone tồn tại
+        // Phone Exists
         if (memberRepository.findByPhone(request.getPhone()).isPresent()) {
-            Map<String, String> error = new HashMap<>();
+
             error.put("phone", "This phone number is already in use");
+            response.error(error);
+        }
+
+        // Username Exists
+        if (memberRepository.findByUsername(request.getUsername()).isPresent()) {
+
+            error.put("username", "This username is already in use");
+            response.error(error);
+        }
+        if (!error.isEmpty()) {
             response.error(error);
             return response;
         }

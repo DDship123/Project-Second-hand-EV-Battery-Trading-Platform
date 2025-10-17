@@ -1,6 +1,5 @@
 package org.example.be.controller;
 
-import jakarta.validation.Valid;
 import org.example.be.dto.reponse.ApiResponse;
 import org.example.be.entity.Member;
 import org.example.be.service.MemberService;
