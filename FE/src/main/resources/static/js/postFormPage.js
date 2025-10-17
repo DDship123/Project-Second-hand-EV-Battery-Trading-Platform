@@ -2,14 +2,53 @@ window.addEventListener("DOMContentLoaded", function () {
     const vehicleInfo = document.querySelector(".vehicle");
     const batteryInfo = document.querySelector(".battery");
     const categorySelect = document.querySelector(".registration__select");
+    const form = document.querySelector(".registration__content");
 
     categorySelect.addEventListener("change", function () {
+        let actionUrl = form.getAttribute("action");
         if (categorySelect.value === "VEHICLE") {
             vehicleInfo.classList.add("active");
             batteryInfo.classList.remove("active");
+
+            const inputs = vehicleInfo.querySelectorAll("input, select, textarea");
+            console.log(inputs);
+            inputs.forEach(input => {
+                input.setAttribute("required", "required");
+                input.removeAttribute("disabled");
+            });
+            const batteryInputs = batteryInfo.querySelectorAll("input, select, textarea");
+            console.log(batteryInputs);
+            batteryInputs.forEach(input => {
+                input.removeAttribute("required");
+                input.setAttribute("disabled", "disabled");
+            });
+
+            if (actionUrl.includes("battery")) {
+                actionUrl = actionUrl.replace("battery", "vehicle");
+                form.setAttribute("action", actionUrl);
+            }
         } else if (categorySelect.value === "BATTERY") {
             batteryInfo.classList.add("active");
             vehicleInfo.classList.remove("active");
+
+            const inputs = batteryInfo.querySelectorAll("input, select, textarea");
+            console.log(inputs);
+            inputs.forEach(input => {
+                input.setAttribute("required", "required");
+                input.removeAttribute("disabled");
+            });
+            const vehicleInputs = vehicleInfo.querySelectorAll("input, select, textarea");
+            console.log(vehicleInputs);
+            vehicleInputs.forEach(input => {
+
+                input.removeAttribute("required");
+                input.setAttribute("disabled", "disabled");
+            });
+
+            if (actionUrl.includes("vehicle")) {
+                actionUrl = actionUrl.replace("vehicle", "battery");
+                form.setAttribute("action", actionUrl);
+            }
         }
     });
 
@@ -22,15 +61,4 @@ window.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // const form = document.querySelector(".registration__content")
-    // form.addEventListener("submit", function (e) {
-    //     if (imageInputs[0].files.length === 0) {
-    //         alert("Please upload at least one image.");
-    //         e.preventDefault();
-    //     }
-    //     if (imageInputs[1].files.length > 4) {
-    //         alert("You can upload a maximum of 4 images.");
-    //         e.preventDefault();
-    //     }
-    // });
 });

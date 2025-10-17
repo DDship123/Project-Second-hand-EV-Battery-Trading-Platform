@@ -173,7 +173,7 @@
                 </div>
                 <div class="vehicle active">
                     <div class="registration__form-group">
-                        <select class="registration__select" name="vehicleStatus" required>
+                        <select class="registration__select" name="productStatus" required>
                             <option value="USED">Đã qua sử dụng</option>
                             <option value="NEW">Mới</option>
                         </select>
@@ -253,6 +253,16 @@
                         <input
                                 type="text"
                                 class="registration__input"
+                                placeholder="Tình trạng xe *"
+                                name="vehicleCondition"
+                                required
+                        />
+                    </div>
+
+                    <div class="registration__form-group">
+                        <input
+                                type="text"
+                                class="registration__input"
                                 placeholder="Giá tiền *"
                                 name="productPrice"
                                 required
@@ -261,7 +271,7 @@
                 </div>
                 <div class="battery">
                     <div class="registration__form-group">
-                        <select class="registration__select" required>
+                        <select class="registration__select" name="productStatus" required>
                             <option value="USED">Đã qua sử dụng</option>
                             <option value="NEW">Mới</option>
                         </select>
@@ -272,6 +282,7 @@
                                 type="text"
                                 class="registration__input"
                                 placeholder="Hãng pin *"
+                                name="batteryBrand"
                                 required
                                 disabled
                         />
@@ -282,6 +293,7 @@
                                 type="text"
                                 class="registration__input"
                                 placeholder="Năm sản xuất *"
+                                name="batteryManufactureYear"
                                 required
                                 disabled
                         />
@@ -295,6 +307,7 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Xuất xứ *"
+                                    name="batteryOrigin"
                                     required
                                     disabled
                             />
@@ -306,6 +319,7 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Dung lượng(Ah)*"
+                                    name="batteryCapacityAh"
                                     required
                                     disabled
                             />
@@ -319,7 +333,8 @@
                             <input
                                     type="text"
                                     class="registration__input"
-                                    placeholder="Năm sản xuất *"
+                                    placeholder="Tình trạng pin *"
+                                    name="batteryCondition"
                                     required
                                     disabled
                             />
@@ -331,6 +346,7 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Điện áp(V) *"
+                                    name="batteryVoltage"
                                     required
                                     disabled
                             />
@@ -342,6 +358,7 @@
                                 type="text"
                                 class="registration__input"
                                 placeholder="Giá tiền *"
+                                name="productPrice"
                                 required
                                 disabled
                         />

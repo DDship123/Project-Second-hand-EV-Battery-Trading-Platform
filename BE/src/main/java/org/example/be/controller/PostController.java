@@ -152,6 +152,7 @@ public class PostController {
         product.setDescription(postRequest.getProduct().getDescription());
         product.setStatus(postRequest.getProduct().getStatus());
         product.setCreatedAt(postRequest.getProduct().getCreatedAt());
+        product.setMember(seller);
 
         if (product.getProductType().equals("VEHICLE"))
         {
@@ -163,6 +164,8 @@ public class PostController {
                 vehicle.setRegisterYear(postRequest.getProduct().getVehicle().getRegistrationYear());
                 vehicle.setOrigin(postRequest.getProduct().getVehicle().getOrigin());
                 vehicle.setBatteryCapacity(postRequest.getProduct().getVehicle().getBatteryCapacity());
+                vehicle.setCondition(postRequest.getProduct().getVehicle().getCondition());
+                vehicle.setName(postRequest.getProduct().getVehicle().getName());
                 product.setVehicle(vehicleService.createVehicle(vehicle));
             }
         } else if (product.getProductType().equals("BATTERY"))

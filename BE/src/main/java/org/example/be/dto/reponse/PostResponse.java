@@ -23,12 +23,8 @@ public class PostResponse {
     public PostResponse() {
     }
 
-    public PostResponse(Integer postsId, String title, String description,
-                        String status, BigDecimal price, LocalDateTime createdAt,
-                        MemberResponse seller, ProductResponse product,
-                        List<String> images, List<PostImageResponse> postImages,List<CommentResponse>  comments) {
-        this.comments = comments;
-        this.postsId = postsId;
+    public PostResponse(String title, String description, String status, BigDecimal price
+            , LocalDateTime createdAt, MemberResponse seller, ProductResponse product, List<CommentResponse> comments, List<String> images, List<PostImageResponse> postImages) {
         this.title = title;
         this.description = description;
         this.status = status;
@@ -36,32 +32,9 @@ public class PostResponse {
         this.createdAt = createdAt;
         this.seller = seller;
         this.product = product;
+        this.comments = comments;
         this.images = images;
         this.postImages = postImages;
-    }
-
-    public List<CommentResponse>  getComments() {
-        return comments;
-    }
-
-    public void setComments(List<CommentResponse>  comments) {
-        this.comments = comments;
-    }
-
-    public MemberResponse getSeller() {
-        return seller;
-    }
-
-    public void setSeller(MemberResponse seller) {
-        this.seller = seller;
-    }
-
-    public ProductResponse getProduct() {
-        return product;
-    }
-
-    public void setProduct(ProductResponse product) {
-        this.product = product;
     }
 
     public Integer getPostsId() {
@@ -112,6 +85,29 @@ public class PostResponse {
         this.createdAt = createdAt;
     }
 
+    public MemberResponse getSeller() {
+        return seller;
+    }
+
+    public void setSeller(MemberResponse seller) {
+        this.seller = seller;
+    }
+
+    public ProductResponse getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductResponse product) {
+        this.product = product;
+    }
+
+    public List<CommentResponse> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentResponse> comments) {
+        this.comments = comments;
+    }
 
     public List<String> getImages() {
         return images;
