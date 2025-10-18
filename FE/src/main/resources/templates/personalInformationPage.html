@@ -45,6 +45,7 @@
             <div class="profile__container__info__inputGroup">
                 <label for="name">Họ và tên</label>
                 <input type="text" id="name" th:field="*{username}" disabled="true" />
+                <p th:if="${usernameError != null}" th:text="${usernameError}" style="color: red"></p>
             </div>
             <div class="profile__container__info__inputGroup">
                 <label for="createdDate">Ngày tạo tài khoản</label>
@@ -104,6 +105,7 @@
             <div class="profile__container__info__inputGroup">
                 <label for="phone">Số điện thoại</label>
                 <input type="text" id="phone" th:field="*{phone}" disabled="true" />
+                <p th:if="${phoneError != null}" th:text="${phoneError}" style="color: red"></p>
             </div>
             <div class="profile__container__info__inputGroup">
                 <label for="address">Địa chỉ</label>
@@ -117,6 +119,7 @@
                         th:field="*{email}"
                         disabled="true"
                 />
+                <p th:if="${emailError != null}" th:text="${emailError}" style="color: red"></p>
             </div>
         </div>
         <input type="submit" class="profile__container__submit" value="Lưu thay đổi" />
@@ -126,3 +129,4 @@
 <script th:src="@{/js/commonComponents/personalPage.js}"></script>
 </body>
 </html>
+

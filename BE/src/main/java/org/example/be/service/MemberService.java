@@ -35,11 +35,39 @@ public class MemberService {
         return member.orElse(null);
     }
 
-    public Member updateMember(Integer id, Member memberDetails) {
+    public ApiResponse<Member> updateMember(Integer id, Member memberDetails) {
         Member member = getMemberById(id);
+        ApiResponse<Member> response = new ApiResponse<>();
+        Map<String , String> error = new HashMap<>();
         if (member == null) {
-            return null;
+            error.put("message", "Member not found");
+            response.error(error);
+            return response;
         }
+        if(memberRepository.findByUsername(memberDetails.getUsername()).isPresent()){
+
+            error.put("username", "This username is already in use");
+
+        }
+        if(memberRepository.findByEmail(memberDetails.getEmail()).isPresent()){
+
+            error.put("email", "This email is already in use");
+
+        }
+
+        if(member.getPhone().matches("^\\d{10,11}$")){
+            error.put("phone", "Invalid phone number format!");
+        }else if(memberRepository.findByPhone(memberDetails.getPhone()).isPresent()){
+
+            error.put("phone", "This phone number is already in use");
+
+        }
+
+        if (!error.isEmpty()) {
+            response.error(error);
+            return response;
+        }
+
         member.setUsername(memberDetails.getUsername());
         member.setAddress(memberDetails.getAddress());
         member.setEmail(memberDetails.getEmail());
@@ -50,7 +78,12 @@ public class MemberService {
         member.setCreatedAt(memberDetails.getCreatedAt());
         member.setCity(memberDetails.getCity());
         member.setAvatarUrl(memberDetails.getAvatarUrl());
-        return memberRepository.save(member);
+        Member saved = memberRepository.save(member);
+
+        HashMap<String, Object> metadata = new HashMap<>();
+        metadata.put("updatedAt", LocalDateTime.now());
+        response.ok(saved, metadata);
+        return response;
     }
 
     public void deleteMember(Integer id) {
@@ -68,8 +101,11 @@ public class MemberService {
             response.error(error);
         }
 
-        // Phone Exists
-        if (memberRepository.findByPhone(request.getPhone()).isPresent()) {
+        // Phone Exists and Phone number format
+        if(!request.getPhone().matches("^\\d{10,11}$")){
+            error.put("phone", "Invalid phone number format!");
+            response.error(error);
+        } else if (memberRepository.findByPhone(request.getPhone()).isPresent()) {
 
             error.put("phone", "This phone number is already in use");
             response.error(error);

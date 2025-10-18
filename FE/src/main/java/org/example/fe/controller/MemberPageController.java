@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/account")
@@ -28,21 +29,66 @@ public class MemberPageController {
     @GetMapping({"/personalInformation",""})
     public String personalInformation(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login";
+        }
         model.addAttribute("user", user);
         return "personalInformationPage";
     }
 
     @PostMapping("/personalInformation")
     public String updatePersonalInformation(Model model, HttpSession session, @ModelAttribute MemberResponse updatedUser) {
+        MemberResponse currentUser = (MemberResponse) session.getAttribute("user");
+
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        boolean usernameChanged = !currentUser.getUsername().equals(updatedUser.getUsername());
+        boolean emailChanged = !currentUser.getEmail().equals(updatedUser.getEmail());
+        boolean phoneChanged = !currentUser.getPhone().equals(updatedUser.getPhone());
+
+//        if(!usernameChanged && !emailChanged && !phoneChanged){
+//            model.addAttribute("infoMessage", "No changes detected");
+//            model.addAttribute("user", currentUser);
+//            return "personalInformationPage";
+//        }
+
+
         ApiResponse<MemberResponse> response = memberService.updateMember(updatedUser);
+        if (response == null) {
+            model.addAttribute("errorMessage", "Failed to update profile");
+            model.addAttribute("user", currentUser);
+            return "personalInformation";
+        }
         if (response.getStatus().equals("SUCCESS")) {
             model.addAttribute("successMessage", "Profile updated successfully");
             session.setAttribute("user", response.getPayload());
         } else {
-            model.addAttribute("errorMessage", "Failed to update profile");
+            Map<String, String> errorMap = response.getError();
+            if (!errorMap.isEmpty()) {
+                if (emailChanged) {
+                    if (errorMap.containsKey("email")) {
+                        model.addAttribute("emailError", errorMap.get("email"));
+                    }
+                }
+                if (usernameChanged) {
+                    if (errorMap.containsKey("username")) {
+                        model.addAttribute("usernameError", errorMap.get("username"));
+                    }
+                }
+                if (phoneChanged) {
+                    if (errorMap.containsKey("phone")) {
+                        model.addAttribute("phoneError", errorMap.get("phone"));
+                    }
+                }
+            }
+                model.addAttribute("errorMessage", "Failed to update profile");
+                model.addAttribute("user", currentUser);
+                return "personalInformationPage";
         }
-        model.addAttribute("user", response.getPayload());
-        return "personalInformationPage";
+            model.addAttribute("user", response.getPayload());
+            return "redirect:/account/personalInformationPage";
     }
 
     @PostMapping("/personalInformation/uploadAvatar")
