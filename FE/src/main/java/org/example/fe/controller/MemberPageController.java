@@ -10,6 +10,7 @@ import org.example.fe.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,11 +57,11 @@ public class MemberPageController {
 
 
         ApiResponse<MemberResponse> response = memberService.updateMember(updatedUser);
-        if (response == null) {
-            model.addAttribute("errorMessage", "Failed to update profile");
-            model.addAttribute("user", currentUser);
-            return "personalInformation";
-        }
+//        if (response == null) {
+//            model.addAttribute("errorMessage", "Failed to update profile");
+//            model.addAttribute("user", currentUser);
+//            return "personalInformation";
+//        }
         if (response.getStatus().equals("SUCCESS")) {
             model.addAttribute("successMessage", "Profile updated successfully");
             session.setAttribute("user", response.getPayload());
@@ -126,19 +127,30 @@ public class MemberPageController {
             model.addAttribute("user", user);
             return "securityPage";
         }
+
+        if(newPassword.equals(currentPassword)){
+            model.addAttribute("passwordError", "The new password cannot be the same as the current password.");
+            model.addAttribute("user", user);
+            return "securityPage";
+        }
+
         if (!newPassword.equals(confirmPassword)) {
-            model.addAttribute("errorMessage", "New password and confirm password do not match");
+            model.addAttribute("passwordError", "New password and confirm password do not match");
             model.addAttribute("user", user);
             return "securityPage";
         }
         user.setPassword(newPassword);
         ApiResponse<MemberResponse> response = memberService.updateMember(user);
+
         model.addAttribute("user", user);
         if (response.getStatus().equals("SUCCESS")) {
             model.addAttribute("successMessage", "Password updated successfully");
         } else {
             model.addAttribute("errorMessage", "Failed to update password");
+            model.addAttribute("user", user);
+            return "securityPage";
         }
+        model.addAttribute("user", response.getPayload());
         return "securityPage";
     }
 

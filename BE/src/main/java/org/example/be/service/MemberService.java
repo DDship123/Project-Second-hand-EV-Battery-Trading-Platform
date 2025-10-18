@@ -63,6 +63,11 @@ public class MemberService {
 
         }
 
+        //New password
+        if(member.getPassword().equals(memberDetails.getPassword())){
+            error.put("password", "New password and confirm password do not match");
+        }
+
         if (!error.isEmpty()) {
             response.error(error);
             return response;
