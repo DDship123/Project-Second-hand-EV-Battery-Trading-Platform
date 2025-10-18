@@ -347,7 +347,8 @@ public class PostServiceImpl implements PostService {
 
             // Make API call to backend with city and productType parameters
             ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts/by-city-and-type?city=" + city + "&productType=" + productType,
+                    apiBaseUrl + "/api/posts/city-type?"+
+                            "productType=" + productType + "&city=" + city,
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}

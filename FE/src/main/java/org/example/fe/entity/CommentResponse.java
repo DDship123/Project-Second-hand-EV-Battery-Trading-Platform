@@ -25,6 +25,10 @@ public class CommentResponse {
         this.createdAt = createdAt;
     }
 
+    public PostResponse getPost() {
+        return post;
+    }
+
     public int getCommentId() {
         return commentId;
     }

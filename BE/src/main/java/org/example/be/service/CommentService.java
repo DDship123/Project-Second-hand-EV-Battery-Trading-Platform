@@ -40,7 +40,7 @@ public class CommentService {
         comment.setMember(commentDetails.getMember());
         comment.setPost(commentDetails.getPost());
         comment.setStatus(commentDetails.getStatus());
-        comment.setCreatedAt(commentDetails.getCreatedAt().toString());
+        comment.setCreatedAt(commentDetails.getCreatedAt());
         return commentRepository.save(comment);
     }
 

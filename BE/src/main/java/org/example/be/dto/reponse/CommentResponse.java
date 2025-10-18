@@ -1,9 +1,5 @@
 package org.example.be.dto.reponse;
 
-import org.example.be.entity.Member;
-import org.example.be.entity.Post;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class CommentResponse {
@@ -27,6 +23,10 @@ public class CommentResponse {
         this.comment = comment;
         this.status = status;
         this.createdAt = createdAt;
+    }
+
+    public PostResponse getPost() {
+        return post;
     }
 
     public int getCommentId() {

@@ -115,6 +115,16 @@ public class PostResponse {
         DecimalFormat decimalFormat = new DecimalFormat("###,###", symbols);
         return decimalFormat.format(price);  // Format BigDecimal thành String
     }
+    public double getAverageRating() {
+        if (comments == null || comments.isEmpty()) {
+            return 0.0;
+        }
+        double sum = 0.0;
+        for (CommentResponse comment : comments) {
+            sum += comment.getRating();
+        }
+        return sum / comments.size();
+    }
 
     public List<String> getImages() {
         return images;

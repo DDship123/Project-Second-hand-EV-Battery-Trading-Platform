@@ -44,10 +44,10 @@
                 <div class="dropdown-options" id="categoryOptions">
                     <div class="dropdown-option" data-value="all">Danh mục</div>
                     <div class="dropdown-option" data-value="motorbike">
-                        Xe máy điện
+                        Xe điện
                     </div>
                     <div class="dropdown-option" data-value="bicycle">
-                        Xe đạp điện
+                        Pin
                     </div>
                 </div>
             </div>
@@ -64,20 +64,20 @@
             <div class="location-dropdown">
                 <div class="dropdown-selected" id="locationDropdown">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span class="selected-text">Tp Hồ Chí Minh</span>
+                    <span class="selected-text">Địa điểm</span>
                     <i class="fas fa-chevron-down dropdown-arrow"></i>
                 </div>
                 <div class="dropdown-options" id="locationOptions">
-                    <div class="dropdown-option" data-value="hcm">Tp Hồ Chí Minh</div>
-                    <div class="dropdown-option" data-value="hanoi">Hà Nội</div>
-                    <div class="dropdown-option" data-value="danang">Đà Nẵng</div>
-                    <div class="dropdown-option" data-value="haiphong">Hải Phòng</div>
-                    <div class="dropdown-option" data-value="cantho">Cần Thơ</div>
-                    <div class="dropdown-option" data-value="vungtau">Vũng Tàu</div>
-                    <div class="dropdown-option" data-value="nhatrang">Nha Trang</div>
-                    <div class="dropdown-option" data-value="hue">Huế</div>
-                    <div class="dropdown-option" data-value="dalat">Đà Lạt</div>
-                    <div class="dropdown-option" data-value="quangninh">
+                    <div class="dropdown-option" >Thành Phố Hồ Chí Minh</div>
+                    <div class="dropdown-option" >Hà Nội</div>
+                    <div class="dropdown-option" >Đà Nẵng</div>
+                    <div class="dropdown-option" >Hải Phòng</div>
+                    <div class="dropdown-option" >Cần Thơ</div>
+                    <div class="dropdown-option" >Vũng Tàu</div>
+                    <div class="dropdown-option" >Nha Trang</div>
+                    <div class="dropdown-option" >Huế</div>
+                    <div class="dropdown-option" >Đà Lạt</div>
+                    <div class="dropdown-option" >
                         Quảng Ninh
                     </div>
                 </div>
@@ -299,7 +299,7 @@
      ============================= -->
 
 <footer th:include="/commonComponents/footer.html"></footer>
-
+<script th:src="@{/js/commonComponents/searchBar.js}"></script>
 <script th:src="@{/js/homePage.js}"></script>
 </body>
 </html>

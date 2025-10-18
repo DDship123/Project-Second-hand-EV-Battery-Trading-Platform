@@ -209,7 +209,7 @@ body {
 }
 
 .location-dropdown .dropdown-options.show {
-    max-height: 250px;
+    max-height: 600px;
     opacity: 1;
 }
 

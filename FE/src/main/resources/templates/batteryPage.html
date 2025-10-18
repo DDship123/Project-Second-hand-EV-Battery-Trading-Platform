@@ -39,16 +39,16 @@
       <!-- Category Dropdown -->
       <div class="custom-dropdown">
         <div class="dropdown-selected" id="categoryDropdown">
-          <span class="selected-text">Danh mục</span>
+          <span th:text="${productType}" class="selected-text">Danh mục</span>
           <i class="fas fa-chevron-down dropdown-arrow"></i>
         </div>
         <div class="dropdown-options" id="categoryOptions">
           <div class="dropdown-option" data-value="all">Danh mục</div>
-          <div class="dropdown-option" data-value="motorbike">
-            Xe máy điện
+          <div class="dropdown-option" data-value="motorbike" th:if="${productType != 'Xe điện'}">
+            Xe điện
           </div>
-          <div class="dropdown-option" data-value="bicycle">
-            Xe đạp điện
+          <div class="dropdown-option" data-value="bicycle" th:if="${productType != 'Pin'}">
+            Pin
           </div>
         </div>
       </div>
@@ -58,27 +58,27 @@
         <button class="search__btn">
           <i class="fas fa-search"></i>
         </button>
-        <input type="text" placeholder="Tìm sản phẩm..." />
+        <input type="text" th:placeholder="${!postTitle.equals('default') ? postTitle : 'Tìm sản phẩm'}" />
       </div>
 
       <!-- Location Dropdown -->
       <div class="location-dropdown">
         <div class="dropdown-selected" id="locationDropdown">
           <i class="fas fa-map-marker-alt"></i>
-          <span class="selected-text">Tp Hồ Chí Minh</span>
+          <span th:text="${!location.equals('default') ? location : 'Địa điểm'}" class="selected-text">Địa điểm</span>
           <i class="fas fa-chevron-down dropdown-arrow"></i>
         </div>
         <div class="dropdown-options" id="locationOptions">
-          <div class="dropdown-option" data-value="hcm">Tp Hồ Chí Minh</div>
-          <div class="dropdown-option" data-value="hanoi">Hà Nội</div>
-          <div class="dropdown-option" data-value="danang">Đà Nẵng</div>
-          <div class="dropdown-option" data-value="haiphong">Hải Phòng</div>
-          <div class="dropdown-option" data-value="cantho">Cần Thơ</div>
-          <div class="dropdown-option" data-value="vungtau">Vũng Tàu</div>
-          <div class="dropdown-option" data-value="nhatrang">Nha Trang</div>
-          <div class="dropdown-option" data-value="hue">Huế</div>
-          <div class="dropdown-option" data-value="dalat">Đà Lạt</div>
-          <div class="dropdown-option" data-value="quangninh">
+          <div class="dropdown-option" th:if="${!location.equals('Thành Phố Hồ Chí Minh')}" >Thành Phố Hồ Chí Minh</div>
+          <div class="dropdown-option" th:if="${!location.equals('Hà Nội')}" >Hà Nội</div>
+          <div class="dropdown-option" th:if="${!location.equals('Đà Nẵng')}" >Đà Nẵng</div>
+          <div class="dropdown-option" th:if="${!location.equals('Hải Phòng')}" >Hải Phòng</div>
+          <div class="dropdown-option" th:if="${!location.equals('Cần Thơ')}" >Cần Thơ</div>
+          <div class="dropdown-option" th:if="${!location.equals('Vũng Tàu')}" >Vũng Tàu</div>
+          <div class="dropdown-option" th:if="${!location.equals('Nha Trang')}" >Nha Trang</div>
+          <div class="dropdown-option" th:if="${!location.equals('Huế')}" >Huế</div>
+          <div class="dropdown-option" th:if="${!location.equals('Đà Lạt')}" >Đà Lạt</div>
+          <div class="dropdown-option" th:if="${!location.equals('Quảng Ninh')}" >
             Quảng Ninh
           </div>
         </div>
@@ -138,6 +138,7 @@
         </a>
       </div>
     </div>
+    <h3 th:if="${#lists.isEmpty(posts)}" class="no-posts-message">Hiện không có bài đăng nào về pin xe điện.</h3>
   </div>
   <div class="battery__page">
     <a href="#">&laquo;</a>

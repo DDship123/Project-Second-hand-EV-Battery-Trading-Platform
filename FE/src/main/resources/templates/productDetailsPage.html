@@ -285,16 +285,28 @@
                     </div>
                 </div>
             </div>
-            <div class="container__sideInfor__comment__input">
+            <form th:action="@{/create/comment}"  method="post" class="container__sideInfor__comment__input">
                 <input
                         type="text"
                         placeholder="Viết bình luận..."
+                        name="comment"
                         class="container__sideInfor__comment__input__field"
+                        required
                 />
-                <button class="container__sideInfor__comment__input__button">
+                <input
+                        type="number"
+                        max="5"
+                        min="1"
+                        placeholder="Đánh giá của bạn...⭐"
+                        name="rating"
+                        class="container__sideInfor__comment__input__field"
+                        required
+                />
+                <input type="hidden" name="postId" th:value="${post.getPostsId()}"/>
+                <button type="submit" class="container__sideInfor__comment__input__button">
                     Gửi
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 </section>

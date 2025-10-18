@@ -3,7 +3,11 @@ package org.example.be.controller;
 import org.example.be.dto.reponse.ApiResponse;
 import org.example.be.dto.reponse.CommentResponse;
 import org.example.be.entity.Comment;
+import org.example.be.entity.Member;
+import org.example.be.entity.Post;
 import org.example.be.service.CommentService;
+import org.example.be.service.MemberService;
+import org.example.be.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +23,73 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private MemberService memberService;
+
+//    @PostMapping
+//    public ResponseEntity<ApiResponse<CommentResponse>> createComment(@RequestBody CommentResponse com) {
+//        ApiResponse<CommentResponse> response = new ApiResponse<>();
+//        try {
+//            Comment comment1 = new Comment();
+//            comment1.setCreatedAt(com.getCreatedAt());
+//            comment1.setStatus(com.getStatus());
+//            comment1.setComment(com.getComment());
+//            comment1.setRating(com.getRating());
+//
+//            Member member = memberService.getMemberById(com.getMember().getMemberId());
+////            member.setMemberId(com.getMember().getMemberId());
+////            member.setUsername(com.getMember().getUsername());
+////            member.setAvatarUrl(com.getMember().getAvatarUrl());
+////            member.setEmail(com.getMember().getEmail());
+////            member.setPhone(com.getMember().getPhone());
+////            member.setAddress(com.getMember().getAddress());
+////            member.setCreatedAt(com.getMember().getCreatedAt());
+////            member.setStatus(com.getMember().getStatus());
+////            member.setRole(com.getMember().getRole());
+////            member.setPassword(com.getMember().getPassword());
+////            member.setUsername(com.getMember().getUsername());
+////            member.setAvatarUrl(com.getMember().getAvatarUrl());
+////            member.setEmail(com.getMember().getEmail());
+//
+//            comment1.setMember(member);
+//            Post post = postService.getPostById(com.getPost().getPostsId()).orElse(null);
+//            comment1.setPost(post);
+//            Comment created = commentService.createComment(comment1);
+//            Map<String, Object> metadata = new HashMap<>();
+//            metadata.put("timestamp", LocalDateTime.now());
+//            response.ok();
+//            return ResponseEntity.ok(response);
+//        } catch (Exception e) {
+//            Map<String, String> error = new HashMap<>();
+//            error.put("message", e.getMessage());
+//            response.error(error);
+//            return ResponseEntity.badRequest().body(response);
+//        }
+//    }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Comment>> createComment(@RequestBody Comment comment) {
+    public ResponseEntity<ApiResponse<Comment>> createComment(@RequestBody CommentResponse comment) {
         ApiResponse<Comment> response = new ApiResponse<>();
         try {
-            Comment created = commentService.createComment(comment);
+            // Convert CommentResponse to Comment entity
+            Comment comment1 = new Comment();
+            comment.setComment(comment.getComment());
+            comment.setRating(comment.getRating());
+            comment.setStatus(comment.getStatus());
+            comment.setCreatedAt(comment.getCreatedAt());
+
+            // Set relationships
+            Member member = new Member();
+            member.setMemberId(comment.getMember().getMemberId());
+            comment1.setMember(member);
+
+            Post post = new Post();
+            post.setPostsId(comment.getPost().getPostsId());
+            comment1.setPost(post);
+
+            Comment created = commentService.createComment(comment1);
             Map<String, Object> metadata = new HashMap<>();
             metadata.put("timestamp", LocalDateTime.now());
             response.ok(created, (HashMap<String, Object>) metadata);
