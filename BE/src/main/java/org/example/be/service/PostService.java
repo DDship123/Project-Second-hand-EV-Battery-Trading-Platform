@@ -121,4 +121,7 @@ public class PostService {
     public List<Post> getAllPostsByStatuses(List<String> statuses) {
         return postRepository.findAllByStatusInOrderByCreatedAtDesc(statuses);
     }
+    public List<Post> findAllPostByProductTypeAndPostTitle(String productType, String title) {
+        return postRepository.findAllPostByProductTypeAndPostTitle(productType, title);
+    }
 }

@@ -73,10 +73,16 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                                                                @Param("title") String title);
 
 
-    // --- ADMIN / STATUS FILTER ---
+    // --- ADMIN / STATUS FILTER ---(Tân)
     @Query("SELECT p FROM Post p WHERE p.status = :status ORDER BY p.createdAt DESC")
     List<Post> findAllByStatusOrderByCreatedAtDesc(@Param("status") String status);
-
+    // Lấy tất cả post theo nhiều trạng thái (chờ, duyệt, xóa) sắp xếp mới nhất lên đầu (Tân)
     @Query("SELECT p FROM Post p WHERE p.status IN :statuses ORDER BY p.createdAt DESC")
     List<Post> findAllByStatusInOrderByCreatedAtDesc(@Param("statuses") List<String> statuses);
+    // --- SEARCH POSTS BY PRODUCT TYPE AND TITLE ---(Tân)
+    @Query("SELECT p FROM Post p " +
+            "WHERE p.product.productType = :productType " +
+            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :title, '%')) " +
+            "AND p.status = 'APPROVED'")
+    List<Post> findAllPostByProductTypeAndPostTitle(@Param("productType") String productType, @Param("title") String title);
 }
