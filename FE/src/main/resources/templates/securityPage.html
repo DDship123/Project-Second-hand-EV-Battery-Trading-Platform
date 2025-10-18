@@ -30,7 +30,7 @@
     <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
     <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
 
-    <form method="post" th:action="@{/account/security}" class="updatePassword__container">
+    <form method="post" th:action="@{/account/security}" th:object="${user}" class="updatePassword__container">
         <div class="updatePassword__container__inputGroup">
             <label for="currentPassword">Mật khẩu hiện tại</label>
             <input
@@ -40,6 +40,7 @@
                     placeholder="Nhập mật khẩu hiện tại"
                     required
             />
+            <p th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red"></p>
         </div>
         <div class="updatePassword__container__inputGroup">
             <label for="newPassword">Mật khẩu mới</label>
@@ -50,6 +51,7 @@
                     placeholder="Nhập mật khẩu mới"
                     required
             />
+            <p th:if="${passwordError != null}" th:text="${passwordError}" style="color: red"></p>
         </div>
         <div class="updatePassword__container__inputGroup">
             <label for="confirmPassword">Xác nhận mật khẩu mới</label>

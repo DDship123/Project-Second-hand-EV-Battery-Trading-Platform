@@ -500,5 +500,20 @@ public class PostController {
             return ResponseEntity.ok(response);
         }
     }
+    // -- GET ALL POST BY PRODUCT TYPE AND POST TITLE --(Tân)   
+    @GetMapping("/filter/type-title")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> findAllPostByProductTypeAndPostTitle(
+            @RequestParam String productType,
+            @RequestParam String title) {
+
+        List<PostResponse> posts = postService.findAllPostByProductTypeAndPostTitle(productType, title)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        response.ok(posts);
+        return ResponseEntity.ok(response);
+    }
 
 }
