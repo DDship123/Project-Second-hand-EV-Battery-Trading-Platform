@@ -86,19 +86,17 @@ public class MemeberController {
     // ------------------- UPDATE -------------------
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Member>> updateMember(@PathVariable Integer id, @RequestBody Member member) {
-        ApiResponse<Member> response = new ApiResponse<>();
-        try {
-            Member updated = memberService.updateMember(id, member);
-
-            Map<String, Object> metadata = new HashMap<>();
-            metadata.put("updatedAt", LocalDateTime.now());
-
-            response.ok(updated, (HashMap<String, Object>) metadata);
+        try{
+            ApiResponse<Member> response = memberService.updateMember(id, member);
+            if("ERROR".equals(response.getStatus())){
+                return ResponseEntity.badRequest().body(response);
+            }
             return ResponseEntity.ok(response);
-        } catch (Exception e) {
+
+        }catch (Exception e){
+            ApiResponse<Member> response = new ApiResponse<>();
             Map<String, String> error = new HashMap<>();
             error.put("message", e.getMessage());
-
             response.error(error);
             return ResponseEntity.badRequest().body(response);
         }

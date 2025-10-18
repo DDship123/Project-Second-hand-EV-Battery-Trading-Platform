@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
     public ApiResponse<MemberResponse> signIn(String userName, String password) {
 
         ApiResponse<MemberResponse> response = new ApiResponse<>();
-        Map<String,String> errs = new HashMap<>();
+        Map<String, String> errs = new HashMap<>();
 
         try {
             // Create headers
@@ -49,7 +49,8 @@ public class MemberServiceImpl implements MemberService {
                     apiBaseUrl + "/api/auth/login",
                     HttpMethod.POST,
                     requestEntity,
-                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
+                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {
+                    }
             );
 
             if (apiResponse.getBody().getStatus().equals("SUCCESS") && apiResponse.getBody() != null) {
@@ -93,7 +94,8 @@ public class MemberServiceImpl implements MemberService {
                     apiBaseUrl + "/api/auth/register",
                     HttpMethod.POST,
                     requestEntity,
-                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
+                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {
+                    }
             );
 
             if (apiResponse.getBody().getStatus().equals("SUCCESS") && apiResponse.getBody() != null) {
@@ -112,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
                 }
                 response.error(errorMap);
             }
-        }catch (HttpClientErrorException e) {
+        } catch (HttpClientErrorException e) {
             //  Nếu backend trả lỗi 400 → parse JSON body
             try {
                 String responseBody = e.getResponseBodyAsString();
@@ -175,7 +177,8 @@ public class MemberServiceImpl implements MemberService {
                     apiBaseUrl + "/api/members/" + memberId,
                     HttpMethod.GET,
                     requestEntity,
-                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
+                    new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {
+                    }
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
@@ -196,18 +199,19 @@ public class MemberServiceImpl implements MemberService {
         ApiResponse<MemberResponse> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
 
-//        // Validate input
-//        if (!StringUtils.hasText(memberUpdate.getUsername())) {
-//            errs.put("username", "Username cannot be empty");
-//        }
-//        if (!StringUtils.hasText(memberUpdate.getEmail())) {
-//            errs.put("email", "Email cannot be empty");
-//        }
-//
-//        if (!errs.isEmpty()) {
-//            response.error(errs);
-//            return response;
-//        }
+
+    //        // Validate input
+    //        if (!StringUtils.hasText(memberUpdate.getUsername())) {
+    //            errs.put("username", "Username cannot be empty");
+    //        }
+    //        if (!StringUtils.hasText(memberUpdate.getEmail())) {
+    //            errs.put("email", "Email cannot be empty");
+    //        }
+    //
+    //        if (!errs.isEmpty()) {
+    //            response.error(errs);
+    //            return response;
+    //        }
 
         try {
             // Create headers
@@ -225,7 +229,7 @@ public class MemberServiceImpl implements MemberService {
                     new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );
 
-            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+            if (apiResponse.getBody() != null && "SUCCESS".equals(apiResponse.getBody().getStatus())) {
                 // Update successful
                 response.ok(apiResponse.getBody().getPayload());
             } else {
@@ -234,7 +238,30 @@ public class MemberServiceImpl implements MemberService {
                 errorMap.put("message", "Failed to update member");
                 response.error(errorMap);
             }
-        } catch (Exception e) {
+        } catch (HttpClientErrorException e) {
+            //  Nếu backend trả lỗi 400 → parse JSON body
+            try {
+                String responseBody = e.getResponseBodyAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(responseBody);
+
+                JsonNode errorNode = root.path("error");
+                Map<String, String> errorMap = new HashMap<>();
+                if (errorNode.isObject()) {
+                    errorNode.fieldNames().forEachRemaining(
+                            field -> errorMap.put(field, errorNode.get(field).asText())
+                    );
+                } else {
+                    errorMap.put("message", "Registration failed");
+                }
+
+                response.error(errorMap);
+            } catch (Exception parseEx) {
+                errs.put("message", "Registration failed: " + e.getMessage());
+                response.error(errs);
+            }
+
+        }  catch (Exception e) {
             // Handle exceptions
             Map<String, String> errorMap = new HashMap<>();
             errorMap.put("message", "Update failed: " + e.getMessage());
@@ -244,3 +271,4 @@ public class MemberServiceImpl implements MemberService {
         return response;
     }
 }
+

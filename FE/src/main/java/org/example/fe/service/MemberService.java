@@ -8,5 +8,4 @@ public interface MemberService {
     ApiResponse<MemberResponse> register(MemberResponse registerMember);
     ApiResponse<MemberResponse> getMemberInfo(int memberId);
     ApiResponse<MemberResponse> updateMember(MemberResponse updatedMember);
-
 }
