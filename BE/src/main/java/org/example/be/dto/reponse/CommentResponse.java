@@ -2,7 +2,7 @@ package org.example.be.dto.reponse;
 
 import java.time.LocalDateTime;
 
-public class CommentResponse {
+public class CommentResponse  {
     private int commentId;
     private PostResponse post;
     private MemberResponse member;
@@ -35,6 +35,10 @@ public class CommentResponse {
 
     public void setCommentId(int commentId) {
         this.commentId = commentId;
+    }
+
+    public void setPost(PostResponse post) {
+        this.post = post;
     }
 
     public MemberResponse getMember() {
@@ -75,9 +79,5 @@ public class CommentResponse {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public void setPost(PostResponse post) {
-        this.post = post;
     }
 }
