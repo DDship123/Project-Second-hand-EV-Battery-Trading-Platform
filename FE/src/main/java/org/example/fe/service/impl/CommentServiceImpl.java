@@ -5,11 +5,10 @@ import org.example.fe.entity.CommentResponse;
 import org.example.fe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -70,10 +69,17 @@ public class CommentServiceImpl implements CommentService {
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", "application/json");
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+            formData.add("postId", String.valueOf(com.getPost().getPostsId()));
+            formData.add("memberId", String.valueOf(com.getMember().getMemberId()));
+            formData.add("comment", com.getComment());
+            formData.add("rating", String.valueOf(com.getRating()));
+            formData.add("status", com.getStatus());
 
             // Create request entity
-            HttpEntity<CommentResponse> requestEntity = new HttpEntity<>(com, headers);
+            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, headers);
 
             // Make API call to backend
             ResponseEntity<ApiResponse<CommentResponse>> apiResponse = restTemplate.exchange(
