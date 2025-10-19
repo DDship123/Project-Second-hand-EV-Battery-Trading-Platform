@@ -316,13 +316,32 @@ public class PostController {
         existingPost.setDescription(post.getDescription());
         existingPost.setStatus(post.getStatus());
         existingPost.setPrice(post.getPrice());
+        existingPost.setStatus("PENDING"); // Khi cập nhật, đặt trạng thái về PENDING lại
+
         List<PostImage> updatedImages = new ArrayList<>();
+
         if (post.getImages() != null) {
-            for (String imageUrl : post.getImages()) {
+            List<PostImage> existingImages = postImageService.getPostImagesByPostId(existingPost.getPostsId());
+            int existingImagesSize = existingImages.size();
+            for (int i = 0; i < post.getImages().size(); i++){
+                String imageUrl = post.getImages().get(i);
                 PostImage postImage = new PostImage();
                 postImage.setImageUrl(imageUrl);
                 postImage.setPost(existingPost);
-                updatedImages.add(postImageService.updatePostImage(postImage.getPostImagesId(),postImage));
+                if (i < existingImagesSize) {
+                    // Cập nhật hình ảnh hiện có
+                    PostImage existingImage = existingImages.get(i);
+                    postImage.setPostImagesId(existingImage.getPostImagesId());
+                    updatedImages.add(postImageService.updatePostImage(existingImage.getPostImagesId(), postImage));
+                } else {
+                    // Tạo hình ảnh mới
+                    updatedImages.add(postImageService.createPostImage(postImage));
+                }
+            }
+            // Xóa các hình ảnh thừa nếu có
+            for (int i = post.getImages().size(); i < existingImagesSize; i++) {
+                PostImage imageToDelete = existingImages.get(i);
+                postImageService.deletePostImage(imageToDelete.getPostImagesId());
             }
         }
         existingPost.setPostImages(updatedImages);

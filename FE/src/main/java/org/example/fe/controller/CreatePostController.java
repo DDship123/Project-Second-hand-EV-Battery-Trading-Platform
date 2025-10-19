@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/home/postForm")
-public class postFormController {
+public class CreatePostController {
     @Autowired
     private PostService postService;
 
@@ -117,7 +117,7 @@ public class postFormController {
 
         postService.create(post);
         ApiResponse<PostResponse> apiResponse = postService.create(post);
-        if (apiResponse.getStatus().equals("success")) {
+        if (apiResponse.getStatus().equals("SUCCESS")) {
             return "redirect:/home/store"; // Redirect to home page after successful post creation
         } else {
             model.addAttribute("postError", apiResponse.getError());

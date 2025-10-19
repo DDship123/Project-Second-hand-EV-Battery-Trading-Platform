@@ -313,6 +313,24 @@ body {
     border-radius: 8px;
     overflow: hidden;
     transition: box-shadow 0.3s;
+    position: relative;
+}
+.product-card__link {
+    text-decoration: none;
+    position: absolute;
+    padding: 10px 20px;
+    top: 10px;
+    color: black;
+    background-color: white;
+    z-index: 1000;
+}
+.product-card .product-card__link:nth-child(1) {
+    right: 10px;
+    border-radius: 0 8px 0 8px;
+}
+.product-card .product-card__link:nth-child(2) {
+    left: 10px;
+    border-radius: 8px 0 8px 0;
 }
 
 .product-card:hover {
