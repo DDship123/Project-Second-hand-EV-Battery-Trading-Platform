@@ -489,6 +489,44 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public ApiResponse<PostResponse> update(PostResponse post) {
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity with post data
+            HttpEntity<PostResponse> requestEntity = new HttpEntity<>(post, headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/"+ post.getPostsId(),
+                    HttpMethod.PUT,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Create post successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Create post failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to create post");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to create post: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
+
+    @Override
     public ApiResponse<PostResponse> delete(int postId) {
         ApiResponse<PostResponse> response = new ApiResponse<>();
 
