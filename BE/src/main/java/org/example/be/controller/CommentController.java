@@ -28,32 +28,37 @@ public class CommentController {
     @Autowired
     private MemberService memberService;
 
+
     @PostMapping
-    public ResponseEntity<ApiResponse<CommentResponse>> createComment(@RequestBody CommentResponse comment) {
+    public ResponseEntity<ApiResponse<CommentResponse>> createComment(    @RequestParam("postId") int postId,
+                                                                  @RequestParam("memberId") int memberId,
+                                                                  @RequestParam("comment") String comment,
+                                                                  @RequestParam("rating") int rating,
+                                                                  @RequestParam("status") String status) {
         ApiResponse<CommentResponse> response = new ApiResponse<>();
         try {
-            Post post = postService.getPostById(comment.getPost().getPostsId()).orElse(null);
-            Member member = memberService.getMemberById(comment.getMember().getMemberId());
-            Comment newComment = new Comment();
-            newComment.setPost(post);
-            newComment.setMember(member);
-            newComment.setRating(comment.getRating());
-            newComment.setComment(comment.getComment());
-            newComment.setStatus(comment.getStatus());
-            newComment.setCreatedAt(comment.getCreatedAt());
+            Comment comment1 = new Comment();
+            comment1.setComment(comment);
+            comment1.setRating(rating);
+            comment1.setStatus(status);
+            comment1.setCreatedAt(LocalDateTime.now());
 
-            commentService.createComment(newComment);
-
-            CommentResponse createdComment = new CommentResponse(
-                    newComment.getCommentId(),
-                    comment.getPost(),
-                    comment.getMember(),
-                    newComment.getRating(),
-                    newComment.getComment(),
-                    newComment.getStatus(),
-                    newComment.getCreatedAt()
-            );
-            response.ok(createdComment);
+            // Set relationships
+            Member member = memberService.getMemberById(memberId);
+            comment1.setMember(member);
+            Post post = postService.getPostById(postId).orElse(null);
+            comment1.setPost(post);
+            Comment created = commentService.createComment(comment1);
+            Map<String, Object> metadata = new HashMap<>();
+            metadata.put("timestamp", LocalDateTime.now());
+            // Convert created Comment entity to CommentResponse DTO
+            CommentResponse commentResponse = new CommentResponse();
+            commentResponse.setCommentId(created.getCommentId());
+            commentResponse.setComment(created.getComment());
+            commentResponse.setRating(created.getRating());
+            commentResponse.setStatus(created.getStatus());
+            commentResponse.setCreatedAt(created.getCreatedAt());
+            response.ok(commentResponse, (HashMap<String, Object>) metadata);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();

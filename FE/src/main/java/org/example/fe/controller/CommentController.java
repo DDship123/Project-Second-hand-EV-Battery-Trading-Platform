@@ -27,7 +27,6 @@ public class CommentController {
         commentResponse.setRating(rating);
         commentResponse.setComment(comment);
         commentResponse.setStatus("PENDING");
-        commentResponse.setCreatedAt(java.time.LocalDateTime.now());
         PostResponse postResponse = new PostResponse();
         postResponse.setPostsId(postId);
         commentResponse.setPost(postResponse);

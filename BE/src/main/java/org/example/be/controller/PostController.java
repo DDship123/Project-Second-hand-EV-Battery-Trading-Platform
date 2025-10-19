@@ -301,18 +301,63 @@ public class PostController {
 
     // --- UPDATE POST ---
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable Integer id, @RequestBody Post post) {
-        Post updatedPost = postService.updatePost(id, post);
+    public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable Integer id, @RequestBody PostResponse post) {
+        Optional<Post> existingPostOpt = postService.getPostById(id);
         ApiResponse<PostResponse> response = new ApiResponse<>();
-        if (updatedPost != null) {
-            response.ok(mapToResponse(updatedPost));
-            return ResponseEntity.ok(response);
-        } else {
+        if (existingPostOpt.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "Post not found");
             response.error(error);
             return ResponseEntity.status(404).body(response);
         }
+
+        Post existingPost = existingPostOpt.get();
+        existingPost.setTitle(post.getTitle());
+        existingPost.setDescription(post.getDescription());
+        existingPost.setStatus(post.getStatus());
+        existingPost.setPrice(post.getPrice());
+        List<PostImage> updatedImages = new ArrayList<>();
+        if (post.getImages() != null) {
+            for (String imageUrl : post.getImages()) {
+                PostImage postImage = new PostImage();
+                postImage.setImageUrl(imageUrl);
+                postImage.setPost(existingPost);
+                updatedImages.add(postImageService.updatePostImage(postImage.getPostImagesId(),postImage));
+            }
+        }
+        existingPost.setPostImages(updatedImages);
+
+        Product product = existingPost.getProduct();
+        product.setName(post.getProduct().getProductName());
+        product.setDescription(post.getProduct().getDescription());
+        product.setStatus(post.getProduct().getStatus());
+        existingPost.setProduct(productService.updateProduct(product.getProductsId(), product));
+
+
+        if (existingPost.getProduct().getProductType().equals("VEHICLE") && existingPost.getProduct().getVehicle() != null) {
+            Vehicle vehicle = existingPost.getProduct().getVehicle();
+            vehicle.setBrand(post.getProduct().getVehicle().getBrand());
+            vehicle.setModel(post.getProduct().getVehicle().getModel());
+            vehicle.setMileage(post.getProduct().getVehicle().getMileage());
+            vehicle.setRegisterYear(post.getProduct().getVehicle().getRegistrationYear());
+            vehicle.setOrigin(post.getProduct().getVehicle().getOrigin());
+            vehicle.setBatteryCapacity(post.getProduct().getVehicle().getBatteryCapacity());
+            vehicleService.updateVehicle(vehicle.getVehicleId(), vehicle);
+        } else if (existingPost.getProduct().getProductType().equals("BATTERY") && existingPost.getProduct().getBattery() != null) {
+            Battery battery = existingPost.getProduct().getBattery();
+            battery.setCondition(post.getProduct().getBattery().getCondition());
+            battery.setBrand(post.getProduct().getBattery().getBrand());
+            battery.setCapacityAh(post.getProduct().getBattery().getCapacity());
+            battery.setVoltageV(post.getProduct().getBattery().getVoltage());
+            battery.setYearAt(post.getProduct().getBattery().getYearOfManufacture());
+            battery.setOrigin(post.getProduct().getBattery().getOrigin());
+            battery.setName(post.getProduct().getBattery().getName());
+            batteryService.updateBattery(battery.getBatteryId(), battery);
+        }
+
+        Post updatedPost = postService.updatePost(existingPost.getPostsId(),existingPost);
+        response.ok(mapToResponse(updatedPost));
+        return ResponseEntity.ok(response);
     }
 
     // --- DELETE POST ---
