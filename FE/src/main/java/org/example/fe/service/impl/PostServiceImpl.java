@@ -257,6 +257,7 @@ public class PostServiceImpl implements PostService {
             );
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 response.ok(apiResponse.getBody().getPayload());
+                response.setMetadata(apiResponse.getBody().getMetadata());
             } else {
                 Map<String, String> errorMap = new HashMap<>();
                 errorMap.put("message", "Failed to retrieve latest vehicle posts");
@@ -282,6 +283,7 @@ public class PostServiceImpl implements PostService {
             );
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 response.ok(apiResponse.getBody().getPayload());
+                response.setMetadata(apiResponse.getBody().getMetadata());
             } else {
                 Map<String, String> errorMap = new HashMap<>();
                 errorMap.put("message", "Failed to retrieve latest battery posts");
@@ -357,6 +359,7 @@ public class PostServiceImpl implements PostService {
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get posts by city and productType successful
                 response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+                response.setMetadata(apiResponse.getBody().getMetadata());
             } else {
                 // Get posts by city and productType failed
                 Map<String, String> errorMap = new HashMap<>();
