@@ -17,6 +17,6 @@ public class AdminPageController {
             return "redirect:/home";
         }
         model.addAttribute("admin", member);
-        return "adminPage";
+        return "postManage";
     }
 }
