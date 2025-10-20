@@ -55,6 +55,7 @@
                 </div>
                 <div class="container__item__infor__image__list" th:if="${post.getImages().size() > 1}">
                     <img th:each="image, start : ${post.getImages()}"
+                         th:if="${start.index > 0}"
                          th:src="${image}"
                             alt="Electric motorcycle side view"
                     />

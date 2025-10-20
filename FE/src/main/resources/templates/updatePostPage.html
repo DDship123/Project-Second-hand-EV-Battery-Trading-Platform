@@ -82,7 +82,7 @@
                     </div>
                     <p th:if="${mainImageError != null}" style="color: red" th:text="${mainImageError}"></p>
                 </div>
-                <button class="registration__upload-button">Thêm ảnh</button>
+                <button class="registration__upload-button">Cập nhật ảnh chính</button>
             </div>
 
             <div class="registration__upload-section">
@@ -109,18 +109,18 @@
                                     stroke-linecap="round"
                             />
                         </svg>
-                        <img th:if="${post.getImages() != null && post.getImages().size() > 1}" th:each="image :${post.getImages()}" th:src="${image}"  alt="Sub Image" />
+                        <img th:if="${post.getImages() != null && post.getImages().size() > 1 && start.index > 0}" th:each="image, start :${post.getImages()}" th:src="${image}"  alt="Sub Image" />
                     </div>
                     <p class="registration__upload-text">
                         Phần ảnh phụ, thêm tối đa 4 ảnh
                         <span class="registration__required">*</span>
                     </p>
                     <div class="registration__file-upload-form">
-                        <input type="file" name="subImage" id="subImage" class="registration__file-input" accept="image/*" multiple/>
+                        <input type="file" name="subImages" id="subImage" class="registration__file-input" accept="image/*" multiple/>
                     </div>
                     <p th:if="${subImagesError != null}" style="color: red" th:text="${subImagesError}"></p>
                 </div>
-                <button class="registration__upload-button">Thêm ảnh</button>
+                <button class="registration__upload-button">Cập nhật ảnh phụ</button>
             </div>
         </div>
 
@@ -366,13 +366,14 @@
                 </div>
             </div>
         </div>
-        <input type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
+        <input type="submit" class="registration__submit-button" value="CẬP NHẬT TIN" />
     </form>
 </div>
 <!-- =============================
      FOOTER SECTION
      ============================= -->
 <footer th:include="/commonComponents/footer.html"></footer>
-<!--<script th:src="@{/js/postFormPage.js}"></script>-->
+
+<script th:src="@{/js/postFormPage.js}"></script>
 </body>
 </html>
