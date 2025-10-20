@@ -1,5 +1,7 @@
 package org.example.fe.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.entity.PostResponse;
 import org.example.fe.service.PostService;
@@ -7,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -453,6 +455,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public ApiResponse<PostResponse> create(PostResponse post) {
         ApiResponse<PostResponse> response = new ApiResponse<>();
+        Map<String, String> error = new HashMap<>();
 
         try {
             // Create headers
@@ -470,20 +473,41 @@ public class PostServiceImpl implements PostService {
                     new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
             );
 
-            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+            if (apiResponse.getBody().getStatus().equals("SUCCESS") && apiResponse.getBody() != null) {
                 // Create post successful
                 response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Create post failed
-                Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Failed to create post");
-                response.error(errorMap);
+                error.put("message", "Failed to create post");
+                response.error(error);
             }
+        }catch (HttpClientErrorException e) {
+            //  Nếu backend trả lỗi 400 → parse JSON body
+            try {
+                String responseBody = e.getResponseBodyAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(responseBody);
+
+                JsonNode errorNode = root.path("error");
+                Map<String, String> errorMap = new HashMap<>();
+                if (errorNode.isObject()) {
+                    errorNode.fieldNames().forEachRemaining(
+                            field -> errorMap.put(field, errorNode.get(field).asText())
+                    );
+                } else {
+                    errorMap.put("message", "Registration failed");
+                }
+
+                response.error(errorMap);
+            } catch (Exception parseEx) {
+                error.put("message", "Registration failed: " + e.getMessage());
+                response.error(error);
+            }
+
         } catch (Exception e) {
             // Handle exceptions
-            Map<String, String> errorMap = new HashMap<>();
-            errorMap.put("message", "Failed to create post: " + e.getMessage());
-            response.error(errorMap);
+            error.put("message", "Failed to create post: " + e.getMessage());
+            response.error(error);
         }
         return response;
     }
