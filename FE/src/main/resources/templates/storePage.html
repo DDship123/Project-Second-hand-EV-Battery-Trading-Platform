@@ -95,6 +95,8 @@
       <div class="product-list active">
         <!-- Product Card 1 -->
         <article class="product-card" th:each="post : ${posts}">
+          <a th:href="'/home/store/updatePost/' + ${post.getPostsId()}" class="product-card__link">Cập Nhật</a>
+          <a th:href="'/home/store/deletePost/'+${post.getPostsId()}" class="product-card__link deleteBtn">Xóa</a>
           <img
                   th:src="${post.getImages()[0]}"
                   alt="Feliz - biển MD"

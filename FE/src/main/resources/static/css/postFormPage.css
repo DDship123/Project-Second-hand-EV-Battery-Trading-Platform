@@ -109,6 +109,9 @@ body {
     align-items: center;
     justify-content: center;
 }
+.registration__upload-box img{
+    width: 100%;
+}
 
 .registration__upload-icon {
     margin-bottom: 20px;

@@ -51,6 +51,13 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findLatestPostsByType(@Param("productType") String productType,
                                      Pageable pageable);
 
+    @Query("SELECT COUNT(p) FROM Post p WHERE p.product.productType = :productType AND p.status = 'APPROVED'")
+    int countByStatus(@Param("productType") String productType);
+
+    @Query("SELECT COUNT(p) FROM Post p WHERE p.seller.city = :location " +
+            "AND p.product.productType = :productType AND p.status = 'APPROVED'")
+    int countByLocationAndProductType(@Param("location")String location,@Param("productType") String productType);
+
 
     // --- FILTER BY LOCATION ---
     @Query("SELECT p FROM Post p WHERE p.seller.city = :city AND p.status = 'APPROVED'")

@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -301,18 +298,82 @@ public class PostController {
 
     // --- UPDATE POST ---
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable Integer id, @RequestBody Post post) {
-        Post updatedPost = postService.updatePost(id, post);
+    public ResponseEntity<ApiResponse<PostResponse>> updatePost(@PathVariable Integer id, @RequestBody PostResponse post) {
+        Optional<Post> existingPostOpt = postService.getPostById(id);
         ApiResponse<PostResponse> response = new ApiResponse<>();
-        if (updatedPost != null) {
-            response.ok(mapToResponse(updatedPost));
-            return ResponseEntity.ok(response);
-        } else {
+        if (existingPostOpt.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "Post not found");
             response.error(error);
             return ResponseEntity.status(404).body(response);
         }
+
+        Post existingPost = existingPostOpt.get();
+        existingPost.setTitle(post.getTitle());
+        existingPost.setDescription(post.getDescription());
+        existingPost.setStatus(post.getStatus());
+        existingPost.setPrice(post.getPrice());
+        existingPost.setStatus("PENDING"); // Khi cập nhật, đặt trạng thái về PENDING lại
+
+        List<PostImage> updatedImages = new ArrayList<>();
+
+        if (post.getImages() != null) {
+            List<PostImage> existingImages = postImageService.getPostImagesByPostId(existingPost.getPostsId());
+            int existingImagesSize = existingImages.size();
+            for (int i = 0; i < post.getImages().size(); i++){
+                String imageUrl = post.getImages().get(i);
+                PostImage postImage = new PostImage();
+                postImage.setImageUrl(imageUrl);
+                postImage.setPost(existingPost);
+                if (i < existingImagesSize) {
+                    // Cập nhật hình ảnh hiện có
+                    PostImage existingImage = existingImages.get(i);
+                    postImage.setPostImagesId(existingImage.getPostImagesId());
+                    updatedImages.add(postImageService.updatePostImage(existingImage.getPostImagesId(), postImage));
+                } else {
+                    // Tạo hình ảnh mới
+                    updatedImages.add(postImageService.createPostImage(postImage));
+                }
+            }
+            // Xóa các hình ảnh thừa nếu có
+            for (int i = post.getImages().size(); i < existingImagesSize; i++) {
+                PostImage imageToDelete = existingImages.get(i);
+                postImageService.deletePostImage(imageToDelete.getPostImagesId());
+            }
+        }
+        existingPost.setPostImages(updatedImages);
+
+        Product product = existingPost.getProduct();
+        product.setName(post.getProduct().getProductName());
+        product.setDescription(post.getProduct().getDescription());
+        product.setStatus(post.getProduct().getStatus());
+        existingPost.setProduct(productService.updateProduct(product.getProductsId(), product));
+
+
+        if (existingPost.getProduct().getProductType().equals("VEHICLE") && existingPost.getProduct().getVehicle() != null) {
+            Vehicle vehicle = existingPost.getProduct().getVehicle();
+            vehicle.setBrand(post.getProduct().getVehicle().getBrand());
+            vehicle.setModel(post.getProduct().getVehicle().getModel());
+            vehicle.setMileage(post.getProduct().getVehicle().getMileage());
+            vehicle.setRegisterYear(post.getProduct().getVehicle().getRegistrationYear());
+            vehicle.setOrigin(post.getProduct().getVehicle().getOrigin());
+            vehicle.setBatteryCapacity(post.getProduct().getVehicle().getBatteryCapacity());
+            vehicleService.updateVehicle(vehicle.getVehicleId(), vehicle);
+        } else if (existingPost.getProduct().getProductType().equals("BATTERY") && existingPost.getProduct().getBattery() != null) {
+            Battery battery = existingPost.getProduct().getBattery();
+            battery.setCondition(post.getProduct().getBattery().getCondition());
+            battery.setBrand(post.getProduct().getBattery().getBrand());
+            battery.setCapacityAh(post.getProduct().getBattery().getCapacity());
+            battery.setVoltageV(post.getProduct().getBattery().getVoltage());
+            battery.setYearAt(post.getProduct().getBattery().getYearOfManufacture());
+            battery.setOrigin(post.getProduct().getBattery().getOrigin());
+            battery.setName(post.getProduct().getBattery().getName());
+            batteryService.updateBattery(battery.getBatteryId(), battery);
+        }
+
+        Post updatedPost = postService.updatePost(existingPost.getPostsId(),existingPost);
+        response.ok(mapToResponse(updatedPost));
+        return ResponseEntity.ok(response);
     }
 
     // --- DELETE POST ---
@@ -338,6 +399,13 @@ public class PostController {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        int count = postService.countApprovedPostsByProductType("vehicle");
+        int totalPages = 0;
+        if (count % 8 == 0) {
+            totalPages = count / 8;
+        } else {
+            totalPages = (count / 8) + 1;
+        }
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "No vehicle posts found");
@@ -345,6 +413,9 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         } else {
             response.ok(posts);
+            Map<String, Object> metaData = new HashMap<>();
+            metaData.put("totalPages", totalPages);
+            response.setMetadata(metaData);
             return ResponseEntity.ok(response);
         }
     }
@@ -355,7 +426,13 @@ public class PostController {
         List<PostResponse> posts = postService.getLatestBatteryPosts(8).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
+        int count = postService.countApprovedPostsByProductType("battery");
+        int totalPages = 0;
+        if (count % 8 == 0) {
+            totalPages = count / 8;
+        } else {
+            totalPages = (count / 8) + 1;
+        }
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
@@ -364,6 +441,9 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         } else {
             response.ok(posts);
+            Map<String, Object> metaData = new HashMap<>();
+            metaData.put("totalPages", totalPages);
+            response.setMetadata(metaData);
             return ResponseEntity.ok(response);
         }
     }
@@ -381,6 +461,7 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         } else {
             response.ok(posts);
+            Map<String, Object> metaData = new HashMap<>();
             return ResponseEntity.ok(response);
         }
     }
@@ -440,9 +521,18 @@ public class PostController {
         List<PostResponse> posts = postService.findAllByMemberCityAndProductType(city, productType).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
+        int count = postService.countPostsByLocationAndStatus(city, productType);
+        int totalPages = 0;
+        if (count % 8 == 0) {
+            totalPages = count / 8;
+        } else {
+            totalPages = (count / 8) + 1;
+        }
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         response.ok(posts);
+        Map<String, Object> metaData = new HashMap<>();
+        metaData.put("totalPages", totalPages);
+        response.setMetadata(metaData);
         return ResponseEntity.ok(response);
     }
 

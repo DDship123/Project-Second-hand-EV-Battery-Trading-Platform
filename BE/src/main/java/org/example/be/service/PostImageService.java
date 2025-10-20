@@ -36,6 +36,9 @@ public class PostImageService {
         }
         return null;
     }
+    public List<PostImage> getPostImagesByPostId(Integer postId) {
+        return postImageRepository.findByPostsId(postId);
+    }
 
     public boolean deletePostImage(Integer id) {
         Optional<PostImage> existing = postImageRepository.findById(id);

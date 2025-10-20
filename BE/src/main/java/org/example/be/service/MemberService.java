@@ -39,50 +39,85 @@ public class MemberService {
         Member member = getMemberById(id);
         ApiResponse<Member> response = new ApiResponse<>();
         Map<String , String> error = new HashMap<>();
+
         if (member == null) {
             error.put("message", "Member not found");
             response.error(error);
             return response;
         }
-        if(memberRepository.findByUsername(memberDetails.getUsername()).isPresent()){
+
+        Optional<Member> existingUsername = memberRepository.findByUsername(memberDetails.getUsername());
+        if(existingUsername.isPresent() && !existingUsername.get().getMemberId().equals(id)) {
 
             error.put("username", "This username is already in use");
 
         }
-        if(memberRepository.findByEmail(memberDetails.getEmail()).isPresent()){
+
+        Optional<Member> existingEmail = memberRepository.findByEmail(memberDetails.getEmail());
+        if(existingEmail.isPresent() && !existingEmail.get().getMemberId().equals(id)) {
 
             error.put("email", "This email is already in use");
 
         }
 
-        if(member.getPhone().matches("^\\d{10,11}$")){
+
+        Optional<Member> existingPhone = memberRepository.findByPhone(memberDetails.getPhone());
+        if(member.getPhone().matches("^\\d{8,9}$")){
             error.put("phone", "Invalid phone number format!");
-        }else if(memberRepository.findByPhone(memberDetails.getPhone()).isPresent()){
+        }else if(existingPhone.isPresent() && !existingPhone.get().getMemberId().equals(id)){
 
             error.put("phone", "This phone number is already in use");
 
         }
 
         //New password
-        if(member.getPassword().equals(memberDetails.getPassword())){
-            error.put("password", "New password and confirm password do not match");
-        }
-
+//        if(){
+//            error.put("password", "New password and confirm password do not match");
+//        }
+//
         if (!error.isEmpty()) {
             response.error(error);
             return response;
         }
 
-        member.setUsername(memberDetails.getUsername());
-        member.setAddress(memberDetails.getAddress());
-        member.setEmail(memberDetails.getEmail());
-        member.setPhone(memberDetails.getPhone());
-        member.setPassword(memberDetails.getPassword());
-        member.setRole(memberDetails.getRole());
-        member.setStatus(memberDetails.getStatus());
-        member.setCreatedAt(memberDetails.getCreatedAt());
-        member.setCity(memberDetails.getCity());
-        member.setAvatarUrl(memberDetails.getAvatarUrl());
+        if(memberDetails.getUsername() != null && !memberDetails.getUsername().isEmpty()){
+            member.setUsername(memberDetails.getUsername());
+        }
+        if(memberDetails.getAddress() != null && !memberDetails.getAddress().isEmpty()){
+            member.setAddress(memberDetails.getAddress());
+        }
+        if(memberDetails.getEmail() != null && !memberDetails.getEmail().isEmpty()){
+            member.setEmail(memberDetails.getEmail());
+        }
+        if(memberDetails.getPhone() != null && !memberDetails.getPhone().isEmpty()){
+            member.setPhone(memberDetails.getPhone());
+        }
+        if(memberDetails.getPassword() != null){
+            member.setPassword(memberDetails.getPassword());
+        }
+        if(memberDetails.getRole() != null && !memberDetails.getRole().isEmpty()){
+            member.setRole(memberDetails.getRole());
+        }
+        if(memberDetails.getStatus() != null && !memberDetails.getStatus().isEmpty()){
+            member.setStatus(memberDetails.getStatus());
+        }
+        if(memberDetails.getCity() != null && !memberDetails.getCity().isEmpty()){
+            member.setCity(memberDetails.getCity());
+        }
+        if(memberDetails.getAvatarUrl() != null && !memberDetails.getAvatarUrl().isEmpty()){
+            member.setAvatarUrl(memberDetails.getAvatarUrl());
+        }
+
+//        member.setUsername(memberDetails.getUsername());
+//        member.setAddress(memberDetails.getAddress());
+//        member.setEmail(memberDetails.getEmail());
+//        member.setPhone(memberDetails.getPhone());
+//        member.setPassword(memberDetails.getPassword());
+//        member.setRole(memberDetails.getRole());
+//        member.setStatus(memberDetails.getStatus());
+//        member.setCreatedAt(memberDetails.getCreatedAt());
+//        member.setCity(memberDetails.getCity());
+//        member.setAvatarUrl(memberDetails.getAvatarUrl());
         Member saved = memberRepository.save(member);
 
         HashMap<String, Object> metadata = new HashMap<>();

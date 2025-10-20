@@ -1,0 +1,124 @@
+<!-- transactionManage.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lí giao dịch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/adminPage.css}" />
+</head>
+
+
+<body>
+<div class="container">
+    <!-- Sidebar inclusion -->
+    <section th:include="adminPage"></section>
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Notification Area -->
+        <div class="notification" id="notification"></div>
+
+        <!-- Quản lí giao dịch Content -->
+        <div class="content-section active" data-section="transaction">
+            <div class="section-title">
+                <i class="fa-solid fa-file-invoice"></i>
+                <h2>Quản lí giao dịch</h2>
+            </div>
+            <div class="content-toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+            </div>
+            <div class="data-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Mã yêu cầu</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Người mua</th>
+                        <th>Người bán</th>
+                        <th>Ngày yêu cầu</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>REQ12345</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Van A</td>
+                        <td>Nguyen Van B</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge pending">Đang đợi</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                            <button class="action-btn-small success">Duyệt</button>
+                            <button class="action-btn-small danger">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REQ12346</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Tan C</td>
+                        <td>Nguyen Van D</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge approved">Đã duyệt</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REQ12347</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Van E</td>
+                        <td>Nguyen Van G</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge approved">Đã duyệt</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REQ12347</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Van E</td>
+                        <td>Nguyen Van G</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge approved">Đã duyệt</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REQ12347</td>
+                        <td>Xe máy điện</td>
+                        <td>Nguyen Van E</td>
+                        <td>Nguyen Van G</td>
+                        <td>06/10/2025</td>
+                        <td><span class="status-badge rejected">Từ chối</span></td>
+                        <td>
+                            <button class="action-btn-small primary">Chi tiết</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/commonComponents/adminPage.js}"></script>
+
+</body>
+
+</html>

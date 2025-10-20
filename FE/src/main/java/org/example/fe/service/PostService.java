@@ -19,6 +19,9 @@ public interface PostService {
     ApiResponse<List<PostResponse>> findAllPostByMemberCityAndProductTypeAndTitle(String productType,String city,String title);
     ApiResponse<List<PostResponse>> getAllPostByMemberId(int memberId);
     ApiResponse<PostResponse> create (PostResponse post);
+
+    ApiResponse<PostResponse> update (PostResponse post);
+
     ApiResponse<PostResponse> delete (int postId);
     ApiResponse<PostResponse> getAllPostByStatus(String status);
     ApiResponse<PostResponse> findAllPostByProductTypeAndPostTitle(String productType,String postTitle);

@@ -36,13 +36,16 @@
             >Trang chủ</a
             >
             <span class="registration__header__breadcrumb-separator">/</span>
-            <span class="registration__header__breadcrumb-current">Đăng tin</span>
+            <span class="registration__header__breadcrumb-current">Cập nhật tin</span>
         </div>
-        <h1 class="registration__title">ĐĂNG TIN</h1>
+        <h1 class="registration__title">CẬP NHẬT TIN</h1>
         <div class="registration__divider"></div>
     </div>
 
-    <form th:action="@{/home/postForm/submit/vehicle}" method="post" enctype="multipart/form-data" class="registration__content">
+    <form th:action="@{/home/store/updatePost}" method="post" th:object="${post}"  enctype="multipart/form-data" class="registration__content">
+        <input type="hidden" th:field="*{postsId}" />
+        <input type="hidden" th:field="*{images}" />
+
         <div class="registration__left">
             <div class="registration__upload-section">
                 <label class="registration__label">
@@ -50,7 +53,7 @@
                 </label>
                 <div class="registration__upload-box">
                     <div class="registration__upload-icon">
-                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <svg th:if="${post.getImages() == null}" width="80" height="80" viewBox="0 0 80 80" fill="none">
                             <rect width="80" height="80" rx="8" fill="#f5f5f5" />
                             <path
                                     d="M40 25C34.477 25 30 29.477 30 35C30 40.523 34.477 45 40 45C45.523 45 50 40.523 50 35C50 29.477 45.523 25 40 25Z"
@@ -68,6 +71,7 @@
                                     stroke-linecap="round"
                             />
                         </svg>
+                        <img th:if="${post.getImages() != null}" th:src="${post.getImages().get(0)}" alt="Main Image" />
                     </div>
                     <p class="registration__upload-text">
                         Phần ảnh chính, thêm tối đa 1 ảnh
@@ -78,7 +82,7 @@
                     </div>
                     <p th:if="${mainImageError != null}" style="color: red" th:text="${mainImageError}"></p>
                 </div>
-                <button class="registration__upload-button">Thêm ảnh</button>
+                <button class="registration__upload-button">Cập nhật ảnh chính</button>
             </div>
 
             <div class="registration__upload-section">
@@ -87,7 +91,7 @@
                 </label>
                 <div class="registration__upload-box">
                     <div class="registration__upload-icon">
-                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <svg  th:if="${post.getImages() == null}" width="80" height="80" viewBox="0 0 80 80" fill="none">
                             <rect width="80" height="80" rx="8" fill="#f5f5f5" />
                             <path
                                     d="M40 25C34.477 25 30 29.477 30 35C30 40.523 34.477 45 40 45C45.523 45 50 40.523 50 35C50 29.477 45.523 25 40 25Z"
@@ -105,17 +109,18 @@
                                     stroke-linecap="round"
                             />
                         </svg>
+                        <img th:if="${post.getImages() != null && post.getImages().size() > 1 && start.index > 0}" th:each="image, start :${post.getImages()}" th:src="${image}"  alt="Sub Image" />
                     </div>
                     <p class="registration__upload-text">
                         Phần ảnh phụ, thêm tối đa 4 ảnh
                         <span class="registration__required">*</span>
                     </p>
                     <div class="registration__file-upload-form">
-                        <input type="file" name="subImage" id="subImage" class="registration__file-input" accept="image/*" multiple/>
+                        <input type="file" name="subImages" id="subImage" class="registration__file-input" accept="image/*" multiple/>
                     </div>
                     <p th:if="${subImagesError != null}" style="color: red" th:text="${subImagesError}"></p>
                 </div>
-                <button class="registration__upload-button">Thêm ảnh</button>
+                <button class="registration__upload-button">Cập nhật ảnh phụ</button>
             </div>
         </div>
 
@@ -130,8 +135,8 @@
                             type="text"
                             class="registration__input"
                             placeholder="Tiêu đề *"
+                            th:field="*{title}"
                             required
-                            name="postTitle"
                     />
                 </div>
 
@@ -139,8 +144,8 @@
               <textarea
                       class="registration__textarea"
                       placeholder="Mô tả chi tiết *"
+                      th:field="*{description}"
                       rows="4"
-                      name="postDescription"
               ></textarea>
                 </div>
             </div>
@@ -149,9 +154,10 @@
                 <h2 class="registration__section-title">THÔNG TIN CHI TIẾT</h2>
 
                 <div class="registration__form-group">
-                    <select class="registration__select" name="productType" required>
-                        <option value="VEHICLE">Xe cộ</option>
-                        <option value="BATTERY">Pin</option>
+                    <select class="registration__select" th:field="*{product.productType}" required>
+                        <option th:value="${post.getProduct().getProductType()}"
+                                th:text="${post.getProduct().getProductType().equals('VEHICLE') ? 'Xe cộ' : 'pin'}" >Xe cộ</option>
+<!--                        <option value="BATTERY">Pin</option>-->
                     </select>
                 </div>
                 <div class="registration__form-group">
@@ -160,7 +166,7 @@
                             class="registration__input"
                             placeholder="Tên sản phẩm *"
                             required
-                            name="productName"
+                            th:field="*{product.productName}"
                     />
                 </div>
                 <div class="registration__form-group">
@@ -168,12 +174,12 @@
                         class="registration__textarea"
                         placeholder="Mô tả sản phẩm *"
                         rows="4"
-                        name="productDescription"
+                        th:field="*{product.description}"
                 ></textarea>
                 </div>
-                <div class="vehicle active">
+                <div th:if="${post.getProduct().getVehicle() != null}" class="vehicle active">
                     <div class="registration__form-group">
-                        <select class="registration__select" name="productStatus" required>
+                        <select class="registration__select" name="productStatus" th:field="*{product.status}" required>
                             <option value="USED">Đã qua sử dụng</option>
                             <option value="NEW">Mới</option>
                         </select>
@@ -185,7 +191,7 @@
                                 class="registration__input"
                                 placeholder="Hãng xe *"
                                 required
-                                name="vehicleBrand"
+                                th:field="*{product.vehicle.brand}"
                         />
                     </div>
 
@@ -195,7 +201,7 @@
                                 class="registration__input"
                                 placeholder="Năm sản xuất *"
                                 required
-                                name="vehicleRegistrationYear"
+                                th:field="*{product.vehicle.registrationYear}"
                         />
                     </div>
 
@@ -208,7 +214,7 @@
                                     class="registration__input"
                                     placeholder="Xuất xứ *"
                                     required
-                                    name="vehicleOrigin"
+                                    th:field="*{product.vehicle.origin}"
                             />
                         </div>
                         <div
@@ -218,7 +224,7 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Số Km đã di *"
-                                    name="VehicleMileage"
+                                    th:field="*{product.vehicle.mileage}"
                                     required
                             />
                         </div>
@@ -233,7 +239,7 @@
                                     class="registration__input"
                                     placeholder="Dung tích pin *"
                                     required
-                                    name="vehicleBatteryCapacity"
+                                    th:field="*{product.vehicle.batteryCapacity}"
                             />
                         </div>
                         <div
@@ -244,7 +250,7 @@
                                     class="registration__input"
                                     placeholder="Dòng xe *"
                                     required
-                                    name="vehicleModel"
+                                    th:field="*{product.vehicle.model}"
                             />
                         </div>
                     </div>
@@ -254,7 +260,7 @@
                                 type="text"
                                 class="registration__input"
                                 placeholder="Tình trạng xe *"
-                                name="vehicleCondition"
+                                th:field="*{product.vehicle.condition}"
                                 required
                         />
                     </div>
@@ -265,13 +271,14 @@
                                 class="registration__input"
                                 placeholder="Giá tiền *"
                                 name="productPrice"
+                                th:field="*{price}"
                                 required
                         />
                     </div>
                 </div>
-                <div class="battery">
+                <div th:if="${post.getProduct().getBattery() != null}" class="battery active">
                     <div class="registration__form-group">
-                        <select class="registration__select" name="productStatus" required>
+                        <select class="registration__select" name="productStatus" th:field="*{product.status}" required>
                             <option value="USED">Đã qua sử dụng</option>
                             <option value="NEW">Mới</option>
                         </select>
@@ -282,9 +289,8 @@
                                 type="text"
                                 class="registration__input"
                                 placeholder="Hãng pin *"
-                                name="batteryBrand"
+                                th:field="*{product.battery.brand}"
                                 required
-                                disabled
                         />
                     </div>
 
@@ -293,9 +299,8 @@
                                 type="text"
                                 class="registration__input"
                                 placeholder="Năm sản xuất *"
-                                name="batteryManufactureYear"
+                                th:field="*{product.battery.yearOfManufacture}"
                                 required
-                                disabled
                         />
                     </div>
 
@@ -307,9 +312,8 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Xuất xứ *"
-                                    name="batteryOrigin"
+                                    th:field="*{product.battery.origin}"
                                     required
-                                    disabled
                             />
                         </div>
                         <div
@@ -319,9 +323,8 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Dung lượng(Ah)*"
-                                    name="batteryCapacityAh"
+                                    th:field="*{product.battery.capacity}"
                                     required
-                                    disabled
                             />
                         </div>
                     </div>
@@ -334,9 +337,8 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Tình trạng pin *"
-                                    name="batteryCondition"
+                                    th:field="*{product.battery.condition}"
                                     required
-                                    disabled
                             />
                         </div>
                         <div
@@ -346,9 +348,8 @@
                                     type="text"
                                     class="registration__input"
                                     placeholder="Điện áp(V) *"
-                                    name="batteryVoltage"
+                                    th:field="*{product.battery.voltage}"
                                     required
-                                    disabled
                             />
                         </div>
                     </div>
@@ -358,24 +359,21 @@
                                 type="text"
                                 class="registration__input"
                                 placeholder="Giá tiền *"
-                                name="productPrice"
+                                th:field="*{price}"
                                 required
-                                disabled
                         />
                     </div>
                 </div>
             </div>
         </div>
-        <input type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
-<!--        <button type="submit" class="registration__submit-button">-->
-<!--            ĐĂNG TIN-->
-<!--        </button>-->
+        <input type="submit" class="registration__submit-button" value="CẬP NHẬT TIN" />
     </form>
 </div>
 <!-- =============================
      FOOTER SECTION
      ============================= -->
 <footer th:include="/commonComponents/footer.html"></footer>
+
 <script th:src="@{/js/postFormPage.js}"></script>
 </body>
 </html>

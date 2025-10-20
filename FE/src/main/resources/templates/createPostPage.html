@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/postFormPage.css}" />
+</head>
+<body>
+<!-- =============================
+     HEADER SECTION
+     ============================= -->
+<header th:include="/commonComponents/header.html"></header>
+<!-- =============================
+     MAIN SECTION
+     ============================= -->
+<div class="registration">
+    <div class="registration__header">
+        <div class="registration__header__breadcrumb">
+            <a href="#" class="registration__header__breadcrumb-link"
+            >Trang chủ</a
+            >
+            <span class="registration__header__breadcrumb-separator">/</span>
+            <span class="registration__header__breadcrumb-current">Đăng tin</span>
+        </div>
+        <h1 class="registration__title">ĐĂNG TIN</h1>
+        <div class="registration__divider"></div>
+    </div>
+
+    <form th:action="@{/home/postForm/submit/vehicle}" method="post" enctype="multipart/form-data" class="registration__content">
+        <div class="registration__left">
+            <div class="registration__upload-section">
+                <label class="registration__label">
+                    ẢNH CHÍNH <span class="registration__required">*</span>
+                </label>
+                <div class="registration__upload-box">
+                    <div class="registration__upload-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                            <rect width="80" height="80" rx="8" fill="#f5f5f5" />
+                            <path
+                                    d="M40 25C34.477 25 30 29.477 30 35C30 40.523 34.477 45 40 45C45.523 45 50 40.523 50 35C50 29.477 45.523 25 40 25Z"
+                                    fill="#d0d0d0"
+                            />
+                            <path
+                                    d="M25 50C25 47.239 27.239 45 30 45H50C52.761 45 55 47.239 55 50V55H25V50Z"
+                                    fill="#d0d0d0"
+                            />
+                            <circle cx="55" cy="30" r="8" fill="#d0d0d0" />
+                            <path
+                                    d="M59 30H61M55 26V24M55 34V36M51 30H49"
+                                    stroke="white"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+                    <p class="registration__upload-text">
+                        Phần ảnh chính, thêm tối đa 1 ảnh
+                        <span class="registration__required">*</span>
+                    </p>
+                    <div class="registration__file-upload-form">
+                        <input type="file" name="mainImage" id="mainImage" class="registration__file-input" accept="image/*"  />
+                    </div>
+                    <p th:if="${mainImageError != null}" style="color: red" th:text="${mainImageError}"></p>
+                </div>
+                <button class="registration__upload-button">Thêm ảnh</button>
+            </div>
+
+            <div class="registration__upload-section">
+                <label class="registration__label">
+                    ẢNH PHỤ <span class="registration__required">*</span>
+                </label>
+                <div class="registration__upload-box">
+                    <div class="registration__upload-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                            <rect width="80" height="80" rx="8" fill="#f5f5f5" />
+                            <path
+                                    d="M40 25C34.477 25 30 29.477 30 35C30 40.523 34.477 45 40 45C45.523 45 50 40.523 50 35C50 29.477 45.523 25 40 25Z"
+                                    fill="#d0d0d0"
+                            />
+                            <path
+                                    d="M25 50C25 47.239 27.239 45 30 45H50C52.761 45 55 47.239 55 50V55H25V50Z"
+                                    fill="#d0d0d0"
+                            />
+                            <circle cx="55" cy="30" r="8" fill="#d0d0d0" />
+                            <path
+                                    d="M59 30H61M55 26V24M55 34V36M51 30H49"
+                                    stroke="white"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+                    <p class="registration__upload-text">
+                        Phần ảnh phụ, thêm tối đa 4 ảnh
+                        <span class="registration__required">*</span>
+                    </p>
+                    <div class="registration__file-upload-form">
+                        <input type="file" name="subImages" id="subImages" class="registration__file-input" accept="image/*" multiple/>
+                    </div>
+                    <p th:if="${subImagesError != null}" style="color: red" th:text="${subImagesError}"></p>
+                </div>
+                <button class="registration__upload-button">Thêm ảnh</button>
+            </div>
+        </div>
+
+        <div class="registration__right">
+            <div class="registration__section">
+                <h2 class="registration__section-title">
+                    TIÊU ĐỀ TIN ĐĂNG VÀ MÔ TẢ CHI TIẾT
+                </h2>
+
+                <div class="registration__form-group">
+                    <input
+                            type="text"
+                            class="registration__input"
+                            placeholder="Tiêu đề *"
+                            required
+                            name="postTitle"
+                    />
+                </div>
+
+                <div class="registration__form-group">
+              <textarea
+                      class="registration__textarea"
+                      placeholder="Mô tả chi tiết *"
+                      rows="4"
+                      name="postDescription"
+              ></textarea>
+                </div>
+            </div>
+
+            <div class="registration__section">
+                <h2 class="registration__section-title">THÔNG TIN CHI TIẾT</h2>
+
+                <div class="registration__form-group">
+                    <select class="registration__select" name="productType" required>
+                        <option value="VEHICLE">Xe cộ</option>
+                        <option value="BATTERY">Pin</option>
+                    </select>
+                </div>
+                <div class="registration__form-group">
+                    <input
+                            type="text"
+                            class="registration__input"
+                            placeholder="Tên sản phẩm *"
+                            required
+                            name="productName"
+                    />
+                </div>
+                <div class="registration__form-group">
+                <textarea
+                        class="registration__textarea"
+                        placeholder="Mô tả sản phẩm *"
+                        rows="4"
+                        name="productDescription"
+                ></textarea>
+                </div>
+                <div class="vehicle active">
+                    <div class="registration__form-group">
+                        <select class="registration__select" name="productStatus" required>
+                            <option value="USED">Đã qua sử dụng</option>
+                            <option value="NEW">Mới</option>
+                        </select>
+                    </div>
+
+                    <div class="registration__form-group">
+                        <input
+                                type="text"
+                                class="registration__input"
+                                placeholder="Hãng xe *"
+                                required
+                                name="vehicleBrand"
+                        />
+                    </div>
+
+                    <div class="registration__form-group">
+                        <input
+                                type="text"
+                                class="registration__input"
+                                placeholder="Năm sản xuất *"
+                                required
+                                name="vehicleRegistrationYear"
+                        />
+                    </div>
+
+                    <div class="registration__form-row">
+                        <div
+                                class="registration__form-group registration__form-group--half"
+                        >
+                            <input
+                                    type="text"
+                                    class="registration__input"
+                                    placeholder="Xuất xứ *"
+                                    required
+                                    name="vehicleOrigin"
+                            />
+                        </div>
+                        <div
+                                class="registration__form-group registration__form-group--half"
+                        >
+                            <input
+                                    type="text"
+                                    class="registration__input"
+                                    placeholder="Số Km đã di *"
+                                    name="VehicleMileage"
+                                    required
+                            />
+                        </div>
+                    </div>
+
+                    <div class="registration__form-row">
+                        <div
+                                class="registration__form-group registration__form-group--half"
+                        >
+                            <input
+                                    type="text"
+                                    class="registration__input"
+                                    placeholder="Dung tích pin *"
+                                    required
+                                    name="vehicleBatteryCapacity"
+                            />
+                        </div>
+                        <div
+                                class="registration__form-group registration__form-group--half"
+                        >
+                            <input
+                                    type="text"
+                                    class="registration__input"
+                                    placeholder="Dòng xe *"
+                                    required
+                                    name="vehicleModel"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="registration__form-group">
+                        <input
+                                type="text"
+                                class="registration__input"
+                                placeholder="Tình trạng xe *"
+                                name="vehicleCondition"
+                                required
+                        />
+                    </div>
+
+                    <div class="registration__form-group">
+                        <input
+                                type="text"
+                                class="registration__input"
+                                placeholder="Giá tiền *"
+                                name="productPrice"
+                                required
+                        />
+                    </div>
+                </div>
+                <div class="battery">
+                    <div class="registration__form-group">
+                        <select class="registration__select" name="productStatus" required>
+                            <option value="USED">Đã qua sử dụng</option>
+                            <option value="NEW">Mới</option>
+                        </select>
+                    </div>
+
+                    <div class="registration__form-group">
+                        <input
+                                type="text"
+                                class="registration__input"
+                                placeholder="Hãng pin *"
+                                name="batteryBrand"
+                                required
+                                disabled
+                        />
+                    </div>
+
+                    <div class="registration__form-group">
+                        <input
+                                type="text"
+                                class="registration__input"
+                                placeholder="Năm sản xuất *"
+                                name="batteryManufactureYear"
+                                required
+                                disabled
+                        />
+                    </div>
+
+                    <div class="registration__form-row">
+                        <div
+                                class="registration__form-group registration__form-group--half"
+                        >
+                            <input
+                                    type="text"
+                                    class="registration__input"
+                                    placeholder="Xuất xứ *"
+                                    name="batteryOrigin"
+                                    required
+                                    disabled
+                            />
+                        </div>
+                        <div
+                                class="registration__form-group registration__form-group--half"
+                        >
+                            <input
+                                    type="text"
+                                    class="registration__input"
+                                    placeholder="Dung lượng(Ah)*"
+                                    name="batteryCapacityAh"
+                                    required
+                                    disabled
+                            />
+                        </div>
+                    </div>
+
+                    <div class="registration__form-row">
+                        <div
+                                class="registration__form-group registration__form-group--half"
+                        >
+                            <input
+                                    type="text"
+                                    class="registration__input"
+                                    placeholder="Tình trạng pin *"
+                                    name="batteryCondition"
+                                    required
+                                    disabled
+                            />
+                        </div>
+                        <div
+                                class="registration__form-group registration__form-group--half"
+                        >
+                            <input
+                                    type="text"
+                                    class="registration__input"
+                                    placeholder="Điện áp(V) *"
+                                    name="batteryVoltage"
+                                    required
+                                    disabled
+                            />
+                        </div>
+                    </div>
+
+                    <div class="registration__form-group">
+                        <input
+                                type="text"
+                                class="registration__input"
+                                placeholder="Giá tiền *"
+                                name="productPrice"
+                                required
+                                disabled
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
+<!--        <button type="submit" class="registration__submit-button">-->
+<!--            ĐĂNG TIN-->
+<!--        </button>-->
+    </form>
+</div>
+<!-- =============================
+     FOOTER SECTION
+     ============================= -->
+<footer th:include="/commonComponents/footer.html"></footer>
+<script th:src="@{/js/postFormPage.js}"></script>
+</body>
+</html>

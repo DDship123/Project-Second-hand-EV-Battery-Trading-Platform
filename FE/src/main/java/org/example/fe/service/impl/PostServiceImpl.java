@@ -254,6 +254,7 @@ public class PostServiceImpl implements PostService {
             );
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 response.ok(apiResponse.getBody().getPayload());
+                response.setMetadata(apiResponse.getBody().getMetadata());
             } else {
                 Map<String, String> errorMap = new HashMap<>();
                 errorMap.put("message", "Failed to retrieve latest vehicle posts");
@@ -279,6 +280,7 @@ public class PostServiceImpl implements PostService {
             );
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 response.ok(apiResponse.getBody().getPayload());
+                response.setMetadata(apiResponse.getBody().getMetadata());
             } else {
                 Map<String, String> errorMap = new HashMap<>();
                 errorMap.put("message", "Failed to retrieve latest battery posts");
@@ -354,6 +356,7 @@ public class PostServiceImpl implements PostService {
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get posts by city and productType successful
                 response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+                response.setMetadata(apiResponse.getBody().getMetadata());
             } else {
                 // Get posts by city and productType failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -463,6 +466,44 @@ public class PostServiceImpl implements PostService {
             ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/posts/create",
                     HttpMethod.POST,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Create post successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Create post failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to create post");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to create post: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
+
+    @Override
+    public ApiResponse<PostResponse> update(PostResponse post) {
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity with post data
+            HttpEntity<PostResponse> requestEntity = new HttpEntity<>(post, headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/"+ post.getPostsId(),
+                    HttpMethod.PUT,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
             );

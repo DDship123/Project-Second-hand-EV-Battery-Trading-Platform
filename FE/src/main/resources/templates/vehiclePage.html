@@ -137,13 +137,13 @@
         </div>
         <h3 th:if="${#lists.isEmpty(posts)}" class="no-posts-message">Hiện không có bài đăng nào về xe điện.</h3>
     </div>
-    <div class="vehicle__page">
+    <div th:if="${!posts.isEmpty()}" class="vehicle__page">
         <a href="#">&laquo;</a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
+        <a th:each="i : ${#numbers.sequence(1,totalPage)}" th:text="${i}" href="#">1</a>
+<!--        <a href="#">2</a>-->
+<!--        <a href="#">3</a>-->
+<!--        <a href="#">4</a>-->
+<!--        <a href="#">5</a>-->
         <a href="#">&raquo;</a>
     </div>
 </section>

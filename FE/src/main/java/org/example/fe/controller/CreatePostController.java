@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/home/postForm")
-public class postFormController {
+public class CreatePostController {
     @Autowired
     private PostService postService;
 
@@ -33,7 +32,7 @@ public class postFormController {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
-        return "postFormPage";
+        return "createPostPage";
     }
     @PostMapping("/submit/vehicle")
     public String submitVehiclePost(Model model,HttpSession session, @RequestParam("mainImage") MultipartFile mainImage,
@@ -57,12 +56,12 @@ public class postFormController {
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         if (mainImage == null || mainImage.isEmpty()) {
             model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
-            return "postFormPage";
+            return "createPostPage";
         }
         if (subImages!=null && subImages.size()> 4)
         {
             model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
-            return "postFormPage";
+            return "createPostPage";
         }
         PostResponse post = new PostResponse();
         post.setTitle(postTitle);
@@ -90,7 +89,7 @@ public class postFormController {
         }catch (Exception e)
         {
             model.addAttribute("imageUploadError", "Error uploading images: " + e.getMessage());
-            return "postFormPage";
+            return "createPostPage";
         }
 
 
@@ -118,12 +117,12 @@ public class postFormController {
 
         postService.create(post);
         ApiResponse<PostResponse> apiResponse = postService.create(post);
-        if (apiResponse.getStatus().equals("success")) {
+        if (apiResponse.getStatus().equals("SUCCESS")) {
             return "redirect:/home/store"; // Redirect to home page after successful post creation
         } else {
             model.addAttribute("postError", apiResponse.getError());
         }
-        return "postFormPage"; // For now, just return to the form page
+        return "createPostPage"; // For now, just return to the form page
     }
 
     @PostMapping("/submit/battery")
@@ -147,11 +146,11 @@ public class postFormController {
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         if (mainImage == null || mainImage.isEmpty()) {
             model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
-            return "postFormPage";
+            return "createPostPage";
         }
         if (subImages != null && subImages.size() > 4) {
             model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
-            return "postFormPage";
+            return "createPostPage";
         }
         PostResponse post = new PostResponse();
         post.setTitle(postTitle);
@@ -177,7 +176,7 @@ public class postFormController {
             post.setImages(imageUrls);
         } catch (Exception e) {
             model.addAttribute("imageUploadError", "Error uploading images: " + e.getMessage());
-            return "postFormPage";
+            return "createPostPage";
         }
         ProductResponse product = new ProductResponse();
         product.setProductName(productName);
@@ -204,6 +203,6 @@ public class postFormController {
         } else {
             model.addAttribute("postError", apiResponse.getError());
         }
-        return "postFormPage"; // For now, just return to the form page
+        return "createPostPage"; // For now, just return to the form page
     }
 }

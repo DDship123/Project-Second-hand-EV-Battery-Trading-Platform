@@ -87,9 +87,9 @@ public class MemberPageController {
                 model.addAttribute("errorMessage", "Failed to update profile");
                 model.addAttribute("user", currentUser);
                 return "personalInformationPage";
-        }
+            }
             model.addAttribute("user", response.getPayload());
-            return "redirect:/account/personalInformationPage";
+            return "personalInformationPage";
     }
 
     @PostMapping("/personalInformation/uploadAvatar")

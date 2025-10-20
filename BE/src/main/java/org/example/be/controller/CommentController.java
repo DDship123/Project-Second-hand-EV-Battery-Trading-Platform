@@ -28,38 +28,6 @@ public class CommentController {
     @Autowired
     private MemberService memberService;
 
-//    @PostMapping
-//    public ResponseEntity<ApiResponse<Comment>> createComment(@RequestBody CommentResponse comment) {
-//        ApiResponse<Comment> response = new ApiResponse<>();
-//        try {
-//            // Convert CommentResponse to Comment entity
-//            Comment comment1 = new Comment();
-//            comment.setComment(comment.getComment());
-//            comment.setRating(comment.getRating());
-//            comment.setStatus(comment.getStatus());
-//            comment.setCreatedAt(comment.getCreatedAt());
-//
-//            // Set relationships
-//            Member member = new Member();
-//            member.setMemberId(comment.getMember().getMemberId());
-//            comment1.setMember(member);
-//
-//            Post post = new Post();
-//            post.setPostsId(comment.getPost().getPostsId());
-//            comment1.setPost(post);
-//
-//            Comment created = commentService.createComment(comment1);
-//            Map<String, Object> metadata = new HashMap<>();
-//            metadata.put("timestamp", LocalDateTime.now());
-//            response.ok(created, (HashMap<String, Object>) metadata);
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            Map<String, String> error = new HashMap<>();
-//            error.put("message", e.getMessage());
-//            response.error(error);
-//            return ResponseEntity.badRequest().body(response);
-//        }
-//    }
 
     @PostMapping
     public ResponseEntity<ApiResponse<CommentResponse>> createComment(    @RequestParam("postId") int postId,
