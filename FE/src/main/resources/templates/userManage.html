@@ -1,0 +1,286 @@
+<!-- userManage.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lí người dùng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="adminPage.css" />
+</head>
+
+<section th:include="adminPage"></section>
+
+<body>
+<div class="container">
+    <!-- Sidebar inclusion -->
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Notification Area -->
+        <div class="notification" id="notification"></div>
+
+        <!-- Quản lí người dùng Content -->
+        <div class="content-section active" data-section="user">
+            <div class="section-title">
+                <i class="fa-solid fa-user-group"></i>
+                <h2>Quản lí người dùng</h2>
+            </div>
+            <div class="content-header">
+                <div class="filter-tabs">
+                    <button class="tab-btn active" data-tab="users">Người dùng</button>
+                    <button class="tab-btn" data-tab="admins">Admin</button>
+                </div>
+            </div>
+            <div class="tab-content active" id="usersTab">
+                <div class="content-toolbar">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Tìm kiếm người dùng...">
+                    </div>
+                    <div class="toolbar-actions">
+                        <div class="view-toggle">
+                            <button class="view-btn"><i class="fa-solid fa-list"></i></button>
+                            <button class="view-btn active"><i class="fa-solid fa-grip"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-table" id="userTable">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Mã</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Giới thiệu viên <i class="fa-solid fa-chevron-down filter-icon"
+                                                   id="referrerFilterIcon"></i></th>
+                            <th>Ngày đăng ký <i class="fa-solid fa-chevron-down filter-icon"
+                                                id="dateFilterIcon"></i></th>
+                            <th>Trạng thái <i class="fa-solid fa-chevron-down filter-icon"
+                                              id="statusFilterIcon"></i></th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-user-id="1" data-register-date="2025-10-06">
+                            <td>U001</td>
+                            <td>Nguyen Van A</td>
+                            <td>nguyenvana@gmail.com</td>
+                            <td>Chưa đăng ký</td>
+                            <td>06/10/2025</td>
+                            <td>
+                                <select class="status-select">
+                                    <option value="Hoạt động" selected>Hoạt động</option>
+                                    <option value="Tạm khóa">Tạm khóa</option>
+                                    <option value="Cấm vĩnh viễn">Cấm vĩnh viễn</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="action-btn-small primary user-detail-btn">Chi tiết</button>
+                            </td>
+                        </tr>
+                        <tr data-user-id="2" data-register-date="2025-10-07">
+                            <td>U002</td>
+                            <td>Tran Thi B</td>
+                            <td>tranthib@gmail.com</td>
+                            <td>Gói chuyên nghiệp</td>
+                            <td>07/10/2025</td>
+                            <td>
+                                <select class="status-select">
+                                    <option value="Hoạt động">Hoạt động</option>
+                                    <option value="Tạm khóa" selected>Tạm khóa</option>
+                                    <option value="Cấm vĩnh viễn">Cấm vĩnh viễn</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="action-btn-small primary user-detail-btn">Chi tiết</button>
+                            </td>
+                        </tr>
+                        <tr data-user-id="3" data-register-date="2025-10-08">
+                            <td>U003</td>
+                            <td>Le Van C</td>
+                            <td>levanc@gmail.com</td>
+                            <td>Gói doanh nghiệp</td>
+                            <td>08/10/2025</td>
+                            <td>
+                                <select class="status-select">
+                                    <option value="Hoạt động">Hoạt động</option>
+                                    <option value="Tạm khóa">Tạm khóa</option>
+                                    <option value="Cấm vĩnh viễn" selected>Cấm vĩnh viễn</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="action-btn-small primary user-detail-btn">Chi tiết</button>
+                            </td>
+                        </tr>
+                        <tr data-user-id="4" data-register-date="2025-10-09">
+                            <td>U004</td>
+                            <td>Pham Thi D</td>
+                            <td>phamthid@gmail.com</td>
+                            <td>Gói chuyên nghiệp</td>
+                            <td>09/10/2025</td>
+                            <td>
+                                <select class="status-select">
+                                    <option value="Hoạt động" selected>Hoạt động</option>
+                                    <option value="Tạm khóa">Tạm khóa</option>
+                                    <option value="Cấm vĩnh viễn">Cấm vĩnh viễn</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="action-btn-small primary user-detail-btn">Chi tiết</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Dropdowns for filters (hidden initially) -->
+                <div id="referrerDropdown" class="filter-dropdown" style="display: none;">
+                    <div class="filter-option" data-value="">Tất cả</div>
+                    <div class="filter-option" data-value="Chưa đăng ký">Chưa đăng ký</div>
+                    <div class="filter-option" data-value="Gói cơ bản">Gói cơ bản</div>
+                    <div class="filter-option" data-value="Gói chuyên nghiệp">Gói chuyên nghiệp</div>
+                    <div class="filter-option" data-value="Gói doanh nghiệp">Gói doanh nghiệp</div>
+                </div>
+                <div id="statusDropdown" class="filter-dropdown" style="display: none;">
+                    <div class="filter-option" data-value="">Tất cả</div>
+                    <div class="filter-option" data-value="Hoạt động">Hoạt động</div>
+                    <div class="filter-option" data-value="Tạm khóa">Tạm khóa</div>
+                    <div class="filter-option" data-value="Cấm vĩnh viễn">Cấm vĩnh viễn</div>
+                </div>
+                <div id="dateDropdown" class="filter-dropdown" style="display: none;">
+                    <div class="filter-option" data-sort="asc">Từ sớm nhất đến muộn nhất</div>
+                    <div class="filter-option" data-sort="desc">Từ muộn nhất đến sớm nhất</div>
+                    <div class="date-range">
+                        <label>Từ ngày:</label>
+                        <input type="date" id="fromDate">
+                        <label>Đến ngày:</label>
+                        <input type="date" id="toDate">
+                        <button id="applyDateRange">Áp dụng</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="adminsTab">
+                <div class="content-toolbar">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Tìm kiếm admin...">
+                    </div>
+                </div>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Mã</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Vai trò</th>
+                            <th>Số điện thoại</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-user-id="a1">
+                            <td>A001</td>
+                            <td>Nguyen Van L</td>
+                            <td>nguyenvanl@gmail.com</td>
+                            <td>Admin</td>
+                            <td>0905123456</td>
+                            <td>
+                                <button class="action-icon view admin-detail-btn"><i
+                                        class="fa-solid fa-eye"></i></button>
+                                <button class="action-icon lock"><i class="fa-solid fa-lock"></i></button>
+                                <button class="action-icon delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-user-id="a2">
+                            <td>A002</td>
+                            <td>Tran Van M</td>
+                            <td>tranvanm@gmail.com</td>
+                            <td>Admin</td>
+                            <td>0905234567</td>
+                            <td>
+                                <button class="action-icon view admin-detail-btn"><i
+                                        class="fa-solid fa-eye"></i></button>
+                                <button class="action-icon lock"><i class="fa-solid fa-lock"></i></button>
+                                <button class="action-icon delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-user-id="a3">
+                            <td>A003</td>
+                            <td>Le Thi N</td>
+                            <td>lethin@gmail.com</td>
+                            <td>Admin</td>
+                            <td>0905345678</td>
+                            <td>
+                                <button class="action-icon view admin-detail-btn"><i
+                                        class="fa-solid fa-eye"></i></button>
+                                <button class="action-icon lock"><i class="fa-solid fa-lock"></i></button>
+                                <button class="action-icon delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-user-id="a4">
+                            <td>A004</td>
+                            <td>Pham Van O</td>
+                            <td>phamvano@gmail.com</td>
+                            <td>Admin</td>
+                            <td>0905456789</td>
+                            <td>
+                                <button class="action-icon view admin-detail-btn"><i
+                                        class="fa-solid fa-eye"></i></button>
+                                <button class="action-icon lock"><i class="fa-solid fa-lock"></i></button>
+                                <button class="action-icon delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Detail Modal (used for both users and admins) -->
+<div id="userDetailModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Chi tiết người dùng</h2>
+        <div class="modal-body">
+            <div class="user-avatar-wrapper">
+                <img id="userAvatar" src="" alt="User Avatar">
+            </div>
+            <div class="details-container">
+                <div class="user-personal-info">
+                    <h3>Thông tin cá nhân</h3>
+                    <p><strong>Họ và tên:</strong> <span id="userFullName"></span></p>
+                    <p><strong>Email:</strong> <span id="userEmail"></span></p>
+                    <p><strong>Số điện thoại:</strong> <span id="userPhone"></span></p>
+                    <p><strong>Ngày sinh:</strong> <span id="userBirthDate"></span></p>
+                    <p><strong>Địa chỉ:</strong> <span id="userAddress"></span></p>
+                </div>
+                <div class="user-account-info">
+                    <h3>Thông tin tài khoản</h3>
+                    <p><strong>Mã:</strong> <span id="userCode"></span></p>
+                    <p><strong>Giới thiệu viên:</strong> <span id="userReferrer"></span></p>
+                    <p><strong>Ngày đăng ký:</strong> <span id="userRegisterDate"></span></p>
+                    <p><strong>Trạng thái:</strong> <span id="userStatus"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="action-btn-small primary" id="modalCloseUser">Đóng</button>
+        </div>
+    </div>
+</div>
+<script src="adminPage.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!-- feeManage.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cấu hình phí & Hoa hồng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="adminPage.css" />
+</head>
+
+<section th:include="adminPage"></section>
+
+<body>
+<div class="container">
+    <!-- Sidebar inclusion -->
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Notification Area -->
+        <div class="notification" id="notification"></div>
+
+        <!-- Cấu hình phí & Hoa hồng Content -->
+        <div class="content-section active" data-section="fee">
+            <div class="section-title">
+                <i class="fa-solid fa-dollar-sign"></i>
+                <h2>Cấu hình phí & Hoa hồng</h2>
+            </div>
+            <div class="fee-config-container">
+                <div class="fee-card">
+                    <h3>Phí giao dịch</h3>
+                    <div class="fee-input-group">
+                        <label>Phí cố định (VNĐ)</label>
+                        <input type="number" value="10000" class="fee-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Phí theo % giao dịch</label>
+                        <input type="number" value="2.5" class="fee-input">
+                        <span class="input-suffix">%</span>
+                    </div>
+                    <button class="save-btn">Lưu thay đổi</button>
+                </div>
+
+                <div class="fee-card">
+                    <h3>Hoa hồng người giới thiệu</h3>
+                    <div class="fee-input-group">
+                        <label>Hoa hồng cấp 1 (%)</label>
+                        <input type="number" value="5" class="fee-input">
+                        <span class="input-suffix">%</span>
+                    </div>
+                    <div class="fee-input-group">
+                        <label>Hoa hồng cấp 2 (%)</label>
+                        <input type="number" value="3" class="fee-input">
+                        <span class="input-suffix">%</span>
+                    </div>
+                    <button class="save-btn">Lưu thay đổi</button>
+                </div>
+
+                <div class="fee-card">
+                    <h3>Phí đăng tin</h3>
+                    <div class="fee-input-group">
+                        <label>Gói cơ bản (VNĐ/tháng)</label>
+                        <input type="number" value="50000" class="fee-input">
+                    </div>
+                    <div class="fee-input-group">
+                        <label>Gói nâng cao (VNĐ/tháng)</label>
+                        <input type="number" value="100000" class="fee-input">
+                    </div>
+                    <div class="fee-input-group">
+                        <label>Gói VIP (VNĐ/tháng)</label>
+                        <input type="number" value="200000" class="fee-input">
+                    </div>
+                    <button class="save-btn">Lưu thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="adminPage.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+<!-- postManage.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lí đăng bài</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="adminPage.css" />
+</head>
+
+<section th:include="adminPage"></section>
+
+<body>
+<div class="container">
+    <!-- Sidebar inclusion -->
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Notification Area -->
+        <div class="notification" id="notification"></div>
+
+        <!-- Quản lí đăng bài Content -->
+        <div class="content-section active" data-section="post">
+            <div class="content-header">
+                <div class="filter-tabs">
+                    <button class="tab-btn active">Đợi duyệt <span class="badge">15</span></button>
+                    <button class="tab-btn">Đã duyệt</button>
+                    <button class="tab-btn">Từ chối <span class="badge">8</span></button>
+                </div>
+                <div class="result-info">Hiện 1 - 8 trên 100 kết quả</div>
+            </div>
+
+            <div class="content-toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+                <div class="toolbar-actions">
+                    <div class="view-toggle">
+                        <button class="view-btn"><i class="fa-solid fa-list"></i></button>
+                        <button class="view-btn active"><i class="fa-solid fa-grip"></i></button>
+                    </div>
+                    <button class="filter-btn">
+                        <i class="fa-solid fa-filter"></i> Lọc
+                    </button>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Thời gian duyệt</th>
+                        <th>Mô tả</th>
+                        <th>Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-post-id="1">
+                        <td>Nguyen Tien Linh</td>
+                        <td>nguyentienlinh@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr data-post-id="2">
+                        <td>Nguyen Van An</td>
+                        <td>nguyenvanae@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr data-post-id="3">
+                        <td>Tran Trung Tam</td>
+                        <td>trungtamtran@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr data-post-id="4">
+                        <td>Huan Hoa Hong</td>
+                        <td>huanrose@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr data-post-id="5">
+                        <td>Tran Trung Tien</td>
+                        <td>tienbjp@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr data-post-id="6">
+                        <td>Do Giam Doc</td>
+                        <td>giamdoc@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr data-post-id="7">
+                        <td>Nguyen Gan Gui</td>
+                        <td>gangui@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    <tr data-post-id="8">
+                        <td>The Tinh Thon</td>
+                        <td>tinhthon@gmail.com</td>
+                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
+                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                        <td>
+                            <button class="action-btn approve">Duyệt</button>
+                            <button class="action-btn reject">Từ chối</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">5</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Post Detail Modal -->
+<div id="postDetailModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Chi tiết đăng bài</h2>
+        <div class="modal-body">
+            <div class="vehicle-image">
+                <img id="vehicleImage" src="" alt="Vehicle Image">
+            </div>
+            <div class="details-container">
+                <div class="vehicle-details">
+                    <h3>Thông tin xe</h3>
+                    <p><strong>Thương hiệu:</strong> <span id="vehicleBrand"></span></p>
+                    <p><strong>Model:</strong> <span id="vehicleModel"></span></p>
+                    <p><strong>Năm đăng ký:</strong> <span id="vehicleRegisterYear"></span></p>
+                    <p><strong>Số km đã chạy:</strong> <span id="vehicleMileage"></span> km</p>
+                    <p><strong>Tình trạng:</strong> <span id="vehicleCondition"></span></p>
+                    <p><strong>Dung lượng pin:</strong> <span id="vehicleBatteryCapacity"></span> kWh</p>
+                    <p><strong>Xuất xứ:</strong> <span id="vehicleOrigin"></span></p>
+                    <p><strong>Giá:</strong> <span id="vehiclePrice"></span> VNĐ</p>
+                    <p><strong>Mô tả:</strong> <span id="vehicleDescription"></span></p>
+                </div>
+                <div class="seller-info">
+                    <h3>Thông tin người bán</h3>
+                    <p><strong>Họ và tên:</strong> <span id="sellerName"></span></p>
+                    <p><strong>Email:</strong> <span id="sellerEmail"></span></p>
+                    <p><strong>Số điện thoại:</strong> <span id="sellerPhone"></span></p>
+                    <p><strong>Địa chỉ:</strong> <span id="sellerAddress"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="action-btn approve" id="modalApprove">Duyệt</button>
+            <button class="action-btn reject" id="modalReject">Từ chối</button>
+        </div>
+    </div>
+</div>
+<script src="adminPage.js"></script>
+
+</body>
+
+</html>
