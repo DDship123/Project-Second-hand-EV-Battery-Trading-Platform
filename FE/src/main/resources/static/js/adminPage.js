@@ -7,332 +7,27 @@ const submenuItems = document.querySelectorAll('.submenu-item');
 const contentSections = document.querySelectorAll('.content-section');
 const notification = document.getElementById('notification');
 
-// Hardcoded data for demonstration purposes.
-// In the future, this will be replaced by fetching data from an API.
-// Example:
-// async function fetchPostData() {
-//   const response = await fetch('/api/posts');
-//   const data = await response.json();
-//   return data; // Assuming data is an object with postId as keys
-// }
-// Then, use const postData = await fetchPostData();
-const postData = {
-  1: {
-    vehicle: {
-      image: 'https://via.placeholder.com/300x200?text=Vehicle+1',
-      brand: 'Honda',
-      model: 'Civic',
-      registerYear: 2020,
-      mileage: 15000,
-      condition: 'Tốt',
-      batteryCapacity: 50,
-      origin: 'Nhật Bản',
-      price: 500000000,
-      description: 'Xe đẹp, chạy tốt, ít sử dụng.'
-    },
-    seller: {
-      name: 'Nguyen Tien Linh',
-      email: 'nguyentienlinh@gmail.com',
-      phone: '0123456789',
-      address: '123 Đường ABC, Quận 1, TP. HCM'
-    }
-  },
-  2: {
-    vehicle: {
-      image: 'https://via.placeholder.com/300x200?text=Vehicle+2',
-      brand: 'Toyota',
-      model: 'Camry',
-      registerYear: 2018,
-      mileage: 30000,
-      condition: 'Bình thường',
-      batteryCapacity: 60,
-      origin: 'Mỹ',
-      price: 600000000,
-      description: 'Xe gia đình, bảo dưỡng định kỳ.'
-    },
-    seller: {
-      name: 'Nguyen Van An',
-      email: 'nguyenvanae@gmail.com',
-      phone: '0987654321',
-      address: '456 Đường DEF, Quận 2, TP. HCM'
-    }
-  },
-  3: {
-    vehicle: {
-      image: 'https://via.placeholder.com/300x200?text=Vehicle+3',
-      brand: 'Ford',
-      model: 'Mustang',
-      registerYear: 2022,
-      mileage: 5000,
-      condition: 'Xuất sắc',
-      batteryCapacity: 70,
-      origin: 'Mỹ',
-      price: 1200000000,
-      description: 'Xe thể thao, động cơ mạnh mẽ.'
-    },
-    seller: {
-      name: 'Tran Trung Tam',
-      email: 'trungtamtran@gmail.com',
-      phone: '0112233445',
-      address: '789 Đường GHI, Quận 3, TP. HCM'
-    }
-  },
-  4: {
-    vehicle: {
-      image: 'https://via.placeholder.com/300x200?text=Vehicle+4',
-      brand: 'BMW',
-      model: 'X5',
-      registerYear: 2019,
-      mileage: 25000,
-      condition: 'Tốt',
-      batteryCapacity: 80,
-      origin: 'Đức',
-      price: 1500000000,
-      description: 'Xe SUV cao cấp, đầy đủ tiện nghi.'
-    },
-    seller: {
-      name: 'Huan Hoa Hong',
-      email: 'huanrose@gmail.com',
-      phone: '0556677889',
-      address: '101 Đường JKL, Quận 4, TP. HCM'
-    }
-  },
-  5: {
-    vehicle: {
-      image: 'https://via.placeholder.com/300x200?text=Vehicle+5',
-      brand: 'Mercedes-Benz',
-      model: 'C-Class',
-      registerYear: 2021,
-      mileage: 10000,
-      condition: 'Xuất sắc',
-      batteryCapacity: 55,
-      origin: 'Đức',
-      price: 900000000,
-      description: 'Xe sang trọng, nội thất da cao cấp.'
-    },
-    seller: {
-      name: 'Tran Trung Tien',
-      email: 'tienbjp@gmail.com',
-      phone: '0334455667',
-      address: '112 Đường MNO, Quận 5, TP. HCM'
-    }
-  },
-  6: {
-    vehicle: {
-      image: 'https://via.placeholder.com/300x200?text=Vehicle+6',
-      brand: 'Audi',
-      model: 'A4',
-      registerYear: 2017,
-      mileage: 40000,
-      condition: 'Bình thường',
-      batteryCapacity: 65,
-      origin: 'Đức',
-      price: 700000000,
-      description: 'Xe Đức, bền bỉ và tiết kiệm nhiên liệu.'
-    },
-    seller: {
-      name: 'Do Giam Doc',
-      email: 'giamdoc@gmail.com',
-      phone: '0778899001',
-      address: '131 Đường PQR, Quận 6, TP. HCM'
-    }
-  },
-  7: {
-    vehicle: {
-      image: 'https://via.placeholder.com/300x200?text=Vehicle+7',
-      brand: 'Volkswagen',
-      model: 'Golf',
-      registerYear: 2023,
-      mileage: 2000,
-      condition: 'Tốt',
-      batteryCapacity: 45,
-      origin: 'Đức',
-      price: 800000000,
-      description: 'Xe hatchback thể thao, dễ lái.'
-    },
-    seller: {
-      name: 'Nguyen Gan Gui',
-      email: 'gangui@gmail.com',
-      phone: '0223344556',
-      address: '415 Đường STU, Quận 7, TP. HCM'
-    }
-  },
-  8: {
-    vehicle: {
-      image: 'https://via.placeholder.com/300x200?text=Vehicle+8',
-      brand: 'Tesla',
-      model: 'Model 3',
-      registerYear: 2024,
-      mileage: 1000,
-      condition: 'Xuất sắc',
-      batteryCapacity: 75,
-      origin: 'Mỹ',
-      price: 2000000000,
-      description: 'Xe điện hiện đại, tự lái cấp độ 2.'
-    },
-    seller: {
-      name: 'The Tinh Thon',
-      email: 'tinhthon@gmail.com',
-      phone: '0445566778',
-      address: '161 Đường VWX, Quận 8, TP. HCM'
-    }
-  }
-};
+window.addEventListener('DOMContentLoaded', () => {
+  submenu.classList.add('open');
+  dropdownArrow.classList.add('open');
+  permissionMenu.classList.add('active');
 
-// Hardcoded user data for demonstration purposes.
-// In the future, this will be replaced by fetching data from an API.
-// Example:
-// async function fetchUserData() {
-//   const response = await response.json();
-//   return data; // Assuming data is an object with userId as keys
-// }
-// Then, use const userData = await fetchUserData();
-const userData = {
-  1: {
-    avatar: 'https://via.placeholder.com/200?text=User+A',
-    fullName: 'Nguyen Van A',
-    email: 'nguyenvana@gmail.com',
-    phone: '0123456789',
-    birthDate: 'January 1st, 1990',
-    address: '123 ABC Street, Ho Chi Minh City',
-    code: 'U001',
-    referrer: 'Chưa đăng ký',
-    registerDate: '06/10/2025',
-    status: 'Hoạt động'
-  },
-  2: {
-    avatar: 'https://via.placeholder.com/200?text=User+B',
-    fullName: 'Tran Thi B',
-    email: 'tranthib@gmail.com',
-    phone: '0987654321',
-    birthDate: 'February 2nd, 1992',
-    address: '456 DEF Street, Hanoi',
-    code: 'U002',
-    referrer: 'Gói chuyên nghiệp',
-    registerDate: '07/10/2025',
-    status: 'Tạm khóa'
-  },
-  3: {
-    avatar: 'https://via.placeholder.com/200?text=User+C',
-    fullName: 'Le Van C',
-    email: 'levanc@gmail.com',
-    phone: '0112233445',
-    birthDate: 'March 3rd, 1985',
-    address: '789 GHI Street, Da Nang',
-    code: 'U003',
-    referrer: 'Gói doanh nghiệp',
-    registerDate: '08/10/2025',
-    status: 'Cấm vĩnh viễn'
-  },
-  4: {
-    avatar: 'https://via.placeholder.com/200?text=User+D',
-    fullName: 'Pham Thi D',
-    email: 'phamthid@gmail.com',
-    phone: '0556677889',
-    birthDate: 'April 4th, 1995',
-    address: '101 JKL Street, Can Tho',
-    code: 'U004',
-    referrer: 'Gói chuyên nghiệp',
-    registerDate: '09/10/2025',
-    status: 'Hoạt động'
+  if (window.location.pathname.includes('post-manage')) {
+    submenuItems[0].classList.add('active');
+  }else if (window.location.pathname.includes('transaction-manage')) {
+    submenuItems[1].classList.add('active');
+  }else if (window.location.pathname.includes('member-manage')) {
+    submenuItems[2].classList.add('active');
+  }else if (window.location.pathname.includes('comment-review-manage')) {
+    submenuItems[3].classList.add('active');
+  }else if (window.location.pathname.includes('fee-manage')) {
+    submenuItems[4].classList.add('active');
+  } else {
+    // Default to first submenu item
+    submenuItems[0].classList.add('active');
   }
-};
+});
 
-// Hardcoded admin data
-const adminData = {
-  a1: {
-    avatar: 'https://via.placeholder.com/200?text=Admin+L',
-    fullName: 'Nguyen Van L',
-    email: 'nguyenvanl@gmail.com',
-    phone: '0905123456',
-    birthDate: 'May 5th, 1980',
-    address: '222 Admin St, Ho Chi Minh City',
-    code: 'A001',
-    referrer: 'Admin',
-    registerDate: '01/01/2025',
-    status: 'Hoạt động'
-  },
-  a2: {
-    avatar: 'https://via.placeholder.com/200?text=Admin+M',
-    fullName: 'Tran Van M',
-    email: 'tranvanm@gmail.com',
-    phone: '0905234567',
-    birthDate: 'June 6th, 1982',
-    address: '333 Admin St, Hanoi',
-    code: 'A002',
-    referrer: 'Admin',
-    registerDate: '02/01/2025',
-    status: 'Hoạt động'
-  },
-  a3: {
-    avatar: 'https://via.placeholder.com/200?text=Admin+N',
-    fullName: 'Le Thi N',
-    email: 'lethin@gmail.com',
-    phone: '0905345678',
-    birthDate: 'July 7th, 1984',
-    address: '444 Admin St, Da Nang',
-    code: 'A003',
-    referrer: 'Admin',
-    registerDate: '03/01/2025',
-    status: 'Hoạt động'
-  },
-  a4: {
-    avatar: 'https://via.placeholder.com/200?text=Admin+O',
-    fullName: 'Pham Van O',
-    email: 'phamvano@gmail.com',
-    phone: '0905456789',
-    birthDate: 'August 8th, 1986',
-    address: '555 Admin St, Can Tho',
-    code: 'A004',
-    referrer: 'Admin',
-    registerDate: '04/01/2025',
-    status: 'Hoạt động'
-  }
-};
-
-// Hardcoded comment data
-const commentData = {
-  1: {
-    user: 'Nguyen Van A',
-    date: '19/10/2025',
-    content: 'Bình luận rất tốt về sản phẩm.',
-    status: 'Đang đợi'
-  },
-  2: {
-    user: 'Tran Thi B',
-    date: '18/10/2025',
-    content: 'Sản phẩm chất lượng cao.',
-    status: 'Đã duyệt'
-  },
-  3: {
-    user: 'Le Van C',
-    date: '17/10/2025',
-    content: 'Không hài lòng với dịch vụ.',
-    status: 'Từ chối'
-  }
-};
-
-// Hardcoded review data
-const reviewData = {
-  1: {
-    user: 'Nguyen Van A',
-    date: '19/10/2025',
-    content: 'Đánh giá 5 sao, sản phẩm tuyệt vời.',
-    status: 'Đang đợi'
-  },
-  2: {
-    user: 'Tran Thi B',
-    date: '18/10/2025',
-    content: '4 sao, giao hàng nhanh.',
-    status: 'Đã duyệt'
-  },
-  3: {
-    user: 'Le Van C',
-    date: '17/10/2025',
-    content: '2 sao, sản phẩm lỗi.',
-    status: 'Từ chối'
-  }
-};
 
 function deactivateAllMenus() {
   document.querySelectorAll('.menu-item.active').forEach(el => el.classList.remove('active'));
@@ -376,7 +71,8 @@ submenuItems.forEach(item => {
   item.addEventListener('click', function (e) {
     e.stopPropagation();
     deactivateAllMenus();
-    this.classList.add('active');
+    // this.classList.add('active');
+    this.classList.remove('active');
     permissionMenu.classList.add('active');
     submenu.classList.add('open');
     dropdownArrow.classList.add('open');
@@ -393,6 +89,25 @@ submenuItems.forEach(item => {
     const targetSection = document.querySelector(`[data-section="${sectionToShow}"]`);
     if (targetSection) {
       targetSection.classList.add('active');
+    }
+    switch (item.textContent.trim()) {
+      case 'Quản lí đăng bài':
+        window.location.href = '/home/admin/post-manage';
+        break;
+      case 'Quản lí giao dịch':
+        window.location.href = '/home/admin/transaction-manage';
+        break;
+      case 'Quản lí người dùng':
+        window.location.href = '/home/admin/member-manage';
+        break;
+      case 'Quản lí bình luận':
+        window.location.href = '/home/admin/comment-review-manage';
+        break;
+      case 'Cấu hình phí & Hoa hồng':
+        window.location.href = '/home/admin/fee-manage';
+        break;
+      default:
+        break;
     }
   });
 });

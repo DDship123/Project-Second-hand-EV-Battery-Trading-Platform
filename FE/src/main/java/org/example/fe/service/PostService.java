@@ -23,7 +23,7 @@ public interface PostService {
     ApiResponse<PostResponse> update (PostResponse post);
 
     ApiResponse<PostResponse> delete (int postId);
-    ApiResponse<PostResponse> getAllPostByStatus(String status);
+    ApiResponse<List<PostResponse>> getAllPostByStatus(String status);
     ApiResponse<PostResponse> findAllPostByProductTypeAndPostTitle(String productType,String postTitle);
 
 }

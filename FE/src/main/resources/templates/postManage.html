@@ -30,11 +30,11 @@
         <div class="content-section active" data-section="post">
             <div class="content-header">
                 <div class="filter-tabs">
-                    <button class="tab-btn active">Đợi duyệt <span class="badge">15</span></button>
+                    <button class="tab-btn active">Đợi duyệt <span class="badge"></span></button>
                     <button class="tab-btn">Đã duyệt</button>
-                    <button class="tab-btn">Từ chối <span class="badge">8</span></button>
+                    <button class="tab-btn">Từ chối <span class="badge"></span></button>
                 </div>
-                <div class="result-info">Hiện 1 - 8 trên 100 kết quả</div>
+<!--                <div class="result-info">Hiện 1 - 8 trên 100 kết quả</div>-->
             </div>
 
             <div class="content-toolbar">
@@ -65,97 +65,27 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr data-post-id="1">
-                        <td>Nguyen Tien Linh</td>
-                        <td>nguyentienlinh@gmail.com</td>
-                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
-                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
+                    <tr th:each="post : ${posts}" >
+                        <td th:text="${post.getSeller().getUsername()}">Nguyen Tien Linh</td>
+                        <td th:text="${post.getSeller().getEmail()}"></td>
+                        <td><a th:href="'/home/admin/post-manage/detail/'+${post.getPostsId()}" class="link-text detail-link" >Chi tiết</a></td>
+                        <td style="width: 25vw;" th:text="${post.getDescription()}">Xe đẹp, mới 99%</td>
                         <td>
-                            <button class="action-btn approve">Duyệt</button>
-                            <button class="action-btn reject">Từ chối</button>
-                        </td>
-                    </tr>
-                    <tr data-post-id="2">
-                        <td>Nguyen Van An</td>
-                        <td>nguyenvanae@gmail.com</td>
-                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
-                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
-                        <td>
-                            <button class="action-btn approve">Duyệt</button>
-                            <button class="action-btn reject">Từ chối</button>
-                        </td>
-                    </tr>
-                    <tr data-post-id="3">
-                        <td>Tran Trung Tam</td>
-                        <td>trungtamtran@gmail.com</td>
-                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
-                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
-                        <td>
-                            <button class="action-btn approve">Duyệt</button>
-                            <button class="action-btn reject">Từ chối</button>
-                        </td>
-                    </tr>
-                    <tr data-post-id="4">
-                        <td>Huan Hoa Hong</td>
-                        <td>huanrose@gmail.com</td>
-                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
-                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
-                        <td>
-                            <button class="action-btn approve">Duyệt</button>
-                            <button class="action-btn reject">Từ chối</button>
-                        </td>
-                    </tr>
-                    <tr data-post-id="5">
-                        <td>Tran Trung Tien</td>
-                        <td>tienbjp@gmail.com</td>
-                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
-                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
-                        <td>
-                            <button class="action-btn approve">Duyệt</button>
-                            <button class="action-btn reject">Từ chối</button>
-                        </td>
-                    </tr>
-                    <tr data-post-id="6">
-                        <td>Do Giam Doc</td>
-                        <td>giamdoc@gmail.com</td>
-                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
-                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
-                        <td>
-                            <button class="action-btn approve">Duyệt</button>
-                            <button class="action-btn reject">Từ chối</button>
-                        </td>
-                    </tr>
-                    <tr data-post-id="7">
-                        <td>Nguyen Gan Gui</td>
-                        <td>gangui@gmail.com</td>
-                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
-                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
-                        <td>
-                            <button class="action-btn approve">Duyệt</button>
-                            <button class="action-btn reject">Từ chối</button>
-                        </td>
-                    </tr>
-                    <tr data-post-id="8">
-                        <td>The Tinh Thon</td>
-                        <td>tinhthon@gmail.com</td>
-                        <td>Thứ 2, ngày 7 tháng 4 năm 2025</td>
-                        <td><a href="#" class="link-text detail-link">Chi tiết</a></td>
-                        <td>
-                            <button class="action-btn approve">Duyệt</button>
-                            <button class="action-btn reject">Từ chối</button>
+                            <button class="action-btn approve" th:attr="data-post-id=${post.getPostsId()}">Duyệt</button>
+                            <button class="action-btn reject" th:attr="data-post-id=${post.getPostsId()}">Từ chối</button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="pagination">
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">4</button>
-                <button class="page-btn">5</button>
-            </div>
+<!--            <div class="pagination">-->
+<!--                <button class="page-btn active">1</button>-->
+<!--                <button class="page-btn">2</button>-->
+<!--                <button class="page-btn">3</button>-->
+<!--                <button class="page-btn">4</button>-->
+<!--                <button class="page-btn">5</button>-->
+<!--            </div>-->
         </div>
     </div>
 </div>
@@ -198,8 +128,7 @@
     </div>
 </div>
 
-<script th:src="@{/js/commonComponents/adminPage.js}"></script>
-
+<script th:src="@{/js/postManage.js}"></script>
 
 </body>
 

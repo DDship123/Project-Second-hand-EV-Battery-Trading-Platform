@@ -24,6 +24,9 @@ public class PostController {
     private PostImageService postImageService;
 
     @Autowired
+    private MemberService memberService;
+
+    @Autowired
     private ProductService productService;
 
     @Autowired
@@ -67,6 +70,7 @@ public class PostController {
             // Sửa: truy cập memberId thông qua relationship
             if (post.getProduct().getMember() != null) {
                 productResponse.setMemberId(post.getProduct().getMember().getMemberId());
+
             }
 
 
@@ -559,7 +563,21 @@ public class PostController {
         List<PostResponse> posts = postService.getAllPostsByStatus(status).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
+        for (PostResponse post : posts) {
+            Member seller = memberService.getMemberById(post.getSeller().getMemberId());
+            if (seller != null) {
+                MemberResponse sellerResponse = new MemberResponse();
+                sellerResponse.setMemberId(seller.getMemberId());
+                sellerResponse.setUsername(seller.getUsername());
+                sellerResponse.setCity(seller.getCity());
+                sellerResponse.setAvatarUrl(seller.getAvatarUrl());
+                sellerResponse.setEmail(seller.getEmail());
+                sellerResponse.setPhone(seller.getPhone());
+                sellerResponse.setRole(seller.getRole());
+                sellerResponse.setStatus(seller.getStatus());
+                post.setSeller(sellerResponse);
+            }
+        }
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();

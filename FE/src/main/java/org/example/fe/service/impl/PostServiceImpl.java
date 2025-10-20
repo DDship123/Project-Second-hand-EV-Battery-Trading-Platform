@@ -591,8 +591,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ApiResponse<PostResponse> getAllPostByStatus(String status) {
-        ApiResponse<PostResponse> response = new ApiResponse<>();
+    public ApiResponse<List<PostResponse>> getAllPostByStatus(String status) {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
 
         try {
             // Create headers
@@ -603,11 +603,11 @@ public class PostServiceImpl implements PostService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts/" + status,
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/admin/status/" + status,
                     HttpMethod.GET,
                     requestEntity,
-                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
