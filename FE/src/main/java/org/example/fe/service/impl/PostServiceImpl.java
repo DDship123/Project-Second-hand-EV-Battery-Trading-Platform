@@ -5,10 +5,7 @@ import org.example.fe.entity.PostResponse;
 import org.example.fe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -502,7 +499,7 @@ public class PostServiceImpl implements PostService {
 
             // Make API call to backend
             ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts/" + postId,
+                    apiBaseUrl + "/api/posts/delete" + postId,
                     HttpMethod.DELETE,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
@@ -526,6 +523,84 @@ public class PostServiceImpl implements PostService {
 
         return response;
 
+    }
+
+    @Override
+    public ApiResponse<PostResponse> getAllPostByStatus(String status) {
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/" + status,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Delete post successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Delete post failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to get post for status");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get post for status: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+    }
+
+    @Override
+    public ApiResponse<PostResponse> findAllPostByProductTypeAndPostTitle(String productType, String postTitle) {
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/type-title?" + "productType=" + productType + "&title=" + postTitle,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Delete post successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Delete post failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to get post for type and title");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get post for type and title: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
     }
 
 }
