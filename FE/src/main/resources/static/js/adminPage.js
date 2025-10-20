@@ -92,7 +92,7 @@ submenuItems.forEach(item => {
     }
     switch (item.textContent.trim()) {
       case 'Quản lí đăng bài':
-        window.location.href = '/home/admin/post-manage';
+        window.location.href = '/home/admin/post-manage/PENDING';
         break;
       case 'Quản lí giao dịch':
         window.location.href = '/home/admin/transaction-manage';
@@ -219,25 +219,25 @@ const userCloseBtn = userModal ? userModal.querySelector('.close') : null;
 const userDetailButtons = document.querySelectorAll('.user-detail-btn');
 const adminDetailButtons = document.querySelectorAll('.admin-detail-btn');
 
-function openUserModal(data) {
-  // Populate modal
-  // Here is where you will set the values from the API response into each field.
-  // For example, replace data.avatar with apiResponse.avatar, etc.
-
-  document.getElementById('userAvatar').src = data.avatar; // Set from API response.avatar
-  document.getElementById('userFullName').textContent = data.fullName; // Set from API response.fullName
-  document.getElementById('userEmail').textContent = data.email; // Set from API response.email
-  document.getElementById('userPhone').textContent = data.phone; // Set from API response.phone
-  document.getElementById('userBirthDate').textContent = data.birthDate; // Set from API response.birthDate
-  document.getElementById('userAddress').textContent = data.address; // Set from API response.address
-  document.getElementById('userCode').textContent = data.code; // Set from API response.code
-  document.getElementById('userReferrer').textContent = data.referrer; // Set from API response.referrer
-  document.getElementById('userRegisterDate').textContent = data.registerDate; // Set from API response.registerDate
-  document.getElementById('userStatus').textContent = data.status; // Set from API response.status
-
-  // Show modal
-  userModal.style.display = 'block';
-}
+// function openUserModal(data) {
+//   // Populate modal
+//   // Here is where you will set the values from the API response into each field.
+//   // For example, replace data.avatar with apiResponse.avatar, etc.
+//
+//   document.getElementById('userAvatar').src = data.avatar; // Set from API response.avatar
+//   document.getElementById('userFullName').textContent = data.fullName; // Set from API response.fullName
+//   document.getElementById('userEmail').textContent = data.email; // Set from API response.email
+//   document.getElementById('userPhone').textContent = data.phone; // Set from API response.phone
+//   document.getElementById('userBirthDate').textContent = data.birthDate; // Set from API response.birthDate
+//   document.getElementById('userAddress').textContent = data.address; // Set from API response.address
+//   document.getElementById('userCode').textContent = data.code; // Set from API response.code
+//   document.getElementById('userReferrer').textContent = data.referrer; // Set from API response.referrer
+//   document.getElementById('userRegisterDate').textContent = data.registerDate; // Set from API response.registerDate
+//   document.getElementById('userStatus').textContent = data.status; // Set from API response.status
+//
+//   // Show modal
+//   userModal.style.display = 'block';
+// }
 
 userDetailButtons.forEach(button => {
   button.addEventListener('click', function (e) {
@@ -304,23 +304,23 @@ const commentCloseBtn = commentModal ? commentModal.querySelector('.close') : nu
 const commentDetailButtons = document.querySelectorAll('.comment-detail-btn');
 const reviewDetailButtons = document.querySelectorAll('.review-detail-btn');
 
-function openCommentModal(data, isReview = false) {
-  document.querySelector('#commentDetailModal h2').textContent = isReview ? 'Chi tiết đánh giá' : 'Chi tiết bình luận';
-  document.getElementById('commentUser').textContent = data.user;
-  document.getElementById('commentDate').textContent = data.date;
-  document.getElementById('commentContent').textContent = data.content;
-  document.getElementById('commentStatus').textContent = data.status;
-
-  // Show or hide actions based on status
-  const actions = commentModal.querySelector('.modal-actions');
-  if (data.status === 'Đang đợi') {
-    actions.style.display = 'flex';
-  } else {
-    actions.style.display = 'none';
-  }
-
-  commentModal.style.display = 'block';
-}
+// function openCommentModal(data, isReview = false) {
+//   document.querySelector('#commentDetailModal h2').textContent = isReview ? 'Chi tiết đánh giá' : 'Chi tiết bình luận';
+//   document.getElementById('commentUser').textContent = data.user;
+//   document.getElementById('commentDate').textContent = data.date;
+//   document.getElementById('commentContent').textContent = data.content;
+//   document.getElementById('commentStatus').textContent = data.status;
+//
+//   // Show or hide actions based on status
+//   const actions = commentModal.querySelector('.modal-actions');
+//   if (data.status === 'Đang đợi') {
+//     actions.style.display = 'flex';
+//   } else {
+//     actions.style.display = 'none';
+//   }
+//
+//   commentModal.style.display = 'block';
+// }
 
 commentDetailButtons.forEach(button => {
   button.addEventListener('click', function (e) {

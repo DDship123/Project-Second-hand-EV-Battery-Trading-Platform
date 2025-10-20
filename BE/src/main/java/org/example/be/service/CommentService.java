@@ -2,6 +2,7 @@ package org.example.be.service;
 
 import org.example.be.dto.reponse.CommentResponse;
 import org.example.be.dto.reponse.MemberResponse;
+import org.example.be.dto.reponse.PostResponse;
 import org.example.be.entity.Comment;
 import org.example.be.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,5 +69,28 @@ public class CommentService {
             )).toList();
         }
         return null;
+    }
+    public List<CommentResponse> findAllCommentByStatus(String status) {
+        List<Comment> comments = commentRepository.findAllByStatus(status);
+        List<CommentResponse> commentResponses = new ArrayList<>();
+        if (comments != null) {
+            for (Comment c : comments) {
+                CommentResponse commentResponse = new CommentResponse();
+                commentResponse.setCommentId(c.getCommentId());
+                commentResponse.setComment(c.getComment());
+                commentResponse.setRating(c.getRating());
+                commentResponse.setStatus(c.getStatus());
+                commentResponse.setCreatedAt(c.getCreatedAt());
+                MemberResponse memberResponse = new MemberResponse();
+                memberResponse.setMemberId(c.getMember().getMemberId());
+                memberResponse.setUsername(c.getMember().getUsername());
+                commentResponse.setMember(memberResponse);
+                PostResponse postResponse = new PostResponse();
+                postResponse.setPostsId(c.getPost().getPostsId());
+                commentResponse.setPost(postResponse);
+                commentResponses.add(commentResponse);
+            }
+        }
+        return commentResponses;
     }
 }

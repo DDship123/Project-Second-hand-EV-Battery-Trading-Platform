@@ -83,6 +83,21 @@ public class CommentController {
         }
     }
 
+    @GetMapping("/status/{status}")
+    public ResponseEntity<ApiResponse<List<CommentResponse>>> getCommentsByStatus(@PathVariable String status) {
+        ApiResponse<List<CommentResponse>> response = new ApiResponse<>();
+        try {
+            List<CommentResponse> comments = commentService.findAllCommentByStatus(status);
+            response.ok(comments);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Comment>> getCommentById(@PathVariable Integer id) {
         ApiResponse<Comment> response = new ApiResponse<>();

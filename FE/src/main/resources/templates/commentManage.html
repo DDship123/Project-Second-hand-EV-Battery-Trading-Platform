@@ -51,41 +51,26 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Người dùng</th>
+                            <th>Người viết</th>
                             <th>Ngày</th>
+                            <th>Bình luận sẩn phẩm</th>
                             <th>Nội dung</th>
+                            <th>Đánh giá</th>
                             <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr data-comment-id="1">
-                            <td>Nguyen Van A</td>
-                            <td>19/10/2025</td>
-                            <td>Bình luận rất tốt về sản phẩm.</td>
-                            <td><span class="status-badge pending">Đang đợi</span></td>
+                        <tr th:each="comment : ${comments}" >
+                            <td th:text="${comment.getMember().getUsername()}">Nguyen Van A</td>
+                            <td th:text="${#temporals.format(comment.getCreatedAt(), 'dd-MM-yyyy')}">19/10/2025</td>
+                            <th><a th:href="'/home/product/detail/'+${comment.getPost().getPostsId()}">Xem sản phẩm</a></th>
+                            <td th:text="${comment.getComment()}">Bình luận rất tốt về sản phẩm.</td>
+                            <td th:text="${comment.getRating()}+'⭐'">5</td>
+                            <td><span class="status-badge pending">Chờ duyệt</span></td>
                             <td>
-                                <button class="action-btn-small primary comment-detail-btn">Chi tiết</button>
-                                <button class="action-btn-small success comment-approve-btn">Duyệt</button>
+                                <button class="action-btn-small success comment-approve-btn" th:attr="data-comment-id=${comment.getCommentId()}">Duyệt</button>
                                 <button class="action-btn-small danger comment-reject-btn">Từ chối</button>
-                            </td>
-                        </tr>
-                        <tr data-comment-id="2">
-                            <td>Tran Thi B</td>
-                            <td>18/10/2025</td>
-                            <td>Sản phẩm chất lượng cao.</td>
-                            <td><span class="status-badge approved">Đã duyệt</span></td>
-                            <td>
-                                <button class="action-btn-small primary comment-detail-btn">Chi tiết</button>
-                            </td>
-                        </tr>
-                        <tr data-comment-id="3">
-                            <td>Le Van C</td>
-                            <td>17/10/2025</td>
-                            <td>Không hài lòng với dịch vụ.</td>
-                            <td><span class="status-badge rejected">Từ chối</span></td>
-                            <td>
-                                <button class="action-btn-small primary comment-detail-btn">Chi tiết</button>
                             </td>
                         </tr>
                         </tbody>
@@ -170,8 +155,8 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/commonComponents/adminPage.js}"></script>
-
+<!--<script th:src="@{/js/commonComponents/adminPage.js}"></script>-->
+<script th:src="@{/js/commentManage.js}"></script>
 </body>
 
 </html>

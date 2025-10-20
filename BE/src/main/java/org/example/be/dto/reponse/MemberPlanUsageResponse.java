@@ -5,7 +5,7 @@ import org.example.be.entity.MembershipPlan;
 
 import java.time.LocalDateTime;
 
-public class MemberPlanUsage {
+public class MemberPlanUsageResponse {
     private int usageId;
     private MemberResponse member;
     private MembershipPlan plan;
@@ -14,10 +14,10 @@ public class MemberPlanUsage {
     private int usedPosts;
     private String status;
 
-    public MemberPlanUsage() {
+    public MemberPlanUsageResponse() {
     }
 
-    public MemberPlanUsage(int usageId, MemberResponse member, MembershipPlan plan, LocalDateTime startDate, LocalDateTime endDate, int usedPosts, String status) {
+    public MemberPlanUsageResponse(int usageId, MemberResponse member, MembershipPlan plan, LocalDateTime startDate, LocalDateTime endDate, int usedPosts, String status) {
         this.usageId = usageId;
         this.member = member;
         this.plan = plan;

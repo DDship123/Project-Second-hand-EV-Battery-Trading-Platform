@@ -17,6 +17,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -199,20 +200,6 @@ public class MemberServiceImpl implements MemberService {
         ApiResponse<MemberResponse> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
 
-
-    //        // Validate input
-    //        if (!StringUtils.hasText(memberUpdate.getUsername())) {
-    //            errs.put("username", "Username cannot be empty");
-    //        }
-    //        if (!StringUtils.hasText(memberUpdate.getEmail())) {
-    //            errs.put("email", "Email cannot be empty");
-    //        }
-    //
-    //        if (!errs.isEmpty()) {
-    //            response.error(errs);
-    //            return response;
-    //        }
-
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
@@ -270,5 +257,6 @@ public class MemberServiceImpl implements MemberService {
 
         return response;
     }
+
 }
 

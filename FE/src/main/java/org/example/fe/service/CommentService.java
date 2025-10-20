@@ -10,4 +10,6 @@ public interface CommentService {
     ApiResponse<List<CommentResponse>> getAllComments(int postID);
     ApiResponse<CommentResponse> createComment(CommentResponse com);
     ApiResponse<List<CommentResponse>> FindAllCommentByPostId(int postId);
+    ApiResponse<List<CommentResponse>> findAllCommentByStatus(String status);
+    ApiResponse<CommentResponse> updateCommentStatus(int commentId, String status);
 }

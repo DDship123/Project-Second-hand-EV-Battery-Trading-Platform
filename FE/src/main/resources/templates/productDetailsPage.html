@@ -263,7 +263,7 @@
         <div class="container__sideInfor__comment">
             <h2 class="container__sideInfor__comment__title">Bình luận</h2>
             <div class="container__sideInfor__comment__list">
-                <div th:each="comment : ${post.getComments()}" class="container__sideInfor__comment__list__item">
+                <div th:each="comment : ${post.getComments()}" th:if="${!comment.getStatus().equals('PENDING')}" class="container__sideInfor__comment__list__item">
                     <img
                             th:src="${comment.getMember().getAvatarUrl()}"
                             alt="avatar"

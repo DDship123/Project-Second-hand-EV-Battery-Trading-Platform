@@ -980,12 +980,15 @@ tbody tr:hover {
   gap: 20px;
 }
 
-.vehicle-image {
+.images {
   flex: 1;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.vehicle-image img {
+.images img {
   width: 100%;
+  margin-bottom: 15px;
   height: auto;
   border-radius: 8px;
 }

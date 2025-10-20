@@ -2,8 +2,10 @@ package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.fe.entity.ApiResponse;
+import org.example.fe.entity.CommentResponse;
 import org.example.fe.entity.MemberResponse;
 import org.example.fe.entity.PostResponse;
+import org.example.fe.service.CommentService;
 import org.example.fe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -20,9 +23,14 @@ import java.util.List;
 public class AdminPageController {
     @Autowired
     private PostService postService;;
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping(value = {"", "/post-manage/{status}"})
-    public String dashboard(Model model, HttpSession session, @PathVariable(required = false) String status) {
+    public String dashboard(Model model, HttpSession session,
+                            @PathVariable(required = false) String status,
+                            @RequestParam(name = "successMessage", required = false) String successMessage,
+                            @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/home";
@@ -33,18 +41,49 @@ public class AdminPageController {
         ApiResponse<List<PostResponse>> response = postService.getAllPostByStatus(status);
         model.addAttribute("posts", response.getPayload());
         model.addAttribute("admin", member);
+        if (successMessage != null) {
+            model.addAttribute("successMessage", successMessage);
+        }
+        if (errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+        }
         return "postManage";
     }
-    @GetMapping("/post-manage/{status}?postId={postId}")
-    public String postDetail(Model model, HttpSession session, @RequestParam(name = "postId") int postId, @PathVariable String status) {
+    @GetMapping("/post-manage/detail")
+    public String postDetail(Model model, HttpSession session, @RequestParam(name = "postId",defaultValue = "0") int postId) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/home";
         }
+        ApiResponse<PostResponse> postResponse = postService.getPostDetail(postId);
+        PostResponse post = postResponse.getPayload();
+        String status = post.getStatus();
         ApiResponse<List<PostResponse>> response = postService.getAllPostByStatus(status);
+        model.addAttribute("postDetail", post);
+        model.addAttribute("totalPosts", response.getPayload().size());
         model.addAttribute("posts", response.getPayload());
         model.addAttribute("admin", member);
         return "postManage";
+    }
+
+    @GetMapping("/post-manage/update-status")
+    public String updatePostStatus(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                   @RequestParam(name = "postId",defaultValue = "0") int postId,
+                                   @RequestParam(name = "status") String status) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/home";
+        }
+        if (postId == 0) {
+            return "redirect:/home/admin/post-manage";
+        }
+        ApiResponse<PostResponse> postResponse = postService.updateStatus(postId, status);
+        if (postResponse.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Cập nhật bài đăng thành công.");
+        } else {
+            redirectAttributes.addAttribute("errorMessage", "Cập nhật bài đăng thất bại.");
+        }
+        return "redirect:/home/admin/post-manage/PENDING";
     }
 
     @GetMapping("/member-manage")
@@ -63,8 +102,29 @@ public class AdminPageController {
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/home";
         }
+        ApiResponse<List<CommentResponse>> response = commentService.findAllCommentByStatus("PENDING");
+        model.addAttribute("comments", response.getPayload());
         model.addAttribute("admin", member);
         return "commentManage";
+    }
+    @GetMapping("/comment-manage/update-status")
+    public String updateCommentStatus(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                   @RequestParam(name = "commentId",defaultValue = "0") int commentId,
+                                   @RequestParam(name = "status") String status) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/home";
+        }
+        if (commentId == 0) {
+            return "redirect:/home/admin/comment-review-manage";
+        }
+        ApiResponse<CommentResponse> commentResponse = commentService.updateCommentStatus(commentId, status);
+        if (commentResponse.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Cập nhật bình luận thành công.");
+        } else {
+            redirectAttributes.addAttribute("errorMessage", "Cập nhật bình luận thất bại.");
+        }
+        return "redirect:/home/admin/comment-review-manage";
     }
 
     @GetMapping("/transaction-manage")

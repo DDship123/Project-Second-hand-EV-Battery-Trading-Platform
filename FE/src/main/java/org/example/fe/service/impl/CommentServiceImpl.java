@@ -148,4 +148,85 @@ public class CommentServiceImpl implements CommentService {
         return response;
 
     }
+
+    @Override
+    public ApiResponse<List<CommentResponse>> findAllCommentByStatus(String status) {
+        ApiResponse<List<CommentResponse>> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend with status parameter
+            ResponseEntity<ApiResponse<List<CommentResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/comments/status/" + status,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<CommentResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get comments by status successful
+                response.ok((List<CommentResponse>) apiResponse.getBody().getPayload());
+            } else {
+                // Get comments by status failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve comments with status: " + status);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get comments by status: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+    }
+
+    @Override
+    public ApiResponse<CommentResponse> updateCommentStatus(int commentId, String status) {
+        ApiResponse<CommentResponse> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+            formData.add("status", status);
+
+            // Create request entity
+            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<CommentResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/comments/update/" + commentId,
+                    HttpMethod.PUT,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<CommentResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Update comment status successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Update comment status failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to update comment status");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to update comment status: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+    }
 }

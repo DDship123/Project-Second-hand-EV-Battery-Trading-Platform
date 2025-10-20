@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     List<Comment> findAllByPost_PostsId(Integer postId);
+
+    List<Comment> findAllByStatus(String status);
 }

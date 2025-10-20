@@ -55,6 +55,7 @@ public class PostController {
             sellerResponse.setCity(post.getSeller().getCity());
             sellerResponse.setUsername(post.getSeller().getUsername());
             sellerResponse.setAvatarUrl(post.getSeller().getAvatarUrl());
+
         }
 
         ProductResponse productResponse = null;
@@ -134,17 +135,19 @@ public class PostController {
         post.setPrice(postRequest.getPrice());
         post.setCreatedAt(postRequest.getCreatedAt());
 
-        Member seller = new Member();
-        seller.setMemberId(postRequest.getSeller().getMemberId());
-        seller.setUsername(postRequest.getSeller().getUsername());
-        seller.setCity(postRequest.getSeller().getCity());
-        seller.setAvatarUrl(postRequest.getSeller().getAvatarUrl());
-        seller.setCreatedAt(postRequest.getSeller().getCreatedAt());
-        seller.setEmail(postRequest.getSeller().getEmail());
-        seller.setPhone(postRequest.getSeller().getPhone());
-        seller.setRole(postRequest.getSeller().getRole());
-        seller.setStatus(postRequest.getSeller().getStatus());
-        seller.setPassword(postRequest.getSeller().getPassword());
+//        Member seller = new Member();
+//        seller.setMemberId(postRequest.getSeller().getMemberId());
+//        seller.setUsername(postRequest.getSeller().getUsername());
+//        seller.setCity(postRequest.getSeller().getCity());
+//        seller.setAvatarUrl(postRequest.getSeller().getAvatarUrl());
+//        seller.setCreatedAt(postRequest.getSeller().getCreatedAt());
+//        seller.setEmail(postRequest.getSeller().getEmail());
+//        seller.setPhone(postRequest.getSeller().getPhone());
+//        seller.setRole(postRequest.getSeller().getRole());
+//        seller.setStatus(postRequest.getSeller().getStatus());
+//        seller.setPassword(postRequest.getSeller().getPassword());
+//        post.setSeller(seller);
+        Member seller = memberService.getMemberById(postRequest.getSeller().getMemberId());
         post.setSeller(seller);
 
         Product product = new Product();
@@ -380,9 +383,58 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/admin/update/status")
+    public ResponseEntity<ApiResponse<PostResponse>> updatePostStatusByAdmin(
+            @RequestParam Integer postsId,
+            @RequestParam String status) {
+        Optional<Post> existingPostOpt = postService.getPostById(postsId);
+        ApiResponse<PostResponse> response = new ApiResponse<>();
+        if (existingPostOpt.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Post not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
+
+        Post existingPost = existingPostOpt.get();
+        existingPost.setStatus(status);
+
+        Post updatedPost = postService.updatePost(existingPost.getPostsId(), existingPost);
+        response.ok(mapToResponse(updatedPost));
+        return ResponseEntity.ok(response);
+    }
+
+
+
     // --- DELETE POST ---
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deletePost(@PathVariable Integer id) {
+        Post post = postService.getPostById(id).orElse(null);
+        if (post != null) {
+            // Xóa tất cả hình ảnh liên quan đến bài đăng
+            List<PostImage> postImages = postImageService.getPostImagesByPostId(id);
+            for (PostImage postImage : postImages) {
+                postImageService.deletePostImage(postImage.getPostImagesId());
+            }
+            if (post.getProduct() != null) {
+                Product product = post.getProduct();
+                // Xóa vehicle hoặc battery liên quan đến product
+                if (product.getVehicle() != null) {
+                    vehicleService.deleteVehicle(product.getVehicle().getVehicleId());
+                }
+                if (product.getBattery() != null) {
+                    batteryService.deleteBattery(product.getBattery().getBatteryId());
+                }
+                // Xóa product
+                productService.deleteProduct(product.getProductsId());
+            }
+        }else {
+            ApiResponse<Void> response = new ApiResponse<>();
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Post not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
         boolean deleted = postService.deletePost(id);
         ApiResponse<Void> response = new ApiResponse<>();
         if (deleted) {
@@ -474,8 +526,13 @@ public class PostController {
     public ResponseEntity<ApiResponse<PostResponse>> getPostById(@PathVariable Integer id) {
         Optional<Post> postOpt = postService.getPostById(id);
         ApiResponse<PostResponse> response = new ApiResponse<>();
+
         if (postOpt.isPresent()) {
-            response.ok(mapToResponse(postOpt.get()));
+            PostResponse postResponse = mapToResponse(postOpt.get());
+            postResponse.getSeller().setAddress(postOpt.get().getSeller().getAddress());
+            postResponse.getSeller().setEmail(postOpt.get().getSeller().getEmail());
+            postResponse.getSeller().setPhone(postOpt.get().getSeller().getPhone());
+            response.ok(postResponse);
             return ResponseEntity.ok(response);
         } else {
             HashMap<String, String> error = new HashMap<>();
@@ -568,13 +625,8 @@ public class PostController {
             if (seller != null) {
                 MemberResponse sellerResponse = new MemberResponse();
                 sellerResponse.setMemberId(seller.getMemberId());
-                sellerResponse.setUsername(seller.getUsername());
-                sellerResponse.setCity(seller.getCity());
-                sellerResponse.setAvatarUrl(seller.getAvatarUrl());
                 sellerResponse.setEmail(seller.getEmail());
-                sellerResponse.setPhone(seller.getPhone());
-                sellerResponse.setRole(seller.getRole());
-                sellerResponse.setStatus(seller.getStatus());
+                sellerResponse.setUsername(seller.getUsername());
                 post.setSeller(sellerResponse);
             }
         }
@@ -586,6 +638,9 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         } else {
             response.ok(posts);
+//            Map<String, Object> metaData = new HashMap<>();
+//            metaData.put("totalPosts", posts.size());
+//            response.setMetadata(metaData);
             return ResponseEntity.ok(response);
         }
     }

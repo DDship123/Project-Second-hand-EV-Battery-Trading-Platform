@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -190,7 +192,7 @@ public class PostServiceImpl implements PostService {
 
             // Make API call to backend
             ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts/" + postID,
+                        apiBaseUrl + "/api/posts/" + postID,
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<PostResponse>>() {}
@@ -548,6 +550,49 @@ public class PostServiceImpl implements PostService {
             response.error(errorMap);
         }
         return response;
+    }
+
+    @Override
+    public ApiResponse<PostResponse> updateStatus(int postId, String status) {
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+            formData.add("postsId", String.valueOf(postId));
+            formData.add("status", status);
+
+            // Create request entity
+            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData,headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/admin/update/status",
+                    HttpMethod.PUT,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Update status successful
+                return apiResponse.getBody();
+            } else {
+                // Update status failed
+                ApiResponse<PostResponse> response = new ApiResponse<>();
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to update post status");
+                response.error(errorMap);
+                return response;
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            ApiResponse<PostResponse> response = new ApiResponse<>();
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to update post status: " + e.getMessage());
+            response.error(errorMap);
+            return response;
+        }
     }
 
     @Override

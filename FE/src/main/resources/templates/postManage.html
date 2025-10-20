@@ -30,7 +30,7 @@
         <div class="content-section active" data-section="post">
             <div class="content-header">
                 <div class="filter-tabs">
-                    <button class="tab-btn active">Đợi duyệt <span class="badge"></span></button>
+                    <button class="tab-btn active">Đợi duyệt <span class="badge" th:text="${totalPosts}"></span></button>
                     <button class="tab-btn">Đã duyệt</button>
                     <button class="tab-btn">Từ chối <span class="badge"></span></button>
                 </div>
@@ -59,7 +59,8 @@
                     <tr>
                         <th>Họ và tên</th>
                         <th>Email</th>
-                        <th>Thời gian duyệt</th>
+                        <th>Loại sản phẩm</th>
+                        <th>Xem chi tiết</th>
                         <th>Mô tả</th>
                         <th>Hành động</th>
                     </tr>
@@ -68,7 +69,8 @@
                     <tr th:each="post : ${posts}" >
                         <td th:text="${post.getSeller().getUsername()}">Nguyen Tien Linh</td>
                         <td th:text="${post.getSeller().getEmail()}"></td>
-                        <td><a th:href="'/home/admin/post-manage/detail/'+${post.getPostsId()}" class="link-text detail-link" >Chi tiết</a></td>
+                        <td th:text="${post.getProduct().getProductType()}">XE ĐIỆN</td>
+                        <td><a th:href="'/home/admin/post-manage/detail'+'?postId='+${post.getPostsId()}" class="link-text detail-link" >Chi tiết</a></td>
                         <td style="width: 25vw;" th:text="${post.getDescription()}">Xe đẹp, mới 99%</td>
                         <td>
                             <button class="action-btn approve" th:attr="data-post-id=${post.getPostsId()}">Duyệt</button>
@@ -91,33 +93,85 @@
 </div>
 
 <!-- Post Detail Modal -->
-<div id="postDetailModal" class="modal">
+<div th:if="${postDetail != null}" id="postDetailModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Chi tiết đăng bài</h2>
         <div class="modal-body">
-            <div class="vehicle-image">
-                <img id="vehicleImage" src="" alt="Vehicle Image">
+            <div class="images">
+                <img th:each="image : ${postDetail.getImages()}" id="vehicleImage" th:src="${image}" alt="Vehicle Image">
             </div>
             <div class="details-container">
-                <div class="vehicle-details">
+                <div th:if="${postDetail.getProduct().getProductType().equals('VEHICLE')}" class="vehicle-details">
                     <h3>Thông tin xe</h3>
-                    <p><strong>Thương hiệu:</strong> <span id="vehicleBrand"></span></p>
-                    <p><strong>Model:</strong> <span id="vehicleModel"></span></p>
-                    <p><strong>Năm đăng ký:</strong> <span id="vehicleRegisterYear"></span></p>
-                    <p><strong>Số km đã chạy:</strong> <span id="vehicleMileage"></span> km</p>
-                    <p><strong>Tình trạng:</strong> <span id="vehicleCondition"></span></p>
-                    <p><strong>Dung lượng pin:</strong> <span id="vehicleBatteryCapacity"></span> kWh</p>
-                    <p><strong>Xuất xứ:</strong> <span id="vehicleOrigin"></span></p>
-                    <p><strong>Giá:</strong> <span id="vehiclePrice"></span> VNĐ</p>
-                    <p><strong>Mô tả:</strong> <span id="vehicleDescription"></span></p>
+                    <p><strong>Tên:</strong>
+                        <span id="vehicleName"
+                              th:text="${postDetail.getProduct().getVehicle().getName()}"></span></p>
+                    <p><strong>Thương hiệu:</strong>
+                        <span id="vehicleBrand"
+                              th:text="${postDetail.getProduct().getVehicle().getBrand()}"></span></p>
+                    <p><strong>Model:</strong>
+                        <span id="vehicleModel"
+                              th:text="${postDetail.getProduct().getVehicle().getModel()}"></span></p>
+                    <p><strong>Năm đăng ký:</strong>
+                        <span id="vehicleRegisterYear"
+                              th:text="${postDetail.getProduct().getVehicle().getRegistrationYear()}"></span></p>
+                    <p><strong>Số km đã chạy:</strong>
+                        <span id="vehicleMileage"
+                              th:text="${postDetail.getProduct().getVehicle().getMileage()}"></span> km</p>
+                    <p><strong>Tình trạng:</strong>
+                        <span id="vehicleCondition"
+                              th:text="${postDetail.getProduct().getVehicle().getCondition()}"></span></p>
+                    <p><strong>Dung lượng pin:</strong>
+                        <span id="vehicleBatteryCapacity"
+                              th:text="${postDetail.getProduct().getVehicle().getBatteryCapacity()}"></span></p>
+                    <p><strong>Xuất xứ:</strong>
+                        <span id="vehicleOrigin"
+                              th:text="${postDetail.getProduct().getVehicle().getOrigin()}"></span></p>
+                    <p><strong>Giá:</strong>
+                        <span id="vehiclePrice" th:text="${postDetail.getPrice()}"></span> VNĐ</p>
+                    <p><strong>Mô tả:</strong>
+                        <span id="vehicleDescription" th:text="${postDetail.getDescription()}"></span></p>
+                </div>
+                <div th:if="${postDetail.getProduct().getProductType().equals('BATTERY')}" class="vehicle-details">
+                    <h3>Thông tin xe</h3>
+                    <p><strong>Tên:</strong>
+                        <span id="batteryName"
+                              th:text="${postDetail.getProduct().getBattery().getName()}"></span></p>
+                    <p><strong>Thương hiệu:</strong>
+                        <span id="batteryBrand"
+                              th:text="${postDetail.getProduct().getBattery().getBrand()}"></span></p>
+                    <p><strong>Xuất xứ:</strong>
+                        <span id="batteryOrigin"
+                              th:text="${postDetail.getProduct().getBattery().getOrigin()}"></span></p>
+                    <p><strong>Năm đăng ký:</strong>
+                        <span id="batteryRegisterYear"
+                              th:text="${postDetail.getProduct().getBattery().getYearOfManufacture()}"></span></p>
+                    <p><strong>Dung lượng:</strong>
+                        <span id="batteryCapacity"
+                              th:text="${postDetail.getProduct().getBattery().getCapacity()}"></span> ah</p>
+                    <p><strong>Tình trạng:</strong>
+                        <span id="batteryCondition"
+                              th:text="${postDetail.getProduct().getBattery().getCondition()}"></span></p>
+                    <p><strong>Dung lượng pin:</strong>
+                        <span id="batteryVoltage"
+                              th:text="${postDetail.getProduct().getBattery().getVoltage()}"></span></p>
+                    <p><strong>Giá:</strong>
+                        <span id="batteryPrice" th:text="${postDetail.getPriceFormated()}"></span> VNĐ</p>
+                    <p><strong>Mô tả:</strong>
+                        <span id="batteryDescription" th:text="${postDetail.getDescription()}"></span></p>
                 </div>
                 <div class="seller-info">
                     <h3>Thông tin người bán</h3>
-                    <p><strong>Họ và tên:</strong> <span id="sellerName"></span></p>
-                    <p><strong>Email:</strong> <span id="sellerEmail"></span></p>
-                    <p><strong>Số điện thoại:</strong> <span id="sellerPhone"></span></p>
-                    <p><strong>Địa chỉ:</strong> <span id="sellerAddress"></span></p>
+                    <p><strong>Họ và tên:</strong>
+                        <span id="sellerName" th:text="${postDetail.getSeller().getUsername()}"></span></p>
+                    <p><strong>Email:</strong>
+                        <span id="sellerEmail" th:text="${postDetail.getSeller().getEmail()}" ></span></p>
+                    <p><strong>Số điện thoại:</strong>
+                        <span id="sellerPhone" th:text="${postDetail.getSeller().getPhone()}"></span></p>
+                    <p><strong>Địa chỉ:</strong>
+                        <span id="sellerAddress" th:text="${postDetail.getSeller().getAddress()} +' '+
+                        ${postDetail.getSeller().getCity()}"></span></p>
                 </div>
             </div>
         </div>
