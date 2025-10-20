@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -402,6 +399,13 @@ public class PostController {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        int count = postService.countApprovedPostsByProductType("vehicle");
+        int totalPages = 0;
+        if (count % 8 == 0) {
+            totalPages = count / 8;
+        } else {
+            totalPages = (count / 8) + 1;
+        }
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "No vehicle posts found");
@@ -409,6 +413,9 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         } else {
             response.ok(posts);
+            Map<String, Object> metaData = new HashMap<>();
+            metaData.put("totalPages", totalPages);
+            response.setMetadata(metaData);
             return ResponseEntity.ok(response);
         }
     }
@@ -419,7 +426,13 @@ public class PostController {
         List<PostResponse> posts = postService.getLatestBatteryPosts(8).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
+        int count = postService.countApprovedPostsByProductType("battery");
+        int totalPages = 0;
+        if (count % 8 == 0) {
+            totalPages = count / 8;
+        } else {
+            totalPages = (count / 8) + 1;
+        }
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         if (posts.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
@@ -428,6 +441,9 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         } else {
             response.ok(posts);
+            Map<String, Object> metaData = new HashMap<>();
+            metaData.put("totalPages", totalPages);
+            response.setMetadata(metaData);
             return ResponseEntity.ok(response);
         }
     }
@@ -445,6 +461,7 @@ public class PostController {
             return ResponseEntity.status(404).body(response);
         } else {
             response.ok(posts);
+            Map<String, Object> metaData = new HashMap<>();
             return ResponseEntity.ok(response);
         }
     }
@@ -504,9 +521,18 @@ public class PostController {
         List<PostResponse> posts = postService.findAllByMemberCityAndProductType(city, productType).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
-
+        int count = postService.countPostsByLocationAndStatus(city, productType);
+        int totalPages = 0;
+        if (count % 8 == 0) {
+            totalPages = count / 8;
+        } else {
+            totalPages = (count / 8) + 1;
+        }
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
         response.ok(posts);
+        Map<String, Object> metaData = new HashMap<>();
+        metaData.put("totalPages", totalPages);
+        response.setMetadata(metaData);
         return ResponseEntity.ok(response);
     }
 

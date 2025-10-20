@@ -20,8 +20,8 @@ public class SearchController {
     private PostService postService;
 
     @RequestMapping("/home/vehicle")
-    public String vehicle(Model model, HttpSession session ,@RequestParam(value = "location",required = false) String location,
-                             @RequestParam(value = "title",required = false) String postTitle) {
+    public String vehicle(Model model, HttpSession session ,@RequestParam(name = "location",defaultValue = "default",required = false) String location,
+                             @RequestParam(name = "title",defaultValue = "default",required = false) String postTitle) {
         model.addAttribute("user", session.getAttribute("user"));
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         model.addAttribute("guest", "false");
@@ -37,21 +37,23 @@ public class SearchController {
             ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByMemberCityAndProductType(location, "VEHICLE");
             model.addAttribute("posts", apiResponse.getPayload());
             model.addAttribute("location", location);
-            model.addAttribute("postTitle", "default");
+            model.addAttribute("postTitle", postTitle);
             model.addAttribute("productType", "Xe điện");
+            model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
             return "vehiclePage";
         }
         model.addAttribute("productType", "Xe điện");
-        model.addAttribute("location", "default");
-        model.addAttribute("postTitle", "default");
+        model.addAttribute("location", location);
+        model.addAttribute("postTitle", postTitle);
         ApiResponse<List<PostResponse>> apiResponse = postService.getLatestVehiclePosts();
         model.addAttribute("posts", apiResponse.getPayload());
+        model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
         return "vehiclePage";
     }
 
     @RequestMapping("/home/battery")
-    public String battery(Model model, HttpSession session,@RequestParam(value = "location",required = false) String location,
-                          @RequestParam(value = "title",required = false) String postTitle) {
+    public String battery(Model model, HttpSession session,@RequestParam(name = "location",defaultValue = "default",required = false) String location,
+                          @RequestParam(name = "title",defaultValue = "default",required = false) String postTitle) {
         model.addAttribute("user", session.getAttribute("user"));
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         model.addAttribute("guest", "false");
@@ -67,15 +69,17 @@ public class SearchController {
             ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByMemberCityAndProductType(location, "BATTERY");
             model.addAttribute("posts", apiResponse.getPayload());
             model.addAttribute("location", location);
-            model.addAttribute("postTitle", "default");
+            model.addAttribute("postTitle", postTitle);
             model.addAttribute("productType", "Pin");
+            model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
             return "batteryPage";
         }
         model.addAttribute("productType", "Pin");
-        model.addAttribute("location", "default");
-        model.addAttribute("postTitle", "default");
+        model.addAttribute("location", location);
+        model.addAttribute("postTitle", postTitle);
         ApiResponse<List<PostResponse>> apiResponse = postService.getLatestBatteryPosts();
         model.addAttribute("posts", apiResponse.getPayload());
+        model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
         return "batteryPage";
     }
 }

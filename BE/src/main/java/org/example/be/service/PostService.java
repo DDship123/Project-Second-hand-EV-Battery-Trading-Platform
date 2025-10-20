@@ -92,9 +92,19 @@ public class PostService {
         return postRepository.findLatestPostsByType("vehicle", PageRequest.of(0, Integer.MAX_VALUE));
     }
 
+
     // Lấy tất cả post battery (không giới hạn, không lọc status)
     public List<Post> findAllBatteryPosts() {
         return postRepository.findLatestPostsByType("battery", PageRequest.of(0, Integer.MAX_VALUE));
+    }
+
+    // Đếm số lượng post theo productType và status APPROVED
+    public int countApprovedPostsByProductType(String productType) {
+        return postRepository.countByStatus(productType);
+    }
+    // Đếm số lượng post theo location và status
+    public int countPostsByLocationAndStatus(String location, String productType) {
+        return postRepository.countByLocationAndProductType(location, productType);
     }
 
     // Lấy tất cả post theo city
