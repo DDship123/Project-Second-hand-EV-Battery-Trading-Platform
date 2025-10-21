@@ -131,6 +131,33 @@ public class CommentController {
         }
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ApiResponse<CommentResponse>> updateCommentStatus(
+            @PathVariable Integer id,
+            @RequestParam("status") String status
+    ) {
+        ApiResponse<CommentResponse> response = new ApiResponse<>();
+        try {
+            Comment comment = commentService.getCommentById(id);
+            comment.setStatus(status);
+            Comment updatedComment = commentService.updateComment(id, comment);
+            // Convert updated Comment entity to CommentResponse DTO
+            CommentResponse updated = new CommentResponse();
+            updated.setCommentId(updatedComment.getCommentId());
+            updated.setComment(updatedComment.getComment());
+            updated.setRating(updatedComment.getRating());
+            updated.setStatus(updatedComment.getStatus());
+            updated.setCreatedAt(updatedComment.getCreatedAt());
+            response.ok(updated);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Boolean>> deleteComment(@PathVariable Integer id) {
         ApiResponse<Boolean> response = new ApiResponse<>();

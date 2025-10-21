@@ -70,7 +70,7 @@
                             <td><span class="status-badge pending">Chờ duyệt</span></td>
                             <td>
                                 <button class="action-btn-small success comment-approve-btn" th:attr="data-comment-id=${comment.getCommentId()}">Duyệt</button>
-                                <button class="action-btn-small danger comment-reject-btn">Từ chối</button>
+                                <button class="action-btn-small danger comment-reject-btn" th:attr="data-comment-id=${comment.getCommentId()}">Từ chối</button>
                             </td>
                         </tr>
                         </tbody>
