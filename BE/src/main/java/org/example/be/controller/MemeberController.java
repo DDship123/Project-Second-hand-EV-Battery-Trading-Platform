@@ -1,6 +1,8 @@
 package org.example.be.controller;
 
 import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.MemberResponse;
+import org.example.be.dto.reponse.MembershipPlanResponse;
 import org.example.be.entity.Member;
 import org.example.be.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,14 +88,14 @@ public class MemeberController {
     // ------------------- UPDATE -------------------
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Member>> updateMember(@PathVariable Integer id, @RequestBody Member member) {
-        try{
+        try {
             ApiResponse<Member> response = memberService.updateMember(id, member);
-            if("ERROR".equals(response.getStatus())){
+            if ("ERROR".equals(response.getStatus())) {
                 return ResponseEntity.badRequest().body(response);
             }
             return ResponseEntity.ok(response);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             ApiResponse<Member> response = new ApiResponse<>();
             Map<String, String> error = new HashMap<>();
             error.put("message", e.getMessage());
@@ -138,6 +140,34 @@ public class MemeberController {
             response.error(error);
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    @GetMapping("/users/status/{status}")
+    public ResponseEntity<ApiResponse<Map<MemberResponse, MembershipPlanResponse>>> getUsersByStatus(@PathVariable String status) {
+        ApiResponse<Map<MemberResponse, MembershipPlanResponse>> response = new ApiResponse<>();
+        try {
+            Map<MemberResponse, MembershipPlanResponse> users = memberService.getUsersWithMembershipPlan(status);
+            HashMap<String, Object> metadata = new HashMap<>();
+            metadata.put("count", users.size());
+            metadata.put("timestamp", LocalDateTime.now());
+            response.ok(users, metadata);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    // cập nhật Status
+    @PutMapping("/update-status")
+    public ResponseEntity<ApiResponse<MemberResponse>> updateMemberStatus(@RequestBody MemberResponse memberResponse) {
+        ApiResponse<MemberResponse> response = memberService.updateMemberStatus(memberResponse);
+        if ("ERROR".equals(response.getStatus())) {
+            return ResponseEntity.badRequest().body(response);
+        }
+        return ResponseEntity.ok(response);
     }
 }
 

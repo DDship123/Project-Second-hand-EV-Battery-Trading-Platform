@@ -119,10 +119,10 @@ public class ReviewController {
     public ResponseEntity<ApiResponse<Boolean>> deleteReview(@PathVariable Integer id) {
         ApiResponse<Boolean> response = new ApiResponse<>();
         try {
-          reviewService.deleteReview(id);
+            reviewService.deleteReview(id);
 
-                response.ok();
-                return ResponseEntity.ok(response);
+            response.ok();
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
@@ -131,6 +131,7 @@ public class ReviewController {
             return ResponseEntity.internalServerError().body(response);
         }
     }
+
     @GetMapping("/seller/{sellerId}")
     public ResponseEntity<ApiResponse<List<ReviewResponse>>> findAllReviewBySellerId(@PathVariable Integer sellerId) {
         ApiResponse<List<ReviewResponse>> response = new ApiResponse<>();
@@ -150,6 +151,70 @@ public class ReviewController {
                 return reviewResponse;
             }).toList();
             response.ok(reviewResponses);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    @GetMapping("/status/{status}")//Tân
+    public ResponseEntity<ApiResponse<List<ReviewResponse>>> findAllReviewByStatus(@PathVariable String status) {
+        ApiResponse<List<ReviewResponse>> response = new ApiResponse<>();
+        try {
+            List<ReviewResponse> reviewResponses = reviewService.findAllReviewByStatus(status);
+            HashMap<String, Object> metadata = new HashMap<>();
+            metadata.put("count", reviewResponses.size());
+            metadata.put("timestamp", LocalDateTime.now());
+            response.ok(reviewResponses, metadata);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    //Update Review
+    @PutMapping("/update-status")
+    public ResponseEntity<ApiResponse<ReviewResponse>> updateReviewFromResponse(@RequestBody ReviewResponse reviewResponse) {
+        ApiResponse<ReviewResponse> response = new ApiResponse<>();
+        try {
+            Review review = reviewService.getReviewById(reviewResponse.getReviewId());
+            if (review == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("message", "Review not found");
+                response.error(error);
+                return ResponseEntity.status(404).body(response);
+            }
+
+            // Cập nhật các thuộc tính
+            if (reviewResponse.getStatus() != null) {
+                review.setStatus(reviewResponse.getStatus());
+            }
+            if (reviewResponse.getComment() != null) {
+                review.setComment(reviewResponse.getComment());
+            }
+            if (reviewResponse.getRating() > 0) {
+                review.setRating(reviewResponse.getRating());
+            }
+
+            Review updatedReview = reviewService.updateReview(review.getReviewsId(), review);
+
+            // Convert lại sang ReviewResponse
+            ReviewResponse result = new ReviewResponse();
+            result.setReviewId(updatedReview.getReviewsId());
+            result.setRating(updatedReview.getRating());
+            result.setComment(updatedReview.getComment());
+            result.setStatus(updatedReview.getStatus());
+            result.setCreatedAt(updatedReview.getCreatedAt());
+
+            HashMap<String, Object> metadata = new HashMap<>();
+            metadata.put("updatedAt", LocalDateTime.now());
+            response.ok(result, metadata);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();

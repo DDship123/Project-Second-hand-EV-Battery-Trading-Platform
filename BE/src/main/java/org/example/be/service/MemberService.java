@@ -1,9 +1,14 @@
 package org.example.be.service;
 
 import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.reponse.MemberResponse;
+import org.example.be.dto.reponse.MembershipPlanResponse;
 import org.example.be.dto.request.LoginRequest;
 import org.example.be.dto.request.MemberRegisterRequest;
 import org.example.be.entity.Member;
+import org.example.be.entity.MemberPlanUsage;
+import org.example.be.entity.MembershipPlan;
+import org.example.be.repository.MemberPlanUsageRepository;
 import org.example.be.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -191,5 +196,84 @@ public class MemberService {
 
     public List<Member> getMembersByStatus(String status) {
         return memberRepository.getMembersByStatus(status);
+    }
+    //(Tân)
+    @Autowired
+    private MemberPlanUsageRepository memberPlanUsageRepository;
+
+    public Map<MemberResponse, MembershipPlanResponse> getUsersWithMembershipPlan(String status) {
+        List<Member> users = memberRepository.findAllByRoleAndStatus("USER", status);
+        Map<MemberResponse, MembershipPlanResponse> result = new HashMap<>();
+
+        for (Member member : users) {
+            MemberResponse memberResponse = new MemberResponse();
+            memberResponse.setMemberId(member.getMemberId());
+            memberResponse.setUsername(member.getUsername());
+            memberResponse.setEmail(member.getEmail());
+            memberResponse.setPhone(member.getPhone());
+            memberResponse.setAddress(member.getAddress());
+            memberResponse.setCity(member.getCity());
+            memberResponse.setRole(member.getRole());
+            memberResponse.setStatus(member.getStatus());
+            memberResponse.setAvatarUrl(member.getAvatarUrl());
+            memberResponse.setCreatedAt(member.getCreatedAt());
+
+            // Lấy MembershipPlan của Member
+            Optional<MemberPlanUsage> planUsage = memberPlanUsageRepository.findByMember_MemberIdAndStatus(member.getMemberId(), "active");
+            MembershipPlanResponse planResponse = null;
+
+            if (planUsage.isPresent() && planUsage.get().getMembershipPlan() != null) {
+                MembershipPlan plan = planUsage.get().getMembershipPlan();
+                planResponse = new MembershipPlanResponse();
+                planResponse.setPlanId(plan.getPlanId());
+                planResponse.setName(plan.getName());
+                planResponse.setPrice(plan.getPrice());
+                planResponse.setDuration(plan.getDuration());
+                planResponse.setMaxPosts(plan.getMaxPosts());
+                planResponse.setPriority(plan.getPriority());
+            }
+
+            result.put(memberResponse, planResponse);
+        }
+
+        return result;
+    }
+    //Cập nhật status của member(Tân)
+    public ApiResponse<MemberResponse> updateMemberStatus(MemberResponse memberResponse) {
+        ApiResponse<MemberResponse> response = new ApiResponse<>();
+        try {
+            Member member = getMemberById(memberResponse.getMemberId());
+            if (member == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("message", "Member not found");
+                response.error(error);
+                return response;
+            }
+
+            member.setStatus(memberResponse.getStatus());
+            Member updated = memberRepository.save(member);
+
+            MemberResponse result = new MemberResponse();
+            result.setMemberId(updated.getMemberId());
+            result.setUsername(updated.getUsername());
+            result.setEmail(updated.getEmail());
+            result.setPhone(updated.getPhone());
+            result.setAddress(updated.getAddress());
+            result.setCity(updated.getCity());
+            result.setRole(updated.getRole());
+            result.setStatus(updated.getStatus());
+            result.setAvatarUrl(updated.getAvatarUrl());
+            result.setCreatedAt(updated.getCreatedAt());
+
+            HashMap<String, Object> metadata = new HashMap<>();
+            metadata.put("updatedAt", LocalDateTime.now());
+            response.ok(result, metadata);
+            return response;
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return response;
+        }
     }
 }

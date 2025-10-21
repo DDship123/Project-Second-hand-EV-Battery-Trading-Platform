@@ -1,11 +1,14 @@
 package org.example.be.service;
 
+import org.example.be.dto.reponse.ApiResponse;
 import org.example.be.entity.Transaction;
 import org.example.be.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -66,5 +69,31 @@ public class TransactionService {
     // Lấy tất cả transaction theo nhiều trạng thái (truyền danh sách)(Tân)
     public List<Transaction> getAllTransactionsByStatuses(List<String> statuses) {
         return transactionRepository.findAllByStatusInOrderByCreatedAtDesc(statuses);
+    }
+
+    // Cập Nhật Transaction status(Tân)
+    public ApiResponse<Transaction> updateTransactionStatus(Integer transactionId, String status) {
+        ApiResponse<Transaction> response = new ApiResponse<>();
+        try {
+            Optional<Transaction> existingTransaction = transactionRepository.findById(transactionId);
+            if (existingTransaction.isEmpty()) {
+                Map<String, String> error = new HashMap<>();
+                error.put("message", "Transaction not found");
+                response.error(error);
+                return response;
+            }
+
+            Transaction transaction = existingTransaction.get();
+            transaction.setStatus(status);
+            Transaction updated = transactionRepository.save(transaction);
+
+            response.ok(updated);
+            return response;
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return response;
+        }
     }
 }

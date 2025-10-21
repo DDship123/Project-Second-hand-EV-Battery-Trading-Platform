@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -188,5 +189,54 @@ public class TransactionController {
             response.ok(transactions);
             return ResponseEntity.ok(response);
         }
+    }
+    // Thêm vào TransactionController
+    @GetMapping("/status/{status}")
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatus(@PathVariable String status) {
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        try {
+            List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatus(status)
+                    .stream()
+                    .map(this::mapToResponse)
+                    .collect(Collectors.toList());
+
+            HashMap<String, Object> metadata = new HashMap<>();
+            metadata.put("count", transactions.size());
+            metadata.put("timestamp", LocalDateTime.now());
+
+            if (transactions.isEmpty()) {
+                HashMap<String, String> error = new HashMap<>();
+                error.put("message", "No transactions found with status: " + status);
+                response.error(error);
+                return ResponseEntity.status(404).body(response);
+            }
+
+            response.ok(transactions, metadata);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            response.error(error);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+    //Cập nhật status cho transaction
+    @PutMapping("/{id}/status")
+    public ResponseEntity<ApiResponse<TransactionResponse>> updateTransactionStatus(
+            @PathVariable Integer id,
+            @RequestParam String status) {
+        ApiResponse<Transaction> serviceResponse = transactionService.updateTransactionStatus(id, status);
+        ApiResponse<TransactionResponse> response = new ApiResponse<>();
+
+        if ("ERROR".equals(serviceResponse.getStatus())) {
+            response.error(serviceResponse.getError());
+            return ResponseEntity.status(404).body(response);
+        }
+
+        TransactionResponse transactionResponse = mapToResponse(serviceResponse.getPayload());
+        HashMap<String, Object> metadata = new HashMap<>();
+        metadata.put("updatedAt", LocalDateTime.now());
+        response.ok(transactionResponse, metadata);
+        return ResponseEntity.ok(response);
     }
 }
