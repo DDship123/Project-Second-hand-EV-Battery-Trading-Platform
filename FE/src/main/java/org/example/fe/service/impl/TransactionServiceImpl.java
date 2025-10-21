@@ -113,4 +113,106 @@ public class TransactionServiceImpl implements TransactionService {
 
         return response;
     }
+
+    @Override
+    public ApiResponse<List<TransactionResponse>> getAllByStatus(String status) {
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Build URL with query parameter
+            String url = apiBaseUrl + "/api/transactions?status=" + status;
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<List<TransactionResponse>>> apiResponse = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<TransactionResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                ApiResponse<List<TransactionResponse>> body = apiResponse.getBody();
+
+                if ("SUCCESS".equals(body.getStatus())) {
+                    // Get transactions by status successful
+                    response.ok(body.getPayload());
+                } else {
+                    // API call thành công nhưng backend trả về lỗi
+                    Map<String, String> errorMap = body.getError();
+                    if (errorMap == null || errorMap.isEmpty()) {
+                        errorMap = new HashMap<>();
+                        errorMap.put("message", "Failed to get transactions by status");
+                    }
+                    response.error(errorMap);
+                }
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get transactions by status: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+
+    }
+
+    @Override
+    public ApiResponse<TransactionResponse> update(Integer transactionId,String status) {
+        ApiResponse<TransactionResponse> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request body
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("transactionId", transactionId);
+            requestBody.put("status", status);
+
+            // Create request entity
+            HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<TransactionResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/transactions/" + transactionId + "/status",
+                    HttpMethod.PATCH,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<TransactionResponse>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                ApiResponse<TransactionResponse> body = apiResponse.getBody();
+
+                if ("SUCCESS".equals(body.getStatus())) {
+                    // Update transaction status successful
+                    response.ok(body.getPayload());
+                } else {
+                    // API call thành công nhưng backend trả về lỗi
+                    Map<String, String> errorMap = body.getError();
+                    if (errorMap == null || errorMap.isEmpty()) {
+                        errorMap = new HashMap<>();
+                        errorMap.put("message", "Failed to update transaction status");
+                    }
+                    response.error(errorMap);
+                }
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to update transaction status: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+
+    }
 }

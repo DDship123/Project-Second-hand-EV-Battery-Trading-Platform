@@ -3,7 +3,7 @@ package org.example.fe.entity;
 import java.time.LocalDateTime;
 
 public class MemberResponse {
-    private int memberId;
+    private Integer memberId;
     private String username;
     private String address;
     private String email;
@@ -14,11 +14,13 @@ public class MemberResponse {
     private String status;
     private String avatarUrl;
     private LocalDateTime createdAt;
+    private MembershipPlanResponse membershipPlan;
+    private MemberPlanUsageResponse memberPlanUsage;
 
     public MemberResponse() {
     }
 
-    public MemberResponse(int memberId, String username, String address, String email, String city, String phone, String password, String role, String status, String avatarUrl, LocalDateTime createdAt) {
+    public MemberResponse(Integer memberId, String username, String address, String email, String city, String phone, String password, String role, String status, String avatarUrl, LocalDateTime createdAt, MembershipPlanResponse membershipPlan, MemberPlanUsageResponse memberPlanUsage) {
         this.memberId = memberId;
         this.username = username;
         this.address = address;
@@ -30,13 +32,15 @@ public class MemberResponse {
         this.status = status;
         this.avatarUrl = avatarUrl;
         this.createdAt = createdAt;
+        this.membershipPlan = membershipPlan;
+        this.memberPlanUsage = memberPlanUsage;
     }
 
-    public int getMemberId() {
+    public Integer getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(int memberId) {
+    public void setMemberId(Integer memberId) {
         this.memberId = memberId;
     }
 
@@ -118,5 +122,21 @@ public class MemberResponse {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public MembershipPlanResponse getMembershipPlan() {
+        return membershipPlan;
+    }
+
+    public void setMembershipPlan(MembershipPlanResponse membershipPlan) {
+        this.membershipPlan = membershipPlan;
+    }
+
+    public MemberPlanUsageResponse getMemberPlanUsage() {
+        return memberPlanUsage;
+    }
+
+    public void setMemberPlanUsage(MemberPlanUsageResponse memberPlanUsage) {
+        this.memberPlanUsage = memberPlanUsage;
     }
 }
