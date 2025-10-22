@@ -196,6 +196,7 @@
                                 required
                                 name="vehicleRegistrationYear"
                         />
+                        <p th:if="${yearError != null}" th:text="${yearError}" style="color:red"></p>
                     </div>
 
                     <div class="registration__form-row">
@@ -220,6 +221,7 @@
                                     name="VehicleMileage"
                                     required
                             />
+                            <p th:if="${mileageError != null}" th:text="${mileageError}" style="color:red"></p>
                         </div>
                     </div>
 
@@ -234,6 +236,7 @@
                                     required
                                     name="vehicleBatteryCapacity"
                             />
+                            <p th:if="${vehicleBatteryCapacity != null}" th:text="${vehicleBatteryCapacity}" style="color:red"></p>
                         </div>
                         <div
                                 class="registration__form-group registration__form-group--half"
@@ -296,6 +299,7 @@
                                 required
                                 disabled
                         />
+                        <div th:if="${batteryYearError != null}" th:text="${batteryYearError}" style="color: red"></div>
                     </div>
 
                     <div class="registration__form-row">
@@ -322,6 +326,7 @@
                                     required
                                     disabled
                             />
+                            <div th:if="${batteryCapacityError != null}" th:text="${batteryCapacityError}" style="color: red"></div>
                         </div>
                     </div>
 
@@ -349,6 +354,7 @@
                                     required
                                     disabled
                             />
+                            <div th:if="${batteryVoltageError != null}" th:text="${batteryVoltageError}" style="color: red"></div>
                         </div>
                     </div>
 

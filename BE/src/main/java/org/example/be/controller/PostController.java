@@ -128,6 +128,15 @@ public class PostController {
             response.error(error);
             return ResponseEntity.badRequest().body(response);
         }
+
+        Map<String,String> error = validatePost(postRequest);
+
+        if(!error.isEmpty()) {
+            ApiResponse<PostResponse> response = new ApiResponse<>();
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+
         Post post = new Post();
         post.setTitle(postRequest.getTitle());
         post.setDescription(postRequest.getDescription());
@@ -679,4 +688,49 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
+    private Map<String, String> validatePost(PostResponse post) {
+        Map<String, String> errors = new HashMap<>();
+        if(post.getProduct() == null){
+            errors.put("product", "Product is required");
+            return errors;
+        }
+
+        String productType = post.getProduct().getProductType();
+        if(productType == null||productType.isEmpty()){
+            errors.put("productType", "Product type is required");
+            return errors;
+        }
+
+        if(productType.equalsIgnoreCase("VEHICLE")){
+            VehicleResponse v = post.getProduct().getVehicle();
+            if(v == null){
+                errors.put("vehicle", "Vehicle is required");
+            }else{
+                if(!String.valueOf(v.getRegistrationYear()).matches("\\d{4}")){
+                    errors.put("vehicle", "Registration year is invalid");
+                }
+                if(!String.valueOf(v.getMileage()).matches("\\d+")){
+                    errors.put("vehicle", "Mileage is invalid");
+                }
+                if(!String.valueOf(v.getBatteryCapacity()).matches("\\d+(\\.\\d+)?")){
+                    errors.put("vehicle", "Battery Capacity is invalid");
+                }
+            }
+
+        }
+
+        if(productType.equalsIgnoreCase("BATTERY")){
+            BatteryResponse b = post.getProduct().getBattery();
+            if(!String.valueOf(b.getCapacity()).matches("\\d+(\\.\\d+)?")){
+                errors.put("vehicle", "Capacity is invalid");
+            }
+            if(!String.valueOf(b.getVoltage()).matches("\\d+(\\.\\d+)?")){
+                errors.put("vehicle", "Voltage is invalid");
+            }
+            if(!String.valueOf(b.getYearOfManufacture()).matches("\\d{4}")){
+                errors.put("vehicle", "Year of Manufacture is invalid");
+            }
+        }
+        return errors;
+    }
 }
