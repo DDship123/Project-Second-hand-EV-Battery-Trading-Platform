@@ -53,7 +53,7 @@ public class CommentService {
         if (comments != null) {
             return comments.stream().map(c -> new CommentResponse(
                     c.getCommentId(),
-                    null,
+                    postId,
                     new MemberResponse(
                             c.getMember().getMemberId(),
                             c.getMember().getUsername(),

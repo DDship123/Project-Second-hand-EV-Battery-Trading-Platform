@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/home/postForm")
@@ -46,23 +48,68 @@ public class CreatePostController {
                                  @RequestParam("vehicleBrand") String vehicleBrand,
                                  @RequestParam("vehicleCondition") String vehicleCondition,
                                  @RequestParam("vehicleModel") String vehicleModel,
-                                 @RequestParam("vehicleRegistrationYear") Integer year,
+                                 @RequestParam("vehicleRegistrationYear") String year,
                                  @RequestParam("vehicleOrigin") String origin,
-                                 @RequestParam("VehicleMileage") Integer mileage,
+                                 @RequestParam("VehicleMileage") String mileageStr,
                                  @RequestParam("vehicleBatteryCapacity") String batteryCapacity,
                                  @RequestParam("productPrice") BigDecimal price) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
+
+        boolean hasErrors = false;
+
         if (mainImage == null || mainImage.isEmpty()) {
             model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
-            return "createPostPage";
+            hasErrors = true;
+//            return "createPostPage";
         }
         if (subImages!=null && subImages.size()> 4)
         {
             model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
-            return "createPostPage";
+            hasErrors = true;
+//            return "createPostPage";
         }
+
+//        Map<String, String> errors = new HashMap<>();
+
+        Integer mileage = null;
+        try{
+            Integer.parseInt(year);
+        }catch (NumberFormatException e){
+//            errors.put("yearError","Year must be an integer");
+            model.addAttribute("yearError", "Năm sản xuất phải là số nguyên");
+            hasErrors = true;
+        }
+
+        try{
+            mileage =  Integer.parseInt(mileageStr);
+        }catch (NumberFormatException e){
+//            errors.put("mileageError","Mileage must be an integer");
+            model.addAttribute("mileageError", "Km phải là số");
+            hasErrors = true;
+        }
+
+        try{
+           Integer.parseInt(batteryCapacity);
+        }catch (NumberFormatException e){
+
+//            errors.put("batteryCapacityError","Battery capacity must be an integer");
+            model.addAttribute("vehicleBatteryCapacity", "Dung tích pin phải là số");
+            hasErrors = true;
+        }
+
+//        if(!errors.isEmpty()){
+//            model.addAttribute("errors",errors);
+//            return "createPostPage";
+//        }
+
+        if(hasErrors){
+           return "createPostPage";
+        }
+
+
+
         PostResponse post = new PostResponse();
         post.setTitle(postTitle);
         post.setDescription(postDescription);
@@ -103,7 +150,7 @@ public class CreatePostController {
 
         VehicleResponse vehicle = new VehicleResponse();
         vehicle.setModel(vehicleModel);
-        vehicle.setRegistrationYear( String.valueOf(year));
+        vehicle.setRegistrationYear(String.valueOf(year));
         vehicle.setOrigin(origin);
         vehicle.setMileage(mileage);
         vehicle.setBatteryCapacity(batteryCapacity);
@@ -136,20 +183,47 @@ public class CreatePostController {
                                  @RequestParam("productStatus") String productStatus,
                                  @RequestParam("batteryBrand") String batteryBrand,
                                  @RequestParam("batteryCondition") String batteryCondition,
-                                 @RequestParam("batteryCapacityAh") Integer batteryCapacity,
+                                 @RequestParam("batteryCapacityAh") String batteryCapacityStr,
                                  @RequestParam("batteryVoltage") String batteryVoltage,
-                                 @RequestParam("batteryManufactureYear") Integer batteryYearOfManufacture,
+                                 @RequestParam("batteryManufactureYear") String batteryYearOfManufacture,
                                  @RequestParam("batteryOrigin") String batteryOrigin,
                                  @RequestParam("productPrice") BigDecimal price) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
+        boolean hasErrors = false;
         if (mainImage == null || mainImage.isEmpty()) {
             model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
-            return "createPostPage";
+            hasErrors = true;
+//            return "createPostPage";
         }
         if (subImages != null && subImages.size() > 4) {
             model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
+                hasErrors = true;
+//            return "createPostPage";
+        }
+        Integer batteryCapacity = null;
+        try{
+           batteryCapacity = Integer.parseInt(batteryCapacityStr);
+        }catch (NumberFormatException e){
+            model.addAttribute("batteryCapacityError","Invalid batteryCapacity");
+            hasErrors = true;
+        }
+        try {
+            Integer.parseInt(batteryVoltage);
+        }catch (NumberFormatException e){
+            model.addAttribute("batteryVoltageError","Invalid batteryVoltage");
+            hasErrors = true;
+        }
+
+        try {
+            Integer.parseInt(batteryYearOfManufacture);
+        }catch (NumberFormatException e){
+            model.addAttribute("batteryYearError","Invalid batteryYearOfManufacture");
+            hasErrors = true;
+        }
+
+        if(hasErrors){
             return "createPostPage";
         }
         PostResponse post = new PostResponse();
