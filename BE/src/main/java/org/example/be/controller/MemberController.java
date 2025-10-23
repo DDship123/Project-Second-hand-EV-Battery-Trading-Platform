@@ -10,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/members")
@@ -141,16 +139,18 @@ public class MemberController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-
+    // Admin : Lists user ra
     @GetMapping("/admin/users")
-    public ResponseEntity<ApiResponse<Map<String, MemberResponse>>> getUsersByStatus() {
-        ApiResponse<Map<String, MemberResponse>> response = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<List<MemberResponse>>> getUsers() {
+        ApiResponse<List<MemberResponse>> response = new ApiResponse<>();
         try {
-            Map<String, MemberResponse> users = memberService.getUsersWithMembershipPlan();
-            HashMap<String, Object> metadata = new HashMap<>();
-            metadata.put("count", users.size());
-            metadata.put("timestamp", LocalDateTime.now());
-            response.ok(users, metadata);
+            List<MemberResponse> users = memberService.getUsersWithMembershipPlan();
+            if (users != null) {
+                users.forEach(u -> u.setPassword(null));
+            } else {
+                users = Collections.emptyList();
+            }
+            response.ok(users);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();

@@ -153,7 +153,7 @@ public class TransactionController {
             return ResponseEntity.ok(response);
         }
     }
-    // --- ADMIN: GET ALL TRANSACTIONS BY STATUS ---
+    //  Hàm ADMIN: lấy transaction mang 1 status
     @GetMapping("/admin/status/{status}")
     public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatusForAdmin(@PathVariable String status) {
         List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatus(status).stream()
@@ -172,7 +172,7 @@ public class TransactionController {
         }
     }
 
-    // --- ADMIN: GET ALL TRANSACTIONS BY MULTIPLE STATUS ---
+    // Hàm ADMIN: lấy transaction mang nhiều status
     @GetMapping("/admin/statuses")
     public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatusesForAdmin(@RequestParam List<String> statuses) {
         List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatuses(statuses).stream()
