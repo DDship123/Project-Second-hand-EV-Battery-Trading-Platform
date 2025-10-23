@@ -517,6 +517,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public ApiResponse<PostResponse> update(PostResponse post) {
         ApiResponse<PostResponse> response = new ApiResponse<>();
+        Map<String,String> error = new HashMap<>();
 
         try {
             // Create headers
@@ -534,7 +535,7 @@ public class PostServiceImpl implements PostService {
                     new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
             );
 
-            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+            if (apiResponse.getBody().getStatus().equals("SUCCESS") && apiResponse.getBody() != null) {
                 // Create post successful
                 response.ok(apiResponse.getBody().getPayload());
             } else {
@@ -543,6 +544,29 @@ public class PostServiceImpl implements PostService {
                 errorMap.put("message", "Failed to create post");
                 response.error(errorMap);
             }
+        }catch (HttpClientErrorException e) {
+            //  Nếu backend trả lỗi 400 → parse JSON body
+            try {
+                String responseBody = e.getResponseBodyAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(responseBody);
+
+                JsonNode errorNode = root.path("error");
+                Map<String, String> errorMap = new HashMap<>();
+                if (errorNode.isObject()) {
+                    errorNode.fieldNames().forEachRemaining(
+                            field -> errorMap.put(field, errorNode.get(field).asText())
+                    );
+                } else {
+                    errorMap.put("message", "Registration failed");
+                }
+
+                response.error(errorMap);
+            } catch (Exception parseEx) {
+                error.put("message", "Registration failed: " + e.getMessage());
+                response.error(error);
+            }
+
         } catch (Exception e) {
             // Handle exceptions
             Map<String, String> errorMap = new HashMap<>();

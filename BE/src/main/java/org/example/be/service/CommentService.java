@@ -86,8 +86,8 @@ public class CommentService {
                 memberResponse.setUsername(c.getMember().getUsername());
                 commentResponse.setMember(memberResponse);
                 PostResponse postResponse = new PostResponse();
-                postResponse.setPostsId(c.getPost().getPostsId());
-                commentResponse.setPost(postResponse);
+//                postResponse.setPostsId(c.getPost().getPostsId());
+                commentResponse.setPostId(postResponse.getPostsId());
                 commentResponses.add(commentResponse);
             }
         }
