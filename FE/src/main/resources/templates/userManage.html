@@ -87,7 +87,7 @@
                                 </select>
                             </td>
                             <td>
-                                <button class="action-btn-small primary user-detail-btn">Chi tiết</button>
+                                <button class="action-btn-small primary user-detail-btn" th:attr="member-id=${user.getValue().getMemberId()}">Chi tiết</button>
                             </td>
                         </tr>
                         </tbody>
@@ -200,24 +200,30 @@
 </div>
 
 <!-- User Detail Modal (used for both users and admins) -->
-<div id="userDetailModal" class="modal">
+<div th:if="${memberDetail != null}" id="userDetailModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Chi tiết người dùng</h2>
         <div class="modal-body">
             <div class="user-avatar-wrapper">
-                <img id="userAvatar" src="" alt="User Avatar">
+                <img id="userAvatar" th:src="${memberDetail.getAvatarUrl()}" alt="User Avatar">
             </div>
             <div class="details-container">
                 <div class="user-personal-info">
                     <h3>Thông tin cá nhân</h3>
-                    <p><strong>Họ và tên:</strong> <span id="userFullName"></span></p>
-                    <p><strong>Email:</strong> <span id="userEmail"></span></p>
-                    <p><strong>Số điện thoại:</strong> <span id="userPhone"></span></p>
-                    <p><strong>Ngày sinh:</strong> <span id="userBirthDate"></span></p>
-                    <p><strong>Địa chỉ:</strong> <span id="userAddress"></span></p>
-                    <p><strong>Thành phố:</strong> <span></span></p>
-                    <p><strong>Số điện thoại:</strong> <span></span></p>
+                    <p><strong>Họ và tên:</strong> <span id="userFullName" th:text="${memberDetail.getUsername()}"></span></p>
+                    <p><strong>Email:</strong> <span id="userEmail" th:text="${memberDetail.getEmail()}"></span></p>
+                    <p><strong>Số điện thoại:</strong> <span id="userPhone" th:text="${memberDetail.getPhone()}"></span></p>
+                    <p><strong>Địa chỉ:</strong> <span id="userAddress" th:text="${memberDetail.getAddress()}"></span></p>
+                    <p><strong>Thành phố:</strong> <span th:text="${memberDetail.getCity()}"></span></p>
+                </div>
+                <div class="reviews">
+                    <h3>Đánh giá gần đây</h3>
+                    <p th:each="review : ${reviews}">
+                        <span th:text="${review.getRating()}+'⭐'"></span>
+                        <span th:text="${review.getContent()}"></span>
+                        <span th:text="${#temporals.format(review.getCreatedAt(),'dd-MM-yyyy')}"></span>
+                    </p>
                 </div>
 <!--                <div class="user-account-info">-->
 <!--                    <h3>Thông tin tài khoản</h3>-->

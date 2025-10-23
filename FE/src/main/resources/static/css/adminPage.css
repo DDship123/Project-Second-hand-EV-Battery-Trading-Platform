@@ -1017,7 +1017,8 @@ tbody tr:hover {
 .vehicle-details,
 .seller-info,
 .user-personal-info,
-.user-account-info {
+.user-account-info,
+.reviews{
   background-color: #f8f9fa;
   padding: 15px;
   border-radius: 8px;
@@ -1026,14 +1027,16 @@ tbody tr:hover {
 .vehicle-details h3,
 .seller-info h3,
 .user-personal-info h3,
-.user-account-info h3 {
+.user-account-info h3 ,
+.reviews h3 {
   margin-bottom: 10px;
 }
 
 .vehicle-details p,
 .seller-info p,
 .user-personal-info p,
-.user-account-info p {
+.user-account-info p,
+.reviews p {
   margin-bottom: 8px;
   font-size: 14px;
 }

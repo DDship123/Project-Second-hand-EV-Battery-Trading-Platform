@@ -24,6 +24,14 @@ window.addEventListener('load', function() {
         });
     });
 
+    const postDetailsBtns = document.querySelectorAll('.action-btn-small');
+    postDetailsBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const memberId = btn.getAttribute('member-id');
+            window.location.href = `/home/admin/member-manage/detail/${memberId}`;
+        });
+    });
+
     const urlParams = new URLSearchParams(window.location.search);
     const successMessage = urlParams.get('successMessage');
     if (successMessage) {

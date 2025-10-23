@@ -53,7 +53,13 @@ public class ReviewService {
     }
 
     public List<Review> findAllReviewBySellerId(Integer sellerId) {
-        return reviewRepository.findAllBySeller_MemberId(sellerId);
+        List<Review> reviews = reviewRepository.findAllBySeller_MemberId(sellerId);
+        for (Review review : reviews) {
+            if (!review.getStatus().equals("APPROVED")) {
+                reviews.remove(review);
+            }
+        }
+        return reviews;
     }
     //Lấy tất cả review theo status(Tân)
     public List<ReviewResponse> findAllReviewByStatus(String status) {

@@ -101,6 +101,23 @@ public class AdminPageController {
         model.addAttribute("users", users);
         return "userManage";
     }
+    @GetMapping("/member-manage/detail/{memberId}")
+    public String memberDetail(Model model, HttpSession session, @PathVariable int memberId) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/home";
+        }
+        ApiResponse<MemberResponse> memberResponse = memberService.getMemberInfo(memberId);
+        MemberResponse memberDetail = memberResponse.getPayload();
+        model.addAttribute("memberDetail", memberDetail);
+
+        ApiResponse<List<ReviewResponse>> reviewResponse = reviewService.FindAllReviewBySellerId(memberId);
+        List<ReviewResponse> reviews = reviewResponse.getPayload();
+        model.addAttribute("reviews", reviews);
+
+        model.addAttribute("admin", member);
+        return "userManage";
+    }
 
 
     @GetMapping("/member-manage/update-status")
