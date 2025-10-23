@@ -3,7 +3,7 @@ package org.example.fe.entity;
 import java.time.LocalDateTime;
 
 public class MemberResponse {
-    private Integer memberId;
+    private int memberId;
     private String username;
     private String address;
     private String email;
@@ -14,13 +14,14 @@ public class MemberResponse {
     private String status;
     private String avatarUrl;
     private LocalDateTime createdAt;
-    private MembershipPlanResponse membershipPlan;
-    private MemberPlanUsageResponse memberPlanUsage;
+    private MembershipPlanResponse membershipPlanResponse;
+    private MemberPlanUsageResponse memberPlanUsageResponse;
 
     public MemberResponse() {
     }
 
-    public MemberResponse(Integer memberId, String username, String address, String email, String city, String phone, String password, String role, String status, String avatarUrl, LocalDateTime createdAt, MembershipPlanResponse membershipPlan, MemberPlanUsageResponse memberPlanUsage) {
+    public MemberResponse(int memberId, String username, String address, String email, String city
+            , String phone, String password, String role, String status, String avatarUrl, LocalDateTime createdAt) {
         this.memberId = memberId;
         this.username = username;
         this.address = address;
@@ -32,15 +33,20 @@ public class MemberResponse {
         this.status = status;
         this.avatarUrl = avatarUrl;
         this.createdAt = createdAt;
-        this.membershipPlan = membershipPlan;
-        this.memberPlanUsage = memberPlanUsage;
     }
 
-    public Integer getMemberId() {
+    public MemberResponse(int memberId, String username, String avatarUrl, LocalDateTime createdAt) {
+        this.memberId = memberId;
+        this.username = username;
+        this.avatarUrl = avatarUrl;
+        this.createdAt = createdAt;
+    }
+
+    public int getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(Integer memberId) {
+    public void setMemberId(int memberId) {
         this.memberId = memberId;
     }
 
@@ -124,19 +130,19 @@ public class MemberResponse {
         this.createdAt = createdAt;
     }
 
-    public MembershipPlanResponse getMembershipPlan() {
-        return membershipPlan;
+    public MembershipPlanResponse getMembershipPlanResponse() {
+        return membershipPlanResponse;
     }
 
-    public void setMembershipPlan(MembershipPlanResponse membershipPlan) {
-        this.membershipPlan = membershipPlan;
+    public void setMembershipPlanResponse(MembershipPlanResponse membershipPlanResponse) {
+        this.membershipPlanResponse = membershipPlanResponse;
     }
 
-    public MemberPlanUsageResponse getMemberPlanUsage() {
-        return memberPlanUsage;
+    public MemberPlanUsageResponse getMemberPlanUsageResponse() {
+        return memberPlanUsageResponse;
     }
 
-    public void setMemberPlanUsage(MemberPlanUsageResponse memberPlanUsage) {
-        this.memberPlanUsage = memberPlanUsage;
+    public void setMemberPlanUsageResponse(MemberPlanUsageResponse memberPlanUsageResponse) {
+        this.memberPlanUsageResponse = memberPlanUsageResponse;
     }
 }

@@ -1,9 +1,4 @@
 window.addEventListener('load', function() {
-    const plans = document.querySelectorAll('td.plan');
-    plans.forEach(function(plan) {
-        const planText = plan.textContent.trim();
-        plan.innerHTML = planText.replace(/\d/g, "")
-    });
 
     const statusSelects = document.querySelectorAll('tr .status-select');
     statusSelects.forEach(function(select) {
@@ -24,12 +19,25 @@ window.addEventListener('load', function() {
         });
     });
 
-    const postDetailsBtns = document.querySelectorAll('.action-btn-small');
+    let postDetailsBtns = document.querySelectorAll('td .action-btn-small');
+
     postDetailsBtns.forEach(function(btn) {
         btn.addEventListener('click', function() {
             const memberId = btn.getAttribute('member-id');
             window.location.href = `/home/admin/member-manage/detail/${memberId}`;
         });
+    });
+
+    const userDetailModal = document.getElementById('userDetailModal');
+    const closeUserDetailModalBtn = userDetailModal.querySelector('.close');
+    const modalCloseUser = document.getElementById('modalCloseUser')
+
+    closeUserDetailModalBtn.addEventListener('click', function() {
+        userDetailModal.style.display = 'none';
+    });
+
+    modalCloseUser.addEventListener('click', function() {
+        userDetailModal.style.display = 'none';
     });
 
     const urlParams = new URLSearchParams(window.location.search);

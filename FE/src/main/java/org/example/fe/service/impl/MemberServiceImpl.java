@@ -257,8 +257,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ApiResponse<Map<String, MemberResponse>> getUser() {
-       ApiResponse<Map<String, MemberResponse>> response = new ApiResponse<>();
+    public ApiResponse<List<MemberResponse>> getUser() {
+       ApiResponse<List<MemberResponse>> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
 
         try {
@@ -270,11 +270,11 @@ public class MemberServiceImpl implements MemberService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<ApiResponse<Map<String, MemberResponse>>> apiResponse = restTemplate.exchange(
+            ResponseEntity<ApiResponse<List<MemberResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/members/admin/users",
                     HttpMethod.GET,
                     requestEntity,
-                    new ParameterizedTypeReference<ApiResponse<Map<String, MemberResponse>>>() {}
+                    new ParameterizedTypeReference<ApiResponse<List<MemberResponse>>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {

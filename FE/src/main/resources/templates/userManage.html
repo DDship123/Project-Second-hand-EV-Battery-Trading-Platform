@@ -71,23 +71,20 @@
                         </thead>
                         <tbody>
                         <tr th:each="user : ${users}" >
-                            <td th:text="${user.getValue().getMemberId()}">U001</td>
-                            <td th:text="${user.getValue().getUsername()}">Nguyen Van A</td>
-                            <td th:text="${user.getValue().getEmail()}">nguyenvana@gmail.com</td>
-                            <td th:text="${user.getKey()}" class="plan">Chưa đăng ký</td>
-                            <td th:text="${#temporals.format(user.getValue().getCreatedAt(),'dd-MM-yyyy')}">06/10/2025</td>
+                            <td th:text="${user.getMemberId()}">U001</td>
+                            <td th:text="${user.getUsername()}">Nguyen Van A</td>
+                            <td th:text="${user.getEmail()}">nguyenvana@gmail.com</td>
+                            <td th:text="${user.getMembershipPlanResponse().getName()}" >Chưa đăng ký</td>
+                            <td th:text="${#temporals.format(user.getCreatedAt(),'dd-MM-yyyy')}">06/10/2025</td>
                             <td>
-                                <select class="status-select" th:attr="data-user-id=${user.getValue().getMemberId()}">
-                                    <option value="Hoạt động" th:selected="${user.getValue().getStatus() == 'ACTIVE'}">Hoạt động</option>
-                                    <option value="Tạm khóa" th:selected="${user.getValue().getStatus() == 'SUPENDED'}">Tạm khóa</option>
-                                    <option value="Cấm vĩnh viễn" th:selected="${user.getValue().getStatus() == 'BANNED'}">Cấm vĩnh viễn</option>
-<!--                                    <option value="Hoạt động" selected>Hoạt động</option>-->
-<!--                                    <option value="Tạm khóa">Tạm khóa</option>-->
-<!--                                    <option value="Cấm vĩnh viễn">Cấm vĩnh viễn</option>-->
+                                <select class="status-select" th:attr="data-user-id=${user.getMemberId()}">
+                                    <option value="Hoạt động" th:selected="${user.getStatus() == 'ACTIVE'}">Hoạt động</option>
+                                    <option value="Tạm khóa" th:selected="${user.getStatus() == 'SUSPENDED'}">Tạm khóa</option>
+                                    <option value="Cấm vĩnh viễn" th:selected="${user.getStatus() == 'BANNED'}">Cấm vĩnh viễn</option>
                                 </select>
                             </td>
                             <td>
-                                <button class="action-btn-small primary user-detail-btn" th:attr="member-id=${user.getValue().getMemberId()}">Chi tiết</button>
+                                <button class="action-btn-small primary user-detail-btn" th:attr="member-id=${user.getMemberId()}">Chi tiết</button>
                             </td>
                         </tr>
                         </tbody>
@@ -200,7 +197,7 @@
 </div>
 
 <!-- User Detail Modal (used for both users and admins) -->
-<div th:if="${memberDetail != null}" id="userDetailModal" class="modal">
+<div th:if="${memberDetail != null}" id="userDetailModal" class="modal" style="display: block;">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Chi tiết người dùng</h2>
@@ -221,17 +218,11 @@
                     <h3>Đánh giá gần đây</h3>
                     <p th:each="review : ${reviews}">
                         <span th:text="${review.getRating()}+'⭐'"></span>
-                        <span th:text="${review.getContent()}"></span>
+                        <span th:text="${review.getComment()}"></span>
                         <span th:text="${#temporals.format(review.getCreatedAt(),'dd-MM-yyyy')}"></span>
                     </p>
+                    <p th:if="${reviews.size() == 0 }">Chưa có đánh giá</p>
                 </div>
-<!--                <div class="user-account-info">-->
-<!--                    <h3>Thông tin tài khoản</h3>-->
-<!--                    <p><strong>Mã:</strong> <span id="userCode"></span></p>-->
-<!--                    <p><strong>Giới thiệu viên:</strong> <span id="userReferrer"></span></p>-->
-<!--                    <p><strong>Ngày đăng ký:</strong> <span id="userRegisterDate"></span></p>-->
-<!--                    <p><strong>Trạng thái:</strong> <span id="userStatus"></span></p>-->
-<!--                </div>-->
             </div>
         </div>
         <div class="modal-actions">

@@ -82,13 +82,13 @@ public class updatePostController {
                     }
 
                 }
-                if(mileageChange){
-                    try{
-                        String mileage = 
-                    }catch (NumberFormatException e){
-                        model.addAttribute("mileageError", "Invalid Mileage");
-                    }
-                }
+//                if(mileageChange){
+//                    try{
+//                        String mileage =
+//                    }catch (NumberFormatException e){
+//                        model.addAttribute("mileageError", "Invalid Mileage");
+//                    }
+//                }
             }
 
             model.addAttribute("error", response.getError());

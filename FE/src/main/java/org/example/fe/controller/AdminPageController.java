@@ -96,7 +96,7 @@ public class AdminPageController {
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/home";
         }
-        Map<String, MemberResponse> users = memberService.getUser().getPayload();
+        List<MemberResponse> users = memberService.getUser().getPayload();
         model.addAttribute("admin", member);
         model.addAttribute("users", users);
         return "userManage";
@@ -115,6 +115,8 @@ public class AdminPageController {
         List<ReviewResponse> reviews = reviewResponse.getPayload();
         model.addAttribute("reviews", reviews);
 
+        List<MemberResponse> users = memberService.getUser().getPayload();
+        model.addAttribute("users", users);
         model.addAttribute("admin", member);
         return "userManage";
     }
