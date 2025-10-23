@@ -176,8 +176,8 @@
             </div>
         </div>
         <div class="modal-actions">
-            <button class="action-btn approve" id="modalApprove">Duyệt</button>
-            <button class="action-btn reject" id="modalReject">Từ chối</button>
+            <button class="action-btn approve" id="modalApprove" th:attr="data-post-id=${postDetail.getPostsId()}">Duyệt</button>
+            <button class="action-btn reject" id="modalReject"  th:attr="data-post-id=${postDetail.getPostsId()}">Từ chối</button>
         </div>
     </div>
 </div>

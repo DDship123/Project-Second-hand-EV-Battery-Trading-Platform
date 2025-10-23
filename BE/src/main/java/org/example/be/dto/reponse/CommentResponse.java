@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class CommentResponse  {
     private int commentId;
-    private int postId;
+    private PostResponse post;
     private MemberResponse member;
     private int rating;
     private String comment;
@@ -14,9 +14,18 @@ public class CommentResponse  {
     public CommentResponse() {
     }
 
-    public CommentResponse(int commentId, int postId, MemberResponse member, int rating, String comment, String status, LocalDateTime createdAt) {
+    public CommentResponse(int commentId, PostResponse post, MemberResponse member, int rating, String comment, String status, LocalDateTime createdAt) {
         this.commentId = commentId;
-        this.postId = postId;
+        this.post = post;
+        this.member = member;
+        this.rating = rating;
+        this.comment = comment;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public CommentResponse(PostResponse post, MemberResponse member, int rating, String comment, String status, LocalDateTime createdAt) {
+        this.post = post;
         this.member = member;
         this.rating = rating;
         this.comment = comment;
@@ -32,12 +41,12 @@ public class CommentResponse  {
         this.commentId = commentId;
     }
 
-    public int getPostId() {
-        return postId;
+    public PostResponse getPost() {
+        return post;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPost(PostResponse post) {
+        this.post = post;
     }
 
     public MemberResponse getMember() {

@@ -15,10 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.View;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -201,9 +199,10 @@ public class MemberService {
     @Autowired
     private MemberPlanUsageRepository memberPlanUsageRepository;
 
-    public Map<MemberResponse, MembershipPlanResponse> getUsersWithMembershipPlan(String status) {
-        List<Member> users = memberRepository.findAllByRoleAndStatus("USER", status);
-        Map<MemberResponse, MembershipPlanResponse> result = new HashMap<>();
+    public Map<String, MemberResponse> getUsersWithMembershipPlan() {
+//        List<Member> users = memberRepository.findAllByRoleAndStatus("USER", status);
+        List<Member> users = memberRepository.findAllByRole("USER");
+        Map<String, MemberResponse> result = new HashMap<>();
 
         for (Member member : users) {
             MemberResponse memberResponse = new MemberResponse();
@@ -220,22 +219,30 @@ public class MemberService {
 
             // Lấy MembershipPlan của Member
             Optional<MemberPlanUsage> planUsage = memberPlanUsageRepository.findByMember_MemberIdAndStatus(member.getMemberId(), "active");
+//            Optional<MemberPlanUsage> planUsage = memberPlanUsageRepository.findByMember_MemberId(member.getMemberId());
             MembershipPlanResponse planResponse = null;
 
             if (planUsage.isPresent() && planUsage.get().getMembershipPlan() != null) {
-                MembershipPlan plan = planUsage.get().getMembershipPlan();
-                planResponse = new MembershipPlanResponse();
-                planResponse.setPlanId(plan.getPlanId());
-                planResponse.setName(plan.getName());
-                planResponse.setPrice(plan.getPrice());
-                planResponse.setDuration(plan.getDuration());
-                planResponse.setMaxPosts(plan.getMaxPosts());
-                planResponse.setPriority(plan.getPriority());
+                result.put(planUsage.get().getMembershipPlan().getName()+memberResponse.getMemberId() , memberResponse);
+            }else {
+                result.put("Chưa đăng ký"+memberResponse.getMemberId(), memberResponse);
             }
 
-            result.put(memberResponse, planResponse);
         }
 
+        // Stream để sắp xếp theo memberId tăng dần
+        List<Map.Entry<String, MemberResponse>> sortedEntries = result.entrySet()
+                .stream()
+                .sorted(Comparator.comparingInt(entry -> entry.getValue().getMemberId()))
+                .collect(Collectors.toList());
+        // Nếu muốn kết quả cuối cùng vẫn là Map
+        result = sortedEntries.stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
         return result;
     }
     //Cập nhật status của member(Tân)

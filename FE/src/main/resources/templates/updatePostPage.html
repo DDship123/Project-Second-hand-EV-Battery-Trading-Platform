@@ -202,6 +202,7 @@
                                 required
                                 th:field="*{product.vehicle.registrationYear}"
                         />
+                        <p th:if="${yearError != null}" th:text="${yearError}"></p>
                     </div>
 
                     <div class="registration__form-row">
@@ -226,6 +227,7 @@
                                     th:field="*{product.vehicle.mileage}"
                                     required
                             />
+                            <p th:if="${vehicleMileageError != null}" th:text="${vehicleMileageError}"></p>
                         </div>
                     </div>
 

@@ -47,7 +47,7 @@
                         <input type="text" placeholder="Tìm kiếm bình luận...">
                     </div>
                 </div>
-                <div class="data-table">
+                <div th:if="${comments != null}" class="data-table">
                     <table>
                         <thead>
                         <tr>
@@ -77,7 +77,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-content" id="reviewsTab">
+            <div th:if="${reviews != null}" style="display: block" class="tab-content" id="reviewsTab">
                 <div class="content-toolbar">
                     <div class="search-box">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -88,41 +88,24 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Người dùng</th>
+                            <th>Người Viết</th>
                             <th>Ngày</th>
                             <th>Nội dung</th>
+                            <th>Người nhận</th>
                             <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr data-review-id="1">
-                            <td>Nguyen Van A</td>
-                            <td>19/10/2025</td>
-                            <td>Đánh giá 5 sao, sản phẩm tuyệt vời.</td>
+                        <tr th:each="review : ${reviews}">
+                            <td th:text="${review.getReviewer().getUsername()}">Nguyen Van A</td>
+                            <td th:text="${#temporals.format(review.getCreatedAt(),'dd-MM-yyyy')}">19/10/2025</td>
+                            <td th:text="${review.getComment()}">Đánh giá 5 sao, sản phẩm tuyệt vời.</td>
+                            <td th:text="${review.getSeller().getUsername()}">Tran Thi B</td>
                             <td><span class="status-badge pending">Đang đợi</span></td>
                             <td>
-                                <button class="action-btn-small primary review-detail-btn">Chi tiết</button>
-                                <button class="action-btn-small success review-approve-btn">Duyệt</button>
-                                <button class="action-btn-small danger review-reject-btn">Từ chối</button>
-                            </td>
-                        </tr>
-                        <tr data-review-id="2">
-                            <td>Tran Thi B</td>
-                            <td>18/10/2025</td>
-                            <td>4 sao, giao hàng nhanh.</td>
-                            <td><span class="status-badge approved">Đã duyệt</span></td>
-                            <td>
-                                <button class="action-btn-small primary review-detail-btn">Chi tiết</button>
-                            </td>
-                        </tr>
-                        <tr data-review-id="3">
-                            <td>Le Van C</td>
-                            <td>17/10/2025</td>
-                            <td>2 sao, sản phẩm lỗi.</td>
-                            <td><span class="status-badge rejected">Từ chối</span></td>
-                            <td>
-                                <button class="action-btn-small primary review-detail-btn">Chi tiết</button>
+                                <button class="action-btn-small success review-approve-btn" th:attr="data-comment-id=${review.getReviewId()}">Duyệt</button>
+                                <button class="action-btn-small danger review-reject-btn" th:attr="data-comment-id=${review.getReviewId()}">Từ chối</button>
                             </td>
                         </tr>
                         </tbody>

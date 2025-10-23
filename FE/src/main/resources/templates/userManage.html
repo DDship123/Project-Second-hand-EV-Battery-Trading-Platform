@@ -60,7 +60,7 @@
                             <th>Mã</th>
                             <th>Họ và tên</th>
                             <th>Email</th>
-                            <th>Giới thiệu viên <i class="fa-solid fa-chevron-down filter-icon"
+                            <th>Gói đăng ký <i class="fa-solid fa-chevron-down filter-icon"
                                                    id="referrerFilterIcon"></i></th>
                             <th>Ngày đăng ký <i class="fa-solid fa-chevron-down filter-icon"
                                                 id="dateFilterIcon"></i></th>
@@ -70,68 +70,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr data-user-id="1" data-register-date="2025-10-06">
-                            <td>U001</td>
-                            <td>Nguyen Van A</td>
-                            <td>nguyenvana@gmail.com</td>
-                            <td>Chưa đăng ký</td>
-                            <td>06/10/2025</td>
+                        <tr th:each="user : ${users}" >
+                            <td th:text="${user.getValue().getMemberId()}">U001</td>
+                            <td th:text="${user.getValue().getUsername()}">Nguyen Van A</td>
+                            <td th:text="${user.getValue().getEmail()}">nguyenvana@gmail.com</td>
+                            <td th:text="${user.getKey()}" class="plan">Chưa đăng ký</td>
+                            <td th:text="${#temporals.format(user.getValue().getCreatedAt(),'dd-MM-yyyy')}">06/10/2025</td>
                             <td>
-                                <select class="status-select">
-                                    <option value="Hoạt động" selected>Hoạt động</option>
-                                    <option value="Tạm khóa">Tạm khóa</option>
-                                    <option value="Cấm vĩnh viễn">Cấm vĩnh viễn</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button class="action-btn-small primary user-detail-btn">Chi tiết</button>
-                            </td>
-                        </tr>
-                        <tr data-user-id="2" data-register-date="2025-10-07">
-                            <td>U002</td>
-                            <td>Tran Thi B</td>
-                            <td>tranthib@gmail.com</td>
-                            <td>Gói chuyên nghiệp</td>
-                            <td>07/10/2025</td>
-                            <td>
-                                <select class="status-select">
-                                    <option value="Hoạt động">Hoạt động</option>
-                                    <option value="Tạm khóa" selected>Tạm khóa</option>
-                                    <option value="Cấm vĩnh viễn">Cấm vĩnh viễn</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button class="action-btn-small primary user-detail-btn">Chi tiết</button>
-                            </td>
-                        </tr>
-                        <tr data-user-id="3" data-register-date="2025-10-08">
-                            <td>U003</td>
-                            <td>Le Van C</td>
-                            <td>levanc@gmail.com</td>
-                            <td>Gói doanh nghiệp</td>
-                            <td>08/10/2025</td>
-                            <td>
-                                <select class="status-select">
-                                    <option value="Hoạt động">Hoạt động</option>
-                                    <option value="Tạm khóa">Tạm khóa</option>
-                                    <option value="Cấm vĩnh viễn" selected>Cấm vĩnh viễn</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button class="action-btn-small primary user-detail-btn">Chi tiết</button>
-                            </td>
-                        </tr>
-                        <tr data-user-id="4" data-register-date="2025-10-09">
-                            <td>U004</td>
-                            <td>Pham Thi D</td>
-                            <td>phamthid@gmail.com</td>
-                            <td>Gói chuyên nghiệp</td>
-                            <td>09/10/2025</td>
-                            <td>
-                                <select class="status-select">
-                                    <option value="Hoạt động" selected>Hoạt động</option>
-                                    <option value="Tạm khóa">Tạm khóa</option>
-                                    <option value="Cấm vĩnh viễn">Cấm vĩnh viễn</option>
+                                <select class="status-select" th:attr="data-user-id=${user.getValue().getMemberId()}">
+                                    <option value="Hoạt động" th:selected="${user.getValue().getStatus() == 'ACTIVE'}">Hoạt động</option>
+                                    <option value="Tạm khóa" th:selected="${user.getValue().getStatus() == 'SUPENDED'}">Tạm khóa</option>
+                                    <option value="Cấm vĩnh viễn" th:selected="${user.getValue().getStatus() == 'BANNED'}">Cấm vĩnh viễn</option>
+<!--                                    <option value="Hoạt động" selected>Hoạt động</option>-->
+<!--                                    <option value="Tạm khóa">Tạm khóa</option>-->
+<!--                                    <option value="Cấm vĩnh viễn">Cấm vĩnh viễn</option>-->
                                 </select>
                             </td>
                             <td>
@@ -264,14 +216,16 @@
                     <p><strong>Số điện thoại:</strong> <span id="userPhone"></span></p>
                     <p><strong>Ngày sinh:</strong> <span id="userBirthDate"></span></p>
                     <p><strong>Địa chỉ:</strong> <span id="userAddress"></span></p>
+                    <p><strong>Thành phố:</strong> <span></span></p>
+                    <p><strong>Số điện thoại:</strong> <span></span></p>
                 </div>
-                <div class="user-account-info">
-                    <h3>Thông tin tài khoản</h3>
-                    <p><strong>Mã:</strong> <span id="userCode"></span></p>
-                    <p><strong>Giới thiệu viên:</strong> <span id="userReferrer"></span></p>
-                    <p><strong>Ngày đăng ký:</strong> <span id="userRegisterDate"></span></p>
-                    <p><strong>Trạng thái:</strong> <span id="userStatus"></span></p>
-                </div>
+<!--                <div class="user-account-info">-->
+<!--                    <h3>Thông tin tài khoản</h3>-->
+<!--                    <p><strong>Mã:</strong> <span id="userCode"></span></p>-->
+<!--                    <p><strong>Giới thiệu viên:</strong> <span id="userReferrer"></span></p>-->
+<!--                    <p><strong>Ngày đăng ký:</strong> <span id="userRegisterDate"></span></p>-->
+<!--                    <p><strong>Trạng thái:</strong> <span id="userStatus"></span></p>-->
+<!--                </div>-->
             </div>
         </div>
         <div class="modal-actions">
@@ -279,8 +233,8 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/commonComponents/adminPage.js}"></script>
-
+<!--<script th:src="@{/js/commonComponents/adminPage.js}"></script>-->
+<script th:src="@{/js/userManage.js}"></script>
 </body>
 
 </html>

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.fe.entity.ApiResponse;
 import org.example.fe.entity.MemberResponse;
+import org.example.fe.entity.MembershipPlanResponse;
 import org.example.fe.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -256,56 +257,38 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ApiResponse<Map<String, MemberResponse>> getUser(String status) {
-        ApiResponse<Map<String, MemberResponse>> response = new ApiResponse<>();
+    public ApiResponse<Map<String, MemberResponse>> getUser() {
+       ApiResponse<Map<String, MemberResponse>> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
 
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Content-Type", "application/json");
 
             // Create request entity
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
-            // Build URL with query parameters
-            String url = apiBaseUrl + "/api/members/users?role=USER";
-            if (status != null && !status.isEmpty()) {
-                url += "&status=" + status;
-            }
-
             // Make API call to backend
             ResponseEntity<ApiResponse<Map<String, MemberResponse>>> apiResponse = restTemplate.exchange(
-                    url,
+                    apiBaseUrl + "/api/members/admin/users",
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<Map<String, MemberResponse>>>() {}
             );
 
-            if ("SUCCESS".equals(apiResponse.getBody().getStatus())) {
-                // Get users with membership plan successful
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get users by status successful
                 response.ok(apiResponse.getBody().getPayload());
-            } else {
-                // API call thành công nhưng backend trả về lỗi
-                Map<String, String> errorMap = apiResponse.getBody().getError();
-                if (errorMap == null || errorMap.isEmpty()) {
-                    // Backend báo lỗi nhưng không cung cấp chi tiết
-                    errorMap = new HashMap<>();
-                    errorMap.put("message", "Failed to get users with membership plan");
-                }
-                // Dùng errorMap từ backend hoặc message mặc định
-                response.error(errorMap);
             }
-
         } catch (Exception e) {
             // Handle exceptions
             Map<String, String> errorMap = new HashMap<>();
-            errorMap.put("message", "Failed to get users with membership plan: " + e.getMessage());
+            errorMap.put("message", "Failed to get users by status: " + e.getMessage());
             response.error(errorMap);
         }
 
         return response;
-
     }
 
     @Override
@@ -320,17 +303,14 @@ public class MemberServiceImpl implements MemberService {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             // Create request body - chỉ gửi memberId và status
-            Map<String, Object> requestBody = new HashMap<>();
-            requestBody.put("memberId", member.getMemberId());
-            requestBody.put("status", member.getStatus());
 
             // Create request entity
-            HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+            HttpEntity<MemberResponse> requestEntity = new HttpEntity<>(member, headers);
 
             // Make API call to backend
             ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/members/" + member.getMemberId() + "/status",
-                    HttpMethod.PATCH,
+                    apiBaseUrl + "/api/members/update-status",
+                    HttpMethod.PUT,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );

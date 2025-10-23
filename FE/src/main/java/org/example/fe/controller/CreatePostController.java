@@ -126,7 +126,7 @@ public class CreatePostController {
             }
             if (subImages != null && !subImages.isEmpty()) {
                 for (MultipartFile subImage : subImages) {
-                    if (subImage != null && !subImage.isEmpty()) {
+                    if (subImage.getName() != null  && !subImage.isEmpty()) {
                         String subImageUrl = cloudinaryService.uploadImage(subImage);
                         imageUrls.add(subImageUrl);
                     }
@@ -150,7 +150,7 @@ public class CreatePostController {
 
         VehicleResponse vehicle = new VehicleResponse();
         vehicle.setModel(vehicleModel);
-        vehicle.setRegistrationYear(String.valueOf(year));
+        vehicle.setRegistrationYear((year));
         vehicle.setOrigin(origin);
         vehicle.setMileage(mileage);
         vehicle.setBatteryCapacity(batteryCapacity);
@@ -162,7 +162,6 @@ public class CreatePostController {
         product.setVehicle(vehicle);
         post.setProduct(product);
 
-        postService.create(post);
         ApiResponse<PostResponse> apiResponse = postService.create(post);
         if (apiResponse.getStatus().equals("SUCCESS")) {
             return "redirect:/home/store"; // Redirect to home page after successful post creation
@@ -272,7 +271,7 @@ public class CreatePostController {
         product.setBattery(battery);
         post.setProduct(product);
         ApiResponse<PostResponse> apiResponse = postService.create(post);
-        if (apiResponse.getStatus().equals("success")) {
+        if (apiResponse.getStatus().equals("SUCCESS")) {
             return "redirect:/home/store"; // Redirect to home page after successful post creation
         } else {
             model.addAttribute("postError", apiResponse.getError());

@@ -111,7 +111,7 @@ public class ReviewServiceImpl implements ReviewService {
 
             // Make API call to backend
             ResponseEntity<ApiResponse<List<ReviewResponse>>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/reviews/" + status,
+                    apiBaseUrl + "/api/reviews/status/" + status,
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<List<ReviewResponse>>>(){}
@@ -150,7 +150,7 @@ public class ReviewServiceImpl implements ReviewService {
 
             // Make API call to backend
             ResponseEntity<ApiResponse<ReviewResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/reviews/update/" + review.getReviewId(),
+                    apiBaseUrl + "/api/reviews/update-status",
                     HttpMethod.PUT,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<ReviewResponse>>() {}

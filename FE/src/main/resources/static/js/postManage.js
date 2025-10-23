@@ -18,23 +18,39 @@ window.addEventListener('load', function() {
 
     const approveButtons = document.querySelectorAll('.action-btn.approve');
     approveButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            const postId = this.getAttribute('data-post-id');
-            if (confirm('Bạn có chắc chắn muốn duyệt bài viết này không?')) {
-                window.location.href = `/home/admin/post-manage/update-status?postId=${postId}&status=APPROVED`;
-            }
-        });
+        approvePost(button);
     });
+    // approveButtons.forEach(function(button) {
+    //     button.addEventListener('click', function() {
+    //         const postId = this.getAttribute('data-post-id');
+    //         if (confirm('Bạn có chắc chắn muốn duyệt bài viết này không?')) {
+    //             window.location.href = `/home/admin/post-manage/update-status?postId=${postId}&status=APPROVED`;
+    //         }
+    //     });
+    // });
 
     const rejectButtons = document.querySelectorAll('.action-btn.reject');
     rejectButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            const postId = this.getAttribute('data-post-id');
-            if (confirm('Bạn có chắc chắn muốn từ chối bài viết này không?')) {
-                window.location.href = `/home/admin/post-manage/update-status?postId=${postId}&status=REJECTED`;
-            }
-        });
+        rejectPost(button);
     });
+
+
+    const buttonDetails = document.querySelectorAll('#postDetailModal .action-btn');
+    buttonDetails[0].addEventListener('click', function() {
+        approvePost(buttonDetails[0]);
+    });
+    buttonDetails[1].addEventListener('click', function() {
+        rejectPost(buttonDetails[1]);
+    });
+
+    // rejectButtons.forEach(function(button) {
+    //     button.addEventListener('click', function() {
+    //         const postId = this.getAttribute('data-post-id');
+    //         if (confirm('Bạn có chắc chắn muốn từ chối bài viết này không?')) {
+    //             window.location.href = `/home/admin/post-manage/update-status?postId=${postId}&status=REJECTED`;
+    //         }
+    //     });
+    // });
 
     const urlParams = new URLSearchParams(window.location.search);
     const successMessage = urlParams.get('successMessage');
@@ -47,3 +63,21 @@ window.addEventListener('load', function() {
     }
 
 });
+
+function approvePost(button) {
+    button.addEventListener('click', function() {
+        const postId = this.getAttribute('data-post-id');
+        if (confirm('Bạn có chắc chắn muốn duyệt bài viết này không?')) {
+            window.location.href = `/home/admin/post-manage/update-status?postId=${postId}&status=APPROVED`;
+        }
+    });
+}
+
+function rejectPost(button) {
+    button.addEventListener('click', function() {
+        const postId = this.getAttribute('data-post-id');
+        if (confirm('Bạn có chắc chắn muốn từ chối bài viết này không?')) {
+            window.location.href = `/home/admin/post-manage/update-status?postId=${postId}&status=REJECTED`;
+        }
+    });
+}
