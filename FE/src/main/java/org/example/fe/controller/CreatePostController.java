@@ -205,20 +205,20 @@ public class CreatePostController {
         try{
            batteryCapacity = Integer.parseInt(batteryCapacityStr);
         }catch (NumberFormatException e){
-            model.addAttribute("batteryCapacityError","Invalid batteryCapacity");
+            model.addAttribute("batteryCapacityError","Vui lòng nhập số");
             hasErrors = true;
         }
         try {
             Integer.parseInt(batteryVoltage);
         }catch (NumberFormatException e){
-            model.addAttribute("batteryVoltageError","Invalid batteryVoltage");
+            model.addAttribute("batteryVoltageError","Vui lòng nhập số");
             hasErrors = true;
         }
 
         try {
             Integer.parseInt(batteryYearOfManufacture);
         }catch (NumberFormatException e){
-            model.addAttribute("batteryYearError","Invalid batteryYearOfManufacture");
+            model.addAttribute("batteryYearError","Vui lòng nhập số");
             hasErrors = true;
         }
 

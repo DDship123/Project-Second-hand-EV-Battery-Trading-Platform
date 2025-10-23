@@ -31,6 +31,7 @@ public class updatePostController {
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<PostResponse> response = postService.getPostDetail(postId);
+        session.setAttribute("postCurr", response.getPayload());
         model.addAttribute("post", response.getPayload());
         return "updatePostPage";
     }
@@ -39,8 +40,7 @@ public class updatePostController {
     public String updatePost(Model model,
                              PostResponse updatedPost, HttpSession session, @RequestParam("mainImage") MultipartFile mainImage,
                              @RequestParam(value = "subImages",required = false) List<MultipartFile> subImages) {
-        PostResponse post = (PostResponse) session.getAttribute("post");
-        VehicleResponse vehicle = post.getProduct().getVehicle();
+        PostResponse post = (PostResponse) session.getAttribute("postCurr");
         try {
             if (mainImage != null && !mainImage.isEmpty()) {
                String mainImageUrl = cloudinaryService.uploadImage(mainImage);
@@ -63,7 +63,10 @@ public class updatePostController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        boolean yearChange = !vehicle.getRegistrationYear().equals(updatedPost.getProduct().getVehicle().getRegistrationYear());
+        VehicleResponse vehicle = post.getProduct().getVehicle();
+        VehicleResponse newVehicle = updatedPost.getProduct().getVehicle();
+        boolean yearChange = !vehicle.getRegistrationYear().equals(newVehicle.getRegistrationYear());
+        boolean mileageChange = vehicle.getMileage() == newVehicle.getMileage();
 
         ApiResponse<PostResponse> response = postService.update( updatedPost);
         if (response.getPayload() != null) {
@@ -78,6 +81,13 @@ public class updatePostController {
                         model.addAttribute("yearError", "Invalid Year");
                     }
 
+                }
+                if(mileageChange){
+                    try{
+                        String mileage = 
+                    }catch (NumberFormatException e){
+                        model.addAttribute("mileageError", "Invalid Mileage");
+                    }
                 }
             }
 
