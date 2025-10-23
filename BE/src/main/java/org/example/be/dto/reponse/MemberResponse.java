@@ -15,6 +15,8 @@ public class MemberResponse {
     private String status;
     private String avatarUrl;
     private LocalDateTime createdAt;
+    private MembershipPlanResponse membershipPlanResponse;
+    private MemberPlanUsageResponse memberPlanUsageResponse;
 
     public MemberResponse() {
     }
@@ -34,7 +36,7 @@ public class MemberResponse {
         this.createdAt = createdAt;
     }
 
-    public MemberResponse(int memberId, String username,String avatarUrl, LocalDateTime createdAt) {
+    public MemberResponse(int memberId, String username, String avatarUrl, LocalDateTime createdAt) {
         this.memberId = memberId;
         this.username = username;
         this.avatarUrl = avatarUrl;
@@ -127,5 +129,21 @@ public class MemberResponse {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public MembershipPlanResponse getMembershipPlanResponse() {
+        return membershipPlanResponse;
+    }
+
+    public void setMembershipPlanResponse(MembershipPlanResponse membershipPlanResponse) {
+        this.membershipPlanResponse = membershipPlanResponse;
+    }
+
+    public MemberPlanUsageResponse getMemberPlanUsageResponse() {
+        return memberPlanUsageResponse;
+    }
+
+    public void setMemberPlanUsageResponse(MemberPlanUsageResponse memberPlanUsageResponse) {
+        this.memberPlanUsageResponse = memberPlanUsageResponse;
     }
 }
