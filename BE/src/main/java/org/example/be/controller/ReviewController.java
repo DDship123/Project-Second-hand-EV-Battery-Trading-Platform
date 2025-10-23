@@ -191,16 +191,17 @@ public class ReviewController {
                 return ResponseEntity.status(404).body(response);
             }
 
-            // Cập nhật các thuộc tính
-            if (reviewResponse.getStatus() != null) {
-                review.setStatus(reviewResponse.getStatus());
-            }
-            if (reviewResponse.getComment() != null) {
-                review.setComment(reviewResponse.getComment());
-            }
-            if (reviewResponse.getRating() > 0) {
-                review.setRating(reviewResponse.getRating());
-            }
+//            // Cập nhật các thuộc tính
+//            if (reviewResponse.getStatus() != null) {
+//                review.setStatus(reviewResponse.getStatus());
+//            }
+//            if (reviewResponse.getComment() != null) {
+//                review.setComment(reviewResponse.getComment());
+//            }
+//            if (reviewResponse.getRating() > 0) {
+//                review.setRating(reviewResponse.getRating());
+//            }
+            review.setStatus(reviewResponse.getStatus());
 
             Review updatedReview = reviewService.updateReview(review.getReviewsId(), review);
 

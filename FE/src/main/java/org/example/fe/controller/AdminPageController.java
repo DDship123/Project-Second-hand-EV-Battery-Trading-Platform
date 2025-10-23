@@ -1,12 +1,11 @@
 package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.fe.entity.ApiResponse;
-import org.example.fe.entity.CommentResponse;
-import org.example.fe.entity.MemberResponse;
-import org.example.fe.entity.PostResponse;
+import org.example.fe.entity.*;
 import org.example.fe.service.CommentService;
+import org.example.fe.service.MemberService;
 import org.example.fe.service.PostService;
+import org.example.fe.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/home/admin")
@@ -25,6 +25,10 @@ public class AdminPageController {
     private PostService postService;;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private ReviewService reviewService;
+    @Autowired
+    private MemberService memberService;
 
     @GetMapping(value = {"", "/post-manage/{status}"})
     public String dashboard(Model model, HttpSession session,
@@ -92,8 +96,34 @@ public class AdminPageController {
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/home";
         }
+        Map<String, MemberResponse> users = memberService.getUser().getPayload();
         model.addAttribute("admin", member);
+        model.addAttribute("users", users);
         return "userManage";
+    }
+
+
+    @GetMapping("/member-manage/update-status")
+    public String updateMemberStatus(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                     @RequestParam(name = "memberId",defaultValue = "0") int memberId,
+                                     @RequestParam(name = "status") String status) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/home";
+        }
+        if (memberId == 0) {
+            return "redirect:/home/admin/member-manage";
+        }
+        MemberResponse memberToUpdate = new MemberResponse();
+        memberToUpdate.setMemberId(memberId);
+        memberToUpdate.setStatus(status);
+        ApiResponse<MemberResponse> memberResponse = memberService.updateStatus(memberToUpdate);
+        if (memberResponse.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Cập nhật thành viên thành công.");
+        } else {
+            redirectAttributes.addAttribute("errorMessage", "Cập nhật thành viên thất bại.");
+        }
+        return "redirect:/home/admin/member-manage";
     }
 
     @GetMapping("/comment-review-manage")
@@ -125,6 +155,42 @@ public class AdminPageController {
             redirectAttributes.addAttribute("errorMessage", "Cập nhật bình luận thất bại.");
         }
         return "redirect:/home/admin/comment-review-manage";
+    }
+
+    @GetMapping("/comment-review-manage/review")
+    public String reviewComments(Model model, HttpSession session)
+                                 {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/home";
+        }
+        model.addAttribute("admin", member);
+        List<ReviewResponse> reviews = reviewService.findAllReviewByStatus("PENDING").getPayload();
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("admin", member);
+        return "commentManage";
+    }
+    @GetMapping("/comment-review-manage/review/update-status")
+    public String updateReviewStatus(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                     @RequestParam(name = "reviewId",defaultValue = "0") int reviewId,
+                                     @RequestParam(name = "status") String status) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/home";
+        }
+        if (reviewId == 0) {
+            return "redirect:/home/admin/comment-review-manage/review";
+        }
+        ReviewResponse reviewToUpdate = new ReviewResponse();
+        reviewToUpdate.setReviewId(reviewId);
+        reviewToUpdate.setStatus(status);
+        ApiResponse<ReviewResponse> reviewResponse = reviewService.update(reviewToUpdate);
+        if (reviewResponse.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Cập nhật đánh giá thành công.");
+        } else {
+            redirectAttributes.addAttribute("errorMessage", "Cập nhật đánh giá thất bại.");
+        }
+        return "redirect:/home/admin/comment-review-manage/review";
     }
 
     @GetMapping("/transaction-manage")

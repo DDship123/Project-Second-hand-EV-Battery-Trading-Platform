@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/members")
-public class MemeberController {
+public class MemberController {
 
     @Autowired
     private MemberService memberService;
@@ -142,11 +142,11 @@ public class MemeberController {
         }
     }
 
-    @GetMapping("/users/status/{status}")
-    public ResponseEntity<ApiResponse<Map<MemberResponse, MembershipPlanResponse>>> getUsersByStatus(@PathVariable String status) {
-        ApiResponse<Map<MemberResponse, MembershipPlanResponse>> response = new ApiResponse<>();
+    @GetMapping("/admin/users")
+    public ResponseEntity<ApiResponse<Map<String, MemberResponse>>> getUsersByStatus() {
+        ApiResponse<Map<String, MemberResponse>> response = new ApiResponse<>();
         try {
-            Map<MemberResponse, MembershipPlanResponse> users = memberService.getUsersWithMembershipPlan(status);
+            Map<String, MemberResponse> users = memberService.getUsersWithMembershipPlan();
             HashMap<String, Object> metadata = new HashMap<>();
             metadata.put("count", users.size());
             metadata.put("timestamp", LocalDateTime.now());
