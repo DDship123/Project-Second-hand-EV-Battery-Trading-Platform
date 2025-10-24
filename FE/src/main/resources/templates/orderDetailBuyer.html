@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết Đơn hàng Mua</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/orderDetail.css}" />
+</head>
+
+<body>
+<div class="container">
+    <div class="main-content">
+        <div class="order-detail">
+            <h1 class="page-title">Chi tiết Đơn hàng Mua</h1>
+
+            <!-- Order Information -->
+            <div class="section">
+                <h2>Thông tin Đơn hàng</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Mã đơn:</span>
+                        <span class="value">#PO001</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Ngày tạo:</span>
+                        <span class="value">23/10/2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buyer Information -->
+            <div class="section">
+                <h2>Thông tin Người mua</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Họ và tên:</span>
+                        <span class="value">Nguyễn Văn A</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Số điện thoại:</span>
+                        <span class="value">0123456789</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Email:</span>
+                        <span class="value">nguyenvana@email.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Thành phố:</span>
+                        <span class="value">Hồ Chí Minh</span>
+                    </div>
+                    <div class="info-item info-item--full">
+                        <span class="label">Địa chỉ:</span>
+                        <span class="value">123 Đường ABC, Phường 1, Quận 1, TP. Hồ Chí Minh</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seller Information -->
+            <div class="section">
+                <h2>Thông tin Người bán</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Họ và tên:</span>
+                        <span class="value">Trần Thị B</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Thành phố:</span>
+                        <span class="value">Hà Nội</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Đánh giá:</span>
+                        <span class="value"><i class="fa-solid fa-star star-icon"></i> 4.8 (120 đánh giá)</span>
+                    </div>
+                </div>
+                <div class="info-note">
+                    <i class="fa-solid fa-info-circle"></i>
+                    <span>Thông tin chi tiết của người bán sẽ được hiển thị sau khi admin phê duyệt đơn hàng.</span>
+                </div>
+            </div>
+
+            <!-- Product Information -->
+            <div class="section">
+                <h2>Thông tin Sản phẩm</h2>
+                <div class="product-display">
+                    <div class="product-image-wrapper">
+                        <img src="https://via.placeholder.com/300x300?text=Vinfast+Feliz" alt="Xe máy điện Vinfast Feliz"
+                             class="product-image">
+                    </div>
+                    <div class="product-info-wrapper">
+                        <h3 class="product-name">Xe máy điện Vinfast Feliz</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="label">Hãng xe:</span>
+                                <span class="value">VinFast</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Dòng xe:</span>
+                                <span class="value">Feliz</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Năm đăng ký:</span>
+                                <span class="value">2023</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Số km đã đi:</span>
+                                <span class="value">3,500 km</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Tình trạng xe:</span>
+                                <span class="value">Đã qua sử dụng, còn rất mới</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Dung tích pin:</span>
+                                <span class="value">22Ah</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Xuất xứ:</span>
+                                <span class="value">Việt Nam</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Giá:</span>
+                                <span class="value value--price">25,000,000 VNĐ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Approval Status -->
+            <div class="section">
+                <h2>Trạng thái Phê duyệt</h2>
+
+                <div class="status-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-label">Xác nhận của Người bán:</div>
+                        <div class="timeline-value">
+                            <span class="status-badge status-badge--approved">Đã chấp nhận</span>
+                            <span class="timeline-date">23/10/2025 10:30</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-label">Xác nhận của Admin:</div>
+                        <div class="timeline-value">
+                            <span class="status-badge status-badge--pending">Đang chờ duyệt</span>
+                            <span class="timeline-date">Đang xử lý...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR Code Payment -->
+                <div class="payment-section">
+                    <h3 class="payment-title">Thanh toán</h3>
+                    <div class="payment-content">
+                        <div class="qr-code-wrapper">
+                            <img src="https://via.placeholder.com/200x200?text=QR+Code" alt="QR Code" class="qr-image">
+                            <p class="qr-instruction">Quét mã QR để thanh toán</p>
+                        </div>
+                        <div class="payment-info">
+                            <p class="payment-note">
+                                <i class="fa-solid fa-circle-info"></i>
+                                Vui lòng chuyển tiền đến tài khoản Admin. Admin sẽ giữ tiền tạm thời cho đến khi giao dịch hoàn tất.
+                            </p>
+                            <div class="payment-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Ngân hàng:</span>
+                                    <span class="detail-value">Vietcombank</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Số tài khoản:</span>
+                                    <span class="detail-value">0123456789</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Chủ tài khoản:</span>
+                                    <span class="detail-value">Admin Platform</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Nội dung:</span>
+                                    <span class="detail-value">#PO001</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Amount -->
+            <div class="section-total">
+                <div class="total-wrapper">
+                    <span class="total-label">Tổng số tiền:</span>
+                    <span class="total-amount">25,000,000 VNĐ</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

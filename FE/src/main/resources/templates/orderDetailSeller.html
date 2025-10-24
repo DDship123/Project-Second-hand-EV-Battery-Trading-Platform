@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết Đơn hàng Bán</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/orderDetail.css}" />
+</head>
+
+<body>
+<div class="container">
+    <div class="main-content">
+        <div class="order-detail">
+            <h1 class="page-title">Chi tiết Đơn hàng Bán</h1>
+
+            <!-- Order Information -->
+            <div class="section">
+                <h2>Thông tin Đơn hàng</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Mã đơn:</span>
+                        <span class="value">#SO001</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Ngày tạo:</span>
+                        <span class="value">23/10/2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seller Information (My full details) -->
+            <div class="section">
+                <h2>Thông tin Người bán (Tôi)</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Họ và tên:</span>
+                        <span class="value">Trần Thị B</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Số điện thoại:</span>
+                        <span class="value">0987654321</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Email:</span>
+                        <span class="value">tranthib@email.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Thành phố:</span>
+                        <span class="value">Hà Nội</span>
+                    </div>
+                    <div class="info-item info-item--full">
+                        <span class="label">Địa chỉ:</span>
+                        <span class="value">456 Đường XYZ, Phường 2, Quận Ba Đình, Hà Nội</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buyer Information (Limited details) -->
+            <div class="section">
+                <h2>Thông tin Người mua</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Họ và tên:</span>
+                        <span class="value">Nguyễn Văn A</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Thành phố:</span>
+                        <span class="value">Hồ Chí Minh</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Đánh giá:</span>
+                        <span class="value"><i class="fa-solid fa-star star-icon"></i> 4.5 (85 đánh giá)</span>
+                    </div>
+                </div>
+                <div class="info-note">
+                    <i class="fa-solid fa-info-circle"></i>
+                    <span>Thông tin chi tiết của người mua sẽ được hiển thị sau khi admin phê duyệt đơn hàng.</span>
+                </div>
+            </div>
+
+            <!-- Product Information -->
+            <div class="section">
+                <h2>Thông tin Sản phẩm</h2>
+                <div class="product-display">
+                    <div class="product-image-wrapper">
+                        <img src="https://via.placeholder.com/300x300?text=Vinfast+Feliz" alt="Xe máy điện Vinfast Feliz"
+                             class="product-image">
+                    </div>
+                    <div class="product-info-wrapper">
+                        <h3 class="product-name">Xe máy điện Vinfast Feliz</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="label">Hãng xe:</span>
+                                <span class="value">VinFast</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Dòng xe:</span>
+                                <span class="value">Feliz</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Năm đăng ký:</span>
+                                <span class="value">2023</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Số km đã đi:</span>
+                                <span class="value">3,500 km</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Tình trạng xe:</span>
+                                <span class="value">Đã qua sử dụng, còn rất mới</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Dung tích pin:</span>
+                                <span class="value">22Ah</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Xuất xứ:</span>
+                                <span class="value">Việt Nam</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Giá bán:</span>
+                                <span class="value value--price">25,000,000 VNĐ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Approval Status -->
+            <div class="section">
+                <h2>Trạng thái Phê duyệt</h2>
+
+                <div class="status-timeline">
+                    <!-- Seller approval comes first -->
+                    <div class="timeline-item">
+                        <div class="timeline-label">Xác nhận của Người bán:</div>
+                        <div class="timeline-value">
+                            <span class="status-badge status-badge--approved">Đã phê duyệt</span>
+                            <span class="timeline-date">23/10/2025 13:45</span>
+                        </div>
+                    </div>
+
+                    <!-- Admin approval comes after seller -->
+                    <div class="timeline-item">
+                        <div class="timeline-label">Xác nhận của Admin:</div>
+                        <div class="timeline-value">
+                            <span class="status-badge status-badge--pending">Chờ phê duyệt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons for Seller -->
+                <div class="action-section">
+                    <h3 class="action-title">Hành động</h3>
+                    <div class="action-buttons">
+                        <button class="btn btn--accept">
+                            <i class="fa-solid fa-check"></i> Chấp nhận đơn hàng
+                        </button>
+                        <button class="btn btn--reject">
+                            <i class="fa-solid fa-xmark"></i> Từ chối đơn hàng
+                        </button>
+                    </div>
+                    <p class="action-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>Nếu bạn từ chối đơn hàng, đơn hàng sẽ bị hủy và không cần phê duyệt từ admin.</span>
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Commission & Total -->
+            <div class="section">
+                <h2>Chi phí và Thu nhập</h2>
+                <div class="financial-summary">
+                    <div class="financial-row">
+                        <span class="financial-label">Giá bán sản phẩm:</span>
+                        <span class="financial-value">25,000,000 VNĐ</span>
+                    </div>
+                    <div class="financial-row financial-row--commission">
+              <span class="financial-label">
+                Phí hoa hồng (5%):
+                <span class="tooltip">
+                  <i class="fa-solid fa-circle-question"></i>
+                  <span class="tooltip-text">Phí nền tảng thu từ mỗi giao dịch</span>
+                </span>
+              </span>
+                        <span class="financial-value">- 1,250,000 VNĐ</span>
+                    </div>
+                    <div class="financial-row financial-row--total">
+                        <span class="financial-label">Tổng số tiền bạn nhận được:</span>
+                        <span class="financial-value financial-value--total">23,750,000 VNĐ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Amount Section -->
+            <div class="section-total">
+                <div class="total-wrapper">
+                    <span class="total-label">Tổng tiền bạn sẽ nhận:</span>
+                    <span class="total-amount">23,750,000 VNĐ</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

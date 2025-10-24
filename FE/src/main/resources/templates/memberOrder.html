@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Order Management Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/memberOrder.css}" />
+</head>
+
+<body>
+<div class="container">
+    <div class="main-content">
+        <div class="order-management">
+            <div class="content-toolbar">
+                <div class="filter-tabs main-tabs">
+                    <button class="tab-btn active" data-main-tab="purchase">Đơn mua</button>
+                    <button class="tab-btn" data-main-tab="sales">Đơn bán</button>
+                </div>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+            </div>
+
+            <!-- Purchase Orders Tab Content -->
+            <div class="main-tab-content active" id="purchaseTab">
+                <div class="content-header">
+                    <select class="tab-select">
+                        <option value="pending" selected>Yêu cầu mua hàng (3)</option>
+                        <option value="approved">Chấp thuận yêu cầu (5)</option>
+                        <option value="rejected">Hủy bỏ yêu cầu (2)</option>
+                    </select>
+                    <div class="result-info">Tổng 10 đơn hàng</div>
+                </div>
+                <div class="sub-tab-content active" id="purchasePendingSubTab">
+                    <div class="order-management__list">
+                        <a href="orderDetailBuyer.html?id=1" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+1" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--pending">Đợi kiểm duyệt</div>
+                                <div class="order-management__card-id">#PO001</div>
+                                <div class="order-management__card-title">Xe máy điện Vinfast Feliz</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người bán:</span>
+                                    <span class="order-management__card-info-value">Nguyen Van B, Ho Chi Minh, <i class="fa-solid fa-star"></i>4.8</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 25,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                        <a href="orderDetailBuyer.html?id=2" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+2" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--pending">Đợi kiểm duyệt</div>
+                                <div class="order-management__card-id">#PO002</div>
+                                <div class="order-management__card-title">Xe đạp điện Asama</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người bán:</span>
+                                    <span class="order-management__card-info-value">Tran Thi C, Hanoi, <i class="fa-solid fa-star"></i>4.2</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 15,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                        <a href="orderDetailBuyer.html?id=3" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+3" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--pending">Đợi kiểm duyệt</div>
+                                <div class="order-management__card-id">#PO003</div>
+                                <div class="order-management__card-title">Xe scooter Yamaha</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người bán:</span>
+                                    <span class="order-management__card-info-value">Le Van D, Da Nang, <i class="fa-solid fa-star"></i>4.5</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 30,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="sub-tab-content" id="purchaseApprovedSubTab">
+                    <div class="order-management__list">
+                        <!-- Dummy completed purchase orders -->
+                        <a href="orderDetailBuyer.html?id=4" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+4" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--approved">Được chấp thuận</div>
+                                <div class="order-management__card-id">#PO004</div>
+                                <div class="order-management__card-title">Xe máy điện Honda</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người bán:</span>
+                                    <span class="order-management__card-info-value">Pham Van E, Can Tho, <i class="fa-solid fa-star"></i>4.7</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 40,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                        <!-- Add more as needed -->
+                    </div>
+                </div>
+                <div class="sub-tab-content" id="purchaseRejectedSubTab">
+                    <div class="order-management__list">
+                        <!-- Dummy failed purchase orders -->
+                        <a href="orderDetailBuyer.html?id=5" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+5" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--rejected">Từ chối</div>
+                                <div class="order-management__card-id">#PO005</div>
+                                <div class="order-management__card-title">Xe đạp điện Giant</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người bán:</span>
+                                    <span class="order-management__card-info-value">Vo Thi F, Hue, <i class="fa-solid fa-star"></i>4.0</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 20,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                        <!-- Add more as needed -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Orders Tab Content -->
+            <div class="main-tab-content" id="salesTab">
+                <div class="content-header">
+                    <select class="tab-select">
+                        <option value="pending" selected>Đợi kiểm duyệt (2)</option>
+                        <option value="approved">Đã chấp thuận (4)</option>
+                        <option value="rejected">Từ chối (1)</option>
+                    </select>
+                    <div class="result-info">Tổng 7 đơn hàng</div>
+                </div>
+                <div class="sub-tab-content active" id="salesPendingSubTab">
+                    <div class="order-management__list">
+                        <a href="orderDetailSeller.html?id=6" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+6" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--pending">Đợi kiểm duyệt</div>
+                                <div class="order-management__card-id">#SO001</div>
+                                <div class="order-management__card-title">Xe máy điện Vinfast Feliz</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người mua:</span>
+                                    <span class="order-management__card-info-value">Tran Thi G, Ho Chi Minh</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 25,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                        <a href="orderDetailSeller.html?id=7" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+7" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--pending">Đợi kiểm duyệt</div>
+                                <div class="order-management__card-id">#SO002</div>
+                                <div class="order-management__card-title">Xe đạp điện Asama</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người mua:</span>
+                                    <span class="order-management__card-info-value">Le Van H, Hanoi</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 15,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="sub-tab-content" id="salesApprovedSubTab">
+                    <div class="order-management__list">
+                        <!-- Dummy completed sales orders -->
+                        <a href="orderDetailSeller.html?id=8" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+8" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--approved">Được chấp thuận</div>
+                                <div class="order-management__card-id">#SO003</div>
+                                <div class="order-management__card-title">Xe scooter Yamaha</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người mua:</span>
+                                    <span class="order-management__card-info-value">Pham Van I, Da Nang</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 30,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                        <!-- Add more as needed -->
+                    </div>
+                </div>
+                <div class="sub-tab-content" id="salesRejectedSubTab">
+                    <div class="order-management__list">
+                        <!-- Dummy failed sales orders -->
+                        <a href="orderDetailSeller.html?id=9" class="order-management__card">
+                            <img class="order-management__card-image" src="https://via.placeholder.com/100x100?text=Product+9" alt="Product Image">
+                            <div class="order-management__card-content">
+                                <div class="order-management__card-status order-management__card-status--rejected">Từ chối</div>
+                                <div class="order-management__card-id">#SO004</div>
+                                <div class="order-management__card-title">Xe đạp điện Giant</div>
+                                <div class="order-management__card-info">
+                                    <span class="order-management__card-info-label">Người mua:</span>
+                                    <span class="order-management__card-info-value">Vo Thi J, Hue</span>
+                                </div>
+                                <div class="order-management__card-total">Tổng: 20,000,000 VNĐ</div>
+                            </div>
+                        </a>
+                        <!-- Add more as needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/memberOrder.js}"></script>
+</body>
+
+</html>
