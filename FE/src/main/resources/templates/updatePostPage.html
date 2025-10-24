@@ -202,7 +202,7 @@
                                 required
                                 th:field="*{product.vehicle.registrationYear}"
                         />
-                        <p th:if="${yearError != null}" th:text="${yearError}"></p>
+                        <p th:if="${yearError != null}" th:text="${yearError}" style="color: red"></p>
                     </div>
 
                     <div class="registration__form-row">
@@ -221,13 +221,12 @@
                                 class="registration__form-group registration__form-group--half"
                         >
                             <input
-                                    type="text"
+                                    type="number"
                                     class="registration__input"
                                     placeholder="Số Km đã di *"
                                     th:field="*{product.vehicle.mileage}"
                                     required
                             />
-                            <p th:if="${vehicleMileageError != null}" th:text="${vehicleMileageError}"></p>
                         </div>
                     </div>
 
@@ -242,6 +241,7 @@
                                     required
                                     th:field="*{product.vehicle.batteryCapacity}"
                             />
+                            <p th:if="${batteryCapacityError != null}" th:text="${batteryCapacityError}" style="color: red"></p>
                         </div>
                         <div
                                 class="registration__form-group registration__form-group--half"
@@ -272,9 +272,10 @@
                                 class="registration__input"
                                 placeholder="Giá tiền *"
                                 name="productPrice"
-                                th:field="*{price}"
+                                th:field="*{priceInput}"
                                 required
                         />
+                        <p th:if="${priceError != null}" th:text="${priceError}" style="color: red"></p>
                     </div>
                 </div>
                 <div th:if="${post.getProduct().getBattery() != null}" class="battery active">
@@ -303,6 +304,7 @@
                                 th:field="*{product.battery.yearOfManufacture}"
                                 required
                         />
+                        <p th:if="${yearError != null}" th:text="${yearError}" style="color: red"></p>
                     </div>
 
                     <div class="registration__form-row">
@@ -352,6 +354,7 @@
                                     th:field="*{product.battery.voltage}"
                                     required
                             />
+                            <p th:if="${voltageError != null}" th:text="${voltageError}" style="color: red"></p>
                         </div>
                     </div>
 
@@ -360,9 +363,10 @@
                                 type="text"
                                 class="registration__input"
                                 placeholder="Giá tiền *"
-                                th:field="*{price}"
+                                th:field="*{priceInput}"
                                 required
                         />
+                        <p th:if="${priceError != null}" th:text="${priceError}" style="color: red"></p>
                     </div>
                 </div>
             </div>
