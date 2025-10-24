@@ -1,7 +1,7 @@
 package org.example.be.controller;
 
-import org.example.be.dto.reponse.ApiResponse;
-import org.example.be.dto.reponse.CommentResponse;
+import org.example.be.dto.response.ApiResponse;
+import org.example.be.dto.response.CommentResponse;
 import org.example.be.entity.Comment;
 import org.example.be.entity.Member;
 import org.example.be.entity.Post;

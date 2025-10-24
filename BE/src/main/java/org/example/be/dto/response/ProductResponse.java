@@ -1,7 +1,4 @@
-package org.example.be.dto.reponse;
-
-import org.example.be.dto.reponse.BatteryResponse;
-import org.example.be.dto.reponse.VehicleResponse;
+package org.example.be.dto.response;
 
 import java.time.LocalDateTime;
 

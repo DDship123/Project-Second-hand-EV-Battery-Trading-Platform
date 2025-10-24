@@ -1,7 +1,7 @@
 package org.example.be.service;
 
-import org.example.be.dto.reponse.MemberResponse;
-import org.example.be.dto.reponse.ReviewResponse;
+import org.example.be.dto.response.MemberResponse;
+import org.example.be.dto.response.ReviewResponse;
 import org.example.be.entity.Review;
 import org.example.be.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;

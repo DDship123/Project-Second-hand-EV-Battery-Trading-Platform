@@ -1,6 +1,6 @@
 package org.example.be.controller;
 
-import org.example.be.dto.reponse.*;
+import org.example.be.dto.response.*;
 import org.example.be.entity.*;
 import org.example.be.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
-package org.example.be.dto.reponse;
+package org.example.be.dto.response;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class MemberResponse {

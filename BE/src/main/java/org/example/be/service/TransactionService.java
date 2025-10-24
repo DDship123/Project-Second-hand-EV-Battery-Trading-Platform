@@ -1,6 +1,6 @@
 package org.example.be.service;
 
-import org.example.be.dto.reponse.ApiResponse;
+import org.example.be.dto.response.ApiResponse;
 import org.example.be.entity.Transaction;
 import org.example.be.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;

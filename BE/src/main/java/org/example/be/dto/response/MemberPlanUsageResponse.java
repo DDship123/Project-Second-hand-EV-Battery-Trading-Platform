@@ -1,6 +1,5 @@
-package org.example.be.dto.reponse;
+package org.example.be.dto.response;
 
-import org.example.be.entity.Member;
 import org.example.be.entity.MembershipPlan;
 
 import java.time.LocalDateTime;

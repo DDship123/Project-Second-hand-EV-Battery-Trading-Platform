@@ -1,4 +1,4 @@
-package org.example.be.dto.reponse;
+package org.example.be.dto.response;
 
 public class BatteryResponse {
     private int batteryId;

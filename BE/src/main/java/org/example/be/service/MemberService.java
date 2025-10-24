@@ -1,8 +1,8 @@
 package org.example.be.service;
 
-import org.example.be.dto.reponse.ApiResponse;
-import org.example.be.dto.reponse.MemberResponse;
-import org.example.be.dto.reponse.MembershipPlanResponse;
+import org.example.be.dto.response.ApiResponse;
+import org.example.be.dto.response.MemberResponse;
+import org.example.be.dto.response.MembershipPlanResponse;
 import org.example.be.dto.request.LoginRequest;
 import org.example.be.dto.request.MemberRegisterRequest;
 import org.example.be.entity.Member;
@@ -16,7 +16,6 @@ import org.springframework.web.servlet.View;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class MemberService {

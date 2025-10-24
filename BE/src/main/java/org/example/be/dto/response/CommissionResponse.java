@@ -1,6 +1,4 @@
-package org.example.be.dto.reponse;
-
-import org.example.be.entity.Transaction;
+package org.example.be.dto.response;
 
 import java.time.LocalDateTime;
 
