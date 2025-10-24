@@ -2,10 +2,7 @@ package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.fe.config.CloudinaryService;
-import org.example.fe.entity.ApiResponse;
-import org.example.fe.entity.MemberResponse;
-import org.example.fe.entity.PostResponse;
-import org.example.fe.entity.VehicleResponse;
+import org.example.fe.entity.*;
 import org.example.fe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +39,7 @@ public class updatePostController {
                              PostResponse updatedPost, HttpSession session, @RequestParam("mainImage") MultipartFile mainImage,
                              @RequestParam(value = "subImages",required = false) List<MultipartFile> subImages) {
         PostResponse post = (PostResponse) session.getAttribute("postCurr");
+        boolean hasError = false;
         try {
             if (mainImage != null && !mainImage.isEmpty()) {
                String mainImageUrl = cloudinaryService.uploadImage(mainImage);
@@ -63,34 +62,81 @@ public class updatePostController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        VehicleResponse vehicle = post.getProduct().getVehicle();
-        VehicleResponse newVehicle = updatedPost.getProduct().getVehicle();
-        boolean yearChange = !vehicle.getRegistrationYear().equals(newVehicle.getRegistrationYear());
-        boolean mileageChange = vehicle.getMileage() == newVehicle.getMileage();
+
+        if(post.getProduct().getVehicle() != null){
+            VehicleResponse vehicle = post.getProduct().getVehicle();
+            VehicleResponse newVehicle = updatedPost.getProduct().getVehicle();
+            boolean yearChange = !vehicle.getRegistrationYear().equals(newVehicle.getRegistrationYear());
+            boolean vehicleBatteryCapacity = vehicle.getBatteryCapacity().equals(newVehicle.getBatteryCapacity());
+
+            try{
+                //kiểm tra user có thay đỏi năm không
+                if(yearChange){
+                    Integer.parseInt(newVehicle.getRegistrationYear());
+                }
+            }catch (NumberFormatException e){
+                //nếu người dùng nhập chuỗi vào thì sẽ thông báo validate
+                model.addAttribute("yearError", "Vui lòng nhập số");
+                hasError = true;
+            }
+
+            try{
+                if(vehicleBatteryCapacity){
+                    Integer.parseInt(newVehicle.getBatteryCapacity());
+                }
+            }catch (NumberFormatException e){
+                model.addAttribute("batteryCapacityError","Vui lòng nhập số");
+                hasError = true;
+            }
+        }
+        else{
+            BatteryResponse batterryCurrency = post.getProduct().getBattery();
+            BatteryResponse newBatteryCurrency = updatedPost.getProduct().getBattery();
+            boolean yearChange = !batterryCurrency.getYearOfManufacture().equals(newBatteryCurrency.getYearOfManufacture());
+            boolean voltageChange = !batterryCurrency.getVoltage().equals(newBatteryCurrency.getVoltage());
+
+            try{
+                if(yearChange){
+                    Integer.parseInt(newBatteryCurrency.getYearOfManufacture());
+                }
+            }catch (NumberFormatException e){
+                model.addAttribute("yearError","Vui lòng nhập số");
+                hasError = true;
+            }
+
+            try{
+                if(voltageChange){
+                    Integer.parseInt(newBatteryCurrency.getVoltage());
+                }
+            }catch (NumberFormatException e){
+                model.addAttribute("voltageError","Vui lòng nhập số");
+                hasError = true;
+            }
+
+        }
+
+        try {
+            BigDecimal price = new BigDecimal(updatedPost.getPriceInput());
+            updatedPost.setPrice(price);
+        } catch (Exception e) {
+            //nếu người dùng nhập chuỗi vào trong ô giá tiền thì sẽ có thông ba validate
+            model.addAttribute("priceError", "Vui lòng nhập số");
+            hasError = true;
+        }
+
+
+        if(hasError){
+            model.addAttribute("post", updatedPost);
+            MemberResponse user = (MemberResponse) session.getAttribute("user");
+            model.addAttribute("user", user);
+            model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
+            return "updatePostPage";
+        }
 
         ApiResponse<PostResponse> response = postService.update( updatedPost);
         if (response.getPayload() != null) {
             return "redirect:/home/store";
         } else {
-            Map<String , String> errors = response.getError();
-            if(!errors.isEmpty()){
-                if(yearChange){
-                    try{
-                        Integer.parseInt(updatedPost.getProduct().getVehicle().getRegistrationYear());
-                    }catch (NumberFormatException e){
-                        model.addAttribute("yearError", "Invalid Year");
-                    }
-
-                }
-//                if(mileageChange){
-//                    try{
-//                        String mileage =
-//                    }catch (NumberFormatException e){
-//                        model.addAttribute("mileageError", "Invalid Mileage");
-//                    }
-//                }
-            }
-
             model.addAttribute("error", response.getError());
             model.addAttribute("post", updatedPost);
             MemberResponse user = (MemberResponse) session.getAttribute("user");

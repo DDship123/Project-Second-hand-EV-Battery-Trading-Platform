@@ -16,6 +16,7 @@ public class PostResponse {
     private MemberResponse seller;
     private ProductResponse product;
     private List<CommentResponse> comments;
+    private String priceInput; // nhận chuỗi nhập từ form
 
 
     // images
@@ -140,5 +141,13 @@ public class PostResponse {
 
     public void setPostImages(List<PostImageResponse> postImages) {
         this.postImages = postImages;
+    }
+
+    public String getPriceInput() {
+        return priceInput;
+    }
+
+    public void setPriceInput(String priceInput) {
+        this.priceInput = priceInput;
     }
 }
