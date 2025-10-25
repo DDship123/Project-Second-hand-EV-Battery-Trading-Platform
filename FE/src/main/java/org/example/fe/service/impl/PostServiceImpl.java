@@ -633,7 +633,7 @@ public class PostServiceImpl implements PostService {
 
             // Make API call to backend
             ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts/delete" + postId,
+                    apiBaseUrl + "/api/posts/" + postId,
                     HttpMethod.DELETE,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}

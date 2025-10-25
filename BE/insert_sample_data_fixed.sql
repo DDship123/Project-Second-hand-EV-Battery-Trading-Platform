@@ -24,16 +24,14 @@ VALUES
     ('long_nguyen', N'369 Đường Phan Châu Trinh, Quận Thanh Khê', 'long.nguyen@gmail.com', '0934567891', N'Đà Nẵng', 'LongNg369!', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-04-01 08:50:00' AS DATETIME)),
     ('ha_pham', N'741 Đường Cách Mạng Tháng 8, Quận 10', 'ha.pham@gmail.com', '0945678902', N'Thành phố Hồ Chí Minh', 'HaPham741#', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-04-03 17:35:00' AS DATETIME));
 
+-- =============================================
 -- 2. MEMBERSHIP_PLANS (Independent - no dependencies)
 -- =============================================
 INSERT INTO membership_plans (name, price, duration, max_posts, priority)
 VALUES
     ('Free', 0.00, 30, 5, 'LOW'),
     ('Basic', 99000.00, 30, 20, 'MEDIUM'),
-    ('Premium', 299000.00, 30, 100, 'HIGH'),
-    ('VIP', 599000.00, 30, 999, 'HIGHEST'),
-    ('Student', 49000.00, 30, 10, 'MEDIUM'),
-    ('Business', 499000.00, 30, 500, 'HIGH');
+    ('Premium', 299000.00, 30, 100, 'HIGH');
 
 -- 3. VEHICLE (Independent - no dependencies)
 -- =============================================
@@ -93,15 +91,15 @@ VALUES
     (4, 3, CAST('2024-03-01 00:00:00' AS DATETIME), CAST('2024-03-31 23:59:59' AS DATETIME), 2, 'ACTIVE'),
     (5, 1, CAST('2024-03-05 00:00:00' AS DATETIME), CAST('2024-04-04 23:59:59' AS DATETIME), 0, 'ACTIVE'),
     (6, 2, CAST('2024-03-15 00:00:00' AS DATETIME), CAST('2024-04-14 23:59:59' AS DATETIME), 2, 'ACTIVE'),
-    (7, 5, CAST('2024-03-20 00:00:00' AS DATETIME), CAST('2024-04-19 23:59:59' AS DATETIME), 2, 'ACTIVE'),
+    (7, 1, CAST('2024-03-20 00:00:00' AS DATETIME), CAST('2024-04-19 23:59:59' AS DATETIME), 2, 'ACTIVE'),
     (8, 3, CAST('2024-03-22 00:00:00' AS DATETIME), CAST('2024-04-21 23:59:59' AS DATETIME), 2, 'ACTIVE'),
-    (9, 4, CAST('2024-03-25 00:00:00' AS DATETIME), CAST('2024-04-24 23:59:59' AS DATETIME), 2, 'ACTIVE'),
-    (10, 6, CAST('2024-03-28 00:00:00' AS DATETIME), CAST('2024-04-27 23:59:59' AS DATETIME), 2, 'ACTIVE'),
+    (9, 3, CAST('2024-03-25 00:00:00' AS DATETIME), CAST('2024-04-24 23:59:59' AS DATETIME), 2, 'ACTIVE'),
+    (10, 2, CAST('2024-03-28 00:00:00' AS DATETIME), CAST('2024-04-27 23:59:59' AS DATETIME), 2, 'ACTIVE'),
     (11, 2, CAST('2024-03-29 00:00:00' AS DATETIME), CAST('2024-04-28 23:59:59' AS DATETIME), 1, 'ACTIVE'),
     (12, 3, CAST('2024-03-30 00:00:00' AS DATETIME), CAST('2024-04-29 23:59:59' AS DATETIME), 1, 'ACTIVE'),
-    (13, 4, CAST('2024-04-01 00:00:00' AS DATETIME), CAST('2024-04-30 23:59:59' AS DATETIME), 1, 'ACTIVE'),
+    (13, 2, CAST('2024-04-01 00:00:00' AS DATETIME), CAST('2024-04-30 23:59:59' AS DATETIME), 1, 'ACTIVE'),
     (14, 1, CAST('2024-04-02 00:00:00' AS DATETIME), CAST('2024-05-01 23:59:59' AS DATETIME), 1, 'ACTIVE'),
-    (15, 5, CAST('2024-04-03 00:00:00' AS DATETIME), CAST('2024-05-02 23:59:59' AS DATETIME), 1, 'ACTIVE');
+    (15, 1, CAST('2024-04-03 00:00:00' AS DATETIME), CAST('2024-05-02 23:59:59' AS DATETIME), 1, 'ACTIVE');
 
 -- 6. PRODUCTS (Depends on: members, vehicle, battery)
 -- =============================================
@@ -245,50 +243,186 @@ VALUES
     (7, 14),  -- Trang thích Pin VinFast
     (8, 5);   -- Đức thích Pin Panasonic
 
+-- =============================================
 -- 10. COMMENTS (Depends on: posts, members)
 -- =============================================
 INSERT INTO comments (post_id, member_id, rating, comment, status, created_at)
 VALUES
+    -- Post 1: Honda SH 150i
     (1, 5, 5, N'Xe đẹp quá! Cho mình xem xe được không ạ?', 'APPROVED', '2024-03-11 14:30:00'),
-    (1, 3, 4, N'Giá có thương lượng không bạn?', 'PENDING', '2024-03-11 16:45:00'),
-    (2, 2, 5, N'Xe còn không bạn? Mình có nhu cầu mua.', 'APPROVED', '2024-03-13 10:20:00'),
-    (3, 5, 5, N'Pin này dùng cho xe gì được ạ?', 'APPROVED', '2024-03-16 09:15:00'),
-    (4, 5, 5, N'Xe đẹp lắm! Mình muốn mua.', 'REJECTED', '2024-03-19 11:00:00'),
-    (6, 7, 4, N'Honda Vision này có bảo hành không ạ?', 'PENDING', '2024-03-23 10:20:00'),
-    (7, 8, 5, N'Yamaha Grande giá này quá hời! Xe còn không?', 'APPROVED', '2024-03-24 15:30:00'),
-    (8, 6, 5, N'Pin Samsung này chất lượng thế nào ạ?', 'APPROVED', '2024-03-26 09:45:00'),
-    (9, 10, 5, N'Vespa Primavera đẹp quá! Có thể xem xe không?', 'PENDING', '2024-03-28 14:15:00'),
-    (10, 11, 4, N'VinFast Theon S này có sạc nhanh không?', 'APPROVED', '2024-03-29 11:30:00'),
-    (11, 12, 5, N'Pin CATL này chạy được bao xa vậy ạ?', 'APPROVED', '2024-03-30 16:20:00'),
-    (12, 13, 4, N'Honda PCX 160 có tiết kiệm xăng không?', 'REJECTED', '2024-03-31 10:40:00'),
-    (13, 14, 5, N'VinFast Klara S so với A2 khác gì ạ?', 'PENDING', '2024-04-02 13:25:00'),
-    (14, 15, 5, N'Pin VinFast chính hãng giá này ổn không?', 'APPROVED', '2024-04-03 09:50:00'),
-    (15, 6, 4, N'VinFast Ludo phù hợp cho sinh viên không?', 'APPROVED', '2024-04-04 14:35:00'),
-    (16, 7, 5, N'Pin Bosch chất lượng thật sự tốt!', 'REJECTED', '2024-04-05 11:15:00'),
-    (17, 8, 4, N'Honda Lead 125 này có phanh ABS không?', 'PENDING', '2024-04-06 16:45:00'),
-    (18, 9, 5, N'Yamaha FreeGo màu xanh này đẹp quá!', 'APPROVED', '2024-04-07 12:30:00'),
-    (19, 10, 5, N'Pin Yadea 45Ah chạy xa thật không ạ?', 'APPROVED', '2024-04-08 10:25:00'),
-    (20, 2, 4, N'Yadea Like 200 giống Vespa thật không?', 'PENDING', '2024-04-09 15:10:00');
+    (1, 3, 4, N'Giá có thương lượng không bạn?', 'APPROVED', '2024-03-11 16:45:00'),
+    (1, 14, 5, N'Honda SH màu đỏ này cực kỳ đẹp, mình rất thích!', 'APPROVED', '2024-03-12 09:15:00'),
+    (1, 6, 4, N'5000km thôi thì xe còn rất mới. Giá hơi cao nhỉ?', 'PENDING', '2024-03-12 13:20:00'),
+    (1, 9, 5, N'Xe zin như này hiếm lắm, ai cần mua nhanh kẻo hết!', 'APPROVED', '2024-03-13 10:45:00'),
 
--- 11. TRANSACTIONS (Depends on: members, posts)
+    -- Post 2: Yamaha Janus
+    (2, 2, 5, N'Xe còn không bạn? Mình có nhu cầu mua.', 'APPROVED', '2024-03-13 10:20:00'),
+    (2, 10, 4, N'Yamaha Janus đời 2021 giá này ổn không các bạn?', 'APPROVED', '2024-03-13 15:30:00'),
+    (2, 7, 5, N'Màu xanh đẹp lắm, phù hợp với nữ sử dụng!', 'APPROVED', '2024-03-14 08:45:00'),
+    (2, 12, 3, N'Phanh CBS có an toàn thực sự không nhỉ?', 'PENDING', '2024-03-14 11:20:00'),
+
+    -- Post 3: Pin LG
+    (3, 5, 5, N'Pin này dùng cho xe gì được ạ?', 'APPROVED', '2024-03-16 09:15:00'),
+    (3, 2, 5, N'Pin LG chất lượng tốt, mình đang dùng loại này!', 'APPROVED', '2024-03-16 14:20:00'),
+    (3, 8, 4, N'Giá 8.5 triệu cho pin LG 60V 28Ah là hợp lý rồi', 'APPROVED', '2024-03-17 10:30:00'),
+    (3, 15, 5, N'Bảo hành 2 năm thì yên tâm mua nè!', 'APPROVED', '2024-03-17 16:45:00'),
+    (3, 11, 5, N'Pin này phù hợp với SH 150i không bạn?', 'PENDING', '2024-03-18 09:00:00'),
+
+    -- Post 4: VinFast Klara A2
+    (4, 5, 5, N'Xe đẹp lắm! Mình muốn mua.', 'REJECTED', '2024-03-19 11:00:00'),
+    (4, 2, 4, N'VinFast Klara A2 màu trắng sang trọng quá!', 'APPROVED', '2024-03-19 14:30:00'),
+
+    -- Post 5: Pin Panasonic
+    (5, 14, 3, N'Pin đã qua sử dụng 1 năm thì còn tốt không ạ?', 'APPROVED', '2024-03-21 09:30:00'),
+    (5, 7, 4, N'Giá sinh viên thì phải rẻ hơn chứ bạn ơi!', 'APPROVED', '2024-03-21 13:45:00'),
+    (5, 13, 4, N'Chạy được 40-50km/sạc là ổn cho sinh viên rồi!', 'PENDING', '2024-03-22 10:15:00'),
+
+    -- Post 6: Honda Vision
+    (6, 7, 4, N'Honda Vision này có bảo hành không ạ?', 'APPROVED', '2024-03-23 10:20:00'),
+    (6, 13, 5, N'Xe gia đình sử dụng thì yên tâm hơn xe kinh doanh!', 'APPROVED', '2024-03-23 14:35:00'),
+    (6, 11, 5, N'Màu xám bạc đẹp và bền màu, rất thích!', 'APPROVED', '2024-03-24 09:00:00'),
+    (6, 15, 4, N'22 triệu cho Vision 110 đời 2021 là giá tốt rồi!', 'PENDING', '2024-03-24 15:20:00'),
+
+    -- Post 7: Yamaha Grande
+    (7, 8, 5, N'Yamaha Grande giá này quá hời! Xe còn không?', 'APPROVED', '2024-03-24 15:30:00'),
+    (7, 15, 5, N'4200km thì như xe mới luôn, mua ngay đi!', 'APPROVED', '2024-03-25 08:15:00'),
+    (7, 4, 4, N'Màu đen trông sang trọng và nam tính!', 'APPROVED', '2024-03-25 11:40:00'),
+    (7, 12, 5, N'Bao test máy thì tuyệt vời, cho mình xem xe nhé!', 'PENDING', '2024-03-26 09:30:00'),
+
+    -- Post 8: Pin Samsung
+    (8, 6, 5, N'Pin Samsung này chất lượng thế nào ạ?', 'APPROVED', '2024-03-26 09:45:00'),
+    (8, 12, 5, N'Pin Samsung SDI rất bền, mình đang dùng!', 'APPROVED', '2024-03-26 14:20:00'),
+    (8, 9, 4, N'Sạc nhanh thì tiện lợi lắm, giá hơi cao!', 'PENDING', '2024-03-27 10:15:00'),
+
+    -- Post 9: Vespa Primavera
+    (9, 10, 5, N'Vespa Primavera đẹp quá! Có thể xem xe không?', 'APPROVED', '2024-03-28 14:15:00'),
+    (9, 6, 5, N'Xe Ý nhập khẩu chính hãng thì đắt nhưng chất lượng!', 'APPROVED', '2024-03-29 09:30:00'),
+    (9, 5, 3, N'85 triệu thì hơi đắt với sinh viên như mình!', 'APPROVED', '2024-03-29 13:45:00'),
+    (9, 8, 5, N'Màu xanh mint độc đáo và sang trọng lắm!', 'PENDING', '2024-03-30 10:20:00'),
+
+    -- Post 10: VinFast Theon S
+    (10, 11, 4, N'VinFast Theon S này có sạc nhanh không?', 'APPROVED', '2024-03-29 11:30:00'),
+    (10, 2, 5, N'Xe điện cao cấp nhất VinFast, chưa lăn bánh nữa!', 'APPROVED', '2024-03-30 08:15:00'),
+
+    -- Post 11: Pin CATL
+    (11, 12, 5, N'Pin CATL này chạy được bao xa vậy ạ?', 'APPROVED', '2024-03-30 16:20:00'),
+    (11, 13, 5, N'72V 40Ah dung lượng khủng, phù hợp xe cao cấp!', 'APPROVED', '2024-03-31 09:45:00'),
+    (11, 10, 4, N'Pin CATL Trung Quốc nhưng chất lượng tốt lắm!', 'PENDING', '2024-03-31 14:30:00'),
+
+    -- Post 12: Honda PCX 160
+    (12, 13, 4, N'Honda PCX 160 có tiết kiệm xăng không?', 'APPROVED', '2024-03-31 10:40:00'),
+    (12, 3, 5, N'Màu trắng đen sporty cực kỳ đẹp!', 'APPROVED', '2024-04-01 08:20:00'),
+    (12, 9, 5, N'PCX 160 êm ái và tiết kiệm nhiên liệu lắm!', 'APPROVED', '2024-04-01 13:15:00'),
+    (12, 14, 4, N'45 triệu cho PCX 160 đời 2022 hợp lý chưa?', 'REJECTED', '2024-04-02 09:30:00'),
+
+    -- Post 13: VinFast Klara S
+    (13, 14, 5, N'VinFast Klara S so với A2 khác gì ạ?', 'APPROVED', '2024-04-02 13:25:00'),
+    (13, 7, 5, N'Klara S có pin lớn hơn, chạy xa hơn nhiều!', 'APPROVED', '2024-04-03 09:40:00'),
+    (13, 9, 5, N'Phiên bản cao cấp thì đáng giá, mua luôn!', 'PENDING', '2024-04-03 14:55:00'),
+
+    -- Post 14: Pin VinFast
+    (14, 15, 5, N'Pin VinFast chính hãng giá này ổn không?', 'APPROVED', '2024-04-03 09:50:00'),
+    (14, 10, 4, N'Bảo hành dài hạn thì yên tâm sử dụng!', 'PENDING', '2024-04-04 11:20:00'),
+
+    -- Post 15: VinFast Ludo
+    (15, 6, 4, N'VinFast Ludo phù hợp cho sinh viên không?', 'APPROVED', '2024-04-04 14:35:00'),
+    (15, 11, 5, N'Thiết kế trẻ trung, giá 29 triệu rất phải chăng!', 'APPROVED', '2024-04-05 09:15:00'),
+    (15, 8, 5, N'Ludo mới ra mắt 2024, công nghệ mới nhất!', 'APPROVED', '2024-04-05 13:40:00'),
+
+    -- Post 16: Pin Bosch
+    (16, 7, 5, N'Pin Bosch chất lượng thật sự tốt!', 'APPROVED', '2024-04-05 11:15:00'),
+    (16, 9, 5, N'Hàng Đức thì không bàn cãi về chất lượng!', 'APPROVED', '2024-04-06 08:30:00'),
+    (16, 10, 4, N'Giá 9.5 triệu hơi cao nhưng xứng đáng!', 'REJECTED', '2024-04-06 14:45:00'),
+
+    -- Post 17: Honda Lead 125
+    (17, 8, 4, N'Honda Lead 125 này có phanh ABS không?', 'APPROVED', '2024-04-06 16:45:00'),
+    (17, 4, 5, N'Xe gia đình màu đỏ đẹp, phù hợp chị em!', 'APPROVED', '2024-04-07 10:20:00'),
+    (17, 12, 5, N'Lead 125 bền bỉ và tiết kiệm xăng lắm!', 'PENDING', '2024-04-07 15:35:00'),
+
+    -- Post 18: Yamaha FreeGo
+    (18, 9, 5, N'Yamaha FreeGo màu xanh này đẹp quá!', 'APPROVED', '2024-04-07 12:30:00'),
+    (18, 15, 5, N'FreeGo 125 trẻ trung, phù hợp giới trẻ!', 'APPROVED', '2024-04-08 09:45:00'),
+    (18, 6, 4, N'33 triệu cho FreeGo 2022 có hợp lý không nhỉ?', 'PENDING', '2024-04-08 14:20:00'),
+
+    -- Post 19: Pin Yadea
+    (19, 10, 5, N'Pin Yadea 45Ah chạy xa thật không ạ?', 'APPROVED', '2024-04-08 10:25:00'),
+    (19, 4, 5, N'Dung lượng 45Ah chạy được 80-100km đấy!', 'APPROVED', '2024-04-09 08:15:00'),
+    (19, 3, 5, N'Pin Yadea tầm xa, giá tốt, nên mua!', 'APPROVED', '2024-04-09 13:30:00'),
+
+    -- Post 20: Yadea Like 200
+    (20, 2, 4, N'Yadea Like 200 giống Vespa thật không?', 'APPROVED', '2024-04-09 15:10:00'),
+    (20, 11, 4, N'Thiết kế bắt chước Vespa nhưng giá rẻ hơn nhiều!', 'APPROVED', '2024-04-10 09:25:00'),
+    (20, 14, 3, N'24 triệu cho xe Trung Quốc thì hơi đắt!', 'PENDING', '2024-04-10 14:40:00');
+
+
 -- =============================================
+-- 11. TRANSACTIONS (Depends on: members, posts)
+-- Transaction Status Workflow:
+-- REQUESTED -> ACCEPTED -> PAID -> DELIVERED -> COMPLETED
+-- Can be CANCELLED at any stage
+-- =============================================
+-- REQUESTED: Purchase request initiated by buyer
+--
+-- ACCEPTED: Seller accepts the request
+--
+-- PAID: Buyer has transferred payment (admin verified)
+--
+-- DELIVERED: Seller has delivered the product (admin verified)
+--
+-- COMPLETED: Transaction successful (admin completed)
+--
+-- CANCELLED: Request cancelled by either party
 INSERT INTO transactions (buyer_id, post_id, status, created_at)
 VALUES
+    -- Completed transactions
     (5, 1, 'COMPLETED', CAST('2024-03-25 10:00:00' AS DATETIME)),
-    (2, 2, 'REQUESTED', CAST('2024-03-26 14:30:00' AS DATETIME)),
     (5, 4, 'COMPLETED', CAST('2024-03-27 16:20:00' AS DATETIME)),
-    (7, 6, 'DELIVERED', CAST('2024-03-28 11:15:00' AS DATETIME)),
-    (8, 7, 'ACCEPTED', CAST('2024-03-29 13:40:00' AS DATETIME)),
     (6, 8, 'COMPLETED', CAST('2024-03-30 15:25:00' AS DATETIME)),
-    (10, 9, 'PAID', CAST('2024-04-01 09:50:00' AS DATETIME)),
-    (11, 10, 'REQUESTED', CAST('2024-04-02 14:15:00' AS DATETIME)),
     (12, 11, 'COMPLETED', CAST('2024-04-03 16:30:00' AS DATETIME)),
-    (13, 12, 'ACCEPTED', CAST('2024-04-04 10:45:00' AS DATETIME)),
-    (14, 13, 'DELIVERED', CAST('2024-04-05 12:20:00' AS DATETIME)),
-    (15, 14, 'PAID', CAST('2024-04-06 15:55:00' AS DATETIME)),
     (6, 15, 'COMPLETED', CAST('2024-04-07 11:10:00' AS DATETIME)),
+    (8, 17, 'COMPLETED', CAST('2024-04-09 16:45:00' AS DATETIME)),
+    (2, 3, 'COMPLETED', CAST('2024-03-16 10:00:00' AS DATETIME)),
+    (9, 16, 'COMPLETED', CAST('2024-04-05 14:20:00' AS DATETIME)),
+    (11, 19, 'COMPLETED', CAST('2024-04-08 09:30:00' AS DATETIME)),
+    (13, 6, 'COMPLETED', CAST('2024-03-23 15:45:00' AS DATETIME)),
+
+    -- Delivered (waiting for admin to complete)
+    (7, 6, 'DELIVERED', CAST('2024-03-28 11:15:00' AS DATETIME)),
+    (14, 13, 'DELIVERED', CAST('2024-04-05 12:20:00' AS DATETIME)),
+    (15, 7, 'DELIVERED', CAST('2024-03-25 08:30:00' AS DATETIME)),
+    (3, 12, 'DELIVERED', CAST('2024-03-31 14:15:00' AS DATETIME)),
+    (10, 16, 'DELIVERED', CAST('2024-04-05 10:00:00' AS DATETIME)),
+
+    -- Paid (seller needs to deliver)
+    (10, 9, 'PAID', CAST('2024-04-01 09:50:00' AS DATETIME)),
+    (15, 14, 'PAID', CAST('2024-04-06 15:55:00' AS DATETIME)),
+    (4, 19, 'PAID', CAST('2024-04-08 11:20:00' AS DATETIME)),
+    (12, 17, 'PAID', CAST('2024-04-06 13:40:00' AS DATETIME)),
+    (6, 3, 'PAID', CAST('2024-03-16 16:30:00' AS DATETIME)),
+
+    -- Accepted (buyer needs to pay)
+    (8, 7, 'ACCEPTED', CAST('2024-03-29 13:40:00' AS DATETIME)),
+    (13, 12, 'ACCEPTED', CAST('2024-04-04 10:45:00' AS DATETIME)),
+    (14, 1, 'ACCEPTED', CAST('2024-03-11 09:20:00' AS DATETIME)),
+    (7, 13, 'ACCEPTED', CAST('2024-04-02 15:30:00' AS DATETIME)),
+    (11, 6, 'ACCEPTED', CAST('2024-03-23 11:00:00' AS DATETIME)),
+
+    -- Requested (waiting for seller approval)
+    (2, 2, 'REQUESTED', CAST('2024-03-26 14:30:00' AS DATETIME)),
+    (11, 10, 'REQUESTED', CAST('2024-04-02 14:15:00' AS DATETIME)),
     (7, 16, 'REQUESTED', CAST('2024-04-08 13:35:00' AS DATETIME)),
-    (8, 17, 'COMPLETED', CAST('2024-04-09 16:45:00' AS DATETIME));
+    (9, 12, 'REQUESTED', CAST('2024-03-31 08:45:00' AS DATETIME)),
+    (15, 19, 'REQUESTED', CAST('2024-04-08 16:20:00' AS DATETIME)),
+    (3, 13, 'REQUESTED', CAST('2024-04-02 10:15:00' AS DATETIME)),
+    (4, 7, 'REQUESTED', CAST('2024-03-25 12:40:00' AS DATETIME)),
+
+    -- Cancelled transactions
+    (10, 14, 'CANCELLED', CAST('2024-04-03 09:00:00' AS DATETIME)),
+    (5, 9, 'CANCELLED', CAST('2024-03-28 10:30:00' AS DATETIME)),
+    (8, 13, 'CANCELLED', CAST('2024-04-02 11:45:00' AS DATETIME)),
+    (12, 7, 'CANCELLED', CAST('2024-03-25 14:20:00' AS DATETIME)),
+    (14, 17, 'CANCELLED', CAST('2024-04-06 16:00:00' AS DATETIME)),
+    (6, 9, 'CANCELLED', CAST('2024-03-28 13:15:00' AS DATETIME));
 
 -- =============================================
 -- LEVEL 5: DEPENDS ON LEVEL 4
@@ -322,19 +456,21 @@ VALUES
     (13, 0.05, 1450000.00, 'PAID', CAST('2024-04-07 13:00:00' AS DATETIME)),
     (15, 0.05, 1300000.00, 'PAID', CAST('2024-04-09 18:30:00' AS DATETIME));
 
+-- =============================================
 -- 14. REVIEWS (Depends on: members, transactions)
 -- =============================================
 INSERT INTO reviews (seller_id, reviewer_id, transaction_id, rating, comment, status, created_at)
 VALUES
-    (2, 5, 1, 5, N'Người bán rất tốt, xe đúng như mô tả. Giao dịch nhanh chóng!', 'APPROVED', CAST('2024-03-26 10:00:00' AS DATETIME)),
-    (4, 5, 3, 5, N'Xe VinFast rất đẹp, người bán nhiệt tình. Recommend!', 'PENDING', CAST('2024-03-28 09:30:00' AS DATETIME)),
-    (6, 7, 4, 4, N'Honda Vision chất lượng tốt, giá hợp lý. Cảm ơn bạn!', 'APPROVED', CAST('2024-03-29 08:45:00' AS DATETIME)),
-    (8, 6, 6, 5, N'Pin Samsung chất lượng cao, đúng như quảng cáo. Rất hài lòng!', 'APPROVED', CAST('2024-03-31 16:20:00' AS DATETIME)),
-    (9, 10, 7, 5, N'Vespa Primavera đẹp xuất sắc! Người bán tư vấn nhiệt tình.', 'REJECTED', CAST('2024-04-02 11:15:00' AS DATETIME)),
-    (11, 12, 9, 4, N'Pin CATL dung lượng lớn thật sự. Giao hàng đúng hẹn.', 'PENDING', CAST('2024-04-04 17:45:00' AS DATETIME)),
-    (13, 14, 11, 5, N'VinFast Klara S đẹp như mới. Chất lượng tuyệt vời!', 'APPROVED', CAST('2024-04-06 13:30:00' AS DATETIME)),
-    (15, 6, 13, 4, N'VinFast Ludo thiết kế trẻ trung, phù hợp với tôi. Thanks!', 'APPROVED', CAST('2024-04-08 12:40:00' AS DATETIME)),
-    (7, 8, 15, 5, N'Honda Lead 125 máy móc ổn định. Người bán uy tín!', 'PENDING', CAST('2024-04-10 09:25:00' AS DATETIME));
+    (4, 5, 2, 5, N'Xe VinFast rất đẹp, người bán nhiệt tình.', 'APPROVED', CAST('2024-03-28 09:30:00' AS DATETIME)),
+    (8, 6, 3, 5, N'Pin Samsung chất lượng cao, rất hài lòng.', 'APPROVED', CAST('2024-03-31 16:20:00' AS DATETIME)),
+    (11, 12, 4, 4, N'Pin CATL dung lượng lớn, giao hàng đúng hẹn.', 'APPROVED', CAST('2024-04-04 17:45:00' AS DATETIME)),
+    (15, 6, 5, 4, N'Ludo thiết kế trẻ trung, rất phù hợp.', 'APPROVED', CAST('2024-04-08 12:40:00' AS DATETIME)),
+    (7, 8, 6, 5, N'Lead 125 máy ổn định. Seller uy tín!', 'APPROVED', CAST('2024-04-10 09:25:00' AS DATETIME)),
+    (9, 11, 9, 5, N'Pin Yadea chạy xa, nhiệt tình.', 'APPROVED', CAST('2024-04-09 10:15:00' AS DATETIME)),
+    (6, 13, 10, 4, N'Honda Vision ổn định, giá tốt!', 'APPROVED', CAST('2024-03-24 16:30:00' AS DATETIME)),
+    (13, 14, 12, 5, N'VinFast Klara S đẹp như mới.', 'APPROVED', CAST('2024-04-06 13:30:00' AS DATETIME)),
+    (12, 3, 14, 4, N'Honda PCX 160 sporty và tiết kiệm.', 'APPROVED', CAST('2024-04-01 15:45:00' AS DATETIME)),
+    (2, 5, 1, 5, N'Seller rất chuyên nghiệp.', 'APPROVED', CAST('2024-03-27 14:20:00' AS DATETIME));
 
 -- =============================================
 -- VERIFY DATA

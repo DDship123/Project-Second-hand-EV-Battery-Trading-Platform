@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/home/transactionsHistory")
-public class transactionsHistoryController {
+public class transactionsHistoryPageController {
 
     @Autowired
     private TransactionService transactionService;

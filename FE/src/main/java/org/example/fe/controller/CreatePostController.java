@@ -158,7 +158,6 @@ public class CreatePostController {
         vehicle.setCondition(vehicleCondition);
         vehicle.setName(productName);
 
-
         product.setVehicle(vehicle);
         post.setProduct(product);
 

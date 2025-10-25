@@ -1,48 +1,46 @@
 -- =============================================
--- SQL INSERT SCRIPT FOR CARRY DATABASE
--- Generated based on Entity relationships
--- Microsoft SQL Server (T-SQL) Version
--- Reorganized by dependency order
+-- PHẦN 1/5: LEVEL 1 - BẢNG ĐỘC LẬP (ĐÃ SỬA)
 -- =============================================
 
-USE carry;
-
--- =============================================
--- LEVEL 1: INDEPENDENT TABLES (No foreign keys)
--- =============================================
-
--- 1. MEMBERS (Independent - no dependencies)
+-- 1. MEMBERS (25 records)
 -- =============================================
 INSERT INTO members (username, address, email, phone, city, password, role, status, avatar_url, created_at)
 VALUES
-    ('admin', N'123 Đường Nguyễn Huệ, Quận 1', 'admin@carry.com', '0901234567', N'Thành phố Hồ Chí Minh', 'Admin@2024', 'ADMIN', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-01-01 08:00:00' AS DATETIME)),
-    ('johndoe', N'456 Đường Lê Lợi, Quận 1', 'john.doe@gmail.com', '0912345678', N'Thành phố Hồ Chí Minh', 'JohnDoe123', 'USER', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-01-15 10:30:00' AS DATETIME)),
-    ('janesmit', N'789 Phố Hoàn Kiếm, Quận Ba Đình', 'jane.smith@gmail.com', '0923456789', N'Hà Nội', 'Jane@Smith99', 'USER', N'Tạm khóa', 'https://i.pravatar.cc/300', CAST('2024-02-01 14:20:00' AS DATETIME)),
-    ('bobseller', N'321 Đường Trần Phú, Quận Hải Châu', 'bob.seller@gmail.com', '0934567890', N'Đà Nẵng', 'Bob$Seller22', 'USER', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-02-10 09:15:00' AS DATETIME)),
-    ('alicebuyer', N'654 Đường Hai Bà Trưng, Quận 3', 'alice.buyer@gmail.com', '0945678901', N'Thành phố Hồ Chí Minh', 'Alice2024!', 'USER', N'Cấm vĩnh viễn', 'https://i.pravatar.cc/300', CAST('2024-03-05 16:45:00' AS DATETIME)),
-    ('minh_nguyen', N'123 Đường Nguyễn Thái Học, Quận Ba Đình', 'minh.nguyen@gmail.com', '0956789012', N'Hà Nội', 'MinhNg@2024', 'USER', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-03-10 11:00:00' AS DATETIME)),
-    ('trang_le', N'456 Đường Lý Thường Kiệt, Quận 10', 'trang.le@gmail.com', '0967890123', N'Thành phố Hồ Chí Minh', 'TrangLe#456', 'USER', N'Tạm khóa', 'https://i.pravatar.cc/300', CAST('2024-03-12 09:30:00' AS DATETIME)),
-    ('duc_pham', N'789 Đường Lê Duẩn, Quận Hải Châu', 'duc.pham@gmail.com', '0978901234', N'Đà Nẵng', 'DucPham789!', 'USER', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-03-15 14:45:00' AS DATETIME)),
-    ('linh_vo', N'321 Đường Hoàng Văn Thụ, Quận Tân Bình', 'linh.vo@gmail.com', '0989012345', N'Thành phố Hồ Chí Minh', 'LinhVo@321', 'USER', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-03-18 16:20:00' AS DATETIME)),
-    ('huy_tran', N'654 Đường Điện Biên Phủ, Quận Bình Thạnh', 'huy.tran@gmail.com', '0990123456', N'Thành phố Hồ Chí Minh', 'HuyTran$654', 'USER', N'Cấm vĩnh viễn', 'https://i.pravatar.cc/300', CAST('2024-03-20 10:15:00' AS DATETIME)),
-    ('thao_hoang', N'987 Đường Ngô Quyền, Quận Sơn Trà', 'thao.hoang@gmail.com', '0901234568', N'Đà Nẵng', 'ThaoHoang87', 'USER', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-03-22 13:40:00' AS DATETIME)),
-    ('nam_bui', N'147 Đường Trần Hưng Đạo, Quận Hoàn Kiếm', 'nam.bui@gmail.com', '0912345679', N'Hà Nội', 'NamBui#147', 'USER', N'Tạm khóa', 'https://i.pravatar.cc/300', CAST('2024-03-25 15:10:00' AS DATETIME)),
-    ('mai_do', N'258 Đường Võ Thị Sáu, Quận 3', 'mai.do@gmail.com', '0923456780', N'Thành phố Hồ Chí Minh', 'MaiDo258@', 'USER', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-03-28 12:25:00' AS DATETIME)),
-    ('long_nguyen', N'369 Đường Phan Châu Trinh, Quận Thanh Khê', 'long.nguyen@gmail.com', '0934567891', N'Đà Nẵng', 'LongNg369!', 'USER', N'Hoạt động', 'https://i.pravatar.cc/300', CAST('2024-04-01 08:50:00' AS DATETIME)),
-    ('ha_pham', N'741 Đường Cách Mạng Tháng 8, Quận 10', 'ha.pham@gmail.com', '0945678902', N'Thành phố Hồ Chí Minh', 'HaPham741#', 'USER', N'Cấm vĩnh viễn', 'https://i.pravatar.cc/300', CAST('2024-04-03 17:35:00' AS DATETIME));
+    ('admin', N'123 Đường Nguyễn Huệ, Quận 1', 'admin@carry.com', '0901234567', N'Thành phố Hồ Chí Minh', 'Admin@2024', 'ADMIN', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-01-01 08:00:00' AS DATETIME)),
+    ('johndoe', N'456 Đường Lê Lợi, Quận 1', 'john.doe@gmail.com', '0912345678', N'Thành phố Hồ Chí Minh', 'JohnDoe123', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-01-15 10:30:00' AS DATETIME)),
+    ('janesmit', N'789 Phố Hoàn Kiếm, Quận Ba Đình', 'jane.smith@gmail.com', '0923456789', N'Hà Nội', 'Jane@Smith99', 'USER', 'SUSPENDED', 'https://i.pravatar.cc/300', CAST('2024-02-01 14:20:00' AS DATETIME)),
+    ('bobseller', N'321 Đường Trần Phú, Quận Hải Châu', 'bob.seller@gmail.com', '0934567890', N'Đà Nẵng', 'Bob$Seller22', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-02-10 09:15:00' AS DATETIME)),
+    ('alicebuyer', N'654 Đường Hai Bà Trưng, Quận 3', 'alice.buyer@gmail.com', '0945678901', N'Thành phố Hồ Chí Minh', 'Alice2024!', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-03-05 16:45:00' AS DATETIME)),
+    ('minh_nguyen', N'123 Đường Nguyễn Thái Học, Quận Ba Đình', 'minh.nguyen@gmail.com', '0956789012', N'Hà Nội', 'MinhNg@2024', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-03-10 11:00:00' AS DATETIME)),
+    ('trang_le', N'456 Đường Lý Thường Kiệt, Quận 10', 'trang.le@gmail.com', '0967890123', N'Thành phố Hồ Chí Minh', 'TrangLe#456', 'USER', 'SUSPENDED', 'https://i.pravatar.cc/300', CAST('2024-03-12 09:30:00' AS DATETIME)),
+    ('duc_pham', N'789 Đường Lê Duẩn, Quận Hải Châu', 'duc.pham@gmail.com', '0978901234', N'Đà Nẵng', 'DucPham789!', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-03-15 14:45:00' AS DATETIME)),
+    ('linh_vo', N'321 Đường Hoàng Văn Thụ, Quận Tân Bình', 'linh.vo@gmail.com', '0989012345', N'Thành phố Hồ Chí Minh', 'LinhVo@321', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-03-18 16:20:00' AS DATETIME)),
+    ('huy_tran', N'654 Đường Điện Biên Phủ, Quận Bình Thạnh', 'huy.tran@gmail.com', '0990123456', N'Thành phố Hồ Chí Minh', 'HuyTran$654', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-03-20 10:15:00' AS DATETIME)),
+    ('thao_hoang', N'987 Đường Ngô Quyền, Quận Sơn Trà', 'thao.hoang@gmail.com', '0901234568', N'Đà Nẵng', 'ThaoHoang87', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-03-22 13:40:00' AS DATETIME)),
+    ('nam_bui', N'147 Đường Trần Hưng Đạo, Quận Hoàn Kiếm', 'nam.bui@gmail.com', '0912345679', N'Hà Nội', 'NamBui#147', 'USER', 'SUSPENDED', 'https://i.pravatar.cc/300', CAST('2024-03-25 15:10:00' AS DATETIME)),
+    ('mai_do', N'258 Đường Võ Thị Sáu, Quận 3', 'mai.do@gmail.com', '0923456780', N'Thành phố Hồ Chí Minh', 'MaiDo258@', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-03-28 12:25:00' AS DATETIME)),
+    ('long_nguyen', N'369 Đường Phan Châu Trinh, Quận Thanh Khê', 'long.nguyen@gmail.com', '0934567891', N'Đà Nẵng', 'LongNg369!', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-04-01 08:50:00' AS DATETIME)),
+    ('ha_pham', N'741 Đường Cách Mạng Tháng 8, Quận 10', 'ha.pham@gmail.com', '0945678902', N'Thành phố Hồ Chí Minh', 'HaPham741#', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-04-03 17:35:00' AS DATETIME)),
+    ('nguyen_van_a', N'Đường Lý Thường Kiệt, Quận 1', 'nguyen_van_a@gmail.com', '0919861453', N'Hà Nội', 'Nguyen_van_a@2024', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-06-06 00:00:00' AS DATETIME)),
+    ('tran_thi_b', N'Đường Nguyễn Huệ, Quận Ba Đình', 'tran_thi_b@gmail.com', '0931681461', N'Đà Nẵng', 'Tran_thi_b@2024', 'USER', 'SUSPENDED', 'https://i.pravatar.cc/300', CAST('2024-04-28 00:00:00' AS DATETIME)),
+    ('le_van_c', N'Đường Trần Phú, Quận Hoàn Kiếm', 'le_van_c@gmail.com', '0946499367', N'Thành phố Hồ Chí Minh', 'Le_van_c@2024', 'USER', 'ACTIVE', 'https://i.pravatar.cc/300', CAST('2024-05-13 00:00:00' AS DATETIME)),
+    ('pham_thi_d', N'Đường Lý Thường Kiệt, Quận 1', 'pham_thi_d@gmail.com', '0983265603', N'Hà Nội', 'Pham_thi_d@2024', 'USER', 'SUSPENDED', 'https://i.pravatar.cc/300', CAST('2024-04-08 00:00:00' AS DATETIME)),
+    ('hoang_van_e', N'Đường Lý Thường Kiệt, Quận Bình Thạnh', 'hoang_van_e@gmail.com', '0936592456', N'Đà Nẵng', 'Hoang_van_e@2024', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-05-11 00:00:00' AS DATETIME)),
+    ('vu_thi_f', N'Đường Lý Thường Kiệt, Quận 5', 'vu_thi_f@gmail.com', '0918589194', N'Hà Nội', 'Vu_thi_f@2024', 'USER', 'SUSPENDED', 'https://i.pravatar.cc/300', CAST('2024-06-21 00:00:00' AS DATETIME)),
+    ('dang_van_g', N'Đường Lý Thường Kiệt, Quận Hoàn Kiếm', 'dang_van_g@gmail.com', '0923639792', N'Cần Thơ', 'Dang_van_g@2024', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-06-07 00:00:00' AS DATETIME)),
+    ('ngo_thi_h', N'Đường Hai Bà Trưng, Quận Sơn Trà', 'ngo_thi_h@gmail.com', '0930756466', N'Thành phố Hồ Chí Minh', 'Ngo_thi_h@2024', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-06-22 00:00:00' AS DATETIME)),
+    ('do_van_i', N'Đường Ngô Quyền, Quận 3', 'do_van_i@gmail.com', '0946084117', N'Hà Nội', 'Do_van_i@2024', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-05-12 00:00:00' AS DATETIME)),
+    ('bui_thi_j', N'Đường Lý Thường Kiệt, Quận 3', 'bui_thi_j@gmail.com', '0916978211', N'Hà Nội', 'Bui_thi_j@2024', 'USER', 'BANNED', 'https://i.pravatar.cc/300', CAST('2024-05-01 00:00:00' AS DATETIME));
 
--- 2. MEMBERSHIP_PLANS (Independent - no dependencies)
+-- 2. MEMBERSHIP_PLANS (3 records)
 -- =============================================
 INSERT INTO membership_plans (name, price, duration, max_posts, priority)
 VALUES
     ('Free', 0.00, 30, 5, 'LOW'),
     ('Basic', 99000.00, 30, 20, 'MEDIUM'),
-    ('Premium', 299000.00, 30, 100, 'HIGH'),
-    ('VIP', 599000.00, 30, 999, 'HIGHEST'),
-    ('Student', 49000.00, 30, 10, 'MEDIUM'),
-    ('Business', 499000.00, 30, 500, 'HIGH');
+    ('Premium', 299000.00, 30, 100, 'HIGH');
 
--- 3. VEHICLE (Independent - no dependencies)
+-- 3. VEHICLE (30 records)
 -- =============================================
 INSERT INTO vehicle (name, brand, model, mileage, condition, register_year, battery_capacity, origin)
 VALUES
@@ -65,9 +63,19 @@ VALUES
     ('Yamaha FreeGo 125', 'Yamaha', 'FreeGo 125', 4800, 'Excellent', '2022', '12V 8Ah', N'Việt Nam'),
     ('VinFast Ludo', 'VinFast', 'Ludo', 800, 'New', '2024', '48V 26Ah', N'Việt Nam'),
     ('Pega Xmax', 'Pega', 'Xmax', 13500, 'Fair', '2019', '60V 20Ah', N'Việt Nam'),
-    ('Yadea Like 200', 'Yadea', 'Like 200', 7200, 'Good', '2021', '72V 32Ah', N'Trung Quốc');
+    ('Yadea Like 200', 'Yadea', 'Like 200', 7200, 'Good', '2021', '72V 32Ah', N'Trung Quốc'),
+    ('Yadea Air Blade', 'Yadea', 'Air Blade', 19457, 'New', '2020', '12V 5Ah', N'Việt Nam'),
+    ('Pega NMax', 'Pega', 'NMax', 13521, 'New', '2021', '48V 12Ah', N'Nhật Bản'),
+    ('Honda Vespa Sprint', 'Honda', 'Vespa Sprint', 18942, 'New', '2024', '48V 12Ah', N'Ý'),
+    ('Dibao Vespa Sprint', 'Dibao', 'Vespa Sprint', 2684, 'Good', '2022', '72V 30Ah', N'Việt Nam'),
+    ('Dibao Exciter', 'Dibao', 'Exciter', 10495, 'Good', '2023', '48V 20Ah', N'Ý'),
+    ('Honda Wave Alpha', 'Honda', 'Wave Alpha', 16417, 'Excellent', '2019', '12V 5Ah', N'Ý'),
+    ('Honda Air Blade', 'Honda', 'Air Blade', 17531, 'Fair', '2021', '72V 30Ah', N'Ý'),
+    ('Honda NMax', 'Honda', 'NMax', 9672, 'Excellent', '2021', '60V 24Ah', N'Ý'),
+    ('Piaggio NMax', 'Piaggio', 'NMax', 14925, 'Good', '2019', '72V 30Ah', N'Ý'),
+    ('Pega G6', 'Pega', 'G6', 17317, 'New', '2018', '48V 20Ah', N'Đức');
 
--- 4. BATTERY (Independent - no dependencies)
+-- 4. BATTERY (25 records)
 -- =============================================
 INSERT INTO battery (name, brand, year_at, voltage_v, capacity_ah, condition, origin)
 VALUES
@@ -85,13 +93,27 @@ VALUES
     ('Yamaha Original Battery', 'Yamaha', '2023', '12V', 8, 'Excellent', N'Việt Nam'),
     ('Lithium Pro Max', 'Generic', '2021', '48V', 22, 'Fair', N'Trung Quốc'),
     ('Super Power Battery', 'SuperPower', '2024', '60V', 38, 'New', N'Hàn Quốc'),
-    ('EcoTech Green Battery', 'EcoTech', '2022', '72V', 42, 'Good', N'Nhật Bản');
+    ('EcoTech Green Battery', 'EcoTech', '2022', '72V', 42, 'Good', N'Nhật Bản'),
+    ('Pega 72V 40Ah Battery', 'Pega', '2025', '72V', 40, 'Good', N'Việt Nam'),
+    ('VinFast 12V 30Ah Battery', 'VinFast', '2022', '12V', 30, 'Fair', N'Nhật Bản'),
+    ('Tesla 72V 25Ah Battery', 'Tesla', '2021', '72V', 25, 'Excellent', N'Việt Nam'),
+    ('SuperPower 72V 35Ah', 'SuperPower', '2020', '72V', 35, 'Excellent', N'Việt Nam'),
+    ('EcoTech 72V 35Ah', 'EcoTech', '2021', '72V', 35, 'Fair', N'Ý'),
+    ('Bosch 60V 40Ah', 'Bosch', '2020', '60V', 40, 'Excellent', N'Đức'),
+    ('Panasonic 60V 35Ah', 'Panasonic', '2023', '60V', 35, 'New', N'Nhật Bản'),
+    ('Panasonic 60V 40Ah', 'Panasonic', '2023', '60V', 40, 'Fair', N'Đức'),
+    ('CATL 60V 40Ah', 'CATL', '2022', '60V', 40, 'New', N'Nhật Bản'),
+    ('VinFast 48V 10Ah', 'VinFast', '2024', '48V', 10, 'Fair', N'Trung Quốc');
 
 -- =============================================
--- LEVEL 2: DEPENDS ON LEVEL 1
+-- KẾT THÚC PHẦN 1/5
+-- =============================================
+-- =============================================
+-- PHẦN 2/5: LEVEL 2 - ĐÃ SỬA LỖI TRUNCATED
+-- Thực thi sau khi hoàn thành PHẦN 1
 -- =============================================
 
--- 5. MEMBER_PLAN_USAGE (Depends on: members, membership_plans)
+-- 5. MEMBER_PLAN_USAGE (24 records)
 -- =============================================
 INSERT INTO member_plan_usage (member_id, plan_id, start_date, end_date, used_posts, status)
 VALUES
@@ -100,208 +122,331 @@ VALUES
     (4, 3, CAST('2024-03-01 00:00:00' AS DATETIME), CAST('2024-03-31 23:59:59' AS DATETIME), 2, 'ACTIVE'),
     (5, 1, CAST('2024-03-05 00:00:00' AS DATETIME), CAST('2024-04-04 23:59:59' AS DATETIME), 0, 'ACTIVE'),
     (6, 2, CAST('2024-03-15 00:00:00' AS DATETIME), CAST('2024-04-14 23:59:59' AS DATETIME), 2, 'ACTIVE'),
-    (7, 5, CAST('2024-03-20 00:00:00' AS DATETIME), CAST('2024-04-19 23:59:59' AS DATETIME), 2, 'ACTIVE'),
+    (7, 1, CAST('2024-03-20 00:00:00' AS DATETIME), CAST('2024-04-19 23:59:59' AS DATETIME), 2, 'ACTIVE'),
     (8, 3, CAST('2024-03-22 00:00:00' AS DATETIME), CAST('2024-04-21 23:59:59' AS DATETIME), 2, 'ACTIVE'),
-    (9, 4, CAST('2024-03-25 00:00:00' AS DATETIME), CAST('2024-04-24 23:59:59' AS DATETIME), 2, 'ACTIVE'),
-    (10, 6, CAST('2024-03-28 00:00:00' AS DATETIME), CAST('2024-04-27 23:59:59' AS DATETIME), 2, 'ACTIVE'),
+    (9, 3, CAST('2024-03-25 00:00:00' AS DATETIME), CAST('2024-04-24 23:59:59' AS DATETIME), 2, 'ACTIVE'),
+    (10, 2, CAST('2024-03-28 00:00:00' AS DATETIME), CAST('2024-04-27 23:59:59' AS DATETIME), 2, 'ACTIVE'),
     (11, 2, CAST('2024-03-29 00:00:00' AS DATETIME), CAST('2024-04-28 23:59:59' AS DATETIME), 1, 'ACTIVE'),
     (12, 3, CAST('2024-03-30 00:00:00' AS DATETIME), CAST('2024-04-29 23:59:59' AS DATETIME), 1, 'ACTIVE'),
-    (13, 4, CAST('2024-04-01 00:00:00' AS DATETIME), CAST('2024-04-30 23:59:59' AS DATETIME), 1, 'ACTIVE'),
+    (13, 2, CAST('2024-04-01 00:00:00' AS DATETIME), CAST('2024-04-30 23:59:59' AS DATETIME), 1, 'ACTIVE'),
     (14, 1, CAST('2024-04-02 00:00:00' AS DATETIME), CAST('2024-05-01 23:59:59' AS DATETIME), 1, 'ACTIVE'),
-    (15, 5, CAST('2024-04-03 00:00:00' AS DATETIME), CAST('2024-05-02 23:59:59' AS DATETIME), 1, 'ACTIVE');
+    (15, 1, CAST('2024-04-03 00:00:00' AS DATETIME), CAST('2024-05-02 23:59:59' AS DATETIME), 1, 'ACTIVE'),
+    (16, 2, CAST('2024-04-10 00:00:00' AS DATETIME), CAST('2024-05-10 23:59:59' AS DATETIME), 9, 'ACTIVE'),
+    (17, 2, CAST('2024-04-13 00:00:00' AS DATETIME), CAST('2024-05-13 23:59:59' AS DATETIME), 8, 'ACTIVE'),
+    (18, 1, CAST('2024-04-16 00:00:00' AS DATETIME), CAST('2024-05-16 23:59:59' AS DATETIME), 2, 'ACTIVE'),
+    (19, 1, CAST('2024-04-19 00:00:00' AS DATETIME), CAST('2024-05-19 23:59:59' AS DATETIME), 4, 'ACTIVE'),
+    (20, 3, CAST('2024-04-22 00:00:00' AS DATETIME), CAST('2024-05-22 23:59:59' AS DATETIME), 3, 'ACTIVE'),
+    (21, 1, CAST('2024-04-25 00:00:00' AS DATETIME), CAST('2024-05-25 23:59:59' AS DATETIME), 1, 'ACTIVE'),
+    (22, 2, CAST('2024-04-28 00:00:00' AS DATETIME), CAST('2024-05-28 23:59:59' AS DATETIME), 1, 'ACTIVE'),
+    (23, 1, CAST('2024-05-01 00:00:00' AS DATETIME), CAST('2024-05-31 23:59:59' AS DATETIME), 3, 'ACTIVE'),
+    (24, 3, CAST('2024-05-04 00:00:00' AS DATETIME), CAST('2024-06-03 23:59:59' AS DATETIME), 8, 'ACTIVE'),
+    (25, 1, CAST('2024-05-07 00:00:00' AS DATETIME), CAST('2024-06-06 23:59:59' AS DATETIME), 3, 'ACTIVE');
 
--- 6. PRODUCTS (Depends on: members, vehicle, battery)
+-- 6. PRODUCTS (30 records - ĐÃ SỬA TÊN RÚT NGẮN)
 -- =============================================
 INSERT INTO products (member_id, vehicle_id, battery_id, product_type, name, description, status, created_at)
 VALUES
-    (2, 1, NULL, 'VEHICLE', 'Honda SH 150i 2022', N'Honda SH 150i đời 2022, màu đỏ, đi 5000km, xe zin chưa té ngã', N'Đã qua sử dụng', CAST('2024-03-10 10:00:00' AS DATETIME)),
-    (3, 2, NULL, 'VEHICLE', 'Yamaha Janus 2021', N'Yamaha Janus đời 2021, màu xanh, xe đẹp máy ngon', N'Đã qua sử dụng', CAST('2024-03-12 11:30:00' AS DATETIME)),
-    (4, NULL, 1, 'BATTERY', 'Pin LG 60V 28Ah', N'Pin Lithium LG mới 100%, bảo hành 2 năm', N'Mới', CAST('2024-03-15 14:20:00' AS DATETIME)),
-    (4, 3, NULL, 'VEHICLE', 'VinFast Klara A2', N'VinFast Klara A2 2023, màu trắng, như mới', N'Mới', CAST('2024-03-18 09:45:00' AS DATETIME)),
-    (2, NULL, 2, 'BATTERY', 'Pin Panasonic 48V', N'Pin Panasonic đã dùng 1 năm, còn tốt', N'Đã qua sử dụng', CAST('2024-03-20 16:10:00' AS DATETIME)),
-    (6, 6, NULL, 'VEHICLE', 'Honda Vision 110', N'Honda Vision 110 màu xám bạc, đi 7500km, máy êm ru', N'Đã qua sử dụng', CAST('2024-03-22 08:30:00' AS DATETIME)),
-    (7, 7, NULL, 'VEHICLE', 'Yamaha Grande 2023', N'Yamaha Grande mới cứng, màu đen, chỉ đi 4200km', N'Mới', CAST('2024-03-24 10:15:00' AS DATETIME)),
-    (8, NULL, 3, 'BATTERY', 'Pin Samsung SDI 60V', N'Pin Samsung SDI chất lượng cao, mới 100%', N'Mới', CAST('2024-03-25 13:45:00' AS DATETIME)),
-    (9, 8, NULL, 'VEHICLE', 'Vespa Primavera', N'Vespa Primavera 2023 màu xanh mint, xe Ý nhập khẩu', N'Mới', CAST('2024-03-27 15:20:00' AS DATETIME)),
-    (10, 9, NULL, 'VEHICLE', 'VinFast Theon S', N'VinFast Theon S mới 100%, chưa lăn bánh', N'Mới', CAST('2024-03-28 11:00:00' AS DATETIME)),
-    (11, NULL, 4, 'BATTERY', 'Pin CATL 72V 40Ah', N'Pin CATL dung lượng lớn, phù hợp xe cao cấp', N'Đã qua sử dụng', CAST('2024-03-29 14:30:00' AS DATETIME)),
-    (12, 11, NULL, 'VEHICLE', 'Honda PCX 160 2022', N'Honda PCX 160 màu trắng đen, sporty và tiết kiệm', N'Đã qua sử dụng', CAST('2024-03-30 09:20:00' AS DATETIME)),
-    (13, 13, NULL, 'VEHICLE', 'VinFast Klara S', N'VinFast Klara S phiên bản cao cấp, pin lớn', N'Mới', CAST('2024-04-01 16:40:00' AS DATETIME)),
-    (14, NULL, 6, 'BATTERY', 'Pin VinFast 72V', N'Pin VinFast chính hãng, bảo hành dài hạn', N'Mới', CAST('2024-04-02 12:15:00' AS DATETIME)),
-    (15, 18, NULL, 'VEHICLE', 'VinFast Ludo 2024', N'VinFast Ludo mới ra mắt, thiết kế trẻ trung', N'Mới', CAST('2024-04-03 10:50:00' AS DATETIME)),
-    (6, NULL, 7, 'BATTERY', 'Pin Bosch 48V', N'Pin Bosch Đức, chất lượng châu Âu', N'Mới', CAST('2024-04-04 13:25:00' AS DATETIME)),
-    (7, 16, NULL, 'VEHICLE', 'Honda Lead 125', N'Honda Lead 125 màu đỏ, xe gia đình sử dụng', N'Đã qua sử dụng', CAST('2024-04-05 11:10:00' AS DATETIME)),
-    (8, 17, NULL, 'VEHICLE', 'Yamaha FreeGo 125', N'Yamaha FreeGo 125 màu xanh dương, trẻ trung', N'Đã qua sử dụng', CAST('2024-04-06 14:45:00' AS DATETIME)),
-    (9, NULL, 10, 'BATTERY', 'Pin Yadea 72V', N'Pin Yadea tầm xa, dung lượng 45Ah', N'Mới', CAST('2024-04-07 09:35:00' AS DATETIME)),
-    (10, 20, NULL, 'VEHICLE', 'Yadea Like 200', N'Yadea Like 200 thiết kế Vespa, giá tốt', N'Đã qua sử dụng', CAST('2024-04-08 15:55:00' AS DATETIME));
+    -- Original 20 products
+    (2, 1, NULL, 'VEHICLE', 'Honda SH 150i 2022', N'Honda SH 150i đời 2022, màu đỏ, đi 5000km', 'USED', CAST('2024-03-10 10:00:00' AS DATETIME)),
+    (3, 2, NULL, 'VEHICLE', 'Yamaha Janus 2021', N'Yamaha Janus đời 2021, màu xanh, xe đẹp', 'USED', CAST('2024-03-12 11:30:00' AS DATETIME)),
+    (4, NULL, 1, 'BATTERY', 'Pin LG 60V 28Ah', N'Pin Lithium LG mới 100%, bảo hành 2 năm', 'NEW', CAST('2024-03-15 14:20:00' AS DATETIME)),
+    (4, 3, NULL, 'VEHICLE', 'VinFast Klara A2', N'VinFast Klara A2 2023, màu trắng, như mới', 'NEW', CAST('2024-03-18 09:45:00' AS DATETIME)),
+    (2, NULL, 2, 'BATTERY', 'Pin Panasonic 48V', N'Pin Panasonic đã dùng 1 năm, còn tốt', 'USED', CAST('2024-03-20 16:10:00' AS DATETIME)),
+    (6, 6, NULL, 'VEHICLE', 'Honda Vision 110', N'Honda Vision 110 màu xám, đi 7500km', 'USED', CAST('2024-03-22 08:30:00' AS DATETIME)),
+    (7, 7, NULL, 'VEHICLE', 'Yamaha Grande 2023', N'Yamaha Grande mới cứng, màu đen', 'NEW', CAST('2024-03-24 10:15:00' AS DATETIME)),
+    (8, NULL, 3, 'BATTERY', 'Pin Samsung SDI 60V', N'Pin Samsung SDI chất lượng cao, mới 100%', 'NEW', CAST('2024-03-25 13:45:00' AS DATETIME)),
+    (9, 8, NULL, 'VEHICLE', 'Vespa Primavera', N'Vespa Primavera 2023 màu xanh mint', 'NEW', CAST('2024-03-27 15:20:00' AS DATETIME)),
+    (10, 9, NULL, 'VEHICLE', 'VinFast Theon S', N'VinFast Theon S mới 100%, chưa lăn bánh', 'NEW', CAST('2024-03-28 11:00:00' AS DATETIME)),
+    (11, NULL, 4, 'BATTERY', 'Pin CATL 72V 40Ah', N'Pin CATL dung lượng lớn, xe cao cấp', 'USED', CAST('2024-03-29 14:30:00' AS DATETIME)),
+    (12, 11, NULL, 'VEHICLE', 'Honda PCX 160 2022', N'Honda PCX 160 màu trắng đen, sporty', 'USED', CAST('2024-03-30 09:20:00' AS DATETIME)),
+    (13, 13, NULL, 'VEHICLE', 'VinFast Klara S', N'VinFast Klara S phiên bản cao cấp', 'NEW', CAST('2024-04-01 16:40:00' AS DATETIME)),
+    (14, NULL, 6, 'BATTERY', 'Pin VinFast 72V', N'Pin VinFast chính hãng, bảo hành dài', 'NEW', CAST('2024-04-02 12:15:00' AS DATETIME)),
+    (15, 18, NULL, 'VEHICLE', 'VinFast Ludo 2024', N'VinFast Ludo mới ra mắt, thiết kế trẻ', 'NEW', CAST('2024-04-03 10:50:00' AS DATETIME)),
+    (6, NULL, 7, 'BATTERY', 'Pin Bosch 48V', N'Pin Bosch Đức, chất lượng châu Âu', 'NEW', CAST('2024-04-04 13:25:00' AS DATETIME)),
+    (7, 16, NULL, 'VEHICLE', 'Honda Lead 125', N'Honda Lead 125 màu đỏ, xe gia đình', 'USED', CAST('2024-04-05 11:10:00' AS DATETIME)),
+    (8, 17, NULL, 'VEHICLE', 'Yamaha FreeGo 125', N'Yamaha FreeGo 125 màu xanh dương', 'USED', CAST('2024-04-06 14:45:00' AS DATETIME)),
+    (9, NULL, 10, 'BATTERY', 'Pin Yadea 72V', N'Pin Yadea tầm xa, dung lượng 45Ah', 'NEW', CAST('2024-04-07 09:35:00' AS DATETIME)),
+    (10, 20, NULL, 'VEHICLE', 'Yadea Like 200', N'Yadea Like 200 thiết kế Vespa', 'USED', CAST('2024-04-08 15:55:00' AS DATETIME)),
+
+    -- Additional 10 products (RÚT NGẮN TÊN < 50 CHARS)
+    (23, 5, NULL, 'VEHICLE', 'Suzuki NMax 2024', N'Xe đẹp, tình trạng tốt, bảo dưỡng', 'NEW', CAST('2024-04-29 00:00:00' AS DATETIME)),
+    (17, NULL, 5, 'BATTERY', 'Pin BYD 48V 30Ah', N'Pin chất lượng cao, bảo hành', 'NEW', CAST('2024-04-27 00:00:00' AS DATETIME)),
+    (19, NULL, 20, 'BATTERY', 'Pin EcoTech 48V', N'Pin chất lượng cao, bảo hành', 'USED', CAST('2024-04-12 00:00:00' AS DATETIME)),
+    (19, NULL, 18, 'BATTERY', 'Pin Bosch 12V 40Ah', N'Pin chất lượng cao, bảo hành', 'NEW', CAST('2024-04-30 00:00:00' AS DATETIME)),
+    (20, 19, NULL, 'VEHICLE', 'Yadea Lexi 2021', N'Xe đẹp, tình trạng tốt, bảo dưỡng', 'NEW', CAST('2024-04-25 00:00:00' AS DATETIME)),
+    (9, NULL, 22, 'BATTERY', 'Pin Panasonic 60V', N'Pin chất lượng cao, bảo hành', 'USED', CAST('2024-04-28 00:00:00' AS DATETIME)),
+    (19, NULL, 10, 'BATTERY', 'Pin Tesla 48V 15Ah', N'Pin chất lượng cao, bảo hành', 'NEW', CAST('2024-04-25 00:00:00' AS DATETIME)),
+    (23, 27, NULL, 'VEHICLE', 'Yamaha Air Blade', N'Xe đẹp, tình trạng tốt, bảo dưỡng', 'NEW', CAST('2024-04-18 00:00:00' AS DATETIME)),
+    (19, 3, NULL, 'VEHICLE', 'Honda NMax 2021', N'Xe đẹp, tình trạng tốt, bảo dưỡng', 'USED', CAST('2024-04-21 00:00:00' AS DATETIME)),
+    (24, NULL, 14, 'BATTERY', 'Pin Samsung 12V', N'Pin chất lượng cao, bảo hành', 'NEW', CAST('2024-04-08 00:00:00' AS DATETIME));
 
 -- =============================================
--- LEVEL 3: DEPENDS ON LEVEL 2
+-- KẾT THÚC PHẦN 2/5
+-- =============================================
+-- =============================================
+-- PHẦN 3/5: LEVEL 3 - ĐÃ SỬA
+-- Thực thi sau khi hoàn thành PHẦN 2
 -- =============================================
 
--- 7. POSTS (Depends on: products, members)
+-- 7. POSTS (30 records - ĐÃ SỬA TITLE RÚT NGẮN)
 -- =============================================
 INSERT INTO posts (product_id, seller_id, title, description, status, price, created_at)
 VALUES
-    (1, 2, N'Bán Honda SH 150i 2022 giá tốt', N'Honda SH 150i đời 2022, màu đỏ, đi 5000km. Xe zin chưa té ngã, máy êm ru. Giá thương lượng cho khách thiện chí.', N'Duyệt', 65000000.00, CAST('2024-03-10 10:05:00' AS DATETIME)),
-    (2, 3, N'Yamaha Janus 2021 cần bán gấp', N'Yamaha Janus đời 2021, màu xanh. Xe đẹp máy ngon, phanh CBS an toàn. Cần bán gấp vì chuyển công tác.', N'Chờ', 28000000.00, CAST('2024-03-12 11:35:00' AS DATETIME)),
-    (3, 4, N'Pin LG chính hãng giá rẻ', N'Pin Lithium LG 60V 28Ah mới 100%, bảo hành chính hãng 2 năm. Phù hợp với các dòng xe SH, Klara.', N'Duyệt', 8500000.00, CAST('2024-03-15 14:25:00' AS DATETIME)),
-    (4, 4, N'VinFast Klara A2 2023 như mới', N'VinFast Klara A2 2023, màu trắng, đi 3000km. Xe như mới, bảo hành còn dài.', N'Từ chối', 32000000.00, CAST('2024-03-18 09:50:00' AS DATETIME)),
-    (5, 2, N'Pin Panasonic 48V giá sinh viên', N'Pin Panasonic 48V 20Ah đã dùng 1 năm, còn chạy tốt 40-50km/sạc. Giá rẻ cho sinh viên.', N'Chờ', 3500000.00, CAST('2024-03-20 16:15:00' AS DATETIME)),
-    (6, 6, N'Honda Vision 110 - Xe gia đình', N'Honda Vision 110 đời 2021, màu xám bạc. Xe gia đình sử dụng, bảo dưỡng định kỳ. Giấy tờ đầy đủ.', N'Duyệt', 22000000.00, CAST('2024-03-22 08:35:00' AS DATETIME)),
-    (7, 7, N'Yamaha Grande 2023 mới cứng', N'Yamaha Grande 2023 màu đen, chỉ đi 4200km. Xe mới cứng, bao test máy. Bán vì cần tiền gấp.', N'Duyệt', 31000000.00, CAST('2024-03-24 10:20:00' AS DATETIME)),
-    (8, 8, N'Pin Samsung SDI cao cấp', N'Pin Samsung SDI 60V 32Ah mới 100%. Công nghệ Hàn Quốc, tuổi thọ cao, sạc nhanh.', N'Chờ', 12000000.00, CAST('2024-03-25 13:50:00' AS DATETIME)),
-    (9, 9, N'Vespa Primavera - Xe Ý nhập khẩu', N'Piaggio Vespa Primavera 2023 màu xanh mint. Xe Ý nhập khẩu chính hãng, thiết kế sang trọng.', N'Duyệt', 85000000.00, CAST('2024-03-27 15:25:00' AS DATETIME)),
-    (10, 10, N'VinFast Theon S 2024 - Chưa lăn bánh', N'VinFast Theon S 2024 mới 100%, chưa lăn bánh. Xe điện cao cấp nhất của VinFast.', N'Từ chối', 69000000.00, CAST('2024-03-28 11:05:00' AS DATETIME)),
-    (11, 11, N'Pin CATL 72V 40Ah cao cấp', N'Pin CATL dung lượng lớn, phù hợp xe cao cấp', N'Chờ', 15000000.00, CAST('2024-03-29 14:30:00' AS DATETIME)),
-    (12, 12, N'Honda PCX 160 2022 sporty', N'Honda PCX 160 màu trắng đen, sporty và tiết kiệm', N'Duyệt', 45000000.00, CAST('2024-03-30 09:20:00' AS DATETIME)),
-    (13, 13, N'VinFast Klara S cao cấp', N'VinFast Klara S phiên bản cao cấp, pin lớn', N'Duyệt', 38000000.00, CAST('2024-04-01 16:40:00' AS DATETIME)),
-    (14, 14, N'Pin VinFast 72V chính hãng', N'Pin VinFast chính hãng, bảo hành dài hạn', N'Từ chối', 18000000.00, CAST('2024-04-02 12:15:00' AS DATETIME)),
-    (15, 15, N'VinFast Ludo 2024 mới', N'VinFast Ludo mới ra mắt, thiết kế trẻ trung', N'Chờ', 29000000.00, CAST('2024-04-03 10:50:00' AS DATETIME)),
-    (16, 6, N'Pin Bosch 48V chất lượng Đức', N'Pin Bosch Đức, chất lượng châu Âu', N'Duyệt', 9500000.00, CAST('2024-04-04 13:25:00' AS DATETIME)),
-    (17, 7, N'Honda Lead 125 gia đình', N'Honda Lead 125 màu đỏ, xe gia đình sử dụng', N'Duyệt', 25000000.00, CAST('2024-04-05 11:10:00' AS DATETIME)),
-    (18, 8, N'Yamaha FreeGo 125 trẻ trung', N'Yamaha FreeGo 125 màu xanh dương, trẻ trung', N'Chờ', 33000000.00, CAST('2024-04-06 14:45:00' AS DATETIME)),
-    (19, 9, N'Pin Yadea 72V tầm xa', N'Pin Yadea tầm xa, dung lượng 45Ah', N'Duyệt', 11000000.00, CAST('2024-04-07 09:35:00' AS DATETIME)),
-    (20, 10, N'Yadea Like 200 thiết kế Vespa', N'Yadea Like 200 thiết kế Vespa, giá tốt', N'Từ chối', 24000000.00, CAST('2024-04-08 15:55:00' AS DATETIME));
+    -- Original 20 posts
+    (1, 2, N'Bán Honda SH 150i 2022 giá tốt', N'Honda SH 150i đời 2022, màu đỏ, đi 5000km. Xe zin chưa té ngã, máy êm ru. Giá thương lượng cho khách thiện chí.', 'APPROVED', 65000000.00, CAST('2024-03-10 10:05:00' AS DATETIME)),
+    (2, 3, N'Yamaha Janus 2021 cần bán gấp', N'Yamaha Janus đời 2021, màu xanh. Xe đẹp máy ngon, phanh CBS an toàn. Cần bán gấp vì chuyển công tác.', 'PENDING', 28000000.00, CAST('2024-03-12 11:35:00' AS DATETIME)),
+    (3, 4, N'Pin LG chính hãng giá rẻ', N'Pin Lithium LG 60V 28Ah mới 100%, bảo hành chính hãng 2 năm. Phù hợp với các dòng xe SH, Klara.', 'APPROVED', 8500000.00, CAST('2024-03-15 14:25:00' AS DATETIME)),
+    (4, 4, N'VinFast Klara A2 2023 như mới', N'VinFast Klara A2 2023, màu trắng, đi 3000km. Xe như mới, bảo hành còn dài.', 'REJECTED', 32000000.00, CAST('2024-03-18 09:50:00' AS DATETIME)),
+    (5, 2, N'Pin Panasonic 48V giá sinh viên', N'Pin Panasonic 48V 20Ah đã dùng 1 năm, còn chạy tốt 40-50km/sạc. Giá rẻ cho sinh viên.', 'PENDING', 3500000.00, CAST('2024-03-20 16:15:00' AS DATETIME)),
+    (6, 6, N'Honda Vision 110 - Xe gia đình', N'Honda Vision 110 đời 2021, màu xám bạc. Xe gia đình sử dụng, bảo dưỡng định kỳ. Giấy tờ đầy đủ.', 'APPROVED', 22000000.00, CAST('2024-03-22 08:35:00' AS DATETIME)),
+    (7, 7, N'Yamaha Grande 2023 mới cứng', N'Yamaha Grande 2023 màu đen, chỉ đi 4200km. Xe mới cứng, bao test máy. Bán vì cần tiền gấp.', 'APPROVED', 31000000.00, CAST('2024-03-24 10:20:00' AS DATETIME)),
+    (8, 8, N'Pin Samsung SDI cao cấp', N'Pin Samsung SDI 60V 32Ah mới 100%. Công nghệ Hàn Quốc, tuổi thọ cao, sạc nhanh.', 'PENDING', 12000000.00, CAST('2024-03-25 13:50:00' AS DATETIME)),
+    (9, 9, N'Vespa Primavera - Xe Ý nhập', N'Piaggio Vespa Primavera 2023 màu xanh mint. Xe Ý nhập khẩu chính hãng, thiết kế sang trọng.', 'APPROVED', 85000000.00, CAST('2024-03-27 15:25:00' AS DATETIME)),
+    (10, 10, N'VinFast Theon S 2024 mới', N'VinFast Theon S 2024 mới 100%, chưa lăn bánh. Xe điện cao cấp nhất của VinFast.', 'REJECTED', 69000000.00, CAST('2024-03-28 11:05:00' AS DATETIME)),
+    (11, 11, N'Pin CATL 72V 40Ah cao cấp', N'Pin CATL dung lượng lớn, phù hợp xe cao cấp', 'PENDING', 15000000.00, CAST('2024-03-29 14:30:00' AS DATETIME)),
+    (12, 12, N'Honda PCX 160 2022 sporty', N'Honda PCX 160 màu trắng đen, sporty và tiết kiệm', 'APPROVED', 45000000.00, CAST('2024-03-30 09:20:00' AS DATETIME)),
+    (13, 13, N'VinFast Klara S cao cấp', N'VinFast Klara S phiên bản cao cấp, pin lớn', 'APPROVED', 38000000.00, CAST('2024-04-01 16:40:00' AS DATETIME)),
+    (14, 14, N'Pin VinFast 72V chính hãng', N'Pin VinFast chính hãng, bảo hành dài hạn', 'REJECTED', 18000000.00, CAST('2024-04-02 12:15:00' AS DATETIME)),
+    (15, 15, N'VinFast Ludo 2024 mới', N'VinFast Ludo mới ra mắt, thiết kế trẻ trung', 'PENDING', 29000000.00, CAST('2024-04-03 10:50:00' AS DATETIME)),
+    (16, 6, N'Pin Bosch 48V chất lượng Đức', N'Pin Bosch Đức, chất lượng châu Âu', 'APPROVED', 9500000.00, CAST('2024-04-04 13:25:00' AS DATETIME)),
+    (17, 7, N'Honda Lead 125 gia đình', N'Honda Lead 125 màu đỏ, xe gia đình sử dụng', 'APPROVED', 25000000.00, CAST('2024-04-05 11:10:00' AS DATETIME)),
+    (18, 8, N'Yamaha FreeGo 125 trẻ trung', N'Yamaha FreeGo 125 màu xanh dương, trẻ trung', 'PENDING', 33000000.00, CAST('2024-04-06 14:45:00' AS DATETIME)),
+    (19, 9, N'Pin Yadea 72V tầm xa', N'Pin Yadea tầm xa, dung lượng 45Ah', 'APPROVED', 11000000.00, CAST('2024-04-07 09:35:00' AS DATETIME)),
+    (20, 10, N'Yadea Like 200 thiết kế Vespa', N'Yadea Like 200 thiết kế Vespa, giá tốt', 'REJECTED', 24000000.00, CAST('2024-04-08 15:55:00' AS DATETIME)),
+
+    -- Additional 10 posts (RÚT NGẮN TITLE)
+    (21, 23, N'VinFast Klara Evo đẹp sang', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'APPROVED', 10589489.67, CAST('2024-04-06 00:00:00' AS DATETIME)),
+    (22, 17, N'Pin BYD 48V chất lượng cao', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'APPROVED', 81917951.63, CAST('2024-04-07 00:00:00' AS DATETIME)),
+    (23, 19, N'Pin EcoTech 48V như mới', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'PENDING', 73734276.39, CAST('2024-04-08 00:00:00' AS DATETIME)),
+    (24, 19, N'Bán pin Bosch 12V 40Ah', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'APPROVED', 43817028.75, CAST('2024-04-09 00:00:00' AS DATETIME)),
+    (25, 20, N'Yamaha Sirius 2022 như mới', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'REJECTED', 38427952.45, CAST('2024-04-10 00:00:00' AS DATETIME)),
+    (26, 9, N'Bán pin Panasonic 60V', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'APPROVED', 7140089.33, CAST('2024-04-11 00:00:00' AS DATETIME)),
+    (27, 19, N'Bán pin Tesla 48V 15Ah', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'REJECTED', 96807370.10, CAST('2024-04-12 00:00:00' AS DATETIME)),
+    (28, 23, N'Bán Yamaha Air Blade 2022', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'APPROVED', 48462912.77, CAST('2024-04-13 00:00:00' AS DATETIME)),
+    (29, 19, N'Bán xe Honda NMax 2021', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'APPROVED', 86720772.95, CAST('2024-04-14 00:00:00' AS DATETIME)),
+    (30, 24, N'Bán pin Samsung 12V', N'Mô tả chi tiết, sản phẩm chất lượng, giá thương lượng', 'APPROVED', 72248015.81, CAST('2024-04-15 00:00:00' AS DATETIME));
 
 -- =============================================
--- LEVEL 4: DEPENDS ON LEVEL 3
+-- KẾT THÚC PHẦN 3/5
+-- =============================================
+-- =============================================
+-- PHẦN 4+5/5: LEVEL 4 & 5 - ĐÃ SỬA TẤT CẢ LỖI FK
+-- Thực thi sau khi hoàn thành PHẦN 3
 -- =============================================
 
--- 8. POST_IMAGES (Depends on: posts)
+-- 8. POST_IMAGES (67 records - CHỈ POST_ID TỪ 1-30)
 -- =============================================
 INSERT INTO post_images (post_id, image_url)
 VALUES
-    -- Honda SH 150i 2022
-    (1, 'https://i.pravatar.cc/300'),
-    (1, 'https://i.pravatar.cc/300'),
-    (1, 'https://i.pravatar.cc/300'),
-    -- Yamaha Janus 2021
-    (2, 'https://i.pravatar.cc/300'),
-    (2, 'https://i.pravatar.cc/300'),
-    -- Pin LG
+    (1, 'https://i.pravatar.cc/300'), (1, 'https://i.pravatar.cc/300'), (1, 'https://i.pravatar.cc/300'),
+    (2, 'https://i.pravatar.cc/300'), (2, 'https://i.pravatar.cc/300'),
     (3, 'https://i.pravatar.cc/300'),
-    -- VinFast Klara A2
-    (4, 'https://i.pravatar.cc/300'),
-    (4, 'https://i.pravatar.cc/300'),
-    -- Pin Panasonic
+    (4, 'https://i.pravatar.cc/300'), (4, 'https://i.pravatar.cc/300'),
     (5, 'https://i.pravatar.cc/300'),
-    -- Honda Vision 110
-    (6, 'https://i.pravatar.cc/300'),
-    (6, 'https://i.pravatar.cc/300'),
-    -- Yamaha Grande
-    (7, 'https://i.pravatar.cc/300'),
-    (7, 'https://i.pravatar.cc/300'),
-    -- Pin Samsung
+    (6, 'https://i.pravatar.cc/300'), (6, 'https://i.pravatar.cc/300'),
+    (7, 'https://i.pravatar.cc/300'), (7, 'https://i.pravatar.cc/300'),
     (8, 'https://i.pravatar.cc/300'),
-    -- Vespa Primavera
-    (9, 'https://i.pravatar.cc/300'),
-    (9, 'https://i.pravatar.cc/300'),
-    -- VinFast Theon S
-    (10, 'https://i.pravatar.cc/300'),
-    (10, 'https://i.pravatar.cc/300'),
-    -- Pin CATL
+    (9, 'https://i.pravatar.cc/300'), (9, 'https://i.pravatar.cc/300'),
+    (10, 'https://i.pravatar.cc/300'), (10, 'https://i.pravatar.cc/300'),
     (11, 'https://i.pravatar.cc/300'),
-    -- Honda PCX 160
-    (12, 'https://i.pravatar.cc/300'),
-    (12, 'https://i.pravatar.cc/300'),
-    -- VinFast Klara S
-    (13, 'https://i.pravatar.cc/300'),
-    (13, 'https://i.pravatar.cc/300'),
-    -- Pin VinFast
+    (12, 'https://i.pravatar.cc/300'), (12, 'https://i.pravatar.cc/300'),
+    (13, 'https://i.pravatar.cc/300'), (13, 'https://i.pravatar.cc/300'),
     (14, 'https://i.pravatar.cc/300'),
-    -- VinFast Ludo
-    (15, 'https://i.pravatar.cc/300'),
-    (15, 'https://i.pravatar.cc/300'),
-    -- Pin Bosch
+    (15, 'https://i.pravatar.cc/300'), (15, 'https://i.pravatar.cc/300'),
     (16, 'https://i.pravatar.cc/300'),
-    -- Honda Lead 125
-    (17, 'https://i.pravatar.cc/300'),
-    (17, 'https://i.pravatar.cc/300'),
-    -- Yamaha FreeGo 125
-    (18, 'https://i.pravatar.cc/300'),
-    (18, 'https://i.pravatar.cc/300'),
-    -- Pin Yadea
+    (17, 'https://i.pravatar.cc/300'), (17, 'https://i.pravatar.cc/300'),
+    (18, 'https://i.pravatar.cc/300'), (18, 'https://i.pravatar.cc/300'),
     (19, 'https://i.pravatar.cc/300'),
-    -- Yadea Like 200
-    (20, 'https://i.pravatar.cc/300'),
-    (20, 'https://i.pravatar.cc/300');
+    (20, 'https://i.pravatar.cc/300'), (20, 'https://i.pravatar.cc/300'),
+    (21, 'https://i.pravatar.cc/300'), (21, 'https://i.pravatar.cc/300'), (21, 'https://i.pravatar.cc/300'),
+    (22, 'https://i.pravatar.cc/300'), (22, 'https://i.pravatar.cc/300'), (22, 'https://i.pravatar.cc/300'),
+    (23, 'https://i.pravatar.cc/300'), (23, 'https://i.pravatar.cc/300'), (23, 'https://i.pravatar.cc/300'), (23, 'https://i.pravatar.cc/300'),
+    (24, 'https://i.pravatar.cc/300'), (24, 'https://i.pravatar.cc/300'), (24, 'https://i.pravatar.cc/300'),
+    (25, 'https://i.pravatar.cc/300'), (25, 'https://i.pravatar.cc/300'), (25, 'https://i.pravatar.cc/300'), (25, 'https://i.pravatar.cc/300'),
+    (26, 'https://i.pravatar.cc/300'), (26, 'https://i.pravatar.cc/300'),
+    (27, 'https://i.pravatar.cc/300'), (27, 'https://i.pravatar.cc/300'),
+    (28, 'https://i.pravatar.cc/300'), (28, 'https://i.pravatar.cc/300'), (28, 'https://i.pravatar.cc/300'),
+    (29, 'https://i.pravatar.cc/300'), (29, 'https://i.pravatar.cc/300'), (29, 'https://i.pravatar.cc/300'),
+    (30, 'https://i.pravatar.cc/300'), (30, 'https://i.pravatar.cc/300'), (30, 'https://i.pravatar.cc/300'), (30, 'https://i.pravatar.cc/300');
 
--- 9. FAVORITES (Depends on: members, posts)
+-- 9. FAVORITES (40 records - CHỈ POST_ID 1-30)
 -- =============================================
 INSERT INTO favorites (member_id, post_id)
 VALUES
-    (5, 1),   -- Alice thích Honda SH
-    (5, 4),   -- Alice thích VinFast Klara
-    (3, 3),   -- Jane thích Pin LG
-    (2, 4),   -- John thích VinFast Klara
-    (6, 9),   -- Minh thích Vespa Primavera
-    (7, 10),  -- Trang thích VinFast Theon S
-    (8, 12),  -- Đức thích Honda PCX 160
-    (9, 13),  -- Linh thích VinFast Klara S
-    (10, 6),  -- Huy thích Honda Vision 110
-    (11, 7),  -- Thảo thích Yamaha Grande
-    (12, 8),  -- Nam thích Pin Samsung
-    (13, 11), -- Mai thích Pin CATL
-    (14, 15), -- Long thích VinFast Ludo
-    (15, 18), -- Hà thích Yamaha FreeGo
-    (2, 20),  -- John thích Yadea Like 200
-    (3, 19),  -- Jane thích Pin Yadea
-    (4, 17),  -- Bob thích Honda Lead 125
-    (6, 16),  -- Minh thích Pin Bosch
-    (7, 14),  -- Trang thích Pin VinFast
-    (8, 5);   -- Đức thích Pin Panasonic
+    (5, 1), (5, 4), (3, 3), (2, 4), (6, 9), (7, 10),
+    (8, 12), (9, 13), (10, 6), (11, 7), (12, 8), (13, 11),
+    (14, 15), (15, 18), (2, 20), (3, 19), (4, 17), (6, 16),
+    (7, 14), (8, 5), (13, 22), (15, 28), (17, 3), (20, 7),
+    (20, 27), (16, 9), (4, 12), (10, 9), (12, 15), (11, 17),
+    (8, 29), (12, 24), (5, 11), (24, 11), (8, 2), (20, 16),
+    (7, 2), (12, 10), (2, 9), (12, 4);
 
--- 10. COMMENTS (Depends on: posts, members)
+-- 10. COMMENTS (93 records - CHỈ POST_ID 1-30)
 -- =============================================
 INSERT INTO comments (post_id, member_id, rating, comment, status, created_at)
 VALUES
-    (1, 5, 5, N'Xe đẹp quá! Cho mình xem xe được không ạ?', N'Duyệt', '2024-03-11 14:30:00'),
-    (1, 3, 4, N'Giá có thương lượng không bạn?', N'Chờ', '2024-03-11 16:45:00'),
-    (2, 2, 5, N'Xe còn không bạn? Mình có nhu cầu mua.', N'Duyệt', '2024-03-13 10:20:00'),
-    (3, 5, 5, N'Pin này dùng cho xe gì được ạ?', N'Duyệt', '2024-03-16 09:15:00'),
-    (4, 5, 5, N'Xe đẹp lắm! Mình muốn mua.', N'Từ chối', '2024-03-19 11:00:00'),
-    (6, 7, 4, N'Honda Vision này có bảo hành không ạ?', N'Chờ', '2024-03-23 10:20:00'),
-    (7, 8, 5, N'Yamaha Grande giá này quá hời! Xe còn không?', N'Duyệt', '2024-03-24 15:30:00'),
-    (8, 6, 5, N'Pin Samsung này chất lượng thế nào ạ?', N'Duyệt', '2024-03-26 09:45:00'),
-    (9, 10, 5, N'Vespa Primavera đẹp quá! Có thể xem xe không?', N'Chờ', '2024-03-28 14:15:00'),
-    (10, 11, 4, N'VinFast Theon S này có sạc nhanh không?', N'Duyệt', '2024-03-29 11:30:00'),
-    (11, 12, 5, N'Pin CATL này chạy được bao xa vậy ạ?', N'Duyệt', '2024-03-30 16:20:00'),
-    (12, 13, 4, N'Honda PCX 160 có tiết kiệm xăng không?', N'Từ chối', '2024-03-31 10:40:00'),
-    (13, 14, 5, N'VinFast Klara S so với A2 khác gì ạ?', N'Chờ', '2024-04-02 13:25:00'),
-    (14, 15, 5, N'Pin VinFast chính hãng giá này ổn không?', N'Duyệt', '2024-04-03 09:50:00'),
-    (15, 6, 4, N'VinFast Ludo phù hợp cho sinh viên không?', N'Duyệt', '2024-04-04 14:35:00'),
-    (16, 7, 5, N'Pin Bosch chất lượng thật sự tốt!', N'Từ chối', '2024-04-05 11:15:00'),
-    (17, 8, 4, N'Honda Lead 125 này có phanh ABS không?', N'Chờ', '2024-04-06 16:45:00'),
-    (18, 9, 5, N'Yamaha FreeGo màu xanh này đẹp quá!', N'Duyệt', '2024-04-07 12:30:00'),
-    (19, 10, 5, N'Pin Yadea 45Ah chạy xa thật không ạ?', N'Duyệt', '2024-04-08 10:25:00'),
-    (20, 2, 4, N'Yadea Like 200 giống Vespa thật không?', N'Chờ', '2024-04-09 15:10:00');
+    -- Post 1-5
+    (1, 5, 5, N'Xe đẹp quá! Cho mình xem xe được không ạ?', 'APPROVED', '2024-03-11 14:30:00'),
+    (1, 3, 4, N'Giá có thương lượng không bạn?', 'APPROVED', '2024-03-11 16:45:00'),
+    (1, 14, 5, N'Honda SH màu đỏ này cực kỳ đẹp, mình rất thích!', 'APPROVED', '2024-03-12 09:15:00'),
+    (1, 6, 4, N'5000km thôi thì xe còn rất mới. Giá hơi cao nhỉ?', 'PENDING', '2024-03-12 13:20:00'),
+    (1, 9, 5, N'Xe zin như này hiếm lắm, ai cần mua nhanh kẻo hết!', 'APPROVED', '2024-03-13 10:45:00'),
+    (2, 2, 5, N'Xe còn không bạn? Mình có nhu cầu mua.', 'APPROVED', '2024-03-13 10:20:00'),
+    (2, 10, 4, N'Yamaha Janus đời 2021 giá này ổn không các bạn?', 'APPROVED', '2024-03-13 15:30:00'),
+    (2, 7, 5, N'Màu xanh đẹp lắm, phù hợp với nữ sử dụng!', 'APPROVED', '2024-03-14 08:45:00'),
+    (2, 12, 3, N'Phanh CBS có an toàn thực sự không nhỉ?', 'PENDING', '2024-03-14 11:20:00'),
+    (3, 5, 5, N'Pin này dùng cho xe gì được ạ?', 'APPROVED', '2024-03-16 09:15:00'),
 
--- 11. TRANSACTIONS (Depends on: members, posts)
+    -- Post 6-10
+    (3, 2, 5, N'Pin LG chất lượng tốt, mình đang dùng loại này!', 'APPROVED', '2024-03-16 14:20:00'),
+    (3, 8, 4, N'Giá 8.5 triệu cho pin LG 60V 28Ah là hợp lý rồi', 'APPROVED', '2024-03-17 10:30:00'),
+    (3, 15, 5, N'Bảo hành 2 năm thì yên tâm mua nè!', 'APPROVED', '2024-03-17 16:45:00'),
+    (3, 11, 5, N'Pin này phù hợp với SH 150i không bạn?', 'PENDING', '2024-03-18 09:00:00'),
+    (4, 5, 5, N'Xe đẹp lắm! Mình muốn mua.', 'REJECTED', '2024-03-19 11:00:00'),
+    (4, 2, 4, N'VinFast Klara A2 màu trắng sang trọng quá!', 'APPROVED', '2024-03-19 14:30:00'),
+    (5, 14, 3, N'Pin đã qua sử dụng 1 năm thì còn tốt không ạ?', 'APPROVED', '2024-03-21 09:30:00'),
+    (5, 7, 4, N'Giá sinh viên thì phải rẻ hơn chứ bạn ơi!', 'APPROVED', '2024-03-21 13:45:00'),
+    (5, 13, 4, N'Chạy được 40-50km/sạc là ổn cho sinh viên rồi!', 'PENDING', '2024-03-22 10:15:00'),
+    (6, 7, 4, N'Honda Vision này có bảo hành không ạ?', 'APPROVED', '2024-03-23 10:20:00'),
+
+    -- Post 11-15
+    (6, 13, 5, N'Xe gia đình sử dụng thì yên tâm hơn xe kinh doanh!', 'APPROVED', '2024-03-23 14:35:00'),
+    (6, 11, 5, N'Màu xám bạc đẹp và bền màu, rất thích!', 'APPROVED', '2024-03-24 09:00:00'),
+    (6, 15, 4, N'22 triệu cho Vision 110 đời 2021 là giá tốt rồi!', 'PENDING', '2024-03-24 15:20:00'),
+    (7, 8, 5, N'Yamaha Grande giá này quá hời! Xe còn không?', 'APPROVED', '2024-03-24 15:30:00'),
+    (7, 15, 5, N'4200km thì như xe mới luôn, mua ngay đi!', 'APPROVED', '2024-03-25 08:15:00'),
+    (7, 4, 4, N'Màu đen trông sang trọng và nam tính!', 'APPROVED', '2024-03-25 11:40:00'),
+    (7, 12, 5, N'Bao test máy thì tuyệt vời, cho mình xem xe nhé!', 'PENDING', '2024-03-26 09:30:00'),
+    (8, 6, 5, N'Pin Samsung này chất lượng thế nào ạ?', 'APPROVED', '2024-03-26 09:45:00'),
+    (8, 12, 5, N'Pin Samsung SDI rất bền, mình đang dùng!', 'APPROVED', '2024-03-26 14:20:00'),
+    (8, 9, 4, N'Sạc nhanh thì tiện lợi lắm, giá hơi cao!', 'PENDING', '2024-03-27 10:15:00'),
+
+    -- Post 16-20
+    (9, 10, 5, N'Vespa Primavera đẹp quá! Có thể xem xe không?', 'APPROVED', '2024-03-28 14:15:00'),
+    (9, 6, 5, N'Xe Ý nhập khẩu chính hãng thì đắt nhưng chất lượng!', 'APPROVED', '2024-03-29 09:30:00'),
+    (9, 5, 3, N'85 triệu thì hơi đắt với sinh viên như mình!', 'APPROVED', '2024-03-29 13:45:00'),
+    (9, 8, 5, N'Màu xanh mint độc đáo và sang trọng lắm!', 'PENDING', '2024-03-30 10:20:00'),
+    (10, 11, 4, N'VinFast Theon S này có sạc nhanh không?', 'APPROVED', '2024-03-29 11:30:00'),
+    (10, 2, 5, N'Xe điện cao cấp nhất VinFast, chưa lăn bánh nữa!', 'APPROVED', '2024-03-30 08:15:00'),
+    (11, 12, 5, N'Pin CATL này chạy được bao xa vậy ạ?', 'APPROVED', '2024-03-30 16:20:00'),
+    (11, 13, 5, N'72V 40Ah dung lượng khủng, phù hợp xe cao cấp!', 'APPROVED', '2024-03-31 09:45:00'),
+    (11, 10, 4, N'Pin CATL Trung Quốc nhưng chất lượng tốt lắm!', 'PENDING', '2024-03-31 14:30:00'),
+    (12, 13, 4, N'Honda PCX 160 có tiết kiệm xăng không?', 'APPROVED', '2024-03-31 10:40:00'),
+
+    -- Continue cho đủ 93 comments (rút gọn để tiết kiệm)
+    (12, 3, 5, N'Màu trắng đen sporty cực kỳ đẹp!', 'APPROVED', '2024-04-01 08:20:00'),
+    (12, 9, 5, N'PCX 160 êm ái và tiết kiệm nhiên liệu lắm!', 'APPROVED', '2024-04-01 13:15:00'),
+    (12, 14, 4, N'45 triệu cho PCX 160 đời 2022 hợp lý chưa?', 'REJECTED', '2024-04-02 09:30:00'),
+    (13, 14, 5, N'VinFast Klara S so với A2 khác gì ạ?', 'APPROVED', '2024-04-02 13:25:00'),
+    (13, 7, 5, N'Klara S có pin lớn hơn, chạy xa hơn nhiều!', 'APPROVED', '2024-04-03 09:40:00'),
+    (13, 9, 5, N'Phiên bản cao cấp thì đáng giá, mua luôn!', 'PENDING', '2024-04-03 14:55:00'),
+    (14, 15, 5, N'Pin VinFast chính hãng giá này ổn không?', 'APPROVED', '2024-04-03 09:50:00'),
+    (14, 10, 4, N'Bảo hành dài hạn thì yên tâm sử dụng!', 'PENDING', '2024-04-04 11:20:00'),
+    (15, 6, 4, N'VinFast Ludo phù hợp cho sinh viên không?', 'APPROVED', '2024-04-04 14:35:00'),
+    (15, 11, 5, N'Thiết kế trẻ trung, giá 29 triệu rất phải chăng!', 'APPROVED', '2024-04-05 09:15:00'),
+    (15, 8, 5, N'Ludo mới ra mắt 2024, công nghệ mới nhất!', 'APPROVED', '2024-04-05 13:40:00'),
+    (16, 7, 5, N'Pin Bosch chất lượng thật sự tốt!', 'APPROVED', '2024-04-05 11:15:00'),
+    (16, 9, 5, N'Hàng Đức thì không bàn cãi về chất lượng!', 'APPROVED', '2024-04-06 08:30:00'),
+    (16, 10, 4, N'Giá 9.5 triệu hơi cao nhưng xứng đáng!', 'REJECTED', '2024-04-06 14:45:00'),
+    (17, 8, 4, N'Honda Lead 125 này có phanh ABS không?', 'APPROVED', '2024-04-06 16:45:00'),
+    (17, 4, 5, N'Xe gia đình màu đỏ đẹp, phù hợp chị em!', 'APPROVED', '2024-04-07 10:20:00'),
+    (17, 12, 5, N'Lead 125 bền bỉ và tiết kiệm xăng lắm!', 'PENDING', '2024-04-07 15:35:00'),
+    (18, 9, 5, N'Yamaha FreeGo màu xanh này đẹp quá!', 'APPROVED', '2024-04-07 12:30:00'),
+    (18, 15, 5, N'FreeGo 125 trẻ trung, phù hợp giới trẻ!', 'APPROVED', '2024-04-08 09:45:00'),
+    (18, 6, 4, N'33 triệu cho FreeGo 2022 có hợp lý không nhỉ?', 'PENDING', '2024-04-08 14:20:00'),
+    (19, 10, 5, N'Pin Yadea 45Ah chạy xa thật không ạ?', 'APPROVED', '2024-04-08 10:25:00'),
+    (19, 4, 5, N'Dung lượng 45Ah chạy được 80-100km đấy!', 'APPROVED', '2024-04-09 08:15:00'),
+    (19, 3, 5, N'Pin Yadea tầm xa, giá tốt, nên mua!', 'APPROVED', '2024-04-09 13:30:00'),
+    (20, 2, 4, N'Yadea Like 200 giống Vespa thật không?', 'APPROVED', '2024-04-09 15:10:00'),
+    (20, 11, 4, N'Thiết kế bắt chước Vespa nhưng giá rẻ hơn nhiều!', 'APPROVED', '2024-04-10 09:25:00'),
+    (20, 14, 3, N'24 triệu cho xe Trung Quốc thì hơi đắt!', 'PENDING', '2024-04-10 14:40:00'),
+    -- Additional comments for posts 21-30
+    (21, 22, 3, N'Xe chạy êm, pin bền!', 'APPROVED', '2024-04-17 00:00:00'),
+    (21, 8, 4, N'Giao hàng nhanh, 5 sao!', 'PENDING', '2024-04-14 00:00:00'),
+    (21, 25, 1, N'Xe chạy êm, pin bền!', 'PENDING', '2024-04-17 00:00:00'),
+    (22, 8, 4, N'Giao hàng nhanh, 5 sao!', 'PENDING', '2024-04-08 00:00:00'),
+    (22, 14, 2, N'Xe chạy êm, pin bền!', 'REJECTED', '2024-04-14 00:00:00'),
+    (22, 5, 4, N'Xe chạy êm, pin bền!', 'PENDING', '2024-04-14 00:00:00'),
+    (23, 6, 3, N'Chất lượng không như mô tả', 'REJECTED', '2024-04-08 00:00:00'),
+    (23, 2, 3, N'Chất lượng không như mô tả', 'APPROVED', '2024-04-12 00:00:00'),
+    (23, 12, 2, N'Sản phẩm đẹp, giá tốt!', 'PENDING', '2024-04-14 00:00:00'),
+    (24, 23, 3, N'Giao hàng nhanh, 5 sao!', 'APPROVED', '2024-04-16 00:00:00'),
+    (24, 25, 3, N'Sản phẩm đẹp, giá tốt!', 'APPROVED', '2024-04-16 00:00:00'),
+    (24, 22, 4, N'Chất lượng không như mô tả', 'PENDING', '2024-04-13 00:00:00'),
+    (25, 23, 4, N'Xe chạy êm, pin bền!', 'APPROVED', '2024-04-17 00:00:00'),
+    (25, 24, 5, N'Giá hơi cao, nhưng đáng mua', 'PENDING', '2024-04-13 00:00:00'),
+    (25, 14, 5, N'Sản phẩm đẹp, giá tốt!', 'APPROVED', '2024-04-14 00:00:00'),
+    (26, 10, 4, N'Xe chạy êm, pin bền!', 'APPROVED', '2024-04-13 00:00:00'),
+    (26, 4, 3, N'Sản phẩm đẹp, giá tốt!', 'APPROVED', '2024-04-11 00:00:00'),
+    (26, 25, 4, N'Giá hơi cao, nhưng đáng mua', 'REJECTED', '2024-04-13 00:00:00'),
+    (27, 16, 3, N'Sản phẩm đẹp, giá tốt!', 'REJECTED', '2024-04-08 00:00:00'),
+    (27, 7, 4, N'Xe chạy êm, pin bền!', 'REJECTED', '2024-04-13 00:00:00'),
+    (27, 6, 5, N'Sản phẩm đẹp, giá tốt!', 'APPROVED', '2024-04-08 00:00:00'),
+    (28, 23, 2, N'Xe chạy êm, pin bền!', 'REJECTED', '2024-04-09 00:00:00'),
+    (28, 23, 2, N'Giao hàng nhanh, 5 sao!', 'PENDING', '2024-04-13 00:00:00'),
+    (28, 6, 2, N'Giao hàng nhanh, 5 sao!', 'PENDING', '2024-04-11 00:00:00'),
+    (29, 7, 1, N'Sản phẩm đẹp, giá tốt!', 'APPROVED', '2024-04-12 00:00:00'),
+    (29, 9, 3, N'Giao hàng nhanh, 5 sao!', 'APPROVED', '2024-04-16 00:00:00'),
+    (29, 25, 1, N'Giá hơi cao, nhưng đáng mua', 'APPROVED', '2024-04-12 00:00:00'),
+    (30, 7, 5, N'Giao hàng nhanh, 5 sao!', 'APPROVED', '2024-04-11 00:00:00'),
+    (30, 24, 3, N'Chất lượng không như mô tả', 'REJECTED', '2024-04-16 00:00:00'),
+    (30, 19, 1, N'Giá hơi cao, nhưng đáng mua', 'APPROVED', '2024-04-11 00:00:00');
+
+-- 11. TRANSACTIONS (38 records - CHỈ POST_ID 1-30, ĐÃ SỬA)
 -- =============================================
 INSERT INTO transactions (buyer_id, post_id, status, created_at)
 VALUES
-    (5, 1, N'Hoàn thành giao dịch', CAST('2024-03-25 10:00:00' AS DATETIME)),
-    (2, 2, N'Yêu cầu giao dịch', CAST('2024-03-26 14:30:00' AS DATETIME)),
-    (5, 4, N'Hoàn thành giao dịch', CAST('2024-03-27 16:20:00' AS DATETIME)),
-    (7, 6, N'Giao sản phẩm hoàn tất', CAST('2024-03-28 11:15:00' AS DATETIME)),
-    (8, 7, N'Chấp nhận yêu cầu giao dịch', CAST('2024-03-29 13:40:00' AS DATETIME)),
-    (6, 8, N'Hoàn thành giao dịch', CAST('2024-03-30 15:25:00' AS DATETIME)),
-    (10, 9, N'Đã chuyển tiền cho admin', CAST('2024-04-01 09:50:00' AS DATETIME)),
-    (11, 10, N'Yêu cầu giao dịch', CAST('2024-04-02 14:15:00' AS DATETIME)),
-    (12, 11, N'Hoàn thành giao dịch', CAST('2024-04-03 16:30:00' AS DATETIME)),
-    (13, 12, N'Chấp nhận yêu cầu giao dịch', CAST('2024-04-04 10:45:00' AS DATETIME)),
-    (14, 13, N'Giao sản phẩm hoàn tất', CAST('2024-04-05 12:20:00' AS DATETIME)),
-    (15, 14, N'Đã chuyển tiền cho admin', CAST('2024-04-06 15:55:00' AS DATETIME)),
-    (6, 15, N'Hoàn thành giao dịch', CAST('2024-04-07 11:10:00' AS DATETIME)),
-    (7, 16, N'Yêu cầu giao dịch', CAST('2024-04-08 13:35:00' AS DATETIME)),
-    (8, 17, N'Hoàn thành giao dịch', CAST('2024-04-09 16:45:00' AS DATETIME));
+    -- Completed (10)
+    (5, 1, 'COMPLETED', CAST('2024-03-25 10:00:00' AS DATETIME)),
+    (5, 4, 'COMPLETED', CAST('2024-03-27 16:20:00' AS DATETIME)),
+    (6, 8, 'COMPLETED', CAST('2024-03-30 15:25:00' AS DATETIME)),
+    (12, 11, 'COMPLETED', CAST('2024-04-03 16:30:00' AS DATETIME)),
+    (6, 15, 'COMPLETED', CAST('2024-04-07 11:10:00' AS DATETIME)),
+    (8, 17, 'COMPLETED', CAST('2024-04-09 16:45:00' AS DATETIME)),
+    (2, 3, 'COMPLETED', CAST('2024-03-16 10:00:00' AS DATETIME)),
+    (9, 16, 'COMPLETED', CAST('2024-04-05 14:20:00' AS DATETIME)),
+    (11, 19, 'COMPLETED', CAST('2024-04-08 09:30:00' AS DATETIME)),
+    (13, 6, 'COMPLETED', CAST('2024-03-23 15:45:00' AS DATETIME)),
 
--- =============================================
--- LEVEL 5: DEPENDS ON LEVEL 4
--- =============================================
+    -- Delivered (5)
+    (7, 6, 'DELIVERED', CAST('2024-03-28 11:15:00' AS DATETIME)),
+    (14, 13, 'DELIVERED', CAST('2024-04-05 12:20:00' AS DATETIME)),
+    (15, 7, 'DELIVERED', CAST('2024-03-25 08:30:00' AS DATETIME)),
+    (3, 12, 'DELIVERED', CAST('2024-03-31 14:15:00' AS DATETIME)),
+    (10, 16, 'DELIVERED', CAST('2024-04-05 10:00:00' AS DATETIME)),
 
--- 12. CONTRACTS (Depends on: transactions)
+    -- Paid (5)
+    (10, 9, 'PAID', CAST('2024-04-01 09:50:00' AS DATETIME)),
+    (15, 14, 'PAID', CAST('2024-04-06 15:55:00' AS DATETIME)),
+    (4, 19, 'PAID', CAST('2024-04-08 11:20:00' AS DATETIME)),
+    (12, 17, 'PAID', CAST('2024-04-06 13:40:00' AS DATETIME)),
+    (6, 3, 'PAID', CAST('2024-03-16 16:30:00' AS DATETIME)),
+
+    -- Accepted (5)
+    (8, 7, 'ACCEPTED', CAST('2024-03-29 13:40:00' AS DATETIME)),
+    (13, 12, 'ACCEPTED', CAST('2024-04-04 10:45:00' AS DATETIME)),
+    (14, 1, 'ACCEPTED', CAST('2024-03-11 09:20:00' AS DATETIME)),
+    (7, 13, 'ACCEPTED', CAST('2024-04-02 15:30:00' AS DATETIME)),
+    (11, 6, 'ACCEPTED', CAST('2024-03-23 11:00:00' AS DATETIME)),
+
+    -- Requested (7)
+    (2, 2, 'REQUESTED', CAST('2024-03-26 14:30:00' AS DATETIME)),
+    (11, 10, 'REQUESTED', CAST('2024-04-02 14:15:00' AS DATETIME)),
+    (7, 16, 'REQUESTED', CAST('2024-04-08 13:35:00' AS DATETIME)),
+    (9, 12, 'REQUESTED', CAST('2024-03-31 08:45:00' AS DATETIME)),
+    (15, 19, 'REQUESTED', CAST('2024-04-08 16:20:00' AS DATETIME)),
+    (3, 13, 'REQUESTED', CAST('2024-04-02 10:15:00' AS DATETIME)),
+    (4, 7, 'REQUESTED', CAST('2024-03-25 12:40:00' AS DATETIME)),
+
+    -- Cancelled (6)
+    (10, 14, 'CANCELLED', CAST('2024-04-03 09:00:00' AS DATETIME)),
+    (5, 9, 'CANCELLED', CAST('2024-03-28 10:30:00' AS DATETIME)),
+    (8, 13, 'CANCELLED', CAST('2024-04-02 11:45:00' AS DATETIME)),
+    (12, 7, 'CANCELLED', CAST('2024-03-25 14:20:00' AS DATETIME)),
+    (14, 17, 'CANCELLED', CAST('2024-04-06 16:00:00' AS DATETIME)),
+    (6, 9, 'CANCELLED', CAST('2024-03-28 13:15:00' AS DATETIME));
+
+-- 12. CONTRACTS (9 records - CHỈ TRANSACTION_ID HỢP LỆ)
 -- =============================================
 INSERT INTO contracts (transaction_id, contract_url, signed_at, status, created_at)
 VALUES
@@ -315,7 +460,7 @@ VALUES
     (13, 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', CAST('2024-04-07 12:00:00' AS DATETIME), 'SIGNED', CAST('2024-04-07 11:45:00' AS DATETIME)),
     (15, 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', CAST('2024-04-09 17:30:00' AS DATETIME), 'SIGNED', CAST('2024-04-09 17:15:00' AS DATETIME));
 
--- 13. COMMISSIONS (Depends on: transactions)
+-- 13. COMMISSIONS (9 records - CHỈ TRANSACTION_ID HỢP LỆ)
 -- =============================================
 INSERT INTO commissions (transaction_id, commission_rate, amount, status, created_at)
 VALUES
@@ -329,47 +474,31 @@ VALUES
     (13, 0.05, 1450000.00, 'PAID', CAST('2024-04-07 13:00:00' AS DATETIME)),
     (15, 0.05, 1300000.00, 'PAID', CAST('2024-04-09 18:30:00' AS DATETIME));
 
--- 14. REVIEWS (Depends on: members, transactions)
+-- 14. REVIEWS (20 records - CHỈ TRANSACTION_ID HỢP LỆ)
 -- =============================================
 INSERT INTO reviews (seller_id, reviewer_id, transaction_id, rating, comment, status, created_at)
 VALUES
-    (2, 5, 1, 5, N'Người bán rất tốt, xe đúng như mô tả. Giao dịch nhanh chóng!', N'Duyệt', CAST('2024-03-26 10:00:00' AS DATETIME)),
-    (4, 5, 3, 5, N'Xe VinFast rất đẹp, người bán nhiệt tình. Recommend!', N'Chờ', CAST('2024-03-28 09:30:00' AS DATETIME)),
-    (6, 7, 4, 4, N'Honda Vision chất lượng tốt, giá hợp lý. Cảm ơn bạn!', N'Duyệt', CAST('2024-03-29 08:45:00' AS DATETIME)),
-    (8, 6, 6, 5, N'Pin Samsung chất lượng cao, đúng như quảng cáo. Rất hài lòng!', N'Duyệt', CAST('2024-03-31 16:20:00' AS DATETIME)),
-    (9, 10, 7, 5, N'Vespa Primavera đẹp xuất sắc! Người bán tư vấn nhiệt tình.', N'Từ chối', CAST('2024-04-02 11:15:00' AS DATETIME)),
-    (11, 12, 9, 4, N'Pin CATL dung lượng lớn thật sự. Giao hàng đúng hẹn.', N'Chờ', CAST('2024-04-04 17:45:00' AS DATETIME)),
-    (13, 14, 11, 5, N'VinFast Klara S đẹp như mới. Chất lượng tuyệt vời!', N'Duyệt', CAST('2024-04-06 13:30:00' AS DATETIME)),
-    (15, 6, 13, 4, N'VinFast Ludo thiết kế trẻ trung, phù hợp với tôi. Thanks!', N'Duyệt', CAST('2024-04-08 12:40:00' AS DATETIME)),
-    (7, 8, 15, 5, N'Honda Lead 125 máy móc ổn định. Người bán uy tín!', N'Chờ', CAST('2024-04-10 09:25:00' AS DATETIME));
+    (2, 5, 1, 5, N'Người bán rất tốt, xe đúng như mô tả. Giao dịch nhanh chóng!', 'APPROVED', CAST('2024-03-26 10:00:00' AS DATETIME)),
+    (4, 5, 2, 5, N'Xe VinFast rất đẹp, người bán nhiệt tình. Recommend!', 'APPROVED', CAST('2024-03-28 09:30:00' AS DATETIME)),
+    (8, 6, 3, 5, N'Pin Samsung chất lượng cao, đúng như quảng cáo. Rất hài lòng!', 'APPROVED', CAST('2024-03-31 16:20:00' AS DATETIME)),
+    (11, 12, 4, 4, N'Pin CATL dung lượng lớn thật sự. Giao hàng đúng hẹn.', 'APPROVED', CAST('2024-04-04 17:45:00' AS DATETIME)),
+    (15, 6, 5, 4, N'VinFast Ludo thiết kế trẻ trung, phù hợp với tôi. Thanks!', 'APPROVED', CAST('2024-04-08 12:40:00' AS DATETIME)),
+    (7, 8, 6, 5, N'Honda Lead 125 máy móc ổn định. Người bán uy tín!', 'APPROVED', CAST('2024-04-10 09:25:00' AS DATETIME)),
+    (4, 2, 7, 5, N'Pin LG chất lượng tuyệt vời! Bảo hành chu đáo.', 'APPROVED', CAST('2024-03-17 11:30:00' AS DATETIME)),
+    (6, 9, 8, 5, N'Pin Bosch hàng Đức chất lượng cao. Giao hàng nhanh!', 'APPROVED', CAST('2024-04-06 15:45:00' AS DATETIME)),
+    (9, 11, 9, 5, N'Pin Yadea chạy xa thật sự. Người bán rất nhiệt tình!', 'APPROVED', CAST('2024-04-09 10:15:00' AS DATETIME)),
+    (6, 13, 10, 4, N'Honda Vision 110 xe gia đình rất ổn định. Giá tốt!', 'APPROVED', CAST('2024-03-24 16:30:00' AS DATETIME)),
+    (6, 7, 11, 4, N'Honda Vision chất lượng tốt, giá hợp lý. Cảm ơn bạn!', 'APPROVED', CAST('2024-03-29 08:45:00' AS DATETIME)),
+    (13, 14, 12, 5, N'VinFast Klara S đẹp như mới. Chất lượng tuyệt vời!', 'APPROVED', CAST('2024-04-06 13:30:00' AS DATETIME)),
+    (7, 15, 13, 5, N'Yamaha Grande mới cứng, máy êm. Người bán thân thiện!', 'APPROVED', CAST('2024-03-26 09:20:00' AS DATETIME)),
+    (12, 3, 14, 4, N'Honda PCX 160 sporty và tiết kiệm. Đáng mua!', 'APPROVED', CAST('2024-04-01 15:45:00' AS DATETIME)),
+    (2, 5, 1, 5, N'Seller rất professional, hỗ trợ tận tình từ A-Z!', 'PENDING', CAST('2024-03-27 14:20:00' AS DATETIME)),
+    (8, 6, 3, 5, N'Giao dịch suôn sẻ, không có vấn đề gì. 5 sao!', 'APPROVED', CAST('2024-04-01 09:30:00' AS DATETIME)),
+    (11, 12, 4, 5, N'Người bán tư vấn kỹ càng, hàng chất lượng!', 'PENDING', CAST('2024-04-05 11:15:00' AS DATETIME)),
+    (7, 8, 6, 4, N'Xe đẹp, giấy tờ đầy đủ. Giao dịch tin cậy!', 'APPROVED', CAST('2024-04-11 08:40:00' AS DATETIME)),
+    (6, 9, 8, 5, N'Excellent seller! Fast shipping and good communication.', 'APPROVED', CAST('2024-04-07 10:25:00' AS DATETIME)),
+    (9, 11, 9, 4, N'Pin tốt, đóng gói cẩn thận. Sẽ ủng hộ lần sau!', 'APPROVED', CAST('2024-04-10 14:50:00' AS DATETIME));
 
 -- =============================================
--- VERIFY DATA
+-- KẾT THÚC PHẦN 4+5/5 - HOÀN TẤT DATABASE
 -- =============================================
-SELECT 'Members' AS TableName, COUNT(*) AS RecordCount FROM members
-UNION ALL
-SELECT 'Membership Plans', COUNT(*) FROM membership_plans
-UNION ALL
-SELECT 'Vehicles', COUNT(*) FROM vehicle
-UNION ALL
-SELECT 'Batteries', COUNT(*) FROM battery
-UNION ALL
-SELECT 'Member Plan Usage', COUNT(*) FROM member_plan_usage
-UNION ALL
-SELECT 'Products', COUNT(*) FROM products
-UNION ALL
-SELECT 'Posts', COUNT(*) FROM posts
-UNION ALL
-SELECT 'Post Images', COUNT(*) FROM post_images
-UNION ALL
-SELECT 'Favorites', COUNT(*) FROM favorites
-UNION ALL
-SELECT 'Comments', COUNT(*) FROM comments
-UNION ALL
-SELECT 'Transactions', COUNT(*) FROM transactions
-UNION ALL
-SELECT 'Contracts', COUNT(*) FROM contracts
-UNION ALL
-SELECT 'Commissions', COUNT(*) FROM commissions
-UNION ALL
-SELECT 'Reviews', COUNT(*) FROM reviews;

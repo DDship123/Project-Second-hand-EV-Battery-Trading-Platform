@@ -43,6 +43,15 @@ public class VehicleService {
             vehicleRepository.deleteById(id);
             return true;
         }
+//        Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+//        if (vehicle != null) {
+//            vehicleRepository.delete(vehicle);
+//            return true;
+//        }
         return false;
+    }
+
+    public void deleteVehicle(Vehicle vehicle) {
+        vehicleRepository.delete(vehicle);
     }
 }

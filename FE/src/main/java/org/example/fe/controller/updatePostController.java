@@ -27,6 +27,7 @@ public class updatePostController {
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<PostResponse> response = postService.getPostDetail(postId);
+        response.getPayload().setPriceInput(response.getPayload().getPrice().toString());
         session.setAttribute("postCurr", response.getPayload());
         model.addAttribute("post", response.getPayload());
         return "updatePostPage";

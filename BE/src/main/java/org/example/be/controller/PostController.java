@@ -84,6 +84,7 @@ public class PostController {
                 vehicleResponse.setRegistrationYear(post.getProduct().getVehicle().getRegisterYear());
                 vehicleResponse.setOrigin(post.getProduct().getVehicle().getOrigin());
                 vehicleResponse.setBatteryCapacity(post.getProduct().getVehicle().getBatteryCapacity());
+                vehicleResponse.setCondition(post.getProduct().getVehicle().getCondition());
                 productResponse.setVehicle(vehicleResponse);
             }
 
@@ -144,18 +145,6 @@ public class PostController {
         post.setPrice(postRequest.getPrice());
         post.setCreatedAt(postRequest.getCreatedAt());
 
-//        Member seller = new Member();
-//        seller.setMemberId(postRequest.getSeller().getMemberId());
-//        seller.setUsername(postRequest.getSeller().getUsername());
-//        seller.setCity(postRequest.getSeller().getCity());
-//        seller.setAvatarUrl(postRequest.getSeller().getAvatarUrl());
-//        seller.setCreatedAt(postRequest.getSeller().getCreatedAt());
-//        seller.setEmail(postRequest.getSeller().getEmail());
-//        seller.setPhone(postRequest.getSeller().getPhone());
-//        seller.setRole(postRequest.getSeller().getRole());
-//        seller.setStatus(postRequest.getSeller().getStatus());
-//        seller.setPassword(postRequest.getSeller().getPassword());
-//        post.setSeller(seller);
         Member seller = memberService.getMemberById(postRequest.getSeller().getMemberId());
         post.setSeller(seller);
 
@@ -420,22 +409,25 @@ public class PostController {
     public ResponseEntity<ApiResponse<Void>> deletePost(@PathVariable Integer id) {
         Post post = postService.getPostById(id).orElse(null);
         if (post != null) {
-            // Xóa tất cả hình ảnh liên quan đến bài đăng
+            Product product = post.getProduct();
+            Vehicle vehicle = post.getProduct().getVehicle();
+            Battery battery = post.getProduct().getBattery();
             List<PostImage> postImages = postImageService.getPostImagesByPostId(id);
-            for (PostImage postImage : postImages) {
-                postImageService.deletePostImage(postImage.getPostImagesId());
+            postService.deletePost(id);
+            if (postImages != null && !postImages.isEmpty()) {
+                for (PostImage postImage : postImages) {
+                    postImageService.deletePostImage(postImage.getPostImagesId());
+                }
             }
-            if (post.getProduct() != null) {
-                Product product = post.getProduct();
-                // Xóa vehicle hoặc battery liên quan đến product
-                if (product.getVehicle() != null) {
-                    vehicleService.deleteVehicle(product.getVehicle().getVehicleId());
-                }
-                if (product.getBattery() != null) {
-                    batteryService.deleteBattery(product.getBattery().getBatteryId());
-                }
+            if (product != null) {
                 // Xóa product
                 productService.deleteProduct(product.getProductsId());
+                if (vehicle != null) {
+                    vehicleService.deleteVehicle(vehicle.getVehicleId());
+                }
+                if (battery != null) {
+                    batteryService.deleteBattery(battery.getBatteryId());
+                }
             }
         }else {
             ApiResponse<Void> response = new ApiResponse<>();
