@@ -134,4 +134,8 @@ public class PostService {
     public List<Post> findAllPostByProductTypeAndPostTitle(String productType, String title) {
         return postRepository.findAllPostByProductTypeAndPostTitle(productType, title);
     }
+
+    public Post save(Post post) {
+        return postRepository.save(post);
+    }
 }

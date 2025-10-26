@@ -1,9 +1,11 @@
 package org.example.be.controller;
 
+import jakarta.transaction.Transactional;
 import org.example.be.dto.response.*;
 import org.example.be.entity.*;
 import org.example.be.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.Repository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -425,17 +427,42 @@ public class PostController {
             for (PostImage postImage : postImages) {
                 postImageService.deletePostImage(postImage.getPostImagesId());
             }
+
             if (post.getProduct() != null) {
                 Product product = post.getProduct();
+                Integer vehicleId = null;
+                Integer batteryId = null;
+                // Gỡ liên kết với giữa product và vehicle
+                if(product.getBattery() != null) {
+                    //lấy id cua3 battery trc khi gỡ liên kết
+                    batteryId = product.getBattery().getBatteryId();
+                    product.setBattery(null);
+                }
+                if(product.getVehicle() != null) {
+                    //lấy id của vehicle trc khi gỡ liên kết
+                    vehicleId = product.getVehicle().getVehicleId();
+                    product.setVehicle(null);
+                }
+                //lưu lại sau khi gỡ liên kết
+                productService.save(product);
+
                 // Xóa vehicle hoặc battery liên quan đến product
-                if (product.getVehicle() != null) {
-                    vehicleService.deleteVehicle(product.getVehicle().getVehicleId());
+                if (vehicleId != null) {
+                    vehicleService.deleteVehicle(vehicleId);
                 }
-                if (product.getBattery() != null) {
-                    batteryService.deleteBattery(product.getBattery().getBatteryId());
+                if (batteryId != null) {
+                    batteryService.deleteBattery(batteryId);
                 }
+                // gỡ liên kết giữa product và post
+                post.setProduct(null);
+
+                //lưu lại sau khi gỡ liên kết
+                postService.save(post);
+//                postService.flush();
+
                 // Xóa product
                 productService.deleteProduct(product.getProductsId());
+
             }
         }else {
             ApiResponse<Void> response = new ApiResponse<>();
