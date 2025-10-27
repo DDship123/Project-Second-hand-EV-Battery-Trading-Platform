@@ -37,6 +37,7 @@ body {
 .profile__avatar img {
     border-radius: 10px;
     width: 100%;
+    max-height: 300px;
 }
 .profile__avatar__edit {
     position: absolute;
