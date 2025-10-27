@@ -409,25 +409,47 @@ public class PostController {
     public ResponseEntity<ApiResponse<Void>> deletePost(@PathVariable Integer id) {
         Post post = postService.getPostById(id).orElse(null);
         if (post != null) {
-            Product product = post.getProduct();
-            Vehicle vehicle = post.getProduct().getVehicle();
-            Battery battery = post.getProduct().getBattery();
+            // Xóa tất cả hình ảnh liên quan đến bài đăng
             List<PostImage> postImages = postImageService.getPostImagesByPostId(id);
-            postService.deletePost(id);
-            if (postImages != null && !postImages.isEmpty()) {
-                for (PostImage postImage : postImages) {
-                    postImageService.deletePostImage(postImage.getPostImagesId());
-                }
+            for (PostImage postImage : postImages) {
+                postImageService.deletePostImage(postImage.getPostImagesId());
             }
-            if (product != null) {
+
+            if (post.getProduct() != null) {
+                Product product = post.getProduct();
+                Integer vehicleId = null;
+                Integer batteryId = null;
+                // Gỡ liên kết với giữa product và vehicle
+                if(product.getBattery() != null) {
+                    //lấy id cua3 battery trc khi gỡ liên kết
+                    batteryId = product.getBattery().getBatteryId();
+                    product.setBattery(null);
+                }
+                if(product.getVehicle() != null) {
+                    //lấy id của vehicle trc khi gỡ liên kết
+                    vehicleId = product.getVehicle().getVehicleId();
+                    product.setVehicle(null);
+                }
+                //lưu lại sau khi gỡ liên kết
+                productService.save(product);
+
+                // Xóa vehicle hoặc battery liên quan đến product
+                if (vehicleId != null) {
+                    vehicleService.deleteVehicle(vehicleId);
+                }
+                if (batteryId != null) {
+                    batteryService.deleteBattery(batteryId);
+                }
+                // gỡ liên kết giữa product và post
+                post.setProduct(null);
+
+                //lưu lại sau khi gỡ liên kết
+                postService.save(post);
+//                postService.flush();
+
                 // Xóa product
                 productService.deleteProduct(product.getProductsId());
-                if (vehicle != null) {
-                    vehicleService.deleteVehicle(vehicle.getVehicleId());
-                }
-                if (battery != null) {
-                    batteryService.deleteBattery(battery.getBatteryId());
-                }
+
             }
         }else {
             ApiResponse<Void> response = new ApiResponse<>();
