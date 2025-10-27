@@ -16,6 +16,11 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     @org.springframework.data.jpa.repository.Query("SELECT t FROM Transaction t WHERE t.status = :status ORDER BY t.createdAt DESC")
     List<Transaction> findAllByStatusOrderByCreatedAtDesc(@org.springframework.data.repository.query.Param("status") String status);
 
+    List<Transaction> findByBuyer_MemberIdAndStatus(Integer buyerId, String status);
+
+    List<Transaction> findByPost_Seller_MemberIdAndStatus(Integer sellerId, String status);
+
+
     // Lấy tất cả transaction theo nhiều trạng thái (yêu cầu, chấp nhận, đã chuyển tiền cho admin, đã giao, hoàn thành...)(Tân)
     @org.springframework.data.jpa.repository.Query("SELECT t FROM Transaction t WHERE t.status IN :statuses ORDER BY t.createdAt DESC")
     List<Transaction> findAllByStatusInOrderByCreatedAtDesc(@org.springframework.data.repository.query.Param("statuses") List<String> statuses);

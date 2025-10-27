@@ -1,10 +1,10 @@
 package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.fe.entity.ApiResponse;
-import org.example.fe.entity.FavoriteResponse;
-import org.example.fe.entity.MemberResponse;
-import org.example.fe.entity.PostResponse;
+import org.example.fe.response.ApiResponse;
+import org.example.fe.response.FavoriteResponse;
+import org.example.fe.response.MemberResponse;
+import org.example.fe.response.PostResponse;
 import org.example.fe.service.PostService;
 import org.example.fe.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;

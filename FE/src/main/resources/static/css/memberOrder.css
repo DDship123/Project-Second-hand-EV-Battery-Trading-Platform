@@ -9,14 +9,14 @@
 
 body {
   background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
-.container {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-}
+/*.container {*/
+/*  display: flex;*/
+/*  height: 100vh;*/
+/*  overflow: hidden;*/
+/*}*/
 
 .main-content {
   flex: 1;

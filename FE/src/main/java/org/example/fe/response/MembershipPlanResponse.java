@@ -1,17 +1,23 @@
-package org.example.fe.entity;
+package org.example.fe.response;
 
-public class PostPackageResponse {
-    private int planId;
+import java.math.BigDecimal;
+
+public class MembershipPlanResponse {
+    private Integer planId;
     private String name;
-    private double price;
+    private BigDecimal price;
     private int duration;
     private int maxPosts;
     private String priority;
 
-    public PostPackageResponse() {
+    public Integer getPlanId() {
+        return planId;
     }
 
-    public PostPackageResponse(int planId, String name, double price, int duration, int maxPosts, String priority) {
+    public MembershipPlanResponse() {
+    }
+
+    public MembershipPlanResponse(Integer planId, String name, BigDecimal price, int duration, int maxPosts, String priority) {
         this.planId = planId;
         this.name = name;
         this.price = price;
@@ -20,11 +26,7 @@ public class PostPackageResponse {
         this.priority = priority;
     }
 
-    public int getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(int planId) {
+    public void setPlanId(Integer planId) {
         this.planId = planId;
     }
 
@@ -36,11 +38,11 @@ public class PostPackageResponse {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

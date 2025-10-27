@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="overflow: hidden">
+<html lang="en">
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -17,6 +17,8 @@
     <link rel="stylesheet" th:href="@{/css/orderDetail.css}" />
 </head>
 
+<header th:include="/commonComponents/header.html"></header>
+
 <body>
 <div class="container">
     <div class="main-content">
@@ -29,11 +31,11 @@
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="label">Mã đơn:</span>
-                        <span class="value">#SO001</span>
+                        <span class="value" th:text="${transaction.getTransactionId()}">#PO001</span>
                     </div>
                     <div class="info-item">
                         <span class="label">Ngày tạo:</span>
-                        <span class="value">23/10/2025</span>
+                        <span class="value" th:text="${#temporals.format(transaction.getCreatedAt(),'dd-MM-yyyy')}">23/10/2025</span>
                     </div>
                 </div>
             </div>
@@ -44,23 +46,23 @@
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="label">Họ và tên:</span>
-                        <span class="value">Trần Thị B</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="label">Số điện thoại:</span>
-                        <span class="value">0987654321</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="label">Email:</span>
-                        <span class="value">tranthib@email.com</span>
+                        <span class="value" th:text="${transaction.getSeller().getUsername()}">Trần Thị B</span>
                     </div>
                     <div class="info-item">
                         <span class="label">Thành phố:</span>
-                        <span class="value">Hà Nội</span>
+                        <span class="value" th:text="${transaction.getSeller().getCity()}">Hà Nội</span>
                     </div>
                     <div class="info-item info-item--full">
                         <span class="label">Địa chỉ:</span>
-                        <span class="value">456 Đường XYZ, Phường 2, Quận Ba Đình, Hà Nội</span>
+                        <span class="value" th:text="${transaction.getBuyer().getAddress()}">123 Đường ABC, Phường 1, Quận 1, TP. Hồ Chí Minh</span>
+                    </div>
+                    <div  lass="info-item">
+                        <span class="label">Số điện thoại:</span>
+                        <span class="value" th:text="${transaction.getBuyer().getPhone()}">0123456789</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Email:</span>
+                        <span class="value" th:text="${transaction.getBuyer().getEmail()}">nguyenvana@email.com</span>
                     </div>
                 </div>
             </div>
@@ -71,20 +73,28 @@
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="label">Họ và tên:</span>
-                        <span class="value">Nguyễn Văn A</span>
+                        <span class="value" th:text="${transaction.getBuyer().getUsername()}">Nguyễn Văn A</span>
                     </div>
-                    <div class="info-item">
+                    <div th:if="${!transaction.getStatus().equals('REQUESTED')}" class="info-item">
+                        <span class="label">Số điện thoại:</span>
+                        <span class="value" th:text="${transaction.getBuyer().getPhone()}">0123456789</span>
+                    </div>
+                    <div th:if="${!transaction.getStatus().equals('REQUESTED')}" class="info-item">
+                        <span class="label">Email:</span>
+                        <span class="value" th:text="${transaction.getBuyer().getEmail()}">nguyenvana@email.com</span>
+                    </div>
+                    <div  class="info-item">
                         <span class="label">Thành phố:</span>
-                        <span class="value">Hồ Chí Minh</span>
+                        <span class="value" th:text="${transaction.getBuyer().getCity()}">Hồ Chí Minh</span>
                     </div>
-                    <div class="info-item">
-                        <span class="label">Đánh giá:</span>
-                        <span class="value"><i class="fa-solid fa-star star-icon"></i> 4.5 (85 đánh giá)</span>
+                    <div th:if="${!transaction.getStatus().equals('REQUESTED')}" class="info-item info-item--full">
+                        <span class="label">Địa chỉ:</span>
+                        <span class="value" th:text="${transaction.getBuyer().getAddress()}">123 Đường ABC, Phường 1, Quận 1, TP. Hồ Chí Minh</span>
                     </div>
                 </div>
-                <div class="info-note">
+                <div th:if="${transaction.getStatus().equals('REQUESTED')}" class="info-note">
                     <i class="fa-solid fa-info-circle"></i>
-                    <span>Thông tin chi tiết của người mua sẽ được hiển thị sau khi admin phê duyệt đơn hàng.</span>
+                    <span >Thông tin chi tiết của người bán sẽ được hiển thị sau khi admin phê duyệt đơn hàng.</span>
                 </div>
             </div>
 
@@ -93,43 +103,69 @@
                 <h2>Thông tin Sản phẩm</h2>
                 <div class="product-display">
                     <div class="product-image-wrapper">
-                        <img src="https://via.placeholder.com/300x300?text=Vinfast+Feliz" alt="Xe máy điện Vinfast Feliz"
+                        <img th:src="${transaction.getImageUrl()}" alt="Xe máy điện Vinfast Feliz"
                              class="product-image">
                     </div>
                     <div class="product-info-wrapper">
-                        <h3 class="product-name">Xe máy điện Vinfast Feliz</h3>
-                        <div class="info-grid">
+                        <h3 class="product-name" th:src="${post.getProduct().getProductName()}">Xe máy điện Vinfast Feliz</h3>
+                        <div class="info-grid" th:if="${post.getProduct().getVehicle() != null}">
                             <div class="info-item">
                                 <span class="label">Hãng xe:</span>
-                                <span class="value">VinFast</span>
+                                <span class="value" th:text="${post.getProduct().getVehicle().getBrand()}">VinFast</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Dòng xe:</span>
-                                <span class="value">Feliz</span>
+                                <span class="value" th:text="${post.getProduct().getVehicle().getModel()}">Feliz</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Năm đăng ký:</span>
-                                <span class="value">2023</span>
+                                <span class="value" th:text="${post.getProduct().getVehicle().getRegistrationYear()}">2023</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Số km đã đi:</span>
-                                <span class="value">3,500 km</span>
+                                <span class="value" th:text="${post.getProduct().getVehicle().getMileage()}">3,500 km</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Tình trạng xe:</span>
-                                <span class="value">Đã qua sử dụng, còn rất mới</span>
+                                <span class="value" th:text="${post.getProduct().getVehicle().getCondition()}">Đã qua sử dụng, còn rất mới</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Dung tích pin:</span>
-                                <span class="value">22Ah</span>
+                                <span class="value" th:text="${post.getProduct().getVehicle().getBatteryCapacity()}">22Ah</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">Xuất xứ:</span>
-                                <span class="value">Việt Nam</span>
+                                <span class="value" th:text="${post.getProduct().getVehicle().getOrigin()}">Việt Nam</span>
                             </div>
                             <div class="info-item">
-                                <span class="label">Giá bán:</span>
-                                <span class="value value--price">25,000,000 VNĐ</span>
+                                <span class="label">Giá:</span>
+                                <span class="value value--price" th:text="${post.getPriceFormated()}+'VNĐ'">25,000,000 VNĐ</span>
+                            </div>
+                        </div>
+                        <div class="info-grid" th:if="${post.getProduct().getBattery() != null}">
+                            <div class="info-item">
+                                <span class="label">Hãng pin:</span>
+                                <span class="value" th:text="${post.getProduct().getBattery().getBrand()}">VinFast</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Năm sản xuất:</span>
+                                <span class="value" th:text="${post.getProduct().getBattery().getYearOfManufacture()()}">2023</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Tình trạng pin:</span>
+                                <span class="value" th:text="${post.getProduct().getBattery().getCondition()}">Đã qua sử dụng, còn rất mới</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Dung tích pin:</span>
+                                <span class="value" th:text="${post.getProduct().getBattery().getCapacity()}+'ah'+' - '+ ${post.getProduct().getBattery().getVoltage()}">22Ah</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Xuất xứ:</span>
+                                <span class="value" th:text="${post.getProduct().getBattery().getOrigin()}">Việt Nam</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Giá:</span>
+                                <span class="value value--price" th:text="${post.getPriceFormated()}+'VNĐ'">25,000,000 VNĐ</span>
                             </div>
                         </div>
                     </div>
@@ -137,36 +173,39 @@
             </div>
 
             <!-- Approval Status -->
-            <div class="section">
-                <h2>Trạng thái Phê duyệt</h2>
+            <div class="section" >
+                <h2 >Trạng thái Phê duyệt</h2>
 
-                <div class="status-timeline">
+                <div class="status-timeline" th:if="${!transaction.getStatus().equals('REQUESTED')}" >
                     <!-- Seller approval comes first -->
                     <div class="timeline-item">
-                        <div class="timeline-label">Xác nhận của Người bán:</div>
+                        <div class="timeline-label">Người bán:</div>
                         <div class="timeline-value">
-                            <span class="status-badge status-badge--approved">Đã phê duyệt</span>
-                            <span class="timeline-date">23/10/2025 13:45</span>
+                            <span th:if="${transaction.getStatus().equals('PAID')}" class="status-badge status-badge--pending">Người bán chờ nhận hàng</span>
+                            <span th:if="${transaction.getStatus().equals('DELIVERED')}" class="status-badge status-badge--approved">Người bán đã nhận dược hàng</span>
+                            <span th:if="${transaction.getStatus().equals('ACCEPTED')}" class="status-badge status-badge--pending">Người bán đang thanh toán</span>
+<!--                            <span class="timeline-date">23/10/2025 13:45</span>-->
                         </div>
                     </div>
 
                     <!-- Admin approval comes after seller -->
                     <div class="timeline-item">
-                        <div class="timeline-label">Xác nhận của Admin:</div>
+                        <div class="timeline-label">Admin:</div>
                         <div class="timeline-value">
-                            <span class="status-badge status-badge--pending">Chờ phê duyệt</span>
+                            <span class="status-badge status-badge--pending" th:if="${transaction.getStatus().equals('ACCEPTED')}">Đang chờ người mua chuyển tiền</span>
+                            <span class="status-badge status-badge--approved" th:if="${!transaction.getStatus().equals('REQUESTED') && !transaction.getStatus().equals('ACCEPTED')}">Đã nhận được tiền từ người mua</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Action Buttons for Seller -->
-                <div class="action-section">
+                <div class="action-section"  th:if="${transaction.getStatus().equals('REQUESTED')}">
                     <h3 class="action-title">Hành động</h3>
                     <div class="action-buttons">
-                        <button class="btn btn--accept">
+                        <button class="btn btn--accept" th:attr="data-transaction-id=${transaction.getTransactionId()}">
                             <i class="fa-solid fa-check"></i> Chấp nhận đơn hàng
                         </button>
-                        <button class="btn btn--reject">
+                        <button class="btn btn--reject" th:attr="data-transaction-id=${transaction.getTransactionId()}">
                             <i class="fa-solid fa-xmark"></i> Từ chối đơn hàng
                         </button>
                     </div>
@@ -184,22 +223,23 @@
                 <div class="financial-summary">
                     <div class="financial-row">
                         <span class="financial-label">Giá bán sản phẩm:</span>
-                        <span class="financial-value">25,000,000 VNĐ</span>
+                        <span class="financial-value" th:text="${post.getPrice()+'VNĐ'}">25,000,000 VNĐ</span>
                     </div>
                     <div class="financial-row financial-row--commission">
-              <span class="financial-label">
+              <span class="financial-label" th:text="'Phí hoa hồng '+'('+${commission.getCommissionRate()*100}+'%):'">
                 Phí hoa hồng (5%):
                 <span class="tooltip">
                   <i class="fa-solid fa-circle-question"></i>
                   <span class="tooltip-text">Phí nền tảng thu từ mỗi giao dịch</span>
                 </span>
               </span>
-                        <span class="financial-value">- 1,250,000 VNĐ</span>
+                        <span class="financial-value" th:text="${commission.getPriceFormated(commission.getAmount())}+'VNĐ'">- 1,250,000 VNĐ</span>
                     </div>
-                    <div class="financial-row financial-row--total">
-                        <span class="financial-label">Tổng số tiền bạn nhận được:</span>
-                        <span class="financial-value financial-value--total">23,750,000 VNĐ</span>
-                    </div>
+<!--                    <div class="financial-row financial-row&#45;&#45;total">-->
+<!--                        <span class="financial-label">Tổng số tiền bạn nhận được:</span>-->
+<!--                        <span class="financial-value financial-value&#45;&#45;total" th:text="-->
+<!--                        ${commission.getPriceFormated(post.getPrice().doubleValue() - commission.getAmount())} + ' VNĐ'">23,750,000 VNĐ</span>-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -207,13 +247,16 @@
             <div class="section-total">
                 <div class="total-wrapper">
                     <span class="total-label">Tổng tiền bạn sẽ nhận:</span>
-                    <span class="total-amount">23,750,000 VNĐ</span>
+                    <span class="total-amount" th:text="${commission.getPriceFormated(post.getPrice().doubleValue() - commission.getAmount())} + ' VNĐ'">23,750,000 VNĐ</span>
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
+<footer th:include="/commonComponents/footer.html"></footer>
+<script th:src="@{/js/orderDetailSeller.js}"></script>
 </body>
 
 

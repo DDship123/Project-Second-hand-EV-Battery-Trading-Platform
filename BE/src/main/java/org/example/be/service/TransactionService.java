@@ -6,10 +6,7 @@ import org.example.be.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TransactionService {
@@ -26,8 +23,18 @@ public class TransactionService {
     }
 
     public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+        List<Transaction> requestedTransactions = new ArrayList<>();
+        List<Transaction> delivery= transactionRepository.findAllByStatusOrderByCreatedAtDesc("DELIVERED");
+        List<Transaction> paid = transactionRepository.findAllByStatusOrderByCreatedAtDesc("PAID");
+        List<Transaction> accept = transactionRepository.findAllByStatusOrderByCreatedAtDesc("ACCEPTED");
+        List<Transaction> request = transactionRepository.findAllByStatusOrderByCreatedAtDesc("REQUESTED");
+        requestedTransactions.addAll(delivery);
+        requestedTransactions.addAll(paid);
+        requestedTransactions.addAll(accept);
+        requestedTransactions.addAll(request);
+        return requestedTransactions;
     }
+
 
     public Transaction updateTransaction(Integer id, Transaction updatedTransaction) {
         Optional<Transaction> existingTransaction = transactionRepository.findById(id);
@@ -69,6 +76,32 @@ public class TransactionService {
     // Lấy tất cả transaction theo nhiều trạng thái (truyền danh sách)(Tân)
     public List<Transaction> getAllTransactionsByStatuses(List<String> statuses) {
         return transactionRepository.findAllByStatusInOrderByCreatedAtDesc(statuses);
+    }
+    public List<Transaction> getAllBuyTransactionsByStatus(Integer buyerId, String status) {
+        if (!status.equals("REQUESTED") && !status.equals("CANCELLED") && !status.equals("COMPLETED")) {
+            List<Transaction> result = new ArrayList<>();
+            List<Transaction> delivered = transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "DELIVERED");
+            List<Transaction> paid = transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "PAID");
+            List<Transaction> accepted = transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "ACCEPTED");
+            result.addAll(accepted);
+            result.addAll(paid);
+            result.addAll(delivered);
+            return result;
+        }
+        return transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, status);
+    }
+    public List<Transaction> getAllSellTransactionsByStatus(Integer sellerId, String status) {
+        if (!status.equals("REQUESTED") && !status.equals("CANCELLED") && !status.equals("COMPLETED")) {
+            List<Transaction> result = new ArrayList<>();
+            List<Transaction> delivered = transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "DELIVERED");
+            List<Transaction> paid = transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "PAID");
+            List<Transaction> accepted = transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "ACCEPTED");
+            result.addAll(accepted);
+            result.addAll(paid);
+            result.addAll(delivered);
+            return result;
+        }
+        return transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, status);
     }
 
     // Cập Nhật Transaction status(Tân)

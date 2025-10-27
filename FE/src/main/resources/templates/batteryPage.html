@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="battery__item__actions"  th:if="${post.getSeller().getMemberId() != user.getMemberId()}">
-        <a href="#" class="battery__item__actions__buy"
+        <a th:href="@{'/home/transaction/'+ ${post.getPostsId()}}" class="battery__item__actions__buy"
         ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
         >
         <a th:href="@{'/home/wishList/add/' + ${post.getPostsId()}}" th:if="${guest.equals('false')}" class="battery__item__actions__heart">

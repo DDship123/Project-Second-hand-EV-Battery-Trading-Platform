@@ -1,4 +1,4 @@
-package org.example.fe.entity;
+package org.example.fe.response;
 
 public class BatteryResponse {
     private int batteryId;

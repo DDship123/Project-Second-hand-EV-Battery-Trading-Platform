@@ -2,9 +2,9 @@ package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.fe.config.CloudinaryService;
-import org.example.fe.entity.ApiResponse;
-import org.example.fe.entity.MemberResponse;
-import org.example.fe.entity.TransactionResponse;
+import org.example.fe.response.ApiResponse;
+import org.example.fe.response.MemberResponse;
+import org.example.fe.response.TransactionResponse;
 import org.example.fe.service.MemberService;
 import org.example.fe.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;

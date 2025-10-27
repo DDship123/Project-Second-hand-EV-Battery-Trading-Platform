@@ -6,4 +6,13 @@ window.addEventListener('load', function() {
             window.location.href = `/home/product/detail/${postId}`;
         });
     });
+    const urlParams = new URLSearchParams(window.location.search);
+    const successMessage = urlParams.get('successMessage');
+    if (successMessage) {
+        alert(successMessage);
+    }
+    const errorMessage = urlParams.get('errorMessage');
+    if (errorMessage) {
+        alert(errorMessage);
+    }
 });

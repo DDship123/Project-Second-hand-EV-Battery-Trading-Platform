@@ -1,7 +1,7 @@
 package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.fe.entity.*;
+import org.example.fe.response.*;
 import org.example.fe.service.PostService;
 import org.example.fe.service.ReviewService;
 import org.example.fe.service.TransactionService;

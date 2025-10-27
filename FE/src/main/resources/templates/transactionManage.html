@@ -45,7 +45,7 @@
                     <thead>
                     <tr>
                         <th>Mã yêu cầu</th>
-                        <th>Tên sản phẩm</th>
+                        <th>Tiêu đề của bài đăng</th>
                         <th>Người mua</th>
                         <th>Người bán</th>
                         <th>Ngày yêu cầu</th>
@@ -54,70 +54,74 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>REQ12345</td>
-                        <td>Xe máy điện</td>
-                        <td>Nguyen Van A</td>
-                        <td>Nguyen Van B</td>
-                        <td>06/10/2025</td>
-                        <td><span class="status-badge pending">Đang đợi</span></td>
-                        <td>
-                            <button class="action-btn-small primary">Chi tiết</button>
-                            <button class="action-btn-small success">Duyệt</button>
-                            <button class="action-btn-small danger">Từ chối</button>
+                    <tr th:each="transaction : ${transactions}">
+                        <td th:text="${transaction.getTransactionId()}">REQ12345</td>
+                        <td th:text="${transaction.getPostTitle()}">Xe máy điện</td>
+                        <td th:text="${transaction.getBuyer().getUsername()}">Nguyen Van A</td>
+                        <td th:text="${transaction.getSeller().getUsername()}">Nguyen Van B</td>
+                        <td th:text="${#temporals.format(transaction.getCreatedAt(),'dd-MM-yyyy')}">06/10/2025</td>
+                        <td th:if="${transaction.getStatus().equals('REQUESTED')}"><span class="status-badge pending">Đang đợi</span></td>
+                        <td th:if="${transaction.getStatus().equals('ACCEPTED')}"><span class="status-badge approve">Người bán đã chấp nhận</span></td>
+                        <td th:if="${transaction.getStatus().equals('PAID')}"><span class="status-badge approve">Người mua đã chuyển khoản</span></td>
+                        <td th:if="${transaction.getStatus().equals('DELIVERED')}"><span class="status-badge approve">Người bán đã giao sản phẩm</span></td>
+                        <td class="action-buttons">
+                            <button th:attr="data-transaction-id=${transaction.getTransactionId()}" class="action-btn-small primary">Chi tiết</button>
+                            <button th:attr="data-transaction-id=${transaction.getTransactionId()}" th:if="${transaction.getStatus().equals('DELIVERED')}" class="action-btn-small success">Duyệt</button>
+                            <button th:attr="data-transaction-id=${transaction.getTransactionId()}" th:if="${transaction.getStatus().equals('DELIVERED')}" class="action-btn-small danger">Từ chối</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>REQ12346</td>
-                        <td>Xe máy điện</td>
-                        <td>Nguyen Tan C</td>
-                        <td>Nguyen Van D</td>
-                        <td>06/10/2025</td>
-                        <td><span class="status-badge approved">Đã duyệt</span></td>
-                        <td>
-                            <button class="action-btn-small primary">Chi tiết</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>REQ12347</td>
-                        <td>Xe máy điện</td>
-                        <td>Nguyen Van E</td>
-                        <td>Nguyen Van G</td>
-                        <td>06/10/2025</td>
-                        <td><span class="status-badge approved">Đã duyệt</span></td>
-                        <td>
-                            <button class="action-btn-small primary">Chi tiết</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>REQ12347</td>
-                        <td>Xe máy điện</td>
-                        <td>Nguyen Van E</td>
-                        <td>Nguyen Van G</td>
-                        <td>06/10/2025</td>
-                        <td><span class="status-badge approved">Đã duyệt</span></td>
-                        <td>
-                            <button class="action-btn-small primary">Chi tiết</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>REQ12347</td>
-                        <td>Xe máy điện</td>
-                        <td>Nguyen Van E</td>
-                        <td>Nguyen Van G</td>
-                        <td>06/10/2025</td>
-                        <td><span class="status-badge rejected">Từ chối</span></td>
-                        <td>
-                            <button class="action-btn-small primary">Chi tiết</button>
-                        </td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <td>REQ12346</td>-->
+<!--                        <td>Xe máy điện</td>-->
+<!--                        <td>Nguyen Tan C</td>-->
+<!--                        <td>Nguyen Van D</td>-->
+<!--                        <td>06/10/2025</td>-->
+<!--                        <td><span class="status-badge approved">Đã duyệt</span></td>-->
+<!--                        <td>-->
+<!--                            <button class="action-btn-small primary">Chi tiết</button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>REQ12347</td>-->
+<!--                        <td>Xe máy điện</td>-->
+<!--                        <td>Nguyen Van E</td>-->
+<!--                        <td>Nguyen Van G</td>-->
+<!--                        <td>06/10/2025</td>-->
+<!--                        <td><span class="status-badge approved">Đã duyệt</span></td>-->
+<!--                        <td>-->
+<!--                            <button class="action-btn-small primary">Chi tiết</button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>REQ12347</td>-->
+<!--                        <td>Xe máy điện</td>-->
+<!--                        <td>Nguyen Van E</td>-->
+<!--                        <td>Nguyen Van G</td>-->
+<!--                        <td>06/10/2025</td>-->
+<!--                        <td><span class="status-badge approved">Đã duyệt</span></td>-->
+<!--                        <td>-->
+<!--                            <button class="action-btn-small primary">Chi tiết</button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>REQ12347</td>-->
+<!--                        <td>Xe máy điện</td>-->
+<!--                        <td>Nguyen Van E</td>-->
+<!--                        <td>Nguyen Van G</td>-->
+<!--                        <td>06/10/2025</td>-->
+<!--                        <td><span class="status-badge rejected">Từ chối</span></td>-->
+<!--                        <td>-->
+<!--                            <button class="action-btn-small primary">Chi tiết</button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-<script th:src="@{/js/commonComponents/adminPage.js}"></script>
+
+<script th:src="@{/js/transactionManage.js}"></script>
 
 </body>
 

@@ -157,7 +157,10 @@
                 </div>
                 <div class="container__sideInfor__specifications__row">
                     <div class="container__sideInfor__specifications__cell">
-                        <span class="label">Năm đăng ký:</span>
+                        <span class="label"
+                              th:if="${post.getProduct().getProductType().equals('VEHICLE')}">Năm đăng ký:</span>
+                        <span class="label"
+                              th:if="${post.getProduct().getProductType().equals('BATTERY')}">Năm sản xuất:</span>
                     </div>
                     <div class="container__sideInfor__specifications__cell">
                         <span th:if="${post.getProduct().getProductType().equals('VEHICLE')}"

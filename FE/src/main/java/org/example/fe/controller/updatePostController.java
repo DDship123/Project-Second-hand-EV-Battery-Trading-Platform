@@ -2,7 +2,7 @@ package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.fe.config.CloudinaryService;
-import org.example.fe.entity.*;
+import org.example.fe.response.*;
 import org.example.fe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

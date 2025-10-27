@@ -5,6 +5,7 @@ import org.example.be.config.VnpayProperties;
 import org.example.be.dto.request.CreatePaymentRequest;
 import org.example.be.dto.request.QueryRequest;
 import org.example.be.dto.request.RefundRequest;
+import org.example.be.dto.response.ApiResponse;
 import org.example.be.dto.response.PaymentUrlResponse;
 import org.example.be.dto.response.ReturnUrlResponse;
 import org.example.be.service.VnpayService;
@@ -14,6 +15,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.servlet.view.RedirectView;
+
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -33,16 +36,40 @@ public class VnpayController {
 
     // 1) Tạo URL thanh toán
     @PostMapping("/create")
-    public ResponseEntity<PaymentUrlResponse> create(@Valid @RequestBody CreatePaymentRequest req,
+    public ResponseEntity<ApiResponse<PaymentUrlResponse>> create(@Valid @RequestBody CreatePaymentRequest req,
                                                      HttpServletRequest http) {
         String clientIp = VnpayUtil.clientIp(http.getHeader("X-FORWARDED-FOR"), http.getRemoteAddr());
         String url = service.buildPaymentUrl(req.getAmount(), req.getBankCode(), req.getLanguage(), clientIp);
-        return ResponseEntity.ok(new PaymentUrlResponse("00", "success", url));
+        ApiResponse<PaymentUrlResponse> apiResponse = new ApiResponse<>();
+        apiResponse.ok(new PaymentUrlResponse("00", "success", url));
+        return ResponseEntity.ok(apiResponse);
     }
 
     // 2) Return URL (browser redirect)
+//    @GetMapping("/return")
+//    public ResponseEntity<ApiResponse<ReturnUrlResponse>> returnUrl(HttpServletRequest request) {
+//        Map<String, String> params = extractParams(request);
+//
+//        // THÊM LOG GIÚP DEBUG VNPAY
+//        System.out.println("VNPAY Return Params: " + params);
+//        System.out.println("SecretKey: " + props.getSecretKey());
+//
+//        String vnp_SecureHash = params.get("vnp_SecureHash");
+//        boolean valid = VnpayUtil.verify(params, vnp_SecureHash, props.getSecretKey());
+//        String txnStatus = params.getOrDefault("vnp_TransactionStatus", "");
+//        String responseCode = params.getOrDefault("vnp_ResponseCode", "");
+//
+//        String status;
+//        if (valid) status = "00".equals(txnStatus) ? "SUCCESS" : "FAILED";
+//        else status = "INVALID_SIGNATURE";
+//
+//        ReturnUrlResponse body = new ReturnUrlResponse(valid, txnStatus, responseCode, status);
+//        ApiResponse<ReturnUrlResponse> apiResponse = new ApiResponse<>();
+//        apiResponse.ok(body);
+//        return ResponseEntity.ok(apiResponse);
+//    }
     @GetMapping("/return")
-    public ResponseEntity<ReturnUrlResponse> returnUrl(HttpServletRequest request) {
+    public RedirectView returnUrl(HttpServletRequest request) {
         Map<String, String> params = extractParams(request);
 
         // THÊM LOG GIÚP DEBUG VNPAY
@@ -59,7 +86,8 @@ public class VnpayController {
         else status = "INVALID_SIGNATURE";
 
         ReturnUrlResponse body = new ReturnUrlResponse(valid, txnStatus, responseCode, status);
-        return ResponseEntity.ok(body);
+        String url = "http://localhost:8888/home/order?status=ACCEPTED&transactionStatus=" + status;
+        return new RedirectView(url);
     }
 
     // 3) IPN (server-to-server) – VNPAY sẽ gọi vào đây với GET hoặc POST

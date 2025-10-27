@@ -1,4 +1,4 @@
-package org.example.fe.entity;
+package org.example.fe.response;
 
 public class VehicleResponse {
     private int vehicleId;

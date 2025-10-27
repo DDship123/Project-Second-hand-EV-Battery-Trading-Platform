@@ -15,6 +15,7 @@ public class TransactionResponse {
     private String imageUrl;
     private int rate;
 
+
     public TransactionResponse() {
     }
 

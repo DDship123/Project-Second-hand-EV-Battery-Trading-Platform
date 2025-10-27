@@ -48,5 +48,8 @@ public class CommissionService {
             return false; // không tìm thấy, xóa thất bại
         }
     }
+    public Commission getCommissionByTransactionId(Integer transactionId) {
+        return commissionRepository.findByTransaction_TransactionId(transactionId);
+    }
 
 }

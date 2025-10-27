@@ -1,4 +1,4 @@
-package org.example.fe.entity;
+package org.example.fe.response;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -16,6 +16,7 @@ public class TransactionResponse {
     private LocalDateTime createdAt;
     private String imageUrl;
     private int rate;
+
 
     public TransactionResponse() {
     }
@@ -35,7 +36,6 @@ public class TransactionResponse {
         this.imageUrl = imageUrl;
         this.rate = rate;
     }
-
 
     public Integer getTransactionId() {
         return transactionId;

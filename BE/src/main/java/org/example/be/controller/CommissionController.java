@@ -1,6 +1,7 @@
 package org.example.be.controller;
 
 import org.example.be.dto.response.ApiResponse;
+import org.example.be.dto.response.CommissionResponse;
 import org.example.be.entity.Commission;
 import org.example.be.service.CommissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,27 @@ public class CommissionController {
             response.error(error);
             return ResponseEntity.status(404).body(response);
         }
+    }
+    @GetMapping("/transaction/{transactionId}")
+    public ResponseEntity<ApiResponse<CommissionResponse>> getCommissionByTransactionId(@PathVariable Integer transactionId) {
+        Commission commission = commissionService.getCommissionByTransactionId(transactionId);
+        ApiResponse<CommissionResponse> response = new ApiResponse<>();
+        if (commission != null) {
+            CommissionResponse commissionResponse = new CommissionResponse();
+            commissionResponse.setCommissionId(commission.getCommissionsId());
+            commissionResponse.setCommissionRate(commission.getCommissionRate().doubleValue());
+            commissionResponse.setAmount(commission.getAmount().doubleValue());
+            commissionResponse.setStatus(commission.getStatus());
+            commissionResponse.setCreatedAt(commission.getCreatedAt());
+            response.ok(commissionResponse);
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Commission not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
+
     }
 
     @GetMapping

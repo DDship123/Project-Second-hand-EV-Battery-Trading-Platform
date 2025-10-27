@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public class CommissionResponse {
     private int commissionId;
-    private TransactionResponse transaction;
     private double commissionRate;
     private double amount;
     private String status;
@@ -13,9 +12,15 @@ public class CommissionResponse {
     public CommissionResponse() {
     }
 
-    public CommissionResponse(int commissionId, TransactionResponse transaction, double commissionRate, double amount, String status, LocalDateTime createdAt) {
+    public CommissionResponse(double commissionRate, double amount, String status, LocalDateTime createdAt) {
+        this.commissionRate = commissionRate;
+        this.amount = amount;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public CommissionResponse(int commissionId, double commissionRate, double amount, String status, LocalDateTime createdAt) {
         this.commissionId = commissionId;
-        this.transaction = transaction;
         this.commissionRate = commissionRate;
         this.amount = amount;
         this.status = status;
@@ -28,14 +33,6 @@ public class CommissionResponse {
 
     public void setCommissionId(int commissionId) {
         this.commissionId = commissionId;
-    }
-
-    public TransactionResponse getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(TransactionResponse transaction) {
-        this.transaction = transaction;
     }
 
     public double getCommissionRate() {

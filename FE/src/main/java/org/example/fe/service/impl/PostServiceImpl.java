@@ -2,8 +2,8 @@ package org.example.fe.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.fe.entity.ApiResponse;
-import org.example.fe.entity.PostResponse;
+import org.example.fe.response.ApiResponse;
+import org.example.fe.response.PostResponse;
 import org.example.fe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;

@@ -1,11 +1,9 @@
 package org.example.fe.service;
 
-import org.example.fe.entity.ApiResponse;
-import org.example.fe.entity.MemberResponse;
-import org.example.fe.entity.MembershipPlanResponse;
+import org.example.fe.response.ApiResponse;
+import org.example.fe.response.MemberResponse;
 
 import java.util.List;
-import java.util.Map;
 
 public interface MemberService {
     ApiResponse<MemberResponse> signIn(String userName, String password);

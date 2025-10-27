@@ -1,9 +1,9 @@
 package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.fe.entity.CommentResponse;
-import org.example.fe.entity.MemberResponse;
-import org.example.fe.entity.PostResponse;
+import org.example.fe.response.CommentResponse;
+import org.example.fe.response.MemberResponse;
+import org.example.fe.response.PostResponse;
 import org.example.fe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

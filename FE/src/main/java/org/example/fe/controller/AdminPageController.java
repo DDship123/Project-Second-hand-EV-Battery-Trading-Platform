@@ -1,11 +1,8 @@
 package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.fe.entity.*;
-import org.example.fe.service.CommentService;
-import org.example.fe.service.MemberService;
-import org.example.fe.service.PostService;
-import org.example.fe.service.ReviewService;
+import org.example.fe.response.*;
+import org.example.fe.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/home/admin")
@@ -29,6 +25,8 @@ public class AdminPageController {
     private ReviewService reviewService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private TransactionService transactionService;
 
     @GetMapping(value = {"", "/post-manage/{status}"})
     public String dashboard(Model model, HttpSession session,
@@ -213,14 +211,44 @@ public class AdminPageController {
     }
 
     @GetMapping("/transaction-manage")
-    public String transactionManage(Model model, HttpSession session) {
+    public String transactionManage(Model model, HttpSession session,@RequestParam(name = "successMessage", required = false) String successMessage,
+                                    @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/home";
         }
         model.addAttribute("admin", member);
+        ApiResponse<List<TransactionResponse>> response = transactionService.getAllTransactions();
+        model.addAttribute("transactions", response.getPayload());
+        if (successMessage != null) {
+            model.addAttribute("successMessage", successMessage);
+        }
+        if (errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+        }
         return "transactionManage";
     }
+
+    @GetMapping("/transaction-manage/update-status")
+    public String updateTransactionStatus(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                   @RequestParam(name = "transactionId",defaultValue = "0") int transactionId,
+                                   @RequestParam(name = "status") String status) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/home";
+        }
+        if (transactionId == 0) {
+            return "redirect:/home/admin/transaction-manage";
+        }
+        ApiResponse<TransactionResponse> transactionResponse = transactionService.updateTransactionStatus(transactionId, status);
+        if (transactionResponse.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Cập nhật giao dịch thành công.");
+        } else {
+            redirectAttributes.addAttribute("errorMessage", "Cập nhật giao dịch thất bại.");
+        }
+        return "redirect:/home/admin/transaction-manage";
+    }
+
     @GetMapping("/fee-manage")
     public String feeManage(Model model, HttpSession session) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");

@@ -1,10 +1,11 @@
-package org.example.fe.entity;
+package org.example.fe.response;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 
 public class CommissionResponse {
     private int commissionId;
-    private TransactionResponse transaction;
     private double commissionRate;
     private double amount;
     private String status;
@@ -13,13 +14,32 @@ public class CommissionResponse {
     public CommissionResponse() {
     }
 
-    public CommissionResponse(int commissionId, TransactionResponse transaction, double commissionRate, double amount, String status, LocalDateTime createdAt) {
-        this.commissionId = commissionId;
-        this.transaction = transaction;
+    public CommissionResponse(double commissionRate, double amount, String status, LocalDateTime createdAt) {
         this.commissionRate = commissionRate;
         this.amount = amount;
         this.status = status;
         this.createdAt = createdAt;
+    }
+
+    public CommissionResponse(int commissionId, double commissionRate, double amount, String status, LocalDateTime createdAt) {
+        this.commissionId = commissionId;
+        this.commissionRate = commissionRate;
+        this.amount = amount;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public String getPriceFormated (double price) {
+//        String pattern = "#,###.00";
+//        DecimalFormat decimalFormat = new DecimalFormat(pattern);
+//        DecimalFormatSymbols symbols = decimalFormat.getDecimalFormatSymbols();
+//        symbols.setGroupingSeparator(',');
+//        symbols.setDecimalSeparator('.');
+//        decimalFormat.setDecimalFormatSymbols(symbols);
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("###,###", symbols);
+        return decimalFormat.format(price);
     }
 
     public int getCommissionId() {
@@ -28,14 +48,6 @@ public class CommissionResponse {
 
     public void setCommissionId(int commissionId) {
         this.commissionId = commissionId;
-    }
-
-    public TransactionResponse getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(TransactionResponse transaction) {
-        this.transaction = transaction;
     }
 
     public double getCommissionRate() {
@@ -68,5 +80,4 @@ public class CommissionResponse {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-}
+    }}

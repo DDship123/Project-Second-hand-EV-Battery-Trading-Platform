@@ -1,7 +1,7 @@
 package org.example.fe.service;
 
-import org.example.fe.entity.ApiResponse;
-import org.example.fe.entity.CommentResponse;
+import org.example.fe.response.ApiResponse;
+import org.example.fe.response.CommentResponse;
 
 
 import java.util.List;

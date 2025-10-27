@@ -1,83 +1,71 @@
+window.addEventListener('DOMContentLoaded', (event) => {
+  setUpTransactionUrl();
+  changeTransactionType();
+  changeStatus();
 
-// memberOrder.js
-
-// Main tab switching
-const mainTabButtons = document.querySelectorAll('[data-main-tab]');
-const mainTabContents = document.querySelectorAll('.main-tab-content');
-const searchInput = document.querySelector('.search-box input');
-
-mainTabButtons.forEach(button => {
-  button.addEventListener('click', function () {
-    mainTabButtons.forEach(btn => btn.classList.remove('active'));
-    this.classList.add('active');
-
-    mainTabContents.forEach(content => content.classList.remove('active'));
-    document.getElementById(this.getAttribute('data-main-tab') + 'Tab').classList.add('active');
-
-    // Reset search when switching main tabs
-    searchInput.value = '';
-    filterOrders();
-  });
+  const urlParams = new URLSearchParams(window.location.search);
+  const successMessage = urlParams.get('successMessage');
+  if (successMessage) {
+    alert(successMessage);
+  }
+  const errorMessage = urlParams.get('errorMessage');
+  if (errorMessage) {
+    alert(errorMessage);
+  }
 });
 
-// Sub tab switching for each main tab
-const subSections = document.querySelectorAll('.main-tab-content');
+function setUpTransactionUrl(){
+  let transactionUrl = document.querySelectorAll(".order-management__list a");
+  if (window.location.href.includes("sell")) {
+    transactionUrl.forEach(link => {
+      const transactionId = link.getAttribute("data-transaction-id");
+      link.setAttribute('href', link.getAttribute('href') + 'sell/detail/'+transactionId);
+    })
+  }else {
+    transactionUrl.forEach(link => {
+      const transactionId = link.getAttribute("data-transaction-id");
+      link.setAttribute('href', link.getAttribute('href') + 'detail/'+transactionId);
+    })
+  }
+}
 
-subSections.forEach(section => {
-  const subTabSelect = section.querySelector('.tab-select');
-  const subTabContents = section.querySelectorAll('.sub-tab-content');
 
-  subTabSelect.addEventListener('change', function () {
-    const subTab = this.value;
+function changeTransactionType(){
+  const changeTransactionTypeBtn = document.querySelectorAll(".filter-tabs .tab-btn")
+  changeTransactionTypeBtn.forEach(btn => btn.classList.remove('active'));
 
-    subTabContents.forEach(content => content.classList.remove('active'));
-    const mainTabId = section.id.replace('Tab', '');
-    const targetId = mainTabId + subTab.charAt(0).toUpperCase() + subTab.slice(1) + 'SubTab';
-    document.getElementById(targetId).classList.add('active');
-
-    // TODO: fetch orders for this tab from API
-    // Example:
-    // async function fetchOrders(tabType, subTab) {
-    //   const response = await fetch(`/api/orders?type=${tabType}&status=${subTab}`);
-    //   const data = await response.json();
-    //   // Bind data to the list
-    //   renderOrders(data, targetId);
-    // }
-    // fetchOrders(mainTabId.toLowerCase(), subTab);
-
-    filterOrders();
+  if (window.location.href.includes("sell")) {
+    changeTransactionTypeBtn[1].classList.add('active');
+  }else {
+    changeTransactionTypeBtn[0].classList.add('active');
+  }
+  changeTransactionTypeBtn[0].addEventListener('click', function(){
+    window.location.href = "/home/order";
   });
-});
 
-// Search functionality (applies to current active tab and sub-tab)
-searchInput.addEventListener('input', filterOrders);
-
-function filterOrders() {
-  const search = searchInput.value.toLowerCase();
-  const activeMainTab = document.querySelector('.main-tab-content.active');
-  const activeSubTab = activeMainTab.querySelector('.sub-tab-content.active');
-  const cards = activeSubTab.querySelectorAll('.order-management__card');
-
-  cards.forEach(card => {
-    const title = card.querySelector('.order-management__card-title').textContent.toLowerCase();
-    const id = card.querySelector('.order-management__card-id').textContent.toLowerCase();
-    card.style.display = (title.includes(search) || id.includes(search)) ? '' : 'none';
+  changeTransactionTypeBtn[1].addEventListener('click', function(){
+    window.location.href = "/home/order/sell";
   });
 }
 
-// Function to render orders (for data-binding, hardcoded for demo)
-function renderOrders(data, targetId) {
-  // TODO: Implement dynamic rendering from API data
-  // For example:
-  // const list = document.querySelector(`#${targetId} .order-management__list`);
-  // list.innerHTML = '';
-  // data.forEach(order => {
-  //   const card = document.createElement('a');
-  //   card.href = `orderDetail.html?id=${order.id}`;
-  //   card.classList.add('order-management__card');
-  //   // Build card HTML based on order data
-  //   // Set status class and text based on order.status
-  //   // e.g., if (order.status === 'pending') { statusText = 'Pending Approval'; statusClass = '--pending'; }
-  //   list.appendChild(card);
-  // });
+function changeStatus(){
+  const selectBuyStatus = document.querySelector('#purchaseTab .tab-select');
+  const options = selectBuyStatus.querySelectorAll('option');
+
+  if (!window.location.href.includes("status") || window.location.href.includes("REQUESTED")) {
+    options[0].selected = true;
+  }else if (window.location.href.includes("ACCEPTED")) {
+    options[1].selected = true;
+  }else if (window.location.href.includes("CANCELLED")) {
+    options[2].selected = true;
+  }
+
+  selectBuyStatus.addEventListener('change', function () {
+    const subTab = this.value;
+    let windowUrl = new URL(window.location.href);
+    windowUrl.searchParams.delete('successMessage');
+    windowUrl.searchParams.delete('errorMessage');
+    windowUrl.searchParams.set('status', subTab);
+    window.location.href = windowUrl.toString();
+  });
 }

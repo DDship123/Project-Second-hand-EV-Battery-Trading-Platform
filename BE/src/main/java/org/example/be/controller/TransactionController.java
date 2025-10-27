@@ -1,17 +1,15 @@
 package org.example.be.controller;
 
-import org.example.be.dto.response.ApiResponse;
-import org.example.be.dto.response.MemberResponse;
-import org.example.be.dto.response.TransactionResponse;
-import org.example.be.entity.Review;
-import org.example.be.entity.Transaction;
-import org.example.be.service.ReviewService;
-import org.example.be.service.TransactionService;
+import org.example.be.dto.response.*;
+import org.example.be.entity.*;
+import org.example.be.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +23,12 @@ public class TransactionController {
     private TransactionService transactionService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private CommissionService commissionService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private PostService postService;
 
     private TransactionResponse mapToResponse(Transaction t) {
         TransactionResponse response = new TransactionResponse();
@@ -32,10 +36,24 @@ public class TransactionController {
         MemberResponse buyer = new MemberResponse();
         buyer.setMemberId(t.getBuyer().getMemberId());
         buyer.setUsername(t.getBuyer().getUsername());
+        buyer.setEmail(t.getBuyer().getEmail());
+        buyer.setPhone(t.getBuyer().getPhone());
+        buyer.setAddress(t.getBuyer().getAddress());
+        buyer.setCity(t.getBuyer().getCity());
+
         response.setBuyer(buyer);
         MemberResponse seller = new MemberResponse();
         seller.setMemberId(t.getPost().getSeller().getMemberId());
         seller.setUsername(t.getPost().getSeller().getUsername());
+        seller.setEmail(t.getPost().getSeller().getEmail());
+        seller.setPhone(t.getPost().getSeller().getPhone());
+        seller.setAddress(t.getPost().getSeller().getAddress());
+        seller.setCity(t.getPost().getSeller().getCity());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setPostsId(t.getPost().getPostsId());
+
+        response.setPost(postResponse);
         response.setSeller(seller);
         response.setPostTitle(t.getPost().getTitle());
         response.setStatus(t.getStatus());
@@ -53,8 +71,46 @@ public class TransactionController {
 
 
     @PostMapping
-    public ResponseEntity<ApiResponse<TransactionResponse>> createTransaction(@RequestBody Transaction transaction) {
-        Transaction saved = transactionService.createTransaction(transaction);
+    public ResponseEntity<ApiResponse<TransactionResponse>> createTransaction(@RequestParam Integer buyerId, @RequestParam Integer postId) {
+        Transaction toSave = new Transaction();
+        Member buyer = memberService.getMemberById(buyerId);
+        toSave.setBuyer(buyer);
+        Post post = postService.getPostById(postId).orElse(null);
+        toSave.setPost(post);
+        toSave.setStatus("REQUESTED");
+        toSave.setCreatedAt(LocalDateTime.now());
+        Transaction saved = transactionService.createTransaction(toSave);
+
+        Commission commission = new Commission();
+        commission.setTransaction(saved);
+        if (post.getProduct().getBattery() != null) {
+            if (post.getPrice().doubleValue() > 10000000) {
+                commission.setCommissionRate(BigDecimal.valueOf(0.03));
+                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+                commission.setCreatedAt(LocalDateTime.now());
+                commission.setStatus("PAID");
+
+            } else {
+                commission.setCommissionRate(BigDecimal.valueOf(0.02));
+                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+                commission.setCreatedAt(LocalDateTime.now());
+                commission.setStatus("PAID");
+            }
+        } else if (post.getProduct().getVehicle() != null) {
+            if (post.getPrice().doubleValue() > 20000000) {
+                commission.setCommissionRate(BigDecimal.valueOf(0.04));
+                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+                commission.setCreatedAt(LocalDateTime.now());
+                commission.setStatus("PAID");
+            } else {
+                commission.setCommissionRate(BigDecimal.valueOf(0.025));
+                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+                commission.setCreatedAt(LocalDateTime.now());
+                commission.setStatus("PAID");
+            }
+        }
+        commissionService.createCommission(commission);
+
         ApiResponse<TransactionResponse> response = new ApiResponse<>();
         response.ok(mapToResponse(saved));
         return ResponseEntity.ok(response);
@@ -107,6 +163,7 @@ public class TransactionController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteTransaction(@PathVariable Integer id) {
         boolean deleted = transactionService.deleteTransaction(id);
@@ -130,6 +187,40 @@ public class TransactionController {
         if (list.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "No buy transactions found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(list);
+            return ResponseEntity.ok(response);
+        }
+    }
+    @GetMapping("/buy/status")
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllBuyTransactionsByStatus(
+            @RequestParam(name = "memberId") int buyerId,
+            @RequestParam(name = "status") String status) {
+        List<TransactionResponse> list = transactionService.getAllBuyTransactionsByStatus(buyerId, status).stream()
+                .map(this::mapToResponse).collect(Collectors.toList());
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (list.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No buy transactions found with status: " + status);
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(list);
+            return ResponseEntity.ok(response);
+        }
+    }
+    @GetMapping("/sell/status")
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllSellTransactionsByStatus(
+            @RequestParam(name = "memberId") int sellerId,
+            @RequestParam(name = "status") String status) {
+        List<TransactionResponse> list = transactionService.getAllSellTransactionsByStatus(sellerId, status).stream()
+                .map(this::mapToResponse).collect(Collectors.toList());
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (list.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No buy transactions found with status: " + status);
             response.error(error);
             return ResponseEntity.status(404).body(response);
         } else {
@@ -221,7 +312,7 @@ public class TransactionController {
         }
     }
     //Cập nhật status cho transaction
-    @PutMapping("/{id}/status")
+    @PutMapping("/update-status/{id}")
     public ResponseEntity<ApiResponse<TransactionResponse>> updateTransactionStatus(
             @PathVariable Integer id,
             @RequestParam String status) {

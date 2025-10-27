@@ -9,13 +9,13 @@
 
 body {
   background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .container {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  /*height: 100vh;*/
+  /*overflow: hidden;*/
 }
 
 .main-content {
@@ -274,8 +274,19 @@ body {
 .qr-code-wrapper {
   flex: 0 0 auto;
   text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-
+.qr-code-wrapper h1{
+  padding: 10px 20px;
+  font-size: 26px;
+  cursor: pointer;
+  background-color: #10cf10;
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+}
 .qr-image {
   width: 200px;
   height: 200px;

@@ -1,4 +1,4 @@
-package org.example.fe.entity;
+package org.example.fe.response;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
