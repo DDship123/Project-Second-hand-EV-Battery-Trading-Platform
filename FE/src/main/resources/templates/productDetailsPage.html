@@ -82,7 +82,8 @@
                         <li>Hỗ trợ sang tên, thủ tục giấy tờ.</li>
                     </ul>
                 </div>
-                <button class="container__item__infor__details__action">
+                <button class="container__item__infor__details__action" th:attr="data-postId=${post.getPostsId()}"
+                        th:if="${post.getSeller().getMemberId() != user.getMemberId()}">
                     Yêu cầu giao dịch
                 </button>
             </div>

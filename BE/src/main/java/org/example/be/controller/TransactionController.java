@@ -29,6 +29,8 @@ public class TransactionController {
     private MemberService memberService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private ContractService contractService;
 
     private TransactionResponse mapToResponse(Transaction t) {
         TransactionResponse response = new TransactionResponse();
@@ -110,6 +112,8 @@ public class TransactionController {
             }
         }
         commissionService.createCommission(commission);
+
+
 
         ApiResponse<TransactionResponse> response = new ApiResponse<>();
         response.ok(mapToResponse(saved));

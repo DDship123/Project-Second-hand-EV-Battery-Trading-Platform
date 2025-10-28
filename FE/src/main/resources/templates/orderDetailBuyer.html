@@ -193,7 +193,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-item">
+                    <div class="timeline-item" th:if="${!transaction.getStatus().equals('REQUESTED')}">
                         <div class="timeline-label">Chuyển tiền cho Admin:</div>
                         <div class="timeline-value">
                             <span class="status-badge status-badge--pending" th:if="${transaction.getStatus().equals('ACCEPTED')}">Đang chờ chuyển</span>
@@ -203,14 +203,26 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons for Seller -->
+                <!-- Action Buttons for Buyer -->
+<!--                <div class="action-section"  th:if="${transaction.getStatus().equals('PAID')}">-->
+<!--                    <h3 class="action-title">Hành động</h3>-->
+<!--                    <div class="action-buttons">-->
+<!--                        <button class="btn btn&#45;&#45;accept" th:attr="data-transaction-id=${transaction.getTransactionId()}">-->
+<!--                            <i class="fa-solid fa-check"></i> Người bán đã giao hàng-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="action-section"  th:if="${transaction.getStatus().equals('PAID')}">
                     <h3 class="action-title">Hành động</h3>
-                    <div class="action-buttons">
-                        <button class="btn btn--accept" th:attr="data-transaction-id=${transaction.getTransactionId()}">
-                            <i class="fa-solid fa-check"></i> Người bán đã giao hàng
+                    <form th:action="@{/buyer/confirmDelivery}" method="post">
+                        <input type="hidden" name="transactionId" th:value="${transaction.getTransactionId()}" />
+                        <input type="hidden" name="status" value="DELIVERED" />
+                        <label for="contractImage">Tải hình ảnh hợp đồng :</label>
+                        <input style="display: block;margin: 20px 0"  type="file" name="contractImage" id="contractImage" accept="image/*" />
+                        <button type="submit" class="btn btn--accept">
+                            <i class="fa-solid fa-check"></i> Xác nhận đã nhận hàng
                         </button>
-                    </div>
+                    </form>
                 </div>
 
                 <!-- QR Code Payment -->
