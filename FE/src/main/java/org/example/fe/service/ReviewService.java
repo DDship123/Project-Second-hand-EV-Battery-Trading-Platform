@@ -10,5 +10,6 @@ public interface ReviewService {
     ApiResponse<List<ReviewResponse>> FindAllReviewBySellerId(int sellerId);
     ApiResponse<List<ReviewResponse>> findAllReviewByStatus(String status);
     ApiResponse<ReviewResponse> update(ReviewResponse review);
+    ApiResponse<ReviewResponse> create(ReviewResponse review);
 
 }

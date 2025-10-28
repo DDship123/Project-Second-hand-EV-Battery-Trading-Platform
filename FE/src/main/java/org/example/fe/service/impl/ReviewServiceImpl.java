@@ -175,4 +175,37 @@ public class ReviewServiceImpl implements ReviewService {
         return response;
     }
 
+    @Override
+    public ApiResponse<ReviewResponse> create(ReviewResponse review) {
+        ApiResponse<ReviewResponse> response = new ApiResponse<>();
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<ReviewResponse> requestEntity = new HttpEntity<>(review, headers);
+
+            ResponseEntity<ApiResponse<ReviewResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/reviews/create",
+                    HttpMethod.POST,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<ReviewResponse>>() {}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to create review");
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to create review: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+    }
+
 }
