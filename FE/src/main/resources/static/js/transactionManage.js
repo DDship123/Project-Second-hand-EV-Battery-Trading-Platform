@@ -7,7 +7,7 @@ window.addEventListener('load', function() {
                 if (btn.innerText === 'Chi tiết') {
                     btn.addEventListener('click', function() {
                         const transactionId = this.getAttribute('data-transaction-id');
-                        window.location.href = `/home/order/detail/${transactionId}`;
+                        window.location.href = `/home/order/sell/detail/${transactionId}`;
                     });
                 }else if (btn.innerText === 'Duyệt') {
                     btn.addEventListener('click', function() {
