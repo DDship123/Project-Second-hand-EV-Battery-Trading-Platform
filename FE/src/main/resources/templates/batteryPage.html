@@ -128,7 +128,7 @@
           </p>
         </div>
       </div>
-      <div class="battery__item__actions"  th:if="${post.getSeller().getMemberId() != user.getMemberId()}">
+      <div class="battery__item__actions"  th:if="${ guest.equals('false') && post.getSeller().getMemberId() != user.getMemberId()}">
         <a th:href="@{'/home/transaction/'+ ${post.getPostsId()}}" class="battery__item__actions__buy"
         ><i class="fa-solid fa-plus"></i> Yêu cầu giao dịch</a
         >

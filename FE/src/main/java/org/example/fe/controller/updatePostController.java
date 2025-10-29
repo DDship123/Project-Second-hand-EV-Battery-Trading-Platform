@@ -24,6 +24,9 @@ public class updatePostController {
     @GetMapping("/store/updatePost/{postId}")
     public String showUpdatePostPage(Model model, HttpSession session, @PathVariable("postId") Integer postId) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<PostResponse> response = postService.getPostDetail(postId);

@@ -30,6 +30,9 @@ public class CreatePostController {
     @GetMapping
     public String postForm(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login"; // Redirect to login page if user is not logged in
+        }
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         return "createPostPage";

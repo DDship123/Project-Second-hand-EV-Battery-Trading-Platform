@@ -33,6 +33,9 @@ public class TransactionController {
                                     @PathVariable("postId") Integer postId,
                                     HttpServletRequest request) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
         ApiResponse<TransactionResponse> apiResponse = transactionService.createTransaction(user.getMemberId(), postId);
         if (apiResponse.getStatus().equals("SUCCESS")) {
             redirectAttributes.addAttribute("successMessage", "Gửi yêu cầu mua hàng thành công!");

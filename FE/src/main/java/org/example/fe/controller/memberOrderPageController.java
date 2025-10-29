@@ -35,6 +35,9 @@ public class memberOrderPageController {
                                      @RequestParam(name = "successMessage", required = false) String successMessage,
                                      @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         if (statusTransaction != null && statusTransaction.equals("SUCCESS")) {

@@ -34,8 +34,11 @@ public class AdminPageController {
                             @RequestParam(name = "successMessage", required = false) String successMessage,
                             @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         if (status == null || status.isEmpty()) {
             status = "PENDING";
@@ -54,8 +57,11 @@ public class AdminPageController {
     @GetMapping("/post-manage/detail")
     public String postDetail(Model model, HttpSession session, @RequestParam(name = "postId",defaultValue = "0") int postId) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         ApiResponse<PostResponse> postResponse = postService.getPostDetail(postId);
         PostResponse post = postResponse.getPayload();
@@ -73,8 +79,11 @@ public class AdminPageController {
                                    @RequestParam(name = "postId",defaultValue = "0") int postId,
                                    @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         if (postId == 0) {
             return "redirect:/home/admin/post-manage";
@@ -91,8 +100,11 @@ public class AdminPageController {
     @GetMapping("/member-manage")
     public String memberManage(Model model, HttpSession session) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         List<MemberResponse> users = memberService.getUser().getPayload();
         model.addAttribute("admin", member);
@@ -102,8 +114,11 @@ public class AdminPageController {
     @GetMapping("/member-manage/detail/{memberId}")
     public String memberDetail(Model model, HttpSession session, @PathVariable int memberId) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         ApiResponse<MemberResponse> memberResponse = memberService.getMemberInfo(memberId);
         MemberResponse memberDetail = memberResponse.getPayload();
@@ -125,8 +140,11 @@ public class AdminPageController {
                                      @RequestParam(name = "memberId",defaultValue = "0") int memberId,
                                      @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         if (memberId == 0) {
             return "redirect:/home/admin/member-manage";
@@ -146,8 +164,11 @@ public class AdminPageController {
     @GetMapping("/comment-review-manage")
     public String commentManage(Model model, HttpSession session) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         ApiResponse<List<CommentResponse>> response = commentService.findAllCommentByStatus("PENDING");
         model.addAttribute("comments", response.getPayload());
@@ -159,8 +180,11 @@ public class AdminPageController {
                                    @RequestParam(name = "commentId",defaultValue = "0") int commentId,
                                    @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         if (commentId == 0) {
             return "redirect:/home/admin/comment-review-manage";
@@ -178,8 +202,11 @@ public class AdminPageController {
     public String reviewComments(Model model, HttpSession session)
                                  {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         model.addAttribute("admin", member);
         List<ReviewResponse> reviews = reviewService.findAllReviewByStatus("PENDING").getPayload();
@@ -192,8 +219,11 @@ public class AdminPageController {
                                      @RequestParam(name = "reviewId",defaultValue = "0") int reviewId,
                                      @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         if (reviewId == 0) {
             return "redirect:/home/admin/comment-review-manage/review";
@@ -214,8 +244,11 @@ public class AdminPageController {
     public String transactionManage(Model model, HttpSession session,@RequestParam(name = "successMessage", required = false) String successMessage,
                                     @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         model.addAttribute("admin", member);
         ApiResponse<List<TransactionResponse>> response = transactionService.getAllTransactions();
@@ -234,8 +267,11 @@ public class AdminPageController {
                                    @RequestParam(name = "transactionId",defaultValue = "0") int transactionId,
                                    @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
+            return "redirect:/login";
         }
         if (transactionId == 0) {
             return "redirect:/home/admin/transaction-manage";
@@ -249,13 +285,16 @@ public class AdminPageController {
         return "redirect:/home/admin/transaction-manage";
     }
 
-    @GetMapping("/fee-manage")
-    public String feeManage(Model model, HttpSession session) {
-        MemberResponse member = (MemberResponse) session.getAttribute("user");
-        if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/home";
-        }
-        model.addAttribute("admin", member);
-        return "feeManage";
-    }
+//    @GetMapping("/fee-manage")
+//    public String feeManage(Model model, HttpSession session) {
+//        MemberResponse member = (MemberResponse) session.getAttribute("user");
+//        if (member == null) {
+//            return "redirect:/login";
+//        }
+//        if (!member.getRole().equals("ADMIN")) {
+//            return "redirect:/login";
+//        }
+//        model.addAttribute("admin", member);
+//        return "feeManage";
+//    }
 }
