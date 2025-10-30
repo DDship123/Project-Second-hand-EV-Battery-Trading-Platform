@@ -39,6 +39,13 @@
                         <span class="value" th:text="${#temporals.format(transaction.getCreatedAt(),'dd-MM-yyyy')}">23/10/2025</span>
                     </div>
                 </div>
+                <!-- Nút tải hợp đồng mẫu (PDF) - thêm ở đây -->
+                <div class="mt-2">
+                    <a class="btn btn-outline-primary btn-sm"
+                       th:href="@{|${@environment.getProperty('api.base.url')}/api/contracts/by-transaction/${transaction.transactionId}/template|}">
+                        <i class="fa-regular fa-file-pdf"></i> Tải hợp đồng mẫu (PDF)
+                    </a>
+                </div>
             </div>
 
             <!-- Buyer Information -->
@@ -203,24 +210,18 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons for Buyer -->
-<!--                <div class="action-section"  th:if="${transaction.getStatus().equals('PAID')}">-->
-<!--                    <h3 class="action-title">Hành động</h3>-->
-<!--                    <div class="action-buttons">-->
-<!--                        <button class="btn btn&#45;&#45;accept" th:attr="data-transaction-id=${transaction.getTransactionId()}">-->
-<!--                            <i class="fa-solid fa-check"></i> Người bán đã giao hàng-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>-->
-                <div class="action-section"  th:if="${transaction.getStatus().equals('PAID')}">
-                    <h3 class="action-title">Hành động</h3>
-                    <form th:action="@{/buyer/confirmDelivery}" method="post">
+                <!-- Buyer chỉ upload khi DELIVERED (Tân)-->
+                <div class="action-section" th:if="${transaction.getStatus().equals('DELIVERED')}">
+
+                    <p style="color:#d9534f; font-weight:700; margin-bottom:10px;">
+                         Vui lòng tải lên ảnh hợp đồng đã ký.
+                    </p>
+                    <form th:action="@{/home/contract/upload}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="transactionId" th:value="${transaction.getTransactionId()}" />
-                        <input type="hidden" name="status" value="DELIVERED" />
-                        <label for="contractImage">Tải hình ảnh hợp đồng :</label>
-                        <input style="display: block;margin: 20px 0"  type="file" name="contractImage" id="contractImage" accept="image/*" />
+                        <label for="contractImage">Tải hình ảnh hợp đồng đã ký:</label>
+                        <input style="display:block;margin:20px 0" type="file" name="contractImage" id="contractImage" accept="image/*" required />
                         <button type="submit" class="btn btn--accept">
-                            <i class="fa-solid fa-check"></i> Xác nhận đã nhận hàng
+                            <i class="fa-solid fa-file-upload"></i> Tải hợp đồng đã ký
                         </button>
                     </form>
                 </div>
