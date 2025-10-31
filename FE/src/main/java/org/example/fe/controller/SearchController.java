@@ -39,12 +39,21 @@ public class SearchController {
             model.addAttribute("postTitle", postTitle);
             model.addAttribute("location", location);
             model.addAttribute("productType", "Xe điện");
+            model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
             return "vehiclePage";
-        } else if (!location.equals("default")) {
+        } else if (!location.equals("default") && postTitle.equals("default")) {
             ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByMemberCityAndProductType(location, "VEHICLE");
             model.addAttribute("posts", apiResponse.getPayload());
             model.addAttribute("location", location);
             model.addAttribute("postTitle", postTitle);
+            model.addAttribute("productType", "Xe điện");
+            model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
+            return "vehiclePage";
+        }else if (location.equals("default") && !postTitle.equals("default")) {
+            ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByProductTypeAndPostTitle("VEHICLE", postTitle);
+            model.addAttribute("posts", apiResponse.getPayload());
+            model.addAttribute("postTitle", postTitle);
+            model.addAttribute("location", location);
             model.addAttribute("productType", "Xe điện");
             model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
             return "vehiclePage";
@@ -84,11 +93,19 @@ public class SearchController {
             model.addAttribute("location", location);
             model.addAttribute("productType", "Pin");
             return "batteryPage";
-        } else if (!location.equals("default")) {
+        } else if (!location.equals("default") && postTitle.equals("default")) {
             ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByMemberCityAndProductType(location, "BATTERY");
             model.addAttribute("posts", apiResponse.getPayload());
             model.addAttribute("location", location);
             model.addAttribute("postTitle", postTitle);
+            model.addAttribute("productType", "Pin");
+            model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
+            return "batteryPage";
+        }else if (location.equals("default") && !postTitle.equals("default")) {
+            ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByProductTypeAndPostTitle("BATTERY", postTitle);
+            model.addAttribute("posts", apiResponse.getPayload());
+            model.addAttribute("postTitle", postTitle);
+            model.addAttribute("location", location);
             model.addAttribute("productType", "Pin");
             model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
             return "batteryPage";
