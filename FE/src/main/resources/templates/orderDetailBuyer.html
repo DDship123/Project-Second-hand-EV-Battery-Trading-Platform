@@ -211,10 +211,10 @@
                 </div>
 
                 <!-- Buyer chỉ upload khi DELIVERED (Tân)-->
-                <div class="action-section" th:if="${transaction.getStatus().equals('DELIVERED')}">
+                <div class="action-section" th:if="${transaction.getStatus().equals('PAID')}">
 
                     <p style="color:#d9534f; font-weight:700; margin-bottom:10px;">
-                         Vui lòng tải lên ảnh hợp đồng đã ký.
+                         Vui lòng tải lên ảnh hợp đồng đã ký để xác nhận người bán đã giao sản phẩm.
                     </p>
                     <form th:action="@{/home/contract/upload}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="transactionId" th:value="${transaction.getTransactionId()}" />

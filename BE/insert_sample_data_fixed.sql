@@ -440,6 +440,7 @@ VALUES
     (13, 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', CAST('2024-04-07 12:00:00' AS DATETIME), 'SIGNED', CAST('2024-04-07 11:45:00' AS DATETIME)),
     (15, 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', CAST('2024-04-09 17:30:00' AS DATETIME), 'SIGNED', CAST('2024-04-09 17:15:00' AS DATETIME));
 
+
 -- 13. COMMISSIONS (Depends on: transactions)
 -- =============================================
 INSERT INTO commissions (transaction_id, commission_rate, amount, status, created_at)
