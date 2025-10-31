@@ -1,10 +1,13 @@
 package org.example.be.service;
 
 import org.example.be.entity.Contract;
+import org.example.be.entity.Transaction;
 import org.example.be.repository.ContractRepository;
+import org.example.be.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,9 @@ public class ContractService {
 
     @Autowired
     private ContractRepository contractRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     public Contract createContract(Contract contract) {
         return contractRepository.save(contract);
@@ -46,5 +52,43 @@ public class ContractService {
             return true;
         }
         return false;
+    }
+
+    // Đảm bảo luôn có Contract cho Transaction (nếu chưa có -> tạo mới với UNSIGN)
+    public Contract ensureForTransaction(Integer transactionId) {
+        return contractRepository.findByTransaction_TransactionsId(transactionId)
+                .orElseGet(() -> {
+                    Transaction transaction = transactionRepository.findById(transactionId)
+                            .orElseThrow(() -> new IllegalArgumentException("Transaction not found: " + transactionId));
+                    Contract c = new Contract();
+                    c.setTransaction(transaction);
+                    c.setStatus("UNSIGN");
+                    c.setCreatedAt(LocalDateTime.now());
+                    return contractRepository.save(c);
+                });
+    }
+
+    public Contract getByTransactionId(Integer transactionId) {
+        return contractRepository.findByTransaction_TransactionsId(transactionId)
+                .orElseThrow(() -> new IllegalArgumentException("Contract not found for transaction: " + transactionId));
+    }
+
+    // Chỉ cho phép cập nhật URL hợp đồng đã ký khi Transaction đã ở trạng thái DELIVERED
+    public Contract setSignedUrl(Integer transactionId, String url) {
+        Transaction transaction = transactionRepository.findById(transactionId)
+                .orElseThrow(() -> new IllegalArgumentException("Transaction not found: " + transactionId));
+
+        if (!"DELIVERED".equalsIgnoreCase(transaction.getStatus())) {
+            // Lý do: ký hợp đồng trực tiếp tại thời điểm giao xe, sau đó mới chụp/đăng ảnh
+            throw new IllegalStateException("Transaction must be 'DELIVERED' before uploading signed contract URL.");
+        }
+
+        Contract contract = contractRepository.findByTransaction_TransactionsId(transactionId)
+                .orElseThrow(() -> new IllegalArgumentException("Contract not found for transaction: " + transactionId));
+
+        contract.setContractUrl(url);
+        contract.setStatus("SIGNED");
+        contract.setSignedAt(LocalDateTime.now());
+        return contractRepository.save(contract);
     }
 }

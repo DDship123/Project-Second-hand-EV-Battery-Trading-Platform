@@ -1,8 +1,8 @@
 package org.example.fe.service;
 
 import org.example.fe.response.ApiResponse;
-import org.example.fe.response.ContractResponse;
 
 public interface ContractService {
-    public ApiResponse<ContractResponse> uploadContractImage(Integer transactionId, String contractImageUrl);
+    // Dùng Object để không bị lệch với BE (BE trả ApiResponse<Contract>)
+    ApiResponse<Object> uploadContractImage(Integer transactionId, String contractImageUrl);
 }

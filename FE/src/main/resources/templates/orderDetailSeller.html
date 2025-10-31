@@ -197,8 +197,25 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons for Seller -->
-                <div class="action-section"  th:if="${transaction.getStatus().equals('REQUESTED')}">
+                <!-- Seller: tải PDF khi PAID hoặc DELIVERED (Tân)-->
+                <div class="action-section" th:if="${transaction.getStatus().equals('PAID') or transaction.getStatus().equals('DELIVERED')}">
+
+                    <p style="color:#d9534f; font-weight:600; margin-bottom:10px;">
+                        Tải PDF hợp đồng mẫu để in/ký với người mua.
+                    </p>
+
+                    <div class="action-buttons">
+
+                        <a class="btn btn-sm"
+                           style="display:inline-block; background-color:#0d6efd; color:#ffffff; border:1px solid #0d6efd; padding:8px 12px; border-radius:6px; text-decoration:none;"
+                           th:href="@{|${@environment.getProperty('api.base.url')}/api/contracts/by-transaction/${transaction.transactionId}/template|}">
+                            <i class="fa-regular fa-file-pdf"></i> Tải hợp đồng mẫu (PDF) để ký
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Seller: các hành động REQUESTED -->
+                <div class="action-section" th:if="${transaction.getStatus().equals('REQUESTED')}">
                     <h3 class="action-title">Hành động</h3>
                     <div class="action-buttons">
                         <button class="btn btn--accept" th:attr="data-transaction-id=${transaction.getTransactionId()}">
@@ -210,18 +227,10 @@
                     </div>
                     <p class="action-note">
                         <i class="fa-solid fa-circle-info"></i>
-                        <span>Nếu bạn từ chối đơn hàng, đơn hàng sẽ bị hủy và không cần phê duyệt từ admin.</span>
+                        <span>Nếu bạn từ chối, đơn sẽ bị hủy và không cần phê duyệt từ admin.</span>
                     </p>
                 </div>
-                <div class="action-section"  th:if="${transaction.getStatus().equals('PAID')}">
-                    <h3 class="action-title">Hành động</h3>
-                    <div class="action-buttons">
-                        <a th:href="@{/images/hop-dong-mua-ban-xe-may.pdf}" download="hop-dong-xe-may-dien.pdf">
-                            Tải hợp đồng mua bán xe máy điện để ký và lưu trữ.</a>
-                    </div>
-                </div>
             </div>
-
 
             <!-- Commission & Total -->
             <div class="section">
