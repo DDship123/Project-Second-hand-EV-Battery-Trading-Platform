@@ -45,29 +45,6 @@ public class VnpayController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    // 2) Return URL (browser redirect)
-//    @GetMapping("/return")
-//    public ResponseEntity<ApiResponse<ReturnUrlResponse>> returnUrl(HttpServletRequest request) {
-//        Map<String, String> params = extractParams(request);
-//
-//        // THÊM LOG GIÚP DEBUG VNPAY
-//        System.out.println("VNPAY Return Params: " + params);
-//        System.out.println("SecretKey: " + props.getSecretKey());
-//
-//        String vnp_SecureHash = params.get("vnp_SecureHash");
-//        boolean valid = VnpayUtil.verify(params, vnp_SecureHash, props.getSecretKey());
-//        String txnStatus = params.getOrDefault("vnp_TransactionStatus", "");
-//        String responseCode = params.getOrDefault("vnp_ResponseCode", "");
-//
-//        String status;
-//        if (valid) status = "00".equals(txnStatus) ? "SUCCESS" : "FAILED";
-//        else status = "INVALID_SIGNATURE";
-//
-//        ReturnUrlResponse body = new ReturnUrlResponse(valid, txnStatus, responseCode, status);
-//        ApiResponse<ReturnUrlResponse> apiResponse = new ApiResponse<>();
-//        apiResponse.ok(body);
-//        return ResponseEntity.ok(apiResponse);
-//    }
     @GetMapping("/return")
     public RedirectView returnUrl(HttpServletRequest request) {
         Map<String, String> params = extractParams(request);
@@ -85,8 +62,9 @@ public class VnpayController {
         if (valid) status = "00".equals(txnStatus) ? "SUCCESS" : "FAILED";
         else status = "INVALID_SIGNATURE";
 
-        ReturnUrlResponse body = new ReturnUrlResponse(valid, txnStatus, responseCode, status);
-        String url = "http://localhost:8888/home/order?status=ACCEPTED&transactionStatus=" + status;
+//        ReturnUrlResponse body = new ReturnUrlResponse(valid, txnStatus, responseCode, status);
+//        String url = "http://localhost:8888/home/order?status=ACCEPTED&transactionStatus=" + status;
+        String url = "http://localhost:8888/home/vnpay-redirect?transactionStatus=" + status;
         return new RedirectView(url);
     }
 

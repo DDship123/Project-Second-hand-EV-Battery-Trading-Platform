@@ -1,6 +1,8 @@
 package org.example.fe.response;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class MembershipPlanResponse {
     private Integer planId;
@@ -24,6 +26,13 @@ public class MembershipPlanResponse {
         this.duration = duration;
         this.maxPosts = maxPosts;
         this.priority = priority;
+    }
+
+    public String getPriceFormated() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("###,###", symbols);
+        return decimalFormat.format(price);  // Format BigDecimal thành String
     }
 
     public void setPlanId(Integer planId) {

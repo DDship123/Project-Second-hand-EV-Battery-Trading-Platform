@@ -1,75 +1,65 @@
 package org.example.fe.response;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MemberPlanUsageResponse {
-    private Integer usageId;
-    private Integer memberId;
-    private Integer planId;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private int usedPosts;
+    private int usageId;
+    private MemberResponse member;
+    private MembershipPlanResponse plan;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String status;
 
     public MemberPlanUsageResponse() {
     }
 
-    public MemberPlanUsageResponse(Integer usageId, Integer memberId, Integer planId, LocalDate startDate, LocalDate endDate, int usedPosts, String status) {
-        this.usageId = usageId;
-        this.memberId = memberId;
-        this.planId = planId;
+    public MemberPlanUsageResponse(MemberResponse member, MembershipPlanResponse plan, LocalDateTime startDate, LocalDateTime endDate, String status) {
+        this.member = member;
+        this.plan = plan;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.usedPosts = usedPosts;
         this.status = status;
     }
 
-    public Integer getUsageId() {
+    public int getUsageId() {
         return usageId;
     }
 
-    public void setUsageId(Integer usageId) {
+    public void setUsageId(int usageId) {
         this.usageId = usageId;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public MemberResponse getMember() {
+        return member;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setMember(MemberResponse member) {
+        this.member = member;
     }
 
-    public Integer getPlanId() {
-        return planId;
+    public MembershipPlanResponse getPlan() {
+        return plan;
     }
 
-    public void setPlanId(Integer planId) {
-        this.planId = planId;
+    public void setPlan(MembershipPlanResponse plan) {
+        this.plan = plan;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public int getUsedPosts() {
-        return usedPosts;
-    }
-
-    public void setUsedPosts(int usedPosts) {
-        this.usedPosts = usedPosts;
     }
 
     public String getStatus() {

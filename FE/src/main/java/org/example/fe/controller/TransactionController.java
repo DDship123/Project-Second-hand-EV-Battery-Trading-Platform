@@ -62,20 +62,6 @@ public class TransactionController {
         return "redirect:/home/order/sell";
     }
 
-//    // (Giữ nguyên) Cập nhật trạng thái từ các hành động khác (không dùng để upload hợp đồng nữa)
-//    @PostMapping("/home/transaction/update-status")
-//    public String updateTransactionStatus(RedirectAttributes redirectAttributes, Model model,
-//                                          @RequestParam(name = "transactionId") Integer transactionId,
-//                                          @RequestParam(name = "status") String status,
-//                                          @RequestParam(name = "contractImage", required = false) MultipartFile contractImage) {
-//        ApiResponse<TransactionResponse> apiResponse = transactionService.updateTransactionStatus(transactionId, status);
-//        if (!"SUCCESS".equals(apiResponse.getStatus())) {
-//            redirectAttributes.addAttribute("errorMessage", "Cập nhật trạng thái giao dịch thất bại!");
-//            return "redirect:/home/order";
-//        }
-//        redirectAttributes.addAttribute("successMessage", "Cập nhật trạng thái giao dịch thành công!");
-//        return "redirect:/home/order";
-//    }
 
     // Upload hợp đồng đã ký – CHỈ HÌNH ẢNH, CHỈ KHI transaction đang DELIVERED
     @PostMapping("/home/contract/upload")

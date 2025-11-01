@@ -41,9 +41,14 @@ public class memberOrderPageController {
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         if (statusTransaction != null && statusTransaction.equals("SUCCESS")) {
-            int transactionId = (int) session.getAttribute("updateTransactionId");
+            int transactionId = (int) session.getAttribute("id");
             transactionService.updateTransactionStatus(transactionId, "PAID");
-            session.removeAttribute("updateTransactionId");
+            session.removeAttribute("id");
+            session.removeAttribute("transactionType");
+        } else if (statusTransaction != null && statusTransaction.equals("FAILED")) {
+            // Xử lý khi thanh toán thất bại nếu cần
+            session.removeAttribute("id");
+            session.removeAttribute("transactionType");
         }
         ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllBuyTransaction(memberResponse.getMemberId(),status);
         if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {

@@ -104,6 +104,7 @@
                     <li><a th:href="@{/account/personalInformation}">Hồ sơ của tôi</a></li>
                     <li th:if="${user.getRole() == 'ADMIN'}"><a th:href="@{/home/admin}">Quản lí trang</a></li>
                     <li><a th:href="@{/home/order}">Các giao dịch đang thực hiện</a></li>
+                    <li><a th:href="@{/home/packages}">Đăng ký gói cửa hàng</a></li>
                     <li><a th:href="@{/login}">Đăng xuất</a></li>
                 </ul>
             </div>

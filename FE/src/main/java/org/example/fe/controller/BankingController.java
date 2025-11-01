@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -25,7 +26,9 @@ public class BankingController {
     private TransactionService transactionService;
 
     @GetMapping("/create/{transactionId}/{amount}")
-    public String createBanking(Model model, HttpSession session, RedirectAttributes redirectAttributes, @PathVariable("transactionId") Integer transactionId , @PathVariable("amount") Double amount, HttpServletRequest request) {
+    public String createOrderBanking(Model model, HttpSession session,
+                                     @PathVariable("transactionId") Integer transactionId ,
+                                     @PathVariable("amount") Double amount, HttpServletRequest request) {
         CreatePaymentRequest req = new CreatePaymentRequest();
         req.setAmount(amount.longValue());
         req.setBankCode("");
@@ -34,7 +37,8 @@ public class BankingController {
         String previousUrl = request.getHeader("referer");
         if (response.getPayload() != null) {
             String paymentUrl = response.getPayload().getPaymentUrl();
-            session.setAttribute("updateTransactionId", transactionId);
+            session.setAttribute("id", transactionId);
+            session.setAttribute("transactionType","order");
             return "redirect:"+paymentUrl;  // Trả về view banking.html
         }else {
             model.addAttribute("errorMessage", "Thanh toán không thành công.");
@@ -46,6 +50,34 @@ public class BankingController {
         }
         return "redirect:/home";
     }// Method validate URL để đảm bảo an toàn
+
+    @GetMapping("/register/packages")
+    public String registerPackage(@RequestParam("planId")Integer planId,
+                                  @RequestParam("price") Double amount, Model model,
+                                  HttpSession session, HttpServletRequest request){
+        CreatePaymentRequest req = new CreatePaymentRequest();
+        req.setAmount(amount.longValue());
+        req.setBankCode("");
+        req.setLanguage("vn");
+        ApiResponse<PaymentUrlResponse> response = bankService.createBanking(req);
+        String previousUrl = request.getHeader("referer");
+        if (response.getPayload() != null) {
+            String paymentUrl = response.getPayload().getPaymentUrl();
+            session.setAttribute("id", planId);
+            session.setAttribute("transactionType","package");
+            return "redirect:"+paymentUrl;  // Trả về view banking.html
+        }else {
+            model.addAttribute("errorMessage", "Thanh toán không thành công.");
+            // Lấy URL trước đó
+            // Kiểm tra null và validate URL
+            if (previousUrl != null && isValidRedirectUrl(previousUrl, request)) {
+                return "redirect:" + previousUrl;
+            }
+        }
+        return "redirect:/home";
+    }
+
+
     private boolean isValidRedirectUrl(String url, HttpServletRequest request) {
         try {
             // Chỉ cho phép redirect trong cùng domain
