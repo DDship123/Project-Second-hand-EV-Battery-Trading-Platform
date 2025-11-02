@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="Merge branch 'main' of https://github.com/DDship123/Project-Second-hand-EV-Battery-Trading-Platform&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/CLONEGIT.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CLONEGIT.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
+=======
+    <list default="true" id="21b0ddad-5dff-4920-96f5-ae15e94c037f" name="Changes" comment="" />
+>>>>>>> main
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,12 +47,12 @@
     &quot;assignee&quot;: &quot;dientran0410-dotcom&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/DDship123/Project-Second-hand-EV-Battery-Trading-Platform.git&quot;,
-    &quot;accountId&quot;: &quot;67cab204-755c-4c82-aa24-dc7bb48fad5b&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/DDship123/Project-Second-hand-EV-Battery-Trading-Platform",
+    "accountId": "2b9bc106-5d18-4faf-83ea-d25ffbbacf99"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
@@ -60,11 +64,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+<<<<<<< HEAD
     "Downloaded.Files.Path.Enabled": "false",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
+=======
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+>>>>>>> main
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -72,10 +80,24 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.BeApplication.executor": "Run",
+<<<<<<< HEAD
     "git-widget-placeholder": "Vietp",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/workplace/Project-Second-hand-EV-Battery-Trading-Platform",
+=======
+<<<<<<< HEAD
+    "git-widget-placeholder": "Vietp",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Project_SWP/Project-Second-hand-EV-Battery-Trading-Platform",
+=======
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/LENOVO/Documents/GITHUBEV",
+>>>>>>> 638ee4b7182ff714e3628452605edb3ee7d5f1b5
+>>>>>>> main
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -110,10 +132,13 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
+  </component>
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Logical" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -135,6 +160,11 @@
       <workItem from="1759649351648" duration="12000" />
       <workItem from="1759711743065" duration="13000" />
       <workItem from="1760449911157" duration="30000" />
+<<<<<<< HEAD
+      <workItem from="1762076410320" duration="442000" />
+=======
+      <workItem from="1761783167148" duration="10000" />
+>>>>>>> 638ee4b7182ff714e3628452605edb3ee7d5f1b5
     </task>
     <servers />
   </component>
