@@ -3,7 +3,9 @@ package org.example.fe.controller;
 import jakarta.servlet.http.HttpSession;
 import org.example.fe.config.CloudinaryService;
 import org.example.fe.response.*;
+import org.example.fe.service.MembershipPlanService;
 import org.example.fe.service.PostService;
+import org.example.fe.service.TransactionService;
 import org.example.fe.validate.CreatePostValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,10 @@ import java.util.List;
 public class CreatePostController {
     @Autowired
     private PostService postService;
+    @Autowired
+    private TransactionService transactionService;
+    @Autowired
+    private MembershipPlanService membershipPlanService;
 
     @Autowired
     private CloudinaryService cloudinaryService;
@@ -34,6 +40,12 @@ public class CreatePostController {
         if (user == null) {
             return "redirect:/login"; // Redirect to login page if user is not logged in
         }
+        int numberOfActivePosts = postService.countPostByMemberId(user.getMemberId()).getPayload();
+        MembershipPlanResponse membershipPlan = membershipPlanService.getMembershipPlanByMemberId(user.getMemberId()).getPayload();
+        if (membershipPlan.getMaxPosts() < numberOfActivePosts + 1) {
+            model.addAttribute("planError", "You have reached the maximum number of posts for your membership plan. Please upgrade your plan to create more posts.");
+        }
+
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         return "createPostPage";

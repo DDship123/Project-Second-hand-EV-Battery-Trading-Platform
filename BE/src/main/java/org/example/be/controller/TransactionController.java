@@ -63,8 +63,14 @@ public class TransactionController {
         response.setCreatedAt(t.getCreatedAt());
         response.setImageUrl(t.getPost().getPostImages().get(0).getImageUrl());
         Review review = reviewService.getReviewByTransactionId(t.getTransactionsId());
+
         if (review != null) {
-            response.setRate(review.getRating());
+            ReviewResponse reviewResponse = new ReviewResponse();
+            reviewResponse.setReviewId(review.getReviewsId());
+            reviewResponse.setRating(review.getRating());
+            reviewResponse.setComment(review.getComment());
+            reviewResponse.setCreatedAt(review.getCreatedAt());
+            response.setReview(reviewResponse);
         }
 
         return response;
@@ -190,6 +196,17 @@ public class TransactionController {
     public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllBuyTransactions(@PathVariable Integer buyerId) {
         List<TransactionResponse> list = transactionService.getAllBuyTransactions(buyerId).stream()
                 .map(this::mapToResponse).collect(Collectors.toList());
+//        for (TransactionResponse tr : list) {
+//            Review review = reviewService.getReviewByTransactionId(tr.getTransactionId());
+//            if (review != null) {
+//                ReviewResponse reviewResponse = new ReviewResponse();
+//                reviewResponse.setReviewId(review.getReviewsId());
+//                reviewResponse.setRating(review.getRating());
+//                reviewResponse.setComment(review.getComment());
+//                reviewResponse.setCreatedAt(review.getCreatedAt());
+//                tr.setReview(reviewResponse);
+//            }
+//        }
         ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
         if (list.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();

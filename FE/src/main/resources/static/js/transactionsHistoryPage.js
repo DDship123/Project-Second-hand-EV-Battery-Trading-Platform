@@ -111,4 +111,138 @@ document.addEventListener("DOMContentLoaded", function () {
     dateBtn.addEventListener("click", () => {
         dateBtnIcon.classList.toggle("rotated");
     })
+
+
+
+    // Check current URL to set active button
+    const buyButtonReview = document.querySelector('button a[href="/home/transactionsHistory"]')?.parentElement;
+    const sellButtonReview = document.querySelector('button a[href="/home/transactionsHistory/seller"]')?.parentElement;
+
+    if (buyButton && sellButton) {
+        if (currentPath.includes('/seller')) {
+            sellButtonReview.classList.add('active');
+            buyButtonReview.classList.remove('active');
+        } else {
+            buyButtonReview.classList.add('active');
+            sellButtonReview.classList.remove('active');
+        }
+    }
+
+    // Rating Form Functionality
+    const ratingForm = document.querySelector('.rating-form');
+    const ratingButtons = document.querySelectorAll('.container__body__item__rating__btn');
+    const closeFormBtn = document.querySelector('.rating-form__close');
+    const transactionIdInput = document.querySelector('.rating-form__transaction-id');
+    const sellerIdInput = document.querySelector('.rating-form__seller-id');
+    const submitBtn = document.querySelector('.rating-form__submit-btn');
+
+    // Show rating form when rating button is clicked
+    ratingButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const transactionId = this.getAttribute('data-transaction-id');
+            const sellerId = this.getAttribute('data-seller-id');
+            transactionIdInput.value = transactionId;
+            sellerIdInput.value = sellerId;
+            showRatingForm();
+        });
+    });
+
+    // Close form when close button is clicked
+    if (closeFormBtn) {
+        closeFormBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            hideRatingForm();
+        });
+    }
+
+    // Close form when clicking outside the form content
+    if (ratingForm) {
+        ratingForm.addEventListener('click', function(e) {
+            if (e.target === ratingForm) {
+                hideRatingForm();
+            }
+        });
+    }
+
+    // Handle form submission
+    if (ratingForm) {
+        ratingForm.addEventListener('submit', function(e) {
+            // Add loading state to submit button
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+
+            // The form will submit normally to your Spring Boot controller
+            // You can add additional client-side validation here if needed
+        });
+    }
+
+    // Prevent form content clicks from closing the modal
+    const formContent = document.querySelector('.rating-form__content');
+    if (formContent) {
+        formContent.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+    // Form utility functions
+    function showRatingForm() {
+        if (ratingForm) {
+            ratingForm.style.display = 'flex';
+            // Trigger reflow to ensure display change takes effect
+            ratingForm.offsetHeight;
+            ratingForm.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function hideRatingForm() {
+        if (ratingForm) {
+            // ratingForm.classList.remove('show');
+            // document.body.style.overflow = '';
+            //
+            // // Hide form after transition completes
+            // setTimeout(() => {
+            //     ratingForm.style.display = 'none';
+            //     resetForm();
+            // }, 300);
+            ratingForm.classList.remove('show');
+            document.body.style.overflow = '';
+            ratingForm.style.display = 'none';
+            resetForm();
+        }
+    }
+
+    function resetForm() {
+        if (ratingForm) {
+            const textarea = ratingForm.querySelector('.rating-form__textarea');
+            const ratingInput = ratingForm.querySelector('.rating-form__rating-input');
+
+            if (textarea) textarea.value = '';
+            if (ratingInput) ratingInput.value = '';
+            if (transactionIdInput) transactionIdInput.value = '';
+
+            // Reset submit button state
+            if (submitBtn) {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        }
+    }
+
+    // Handle Escape key to close form
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && ratingForm && ratingForm.classList.contains('show')) {
+            hideRatingForm();
+        }
+    });
+    const urlParams = new URLSearchParams(window.location.search);
+    const successMessage = urlParams.get('successMessage');
+    if (successMessage) {
+        alert(successMessage);
+    }
+    const errorMessage = urlParams.get('errorMessage');
+    if (errorMessage) {
+        alert(errorMessage);
+    }
 });

@@ -92,4 +92,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :title, '%')) " +
             "AND p.status = 'APPROVED'")
     List<Post> findAllPostByProductTypeAndPostTitle(@Param("productType") String productType, @Param("title") String title);
+
+    @Query("SELECT COUNT(p) FROM Post p WHERE p.seller.memberId = :memberId AND p.status != 'REJECTED'")
+    Integer countBySeller_MemberId(int memberId);
 }

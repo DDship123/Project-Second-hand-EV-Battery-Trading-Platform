@@ -4,7 +4,9 @@ import org.example.be.dto.response.ApiResponse;
 import org.example.be.dto.response.MemberResponse;
 import org.example.be.dto.response.ReviewResponse;
 import org.example.be.entity.Review;
+import org.example.be.service.MemberService;
 import org.example.be.service.ReviewService;
+import org.example.be.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,22 +22,46 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private TransactionService transactionService;
+    @Autowired
+    private MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Review>> createReview(@RequestBody Review review) {
-        ApiResponse<Review> response = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<ReviewResponse>> createReview(@RequestParam Integer transactionId,
+                                                            @RequestParam Integer rating,
+                                                            @RequestParam String comment,
+                                                            @RequestParam Integer buyerId,
+                                                            @RequestParam Integer sellerId) {
         try {
-            Review createdReview = reviewService.createReview(review);
+            Review savedReview = new Review();
+            savedReview.setRating(rating);
+            savedReview.setComment(comment);
+            savedReview.setCreatedAt(LocalDateTime.now());
+            savedReview.setStatus("PENDING");
+            savedReview.setReviewer(memberService.getMemberById(buyerId));
+            savedReview.setSeller(memberService.getMemberById(sellerId));
+            savedReview.setTransaction(transactionService.getTransactionById(transactionId).orElse(null));
+            Review createdReview = reviewService.createReview(savedReview);
+
+            ApiResponse<ReviewResponse> response = new ApiResponse<>();
+
+            ReviewResponse reviewResponse = new ReviewResponse();
+            reviewResponse.setReviewId(createdReview.getReviewsId());
+            reviewResponse.setRating(createdReview.getRating());
+            reviewResponse.setComment(createdReview.getComment());
+            reviewResponse.setStatus(createdReview.getStatus());
+            reviewResponse.setCreatedAt(createdReview.getCreatedAt());
 
             HashMap<String, Object> metadata = new HashMap<>();
             metadata.put("timestamp", LocalDateTime.now());
 
-            response.ok(createdReview, metadata);
+            response.ok(reviewResponse, metadata);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
             error.put("message", e.getMessage());
-
+            ApiResponse<ReviewResponse> response = new ApiResponse<>();
             response.error(error);
             return ResponseEntity.badRequest().body(response);
         }

@@ -13,7 +13,7 @@ public class TransactionResponse {
     private String status;
     private LocalDateTime createdAt;
     private String imageUrl;
-    private int rate;
+    private ReviewResponse review;
 
 
     public TransactionResponse() {
@@ -22,7 +22,7 @@ public class TransactionResponse {
     public TransactionResponse(Integer transactionId, MemberResponse buyer
             , String buyerName, MemberResponse seller
             , PostResponse post, String postTitle, BigDecimal price
-            , String status, LocalDateTime createdAt, String imageUrl, int rate) {
+            , String status, LocalDateTime createdAt, String imageUrl) {
         this.transactionId = transactionId;
         this.buyer = buyer;
         this.seller = seller;
@@ -32,9 +32,15 @@ public class TransactionResponse {
         this.status = status;
         this.createdAt = createdAt;
         this.imageUrl = imageUrl;
-        this.rate = rate;
     }
 
+    public ReviewResponse getReview() {
+        return review;
+    }
+
+    public void setReview(ReviewResponse review) {
+        this.review = review;
+    }
 
     public Integer getTransactionId() {
         return transactionId;
@@ -108,11 +114,4 @@ public class TransactionResponse {
         this.imageUrl = imageUrl;
     }
 
-    public int getRate() {
-        return rate;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
 }

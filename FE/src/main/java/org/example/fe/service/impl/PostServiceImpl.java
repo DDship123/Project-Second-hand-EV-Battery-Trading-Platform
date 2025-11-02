@@ -460,6 +460,44 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public ApiResponse<Integer> countPostByMemberId(int memberId) {
+        ApiResponse<Integer> response = new ApiResponse<>();
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<Integer>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/count/" + memberId,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<Integer>>() {}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get count successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Get count failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve post count for member id: " + memberId);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get post count for member: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+    }
+
+    @Override
     public ApiResponse<PostResponse> create(PostResponse post) {
         ApiResponse<PostResponse> response = new ApiResponse<>();
         Map<String, String> error = new HashMap<>();

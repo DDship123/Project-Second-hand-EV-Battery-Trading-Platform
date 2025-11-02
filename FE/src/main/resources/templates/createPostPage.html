@@ -38,7 +38,7 @@
             <span class="registration__header__breadcrumb-current">Đăng tin</span>
         </div>
         <h1 class="registration__title">ĐĂNG TIN</h1>
-        <div class="registration__divider"></div>
+        <div class="registration__divider" th:if="${planError != null}" th:text="${planError}"></div>
     </div>
 
     <form th:action="@{/home/postForm/submit/vehicle}" method="post" enctype="multipart/form-data" class="registration__content">
@@ -373,7 +373,7 @@
                 </div>
             </div>
         </div>
-        <input type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
+        <input th:if="${planError != null}" type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
 <!--        <button type="submit" class="registration__submit-button">-->
 <!--            ĐĂNG TIN-->
 <!--        </button>-->

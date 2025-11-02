@@ -62,7 +62,7 @@ public class TransactionService {
 
 
     public List<Transaction> getAllBuyTransactions(Integer buyerId) {
-        return transactionRepository.findByBuyer_MemberId(buyerId);
+        return transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "COMPLETED");
     }
     public List<Transaction> getAllSellTransactions(Integer sellerId) {
         return transactionRepository.findByPost_Seller_MemberId(sellerId);

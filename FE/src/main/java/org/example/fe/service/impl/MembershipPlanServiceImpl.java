@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,7 +31,7 @@ public class MembershipPlanServiceImpl implements MembershipPlanService {
 
             ResponseEntity<ApiResponse<MembershipPlanResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl+"/api/membership-plans/member/" + memberId,
-                    org.springframework.http.HttpMethod.GET,
+                    HttpMethod.GET,
                     entity,
                     new ParameterizedTypeReference<ApiResponse<MembershipPlanResponse>>() {}
             );
