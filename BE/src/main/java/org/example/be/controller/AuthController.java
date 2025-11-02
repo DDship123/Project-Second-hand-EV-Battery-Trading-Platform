@@ -6,7 +6,10 @@ import org.example.be.dto.response.MemberResponse;
 import org.example.be.dto.request.LoginRequest;
 import org.example.be.dto.request.MemberRegisterRequest;
 import org.example.be.entity.Member;
+import org.example.be.entity.MembershipPlan;
+import org.example.be.service.MemberPlanUsageService;
 import org.example.be.service.MemberService;
+import org.example.be.service.MembershipPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +26,20 @@ public class AuthController {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private MemberPlanUsageService memberPlanUsageService;
+    @Autowired
+    private MembershipPlanService membershipPlanService;
 
 
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<Member>> register(@RequestBody MemberRegisterRequest request) {
         ApiResponse<Member> response = memberService.register(request);
+        MembershipPlan defaultPlan = membershipPlanService.getMembershipPlanById(1).orElse(null);
+        if (defaultPlan != null) {
+            memberPlanUsageService.registerPackage(response.getPayload(), defaultPlan);
+        }
         return ResponseEntity.status(response.getStatus().equals("SUCCESS") ? 201 : 400).body(response);
     }
 

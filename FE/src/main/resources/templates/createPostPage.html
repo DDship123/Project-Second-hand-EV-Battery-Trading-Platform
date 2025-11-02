@@ -269,6 +269,7 @@
                                 name="productPrice"
                                 required
                         />
+                        <p th:if="${priceError != null}" th:text="${priceError}" style="color:red"></p>
                     </div>
                 </div>
                 <div class="battery">
@@ -367,6 +368,7 @@
                                 required
                                 disabled
                         />
+                        <p th:if="${priceError != null}" th:text="${priceError}" style="color:red"></p>
                     </div>
                 </div>
             </div>

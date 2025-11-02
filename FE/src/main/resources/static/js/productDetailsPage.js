@@ -79,4 +79,22 @@ window.addEventListener("load", function () {
      * - Click trái: prevIndex = (3-1+4) % 4 = 2 → Ảnh2
      * - Click phải: nextIndex = (3+1) % 4 = 0 → Ảnh0 (wrap to start)
      */
+
+    const transactionBtn = document.querySelector(".container__item__infor__details__action");
+    transactionBtn.addEventListener("click", function () {
+        const postId = transactionBtn.getAttribute("data-postId");
+        if (confirm("Bạn có chắc chắn muốn thực hiện giao dịch cho sản phẩm này không?")) {
+            window.location.href = `/home/transaction/${postId}`;
+        }
+    });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const successMessage = urlParams.get('successMessage');
+    if (successMessage) {
+        alert(successMessage);
+    }
+    const errorMessage = urlParams.get('errorMessage');
+    if (errorMessage) {
+        alert(errorMessage);
+    }
 });

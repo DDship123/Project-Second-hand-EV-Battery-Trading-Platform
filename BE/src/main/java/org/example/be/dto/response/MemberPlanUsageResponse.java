@@ -7,22 +7,19 @@ import java.time.LocalDateTime;
 public class MemberPlanUsageResponse {
     private int usageId;
     private MemberResponse member;
-    private MembershipPlan plan;
+    private MembershipPlanResponse plan;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private int usedPosts;
     private String status;
 
     public MemberPlanUsageResponse() {
     }
 
-    public MemberPlanUsageResponse(int usageId, MemberResponse member, MembershipPlan plan, LocalDateTime startDate, LocalDateTime endDate, int usedPosts, String status) {
-        this.usageId = usageId;
+    public MemberPlanUsageResponse(MemberResponse member, MembershipPlanResponse plan, LocalDateTime startDate, LocalDateTime endDate, String status) {
         this.member = member;
         this.plan = plan;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.usedPosts = usedPosts;
         this.status = status;
     }
 
@@ -42,11 +39,11 @@ public class MemberPlanUsageResponse {
         this.member = member;
     }
 
-    public MembershipPlan getPlan() {
+    public MembershipPlanResponse getPlan() {
         return plan;
     }
 
-    public void setPlan(MembershipPlan plan) {
+    public void setPlan(MembershipPlanResponse plan) {
         this.plan = plan;
     }
 
@@ -64,14 +61,6 @@ public class MemberPlanUsageResponse {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public int getUsedPosts() {
-        return usedPosts;
-    }
-
-    public void setUsedPosts(int usedPosts) {
-        this.usedPosts = usedPosts;
     }
 
     public String getStatus() {

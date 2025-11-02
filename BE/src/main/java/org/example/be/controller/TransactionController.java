@@ -29,6 +29,8 @@ public class TransactionController {
     private MemberService memberService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private ContractService contractService;
 
     private TransactionResponse mapToResponse(Transaction t) {
         TransactionResponse response = new TransactionResponse();
@@ -81,6 +83,9 @@ public class TransactionController {
         toSave.setCreatedAt(LocalDateTime.now());
         Transaction saved = transactionService.createTransaction(toSave);
 
+        // TẠO CONTRACT MẶC ĐỊNH "UNSIGN" NGAY KHI TẠO GIAO DỊCH
+        contractService.ensureForTransaction(saved.getTransactionsId());
+
         Commission commission = new Commission();
         commission.setTransaction(saved);
         if (post.getProduct().getBattery() != null) {
@@ -110,6 +115,8 @@ public class TransactionController {
             }
         }
         commissionService.createCommission(commission);
+
+
 
         ApiResponse<TransactionResponse> response = new ApiResponse<>();
         response.ok(mapToResponse(saved));

@@ -2,6 +2,7 @@ package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.fe.response.ApiResponse;
+import org.example.fe.response.MemberResponse;
 import org.example.fe.response.PostResponse;
 import org.example.fe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,14 @@ public class SearchController {
                              @RequestParam(name = "title",defaultValue = "default",required = false) String postTitle,
                           @RequestParam(name = "successMessage", required = false) String successMessage,
                           @RequestParam(name = "errorMessage", required = false) String errorMessage) {
-        model.addAttribute("user", session.getAttribute("user"));
-        model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
-        model.addAttribute("guest", "false");
+        MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null){
+            model.addAttribute("guest", "true");
+        }else{
+            model.addAttribute("user", memberResponse);
+            model.addAttribute("guest", "false");
+            model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
+        }
 
         if (!location.equals("default") && !postTitle.equals("default")) {
             ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByMemberCityAndProductTypeAndTitle("VEHICLE", location, postTitle);
@@ -33,12 +39,21 @@ public class SearchController {
             model.addAttribute("postTitle", postTitle);
             model.addAttribute("location", location);
             model.addAttribute("productType", "Xe điện");
+            model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
             return "vehiclePage";
-        } else if (!location.equals("default")) {
+        } else if (!location.equals("default") && postTitle.equals("default")) {
             ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByMemberCityAndProductType(location, "VEHICLE");
             model.addAttribute("posts", apiResponse.getPayload());
             model.addAttribute("location", location);
             model.addAttribute("postTitle", postTitle);
+            model.addAttribute("productType", "Xe điện");
+            model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
+            return "vehiclePage";
+        }else if (location.equals("default") && !postTitle.equals("default")) {
+            ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByProductTypeAndPostTitle("VEHICLE", postTitle);
+            model.addAttribute("posts", apiResponse.getPayload());
+            model.addAttribute("postTitle", postTitle);
+            model.addAttribute("location", location);
             model.addAttribute("productType", "Xe điện");
             model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
             return "vehiclePage";
@@ -63,10 +78,14 @@ public class SearchController {
                           @RequestParam(name = "title",defaultValue = "default",required = false) String postTitle,
                           @RequestParam(name = "successMessage", required = false) String successMessage,
                           @RequestParam(name = "errorMessage", required = false) String errorMessage) {
-        model.addAttribute("user", session.getAttribute("user"));
-        model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
-        model.addAttribute("guest", "false");
-
+        MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null){
+            model.addAttribute("guest", "true");
+        }else{
+            model.addAttribute("user", memberResponse);
+            model.addAttribute("guest", "false");
+            model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
+        }
         if (!location.equals("default") && !postTitle.equals("default")) {
             ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByMemberCityAndProductTypeAndTitle("BATTERY", location, postTitle);
             model.addAttribute("posts", apiResponse.getPayload());
@@ -74,11 +93,19 @@ public class SearchController {
             model.addAttribute("location", location);
             model.addAttribute("productType", "Pin");
             return "batteryPage";
-        } else if (!location.equals("default")) {
+        } else if (!location.equals("default") && postTitle.equals("default")) {
             ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByMemberCityAndProductType(location, "BATTERY");
             model.addAttribute("posts", apiResponse.getPayload());
             model.addAttribute("location", location);
             model.addAttribute("postTitle", postTitle);
+            model.addAttribute("productType", "Pin");
+            model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
+            return "batteryPage";
+        }else if (location.equals("default") && !postTitle.equals("default")) {
+            ApiResponse<List<PostResponse>> apiResponse = postService.findAllPostByProductTypeAndPostTitle("BATTERY", postTitle);
+            model.addAttribute("posts", apiResponse.getPayload());
+            model.addAttribute("postTitle", postTitle);
+            model.addAttribute("location", location);
             model.addAttribute("productType", "Pin");
             model.addAttribute("totalPage", apiResponse.getMetadata().get("totalPages"));
             return "batteryPage";

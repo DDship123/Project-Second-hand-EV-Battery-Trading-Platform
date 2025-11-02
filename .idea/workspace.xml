@@ -65,10 +65,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.BeApplication.executor": "Run",
+<<<<<<< HEAD
     "git-widget-placeholder": "Vietp",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Project_SWP/Project-Second-hand-EV-Battery-Trading-Platform",
+=======
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/LENOVO/Documents/GITHUBEV",
+>>>>>>> 638ee4b7182ff714e3628452605edb3ee7d5f1b5
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -131,7 +138,11 @@
       <workItem from="1759649351648" duration="12000" />
       <workItem from="1759711743065" duration="13000" />
       <workItem from="1760449911157" duration="30000" />
+<<<<<<< HEAD
       <workItem from="1762076410320" duration="442000" />
+=======
+      <workItem from="1761783167148" duration="10000" />
+>>>>>>> 638ee4b7182ff714e3628452605edb3ee7d5f1b5
     </task>
     <servers />
   </component>

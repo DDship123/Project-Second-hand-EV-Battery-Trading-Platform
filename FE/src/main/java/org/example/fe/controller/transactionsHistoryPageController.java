@@ -23,6 +23,9 @@ public class transactionsHistoryPageController {
     @GetMapping
     public String getTransactionsHistory(Model model, HttpSession session) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllBuyTransaction(memberResponse.getMemberId());
@@ -37,6 +40,9 @@ public class transactionsHistoryPageController {
     @GetMapping("/seller")
     public String getSellTransactionsHistory(Model model, HttpSession session) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllSellTransaction(memberResponse.getMemberId());

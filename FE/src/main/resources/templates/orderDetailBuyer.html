@@ -39,6 +39,13 @@
                         <span class="value" th:text="${#temporals.format(transaction.getCreatedAt(),'dd-MM-yyyy')}">23/10/2025</span>
                     </div>
                 </div>
+                <!-- Nút tải hợp đồng mẫu (PDF) - thêm ở đây -->
+                <div class="mt-2">
+                    <a class="btn btn-outline-primary btn-sm"
+                       th:href="@{|${@environment.getProperty('api.base.url')}/api/contracts/by-transaction/${transaction.transactionId}/template|}">
+                        <i class="fa-regular fa-file-pdf"></i> Tải hợp đồng mẫu (PDF)
+                    </a>
+                </div>
             </div>
 
             <!-- Buyer Information -->
@@ -193,7 +200,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-item">
+                    <div class="timeline-item" th:if="${!transaction.getStatus().equals('REQUESTED')}">
                         <div class="timeline-label">Chuyển tiền cho Admin:</div>
                         <div class="timeline-value">
                             <span class="status-badge status-badge--pending" th:if="${transaction.getStatus().equals('ACCEPTED')}">Đang chờ chuyển</span>
@@ -203,14 +210,20 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons for Seller -->
-                <div class="action-section"  th:if="${transaction.getStatus().equals('PAID')}">
-                    <h3 class="action-title">Hành động</h3>
-                    <div class="action-buttons">
-                        <button class="btn btn--accept" th:attr="data-transaction-id=${transaction.getTransactionId()}">
-                            <i class="fa-solid fa-check"></i> Người bán đã giao hàng
+                <!-- Buyer chỉ upload khi DELIVERED (Tân)-->
+                <div class="action-section" th:if="${transaction.getStatus().equals('PAID')}">
+
+                    <p style="color:#d9534f; font-weight:700; margin-bottom:10px;">
+                         Vui lòng tải lên ảnh hợp đồng đã ký để xác nhận người bán đã giao sản phẩm.
+                    </p>
+                    <form th:action="@{/home/contract/upload}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="transactionId" th:value="${transaction.getTransactionId()}" />
+                        <label for="contractImage">Tải hình ảnh hợp đồng đã ký:</label>
+                        <input style="display:block;margin:20px 0" type="file" name="contractImage" id="contractImage" accept="image/*" required />
+                        <button type="submit" class="btn btn--accept">
+                            <i class="fa-solid fa-file-upload"></i> Tải hợp đồng đã ký
                         </button>
-                    </div>
+                    </form>
                 </div>
 
                 <!-- QR Code Payment -->

@@ -82,7 +82,8 @@
                         <li>Hỗ trợ sang tên, thủ tục giấy tờ.</li>
                     </ul>
                 </div>
-                <button class="container__item__infor__details__action">
+                <button class="container__item__infor__details__action" th:attr="data-postId=${post.getPostsId()}"
+                        th:if="${ guest.equals('false') && post.getSeller().getMemberId() != user.getMemberId()}">
                     Yêu cầu giao dịch
                 </button>
             </div>
@@ -288,7 +289,7 @@
                     </div>
                 </div>
             </div>
-            <form th:action="@{/create/comment}"  method="post" class="container__sideInfor__comment__input">
+            <form th:if="${guest.equals('false')}" th:action="@{/create/comment}"  method="post" class="container__sideInfor__comment__input">
                 <input
                         type="text"
                         placeholder="Viết bình luận..."
