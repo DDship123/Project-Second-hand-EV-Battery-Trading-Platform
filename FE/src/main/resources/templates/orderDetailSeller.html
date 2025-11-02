@@ -75,26 +75,26 @@
                         <span class="label">Họ và tên:</span>
                         <span class="value" th:text="${transaction.getBuyer().getUsername()}">Nguyễn Văn A</span>
                     </div>
-                    <div th:if="${!transaction.getStatus().equals('REQUESTED')}" class="info-item">
+                    <div th:if="${!transaction.getStatus().equals('REQUESTED') && !transaction.getStatus().equals('ACCEPTED')}" class="info-item">
                         <span class="label">Số điện thoại:</span>
                         <span class="value" th:text="${transaction.getBuyer().getPhone()}">0123456789</span>
                     </div>
-                    <div th:if="${!transaction.getStatus().equals('REQUESTED')}" class="info-item">
+                    <div th:if="${!transaction.getStatus().equals('REQUESTED')  && !transaction.getStatus().equals('ACCEPTED')}" class="info-item">
                         <span class="label">Email:</span>
-                        <span class="value" th:text="${transaction.getBuyer().getEmail()}">nguyenvana@email.com</span>
+                        <span class="value" th:text="${transaction.getBuyer().getEmail() }">nguyenvana@email.com</span>
                     </div>
                     <div  class="info-item">
                         <span class="label">Thành phố:</span>
                         <span class="value" th:text="${transaction.getBuyer().getCity()}">Hồ Chí Minh</span>
                     </div>
-                    <div th:if="${!transaction.getStatus().equals('REQUESTED')}" class="info-item info-item--full">
+                    <div th:if="${!transaction.getStatus().equals('REQUESTED')  && !transaction.getStatus().equals('ACCEPTED')}" class="info-item info-item--full">
                         <span class="label">Địa chỉ:</span>
                         <span class="value" th:text="${transaction.getBuyer().getAddress()}">123 Đường ABC, Phường 1, Quận 1, TP. Hồ Chí Minh</span>
                     </div>
                 </div>
-                <div th:if="${transaction.getStatus().equals('REQUESTED')}" class="info-note">
+                <div th:if="${transaction.getStatus().equals('REQUESTED')  || transaction.getStatus().equals('ACCEPTED')}" class="info-note">
                     <i class="fa-solid fa-info-circle"></i>
-                    <span >Thông tin chi tiết của người bán sẽ được hiển thị sau khi admin phê duyệt đơn hàng.</span>
+                    <span >Thông tin chi tiết của người mua sẽ được hiển thị sau khi admin phê duyệt đơn hàng.</span>
                 </div>
             </div>
 
@@ -184,7 +184,6 @@
                             <span th:if="${transaction.getStatus().equals('PAID')}" class="status-badge status-badge--pending">Người bán chờ nhận hàng</span>
                             <span th:if="${transaction.getStatus().equals('DELIVERED')}" class="status-badge status-badge--approved">Người bán đã nhận dược hàng</span>
                             <span th:if="${transaction.getStatus().equals('ACCEPTED')}" class="status-badge status-badge--pending">Người bán đang thanh toán</span>
-<!--                            <span class="timeline-date">23/10/2025 13:45</span>-->
                         </div>
                     </div>
 
@@ -198,8 +197,24 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons for Seller -->
-                <div class="action-section"  th:if="${transaction.getStatus().equals('REQUESTED')}">
+                <!-- Seller: tải PDF khi PAID hoặc DELIVERED (Tân)-->
+                <div class="action-section" th:if="${transaction.getStatus().equals('PAID') or transaction.getStatus().equals('DELIVERED')}">
+
+                    <p style="color:#d9534f; font-weight:600; margin-bottom:10px;">
+                        Tải PDF hợp đồng mẫu để in/ký với người mua.
+                    </p>
+
+                    <div class="action-buttons">
+                        <a class="btn btn-sm"
+                           style="display:inline-block; background-color:#0d6efd; color:#ffffff; border:1px solid #0d6efd; padding:8px 12px; border-radius:6px; text-decoration:none;"
+                           th:href="@{|${@environment.getProperty('api.base.url')}/api/contracts/by-transaction/${transaction.transactionId}/template|}">
+                            <i class="fa-regular fa-file-pdf"></i> Tải hợp đồng mẫu (PDF) để ký
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Seller: các hành động REQUESTED -->
+                <div class="action-section" th:if="${transaction.getStatus().equals('REQUESTED')}">
                     <h3 class="action-title">Hành động</h3>
                     <div class="action-buttons">
                         <button class="btn btn--accept" th:attr="data-transaction-id=${transaction.getTransactionId()}">
@@ -211,11 +226,10 @@
                     </div>
                     <p class="action-note">
                         <i class="fa-solid fa-circle-info"></i>
-                        <span>Nếu bạn từ chối đơn hàng, đơn hàng sẽ bị hủy và không cần phê duyệt từ admin.</span>
+                        <span>Nếu bạn từ chối, đơn sẽ bị hủy và không cần phê duyệt từ admin.</span>
                     </p>
                 </div>
             </div>
-
 
             <!-- Commission & Total -->
             <div class="section">
@@ -235,11 +249,6 @@
               </span>
                         <span class="financial-value" th:text="${commission.getPriceFormated(commission.getAmount())}+'VNĐ'">- 1,250,000 VNĐ</span>
                     </div>
-<!--                    <div class="financial-row financial-row&#45;&#45;total">-->
-<!--                        <span class="financial-label">Tổng số tiền bạn nhận được:</span>-->
-<!--                        <span class="financial-value financial-value&#45;&#45;total" th:text="-->
-<!--                        ${commission.getPriceFormated(post.getPrice().doubleValue() - commission.getAmount())} + ' VNĐ'">23,750,000 VNĐ</span>-->
-<!--                    </div>-->
                 </div>
             </div>
 

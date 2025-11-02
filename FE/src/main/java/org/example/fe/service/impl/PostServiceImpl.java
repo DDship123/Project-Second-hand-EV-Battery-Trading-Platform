@@ -13,6 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -389,12 +390,15 @@ public class PostServiceImpl implements PostService {
 
             // Create request entity
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-            // create Url
-            String url = apiBaseUrl + "/api/posts/search?city=" + city + "&productType=" + productType + "&title=" + title;
+
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(apiBaseUrl + "/api/posts/city-type-title")
+                    .queryParam("city", city)
+                    .queryParam("productType", productType)
+                    .queryParam("title", title);
 
             // Make API call to backend with city, productType and title parameters
             ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
-                    url,
+                    uriBuilder.toUriString(),
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
@@ -402,7 +406,8 @@ public class PostServiceImpl implements PostService {
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get posts by city, productType and title successful
-                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+                response.ok(apiResponse.getBody().getPayload());
+                response.setMetadata(apiResponse.getBody().getMetadata());
             } else {
                 // Get posts by city, productType and title failed
                 Map<String, String> errorMap = new HashMap<>();
@@ -699,8 +704,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ApiResponse<PostResponse> findAllPostByProductTypeAndPostTitle(String productType, String postTitle) {
-        ApiResponse<PostResponse> response = new ApiResponse<>();
+    public ApiResponse<List<PostResponse>> findAllPostByProductTypeAndPostTitle(String productType, String postTitle) {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
 
         try {
             // Create headers
@@ -711,16 +716,18 @@ public class PostServiceImpl implements PostService {
             HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
             // Make API call to backend
-            ResponseEntity<ApiResponse<PostResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts/type-title?" + "productType=" + productType + "&title=" + postTitle,
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/type-title?"+
+                            "productType=" + productType + "&title=" + postTitle,
                     HttpMethod.GET,
                     requestEntity,
-                    new ParameterizedTypeReference<ApiResponse<PostResponse>>(){}
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Delete post successful
                 response.ok(apiResponse.getBody().getPayload());
+                response.setMetadata(apiResponse.getBody().getMetadata());
             } else {
                 // Delete post failed
                 Map<String, String> errorMap = new HashMap<>();

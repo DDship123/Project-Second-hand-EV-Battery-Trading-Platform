@@ -23,6 +23,9 @@ public class WishListController {
     @GetMapping
     public String getWishList(Model model, HttpSession session) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<List<FavoriteResponse>> apiResponse = wishlistService.getAll(memberResponse.getMemberId());

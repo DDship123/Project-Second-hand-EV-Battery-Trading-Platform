@@ -631,8 +631,44 @@ public class PostController {
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+        int size = posts.size();
+        int totalPages = 0;
+        if (size % 8 == 0) {
+            totalPages = size / 8;
+        } else {
+            totalPages = (size / 8) + 1;
+        }
 
         ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        Map<String, Object> metaData = new HashMap<>();
+        metaData.put("totalPages", totalPages);
+        response.setMetadata(metaData);
+        response.ok(posts);
+        return ResponseEntity.ok(response);
+    }
+    // -- GET ALL POST BY PRODUCT TYPE AND POST TITLE --(Tân)
+    @GetMapping("/type-title")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> findAllPostByProductTypeAndPostTitle(
+            @RequestParam String productType,
+            @RequestParam String title) {
+
+        List<PostResponse> posts = postService.findAllPostByProductTypeAndPostTitle(productType, title)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        int size = posts.size();
+        int totalPages = 0;
+        if (size % 8 == 0) {
+            totalPages = size / 8;
+        } else {
+            totalPages = (size / 8) + 1;
+        }
+
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        Map<String, Object> metaData = new HashMap<>();
+        metaData.put("totalPages", totalPages);
+        response.setMetadata(metaData);
         response.ok(posts);
         return ResponseEntity.ok(response);
     }
@@ -685,21 +721,6 @@ public class PostController {
             response.ok(posts);
             return ResponseEntity.ok(response);
         }
-    }
-    // -- GET ALL POST BY PRODUCT TYPE AND POST TITLE --(Tân)   
-    @GetMapping("/filter/type-title")
-    public ResponseEntity<ApiResponse<List<PostResponse>>> findAllPostByProductTypeAndPostTitle(
-            @RequestParam String productType,
-            @RequestParam String title) {
-
-        List<PostResponse> posts = postService.findAllPostByProductTypeAndPostTitle(productType, title)
-                .stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
-
-        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
-        response.ok(posts);
-        return ResponseEntity.ok(response);
     }
 
     private Map<String, String> validatePost(PostResponse post) {

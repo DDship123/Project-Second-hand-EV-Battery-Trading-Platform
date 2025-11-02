@@ -7,6 +7,7 @@ import org.example.fe.response.MemberResponse;
 import org.example.fe.response.TransactionResponse;
 import org.example.fe.service.MemberService;
 import org.example.fe.service.TransactionService;
+import org.example.fe.validate.UpdatePersonalInformationValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,9 +45,9 @@ public class MemberPageController {
             return "redirect:/login";
         }
 
-        boolean usernameChanged = !currentUser.getUsername().equals(updatedUser.getUsername());
-        boolean emailChanged = !currentUser.getEmail().equals(updatedUser.getEmail());
-        boolean phoneChanged = !currentUser.getPhone().equals(updatedUser.getPhone());
+//        boolean usernameChanged = !currentUser.getUsername().equals(updatedUser.getUsername());
+//        boolean emailChanged = !currentUser.getEmail().equals(updatedUser.getEmail());
+//        boolean phoneChanged = !currentUser.getPhone().equals(updatedUser.getPhone());
 
 //        if(!usernameChanged && !emailChanged && !phoneChanged){
 //            model.addAttribute("infoMessage", "No changes detected");
@@ -66,27 +67,33 @@ public class MemberPageController {
             session.setAttribute("user", response.getPayload());
         } else {
             Map<String, String> errorMap = response.getError();
-            if (!errorMap.isEmpty()) {
-                if (emailChanged) {
-                    if (errorMap.containsKey("email")) {
-                        model.addAttribute("emailError", errorMap.get("email"));
-                    }
-                }
-                if (usernameChanged) {
-                    if (errorMap.containsKey("username")) {
-                        model.addAttribute("usernameError", errorMap.get("username"));
-                    }
-                }
-                if (phoneChanged) {
-                    if (errorMap.containsKey("phone")) {
-                        model.addAttribute("phoneError", errorMap.get("phone"));
-                    }
-                }
-            }
+//            if (!errorMap.isEmpty()) {
+//                if (emailChanged) {
+//                    if (errorMap.containsKey("email")) {
+//                        model.addAttribute("emailError", errorMap.get("email"));
+//                    }
+//                }
+//                if (usernameChanged) {
+//                    if (errorMap.containsKey("username")) {
+//                        model.addAttribute("usernameError", errorMap.get("username"));
+//                    }
+//                }
+//                if (phoneChanged) {
+//                    if (errorMap.containsKey("phone")) {
+//                        model.addAttribute("phoneError", errorMap.get("phone"));
+//                    }
+//                }
+//            }
+
+            //validate user update information
+            UpdatePersonalInformationValidate validate = new UpdatePersonalInformationValidate();
+            validate.error(model, errorMap, updatedUser, session);
+
                 model.addAttribute("errorMessage", "Failed to update profile");
                 model.addAttribute("user", currentUser);
                 return "personalInformationPage";
             }
+
             model.addAttribute("user", response.getPayload());
             return "personalInformationPage";
     }
@@ -120,22 +127,30 @@ public class MemberPageController {
                                  @RequestParam("currentPassword") String currentPassword,
                                  @RequestParam("newPassword") String newPassword,
                                  @RequestParam("confirmPassword") String confirmPassword) {
+
         MemberResponse user = (MemberResponse) session.getAttribute("user");
-        if (!user.getPassword().equals(currentPassword)) {
-            model.addAttribute("errorMessage", "Current password is incorrect");
-            model.addAttribute("user", user);
-            return "securityPage";
-        }
+        UpdatePersonalInformationValidate validate = new UpdatePersonalInformationValidate();
+        boolean hasError = validate.errrorPassword(model,currentPassword,newPassword,confirmPassword,session);
 
-        if(newPassword.equals(currentPassword)){
-            model.addAttribute("passwordError", "The new password cannot be the same as the current password.");
-            model.addAttribute("user", user);
-            return "securityPage";
-        }
+//        if (!user.getPassword().equals(currentPassword)) {
+//            model.addAttribute("errorMessage", "Current password is incorrect");
+//            model.addAttribute("user", user);
+//            return "securityPage";
+//        }
+//
+//        if(newPassword.equals(currentPassword)){
+//            model.addAttribute("passwordError", "The new password cannot be the same as the current password.");
+//            model.addAttribute("user", user);
+//            return "securityPage";
+//        }
+//
+//        if (!newPassword.equals(confirmPassword)) {
+//            model.addAttribute("passwordError", "New password and confirm password do not match");
+//            model.addAttribute("user", user);
+//            return "securityPage";
+//        }
 
-        if (!newPassword.equals(confirmPassword)) {
-            model.addAttribute("passwordError", "New password and confirm password do not match");
-            model.addAttribute("user", user);
+        if(hasError){
             return "securityPage";
         }
         user.setPassword(newPassword);

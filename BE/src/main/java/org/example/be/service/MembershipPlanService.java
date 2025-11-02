@@ -40,6 +40,10 @@ public class MembershipPlanService {
         return null;
     }
 
+    public Optional<MembershipPlan> getMembershipPlanByMemberId(Integer memberId) {
+        return membershipPlanRepository.findByMemberId(memberId);
+    }
+
     public boolean deleteMembershipPlan(Integer id) {
         if (membershipPlanRepository.existsById(id)) {
             membershipPlanRepository.deleteById(id);

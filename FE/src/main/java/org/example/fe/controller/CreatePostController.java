@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.example.fe.config.CloudinaryService;
 import org.example.fe.response.*;
 import org.example.fe.service.PostService;
+import org.example.fe.validate.CreatePostValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,9 @@ public class CreatePostController {
     @GetMapping
     public String postForm(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login"; // Redirect to login page if user is not logged in
+        }
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         return "createPostPage";
@@ -48,70 +52,75 @@ public class CreatePostController {
                                  @RequestParam("vehicleModel") String vehicleModel,
                                  @RequestParam("vehicleRegistrationYear") String year,
                                  @RequestParam("vehicleOrigin") String origin,
-                                 @RequestParam("VehicleMileage") String mileageStr,
+                                 @RequestParam("VehicleMileage") Integer mileage,
                                  @RequestParam("vehicleBatteryCapacity") String batteryCapacity,
-                                 @RequestParam("productPrice") BigDecimal price) {
+                                 @RequestParam("productPrice") String priceInput) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        CreatePostValidate validate = new CreatePostValidate();
+        PostResponse post = new PostResponse();
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
 
-        boolean hasErrors = false;
+        boolean hasErrors = validate.errorVehicle(model,mainImage,subImages,year,batteryCapacity,post,priceInput);
 
-        if (mainImage == null || mainImage.isEmpty()) {
-            model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
-            hasErrors = true;
-//            return "createPostPage";
-        }
-        if (subImages!=null && subImages.size()> 4)
-        {
-            model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
-            hasErrors = true;
-//            return "createPostPage";
-        }
-
-//        Map<String, String> errors = new HashMap<>();
-
-        Integer mileage = null;
-        try{
-            Integer.parseInt(year);
-        }catch (NumberFormatException e){
-//            errors.put("yearError","Year must be an integer");
-            model.addAttribute("yearError", "Năm sản xuất phải là số nguyên");
-            hasErrors = true;
-        }
-
-        try{
-            mileage =  Integer.parseInt(mileageStr);
-        }catch (NumberFormatException e){
-//            errors.put("mileageError","Mileage must be an integer");
-            model.addAttribute("mileageError", "Km phải là số");
-            hasErrors = true;
-        }
-
-        try{
-           Integer.parseInt(batteryCapacity);
-        }catch (NumberFormatException e){
-
-//            errors.put("batteryCapacityError","Battery capacity must be an integer");
-            model.addAttribute("vehicleBatteryCapacity", "Dung tích pin phải là số");
-            hasErrors = true;
-        }
-
-//        if(!errors.isEmpty()){
-//            model.addAttribute("errors",errors);
-//            return "createPostPage";
+//        if (mainImage == null || mainImage.isEmpty()) {
+//            model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
+//            hasErrors = true;
+////            return "createPostPage";
 //        }
+//        if (subImages!=null && subImages.size()> 4)
+//        {
+//            model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
+//            hasErrors = true;
+////            return "createPostPage";
+//        }
+//
+////        Map<String, String> errors = new HashMap<>();
+//
+//        Integer mileage = null;
+//        try{
+//            Integer.parseInt(year);
+//        }catch (NumberFormatException e){
+////            errors.put("yearError","Year must be an integer");
+//            model.addAttribute("yearError", "Năm sản xuất phải là số nguyên");
+//            hasErrors = true;
+//        }
+//
+//        try{
+//            mileage =  Integer.parseInt(mileageStr);
+//        }catch (NumberFormatException e){
+////            errors.put("mileageError","Mileage must be an integer");
+//            model.addAttribute("mileageError", "Km phải là số");
+//            hasErrors = true;
+//        }
+//
+//        try{
+//           Integer.parseInt(batteryCapacity);
+//        }catch (NumberFormatException e){
+//
+////            errors.put("batteryCapacityError","Battery capacity must be an integer");
+//            model.addAttribute("vehicleBatteryCapacity", "Dung tích pin phải là số");
+//            hasErrors = true;
+//        }
+//
+////        if(!errors.isEmpty()){
+////            model.addAttribute("errors",errors);
+////            return "createPostPage";
+////        }
 
         if(hasErrors){
+            model.addAttribute("user", user);
+            model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
            return "createPostPage";
         }
 
 
 
-        PostResponse post = new PostResponse();
+
         post.setTitle(postTitle);
         post.setDescription(postDescription);
-        post.setPrice(price);
+        post.setPriceInput(priceInput);
+//        post.setPrice(price);
         post.setSeller(user);
         post.setCreatedAt(LocalDateTime.now());
         post.setStatus("PENDING");
@@ -179,53 +188,60 @@ public class CreatePostController {
                                  @RequestParam("productStatus") String productStatus,
                                  @RequestParam("batteryBrand") String batteryBrand,
                                  @RequestParam("batteryCondition") String batteryCondition,
-                                 @RequestParam("batteryCapacityAh") String batteryCapacityStr,
+                                 @RequestParam("batteryCapacityAh") Integer batteryCapacity,
                                  @RequestParam("batteryVoltage") String batteryVoltage,
                                  @RequestParam("batteryManufactureYear") String batteryYearOfManufacture,
                                  @RequestParam("batteryOrigin") String batteryOrigin,
-                                 @RequestParam("productPrice") BigDecimal price) {
+                                 @RequestParam("productPrice") String priceInput) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        CreatePostValidate validate = new CreatePostValidate();
+        PostResponse post = new PostResponse();
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
-        boolean hasErrors = false;
-        if (mainImage == null || mainImage.isEmpty()) {
-            model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
-            hasErrors = true;
-//            return "createPostPage";
-        }
-        if (subImages != null && subImages.size() > 4) {
-            model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
-                hasErrors = true;
-//            return "createPostPage";
-        }
-        Integer batteryCapacity = null;
-        try{
-           batteryCapacity = Integer.parseInt(batteryCapacityStr);
-        }catch (NumberFormatException e){
-            model.addAttribute("batteryCapacityError","Vui lòng nhập số");
-            hasErrors = true;
-        }
-        try {
-            Integer.parseInt(batteryVoltage);
-        }catch (NumberFormatException e){
-            model.addAttribute("batteryVoltageError","Vui lòng nhập số");
-            hasErrors = true;
-        }
+        boolean hasErrors = validate.errorBattery(model,mainImage,subImages,batteryVoltage,batteryYearOfManufacture, post,priceInput);
 
-        try {
-            Integer.parseInt(batteryYearOfManufacture);
-        }catch (NumberFormatException e){
-            model.addAttribute("batteryYearError","Vui lòng nhập số");
-            hasErrors = true;
-        }
+//        if (mainImage == null || mainImage.isEmpty()) {
+//            model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
+//            hasErrors = true;
+////            return "createPostPage";
+//        }
+//        if (subImages != null && subImages.size() > 4) {
+//            model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
+//                hasErrors = true;
+////            return "createPostPage";
+//        }
+//        Integer batteryCapacity = null;
+//        try{
+//           batteryCapacity = Integer.parseInt(batteryCapacityStr);
+//        }catch (NumberFormatException e){
+//            model.addAttribute("batteryCapacityError","Vui lòng nhập số");
+//            hasErrors = true;
+//        }
+//        try {
+//            Integer.parseInt(batteryVoltage);
+//        }catch (NumberFormatException e){
+//            model.addAttribute("batteryVoltageError","Vui lòng nhập số");
+//            hasErrors = true;
+//        }
+//
+//        try {
+//            Integer.parseInt(batteryYearOfManufacture);
+//        }catch (NumberFormatException e){
+//            model.addAttribute("batteryYearError","Vui lòng nhập số");
+//            hasErrors = true;
+//        }
 
         if(hasErrors){
+            model.addAttribute("user", user);
+            model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
             return "createPostPage";
         }
-        PostResponse post = new PostResponse();
+
+
         post.setTitle(postTitle);
         post.setDescription(postDescription);
-        post.setPrice(price);
+        post.setPriceInput(priceInput);
+//        post.setPrice(price);
         post.setSeller(user);
         post.setCreatedAt(LocalDateTime.now());
         post.setStatus("PENDING");

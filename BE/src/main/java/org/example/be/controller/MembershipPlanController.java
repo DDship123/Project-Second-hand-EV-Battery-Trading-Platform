@@ -1,6 +1,7 @@
 package org.example.be.controller;
 
 import org.example.be.dto.response.ApiResponse;
+import org.example.be.dto.response.MembershipPlanResponse;
 import org.example.be.entity.MembershipPlan;
 import org.example.be.service.MembershipPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/membership-plans")
+    @RequestMapping("/api/membership-plans")
 public class MembershipPlanController {
 
     @Autowired
@@ -25,6 +26,7 @@ public class MembershipPlanController {
         response.ok(saved);
         return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<MembershipPlan>> getMembershipPlanById(@PathVariable Integer id) {
@@ -41,19 +43,52 @@ public class MembershipPlanController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<MembershipPlan>>> getAllMembershipPlans() {
-        List<MembershipPlan> list = membershipPlanService.getAllMembershipPlans();
-        ApiResponse<List<MembershipPlan>> response = new ApiResponse<>();
-        if (list.isEmpty()) {
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<ApiResponse<MembershipPlanResponse>> getMembershipPlanByMemberId(@PathVariable Integer memberId) {
+        Optional<MembershipPlan> plan = membershipPlanService.getMembershipPlanByMemberId(memberId);
+        ApiResponse<MembershipPlanResponse> response = new ApiResponse<>();
+        if (plan.isPresent()) {
+            MembershipPlan p = plan.get();
+            MembershipPlanResponse planResponse = new MembershipPlanResponse(
+                    p.getPlanId(),
+                    p.getName(),
+                    p.getPrice(),
+                    p.getDuration(),
+                    p.getMaxPosts(),
+                    p.getPriority()
+            );
+            response.ok(planResponse);
+            return ResponseEntity.ok(response);
+        } else {
             HashMap<String, String> error = new HashMap<>();
-            error.put("message", "No MembershipPlans found");
+            error.put("message", "MembershipPlan not found for the member");
             response.error(error);
             return ResponseEntity.status(404).body(response);
-        } else {
-            response.ok(list);
-            return ResponseEntity.ok(response);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<MembershipPlanResponse>>> getAllMembershipPlans() {
+        List<MembershipPlan> list = membershipPlanService.getAllMembershipPlans();
+        List<MembershipPlanResponse> response = list.stream()
+                .map(plan -> new MembershipPlanResponse(
+                        plan.getPlanId(),
+                        plan.getName(),
+                        plan.getPrice(),
+                        plan.getDuration(),
+                        plan.getMaxPosts(),
+                        plan.getPriority()
+                ))
+                .toList();
+        ApiResponse<List<MembershipPlanResponse>> apiResponse = new ApiResponse<>();
+        if (response.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No MembershipPlans found");
+            apiResponse.error(error);
+            return ResponseEntity.status(404).body(apiResponse);
+        }
+        apiResponse.ok(response);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @PutMapping("/{id}")

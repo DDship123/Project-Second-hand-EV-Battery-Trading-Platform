@@ -25,8 +25,6 @@ public class MemberPlanUsage {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "used_posts")
-    private Integer usedPosts;
 
     @Column(columnDefinition = "NVARCHAR(20)")
     private String status;
@@ -69,14 +67,6 @@ public class MemberPlanUsage {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public Integer getUsedPosts() {
-        return usedPosts;
-    }
-
-    public void setUsedPosts(Integer usedPosts) {
-        this.usedPosts = usedPosts;
     }
 
     public String getStatus() {
