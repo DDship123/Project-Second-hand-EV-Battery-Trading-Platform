@@ -134,7 +134,7 @@ public class MemberService {
         // Email Exists
         if (memberRepository.findByEmail(request.getEmail()).isPresent()) {
 
-            error.put("email", "This email is already in use");
+            error.put("email", "Email này đã được sử dụng");
             response.error(error);
         }
 
@@ -144,14 +144,14 @@ public class MemberService {
             response.error(error);
         } else if (memberRepository.findByPhone(request.getPhone()).isPresent()) {
 
-            error.put("phone", "This phone number is already in use");
+            error.put("phone", "Số điện thoại này đã được sử dụng");
             response.error(error);
         }
 
         // Username Exists
         if (memberRepository.findByUsername(request.getUsername()).isPresent()) {
 
-            error.put("username", "This username is already in use");
+            error.put("username", "Ten đăng nhập này đã được sử dụng");
             response.error(error);
         }
         if (!error.isEmpty()) {
@@ -165,7 +165,7 @@ public class MemberService {
         member.setEmail(request.getEmail());
         member.setPhone(request.getPhone());
         member.setPassword(request.getPassword());
-        member.setRole("MEMBER");
+        member.setRole("USER");
         member.setStatus("ACTIVE");
         member.setCreatedAt(LocalDateTime.now());
 
