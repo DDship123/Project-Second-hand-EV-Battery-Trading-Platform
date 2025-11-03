@@ -122,7 +122,7 @@
             <p class="product-card__price" th:text="${transaction.getPrice()}">13.000.000 đ</p>
             <p class="product-card__location" th:text="'Ngày khởi tạo: ' + ${transaction.getCreatedAt() != null ? #temporals.format(transaction.getCreatedAt(), 'dd-MM-yyyy') : 'N/A'}">9 giờ trước - Hồ Chí Minh</p>
             <p class="product-card__buyer" th:text="'Người mua: '+${transaction.getBuyer().getUsername()}">dawdaw</p>
-            <p class="product-card__rating" th:text="'Đánh giá: '+${transaction.getRate()}+'⭐'">5⭐</p>
+<!--            <p class="product-card__rating" th:text="'Đánh giá: '+${transaction.getReview().getRating()}+'⭐'">5⭐</p>-->
           </article>
         </div>
       </div>

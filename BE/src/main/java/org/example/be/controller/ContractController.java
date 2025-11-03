@@ -1,6 +1,7 @@
 package org.example.be.controller;
 
 import org.example.be.dto.response.ApiResponse;
+import org.example.be.dto.response.ContractResponse;
 import org.example.be.entity.Contract;
 import org.example.be.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,11 +112,17 @@ public class ContractController {
 
     // Lấy contract theo transaction
     @GetMapping("/by-transaction/{transactionId}")
-    public ResponseEntity<ApiResponse<Contract>> getByTransaction(@PathVariable Integer transactionId) {
-        ApiResponse<Contract> res = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<ContractResponse>> getByTransaction(@PathVariable Integer transactionId) {
+        ApiResponse<ContractResponse> res = new ApiResponse<>();
         try {
             Contract payload = contractService.getByTransactionId(transactionId);
-            res.ok(payload);
+            ContractResponse contractResponse = new ContractResponse();
+            contractResponse.setContractId(payload.getContractsId());
+            contractResponse.setContractUrl(payload.getContractUrl());
+            contractResponse.setStatus(payload.getStatus());
+            contractResponse.setCreatedAt(payload.getCreatedAt());
+            contractResponse.setSignedAt(payload.getSignedAt());
+            res.ok(contractResponse);
             return ResponseEntity.ok(res);
         } catch (Exception e) {
             HashMap<String, String> error = new HashMap<>();

@@ -198,7 +198,7 @@
                 </div>
 
                 <!-- Seller: tải PDF khi PAID hoặc DELIVERED (Tân)-->
-                <div class="action-section" th:if="${transaction.getStatus().equals('PAID') or transaction.getStatus().equals('DELIVERED')}">
+                <div class="action-section" th:if="${transaction.getStatus().equals('PAID') && !transaction.getStatus().equals('DELIVERED')}">
 
                     <p style="color:#d9534f; font-weight:600; margin-bottom:10px;">
                         Tải PDF hợp đồng mẫu để in/ký với người mua.
@@ -211,6 +211,10 @@
                             <i class="fa-regular fa-file-pdf"></i> Tải hợp đồng mẫu (PDF) để ký
                         </a>
                     </div>
+                </div>
+
+                <div class="action-section" th:if="${transaction.getStatus().equals('DELIVERED')}">
+                    <img th:src="${contract.getContractUrl()}" alt="Hợp đồng Đơn hàng" class="contract-image"/>
                 </div>
 
                 <!-- Seller: các hành động REQUESTED -->
@@ -237,10 +241,10 @@
                 <div class="financial-summary">
                     <div class="financial-row">
                         <span class="financial-label">Giá bán sản phẩm:</span>
-                        <span class="financial-value" th:text="${post.getPrice()+'VNĐ'}">25,000,000 VNĐ</span>
+                        <span class="financial-value" th:text="${post.getPriceFormated()+'VNĐ'}">25,000,000 VNĐ</span>
                     </div>
                     <div class="financial-row financial-row--commission">
-              <span class="financial-label" th:text="'Phí hoa hồng '+'('+${commission.getCommissionRate()*100}+'%):'">
+              <span class="financial-label" th:text="'Phí hoa hồng '+'('+${commission.getCommissionRate() * 100 }+'%):'">
                 Phí hoa hồng (5%):
                 <span class="tooltip">
                   <i class="fa-solid fa-circle-question"></i>

@@ -224,6 +224,13 @@ public class PostController {
             return ResponseEntity.ok(response);
         }
     }
+    @GetMapping("/count/{memberId}")
+    public ResponseEntity<ApiResponse<Integer>> countPostsByMemberId(@PathVariable Integer memberId) {
+        int count = postService.countPostByMemberId(memberId);
+        ApiResponse<Integer> response = new ApiResponse<>();
+        response.ok(count);
+        return ResponseEntity.ok(response);
+    }
 
     // --- GET POSTS FOR YOU ---
     @GetMapping("/for-you/{memberId}")

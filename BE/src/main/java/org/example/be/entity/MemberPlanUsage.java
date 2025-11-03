@@ -25,6 +25,8 @@ public class MemberPlanUsage {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
+    //bỏ post usage
+
 
     @Column(columnDefinition = "NVARCHAR(20)")
     private String status;

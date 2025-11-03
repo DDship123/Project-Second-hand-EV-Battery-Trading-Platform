@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.fe.response.ApiResponse;
+import org.example.fe.response.ContractResponse;
 import org.example.fe.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -83,6 +85,36 @@ public class ContractServiceImpl implements ContractService {
         } catch (Exception e) {
             var err = new HashMap<String, String>();
             err.put("message", "Failed to upload contract image: " + e.getMessage());
+            response.error(err);
+        }
+        return response;
+    }
+
+    @Override
+    public ApiResponse<ContractResponse> getContractByTransactionId(Integer transactionId) {
+        ApiResponse<ContractResponse> response = new ApiResponse<>();
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            ResponseEntity<ApiResponse<ContractResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/contracts/by-transaction/" + transactionId,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<ContractResponse>>() {}
+            );
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                var err = new HashMap<String, String>();
+                err.put("message", "Failed to get contract");
+                response.error(err);
+            }
+        }catch (Exception e) {
+            var err = new HashMap<String, String>();
+            err.put("message", "Failed to get contract: " + e.getMessage());
             response.error(err);
         }
         return response;

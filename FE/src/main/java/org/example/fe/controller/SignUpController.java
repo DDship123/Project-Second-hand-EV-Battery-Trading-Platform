@@ -48,21 +48,6 @@ public class SignUpController {
             return "redirect:/home";
         } else {
             Map<String, String> errorMap = apiResponse.getError();
-//
-//            if (!errorMap.isEmpty()) {
-//                if (errorMap.containsKey("email")) {
-//                    model.addAttribute("emailError", errorMap.get("email"));
-//                }
-//                if (errorMap.containsKey("username")) {
-//                    model.addAttribute("usernameError", errorMap.get("username"));
-//                }
-//                if (errorMap.containsKey("phone")) {
-//                    model.addAttribute("phoneError", errorMap.get("phone"));
-//                }
-//                if (errorMap.containsKey("message")) {
-//                    model.addAttribute("message", errorMap.get("message"));
-//                }
-//            }
             SignUpValidate signUpValidate = new SignUpValidate();
             signUpValidate.error(model,errorMap);
             return "signUp";

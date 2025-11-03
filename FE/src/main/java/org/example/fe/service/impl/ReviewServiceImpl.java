@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -176,17 +178,24 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ApiResponse<ReviewResponse> create(ReviewResponse review) {
+    public ApiResponse<ReviewResponse> create(int transactionId,int sellerId,int buyerId, int rating, String comment) {
         ApiResponse<ReviewResponse> response = new ApiResponse<>();
 
         try {
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-            HttpEntity<ReviewResponse> requestEntity = new HttpEntity<>(review, headers);
+            MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+            formData.add("transactionId", String.valueOf(transactionId));
+            formData.add("rating", String.valueOf(rating));
+            formData.add("comment", comment);
+            formData.add("sellerId", String.valueOf(sellerId));
+            formData.add("buyerId", String.valueOf(buyerId));
+
+            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, headers);
 
             ResponseEntity<ApiResponse<ReviewResponse>> apiResponse = restTemplate.exchange(
-                    apiBaseUrl + "/api/reviews/create",
+                    apiBaseUrl + "/api/reviews",
                     HttpMethod.POST,
                     requestEntity,
                     new ParameterizedTypeReference<ApiResponse<ReviewResponse>>() {}
