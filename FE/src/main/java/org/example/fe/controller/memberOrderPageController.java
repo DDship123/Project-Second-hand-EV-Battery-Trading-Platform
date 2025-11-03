@@ -30,8 +30,8 @@ public class memberOrderPageController {
 
     @GetMapping
     public String getTransactionPage(Model model, HttpSession session,
-                                     @RequestParam(name = "transactionStatus",required = false) String statusTransaction
-            ,@RequestParam(name = "status", required = false, defaultValue = "REQUESTED") String status,
+                                     @RequestParam(name = "transactionStatus",required = false) String statusTransaction,
+                                     @RequestParam(name = "status", required = false, defaultValue = "REQUESTED") String status,
                                      @RequestParam(name = "successMessage", required = false) String successMessage,
                                      @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
