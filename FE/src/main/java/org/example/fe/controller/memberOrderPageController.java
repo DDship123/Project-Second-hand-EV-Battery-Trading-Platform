@@ -2,10 +2,7 @@ package org.example.fe.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.fe.response.*;
-import org.example.fe.service.CommentService;
-import org.example.fe.service.CommissionService;
-import org.example.fe.service.PostService;
-import org.example.fe.service.TransactionService;
+import org.example.fe.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +24,8 @@ public class memberOrderPageController {
     private CommentService commentService;
     @Autowired
     private CommissionService commissionService;
+    @Autowired
+    private ContractService contractService;
 
     @GetMapping
     public String getTransactionPage(Model model, HttpSession session,
@@ -120,6 +119,10 @@ public class memberOrderPageController {
         } else {
             ApiResponse<PostResponse> postApiResponse = postService.getPostDetail(apiResponse.getPayload().getPost().getPostsId());
             ApiResponse<CommissionResponse> commissionApiResponse = commissionService.getCommissionByTransactionId(transactionId);
+            if (apiResponse.getPayload().getStatus().equals("DELIVERED")){
+                ApiResponse<ContractResponse> contractApiResponse = contractService.getContractByTransactionId(transactionId);
+                model.addAttribute("contract", contractApiResponse.getPayload());
+            }
             model.addAttribute("post", postApiResponse.getPayload());
             model.addAttribute("transaction", apiResponse.getPayload());
             model.addAttribute("commission", commissionApiResponse.getPayload());
