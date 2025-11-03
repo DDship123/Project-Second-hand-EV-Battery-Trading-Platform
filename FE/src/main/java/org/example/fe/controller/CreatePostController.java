@@ -75,50 +75,6 @@ public class CreatePostController {
 
         boolean hasErrors = validate.errorVehicle(model,mainImage,subImages,year,batteryCapacity,post,priceInput);
 
-//        if (mainImage == null || mainImage.isEmpty()) {
-//            model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
-//            hasErrors = true;
-////            return "createPostPage";
-//        }
-//        if (subImages!=null && subImages.size()> 4)
-//        {
-//            model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
-//            hasErrors = true;
-////            return "createPostPage";
-//        }
-//
-////        Map<String, String> errors = new HashMap<>();
-//
-//        Integer mileage = null;
-//        try{
-//            Integer.parseInt(year);
-//        }catch (NumberFormatException e){
-////            errors.put("yearError","Year must be an integer");
-//            model.addAttribute("yearError", "Năm sản xuất phải là số nguyên");
-//            hasErrors = true;
-//        }
-//
-//        try{
-//            mileage =  Integer.parseInt(mileageStr);
-//        }catch (NumberFormatException e){
-////            errors.put("mileageError","Mileage must be an integer");
-//            model.addAttribute("mileageError", "Km phải là số");
-//            hasErrors = true;
-//        }
-//
-//        try{
-//           Integer.parseInt(batteryCapacity);
-//        }catch (NumberFormatException e){
-//
-////            errors.put("batteryCapacityError","Battery capacity must be an integer");
-//            model.addAttribute("vehicleBatteryCapacity", "Dung tích pin phải là số");
-//            hasErrors = true;
-//        }
-//
-////        if(!errors.isEmpty()){
-////            model.addAttribute("errors",errors);
-////            return "createPostPage";
-////        }
 
         if(hasErrors){
             model.addAttribute("user", user);
@@ -212,36 +168,6 @@ public class CreatePostController {
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         boolean hasErrors = validate.errorBattery(model,mainImage,subImages,batteryVoltage,batteryYearOfManufacture, post,priceInput);
 
-//        if (mainImage == null || mainImage.isEmpty()) {
-//            model.addAttribute("mainImageError", "Bắt buộc phải có ảnh chính.");
-//            hasErrors = true;
-////            return "createPostPage";
-//        }
-//        if (subImages != null && subImages.size() > 4) {
-//            model.addAttribute("subImagesError", "You can upload up to 4 sub images.");
-//                hasErrors = true;
-////            return "createPostPage";
-//        }
-//        Integer batteryCapacity = null;
-//        try{
-//           batteryCapacity = Integer.parseInt(batteryCapacityStr);
-//        }catch (NumberFormatException e){
-//            model.addAttribute("batteryCapacityError","Vui lòng nhập số");
-//            hasErrors = true;
-//        }
-//        try {
-//            Integer.parseInt(batteryVoltage);
-//        }catch (NumberFormatException e){
-//            model.addAttribute("batteryVoltageError","Vui lòng nhập số");
-//            hasErrors = true;
-//        }
-//
-//        try {
-//            Integer.parseInt(batteryYearOfManufacture);
-//        }catch (NumberFormatException e){
-//            model.addAttribute("batteryYearError","Vui lòng nhập số");
-//            hasErrors = true;
-//        }
 
         if(hasErrors){
             model.addAttribute("user", user);
