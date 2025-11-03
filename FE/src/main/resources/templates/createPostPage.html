@@ -82,7 +82,7 @@
 
             <div class="registration__upload-section">
                 <label class="registration__label">
-                    ẢNH PHỤ <span class="registration__required">*</span>
+                    ẢNH PHỤ <span class="registration__required"></span>
                 </label>
                 <div class="registration__upload-box">
                     <div class="registration__upload-icon">
@@ -107,7 +107,7 @@
                     </div>
                     <p class="registration__upload-text">
                         Phần ảnh phụ, thêm tối đa 4 ảnh
-                        <span class="registration__required">*</span>
+                        <span class="registration__required"></span>
                     </p>
                     <div class="registration__file-upload-form">
                         <input type="file" name="subImages" id="subImages" class="registration__file-input" accept="image/*" multiple/>
@@ -373,7 +373,7 @@
                 </div>
             </div>
         </div>
-        <input th:if="${planError != null}" type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
+        <input th:if="${planError == null}" type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
 <!--        <button type="submit" class="registration__submit-button">-->
 <!--            ĐĂNG TIN-->
 <!--        </button>-->

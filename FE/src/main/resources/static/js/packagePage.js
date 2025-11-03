@@ -3,7 +3,7 @@ window.addEventListener("load",function (){
     packageElements.forEach(function(card) {
         const btn = card.querySelector('button');
         if (btn) {
-            if (btn.innerText !== 'Miễn Phí'){
+            if (btn.innerText !== 'MIỄN PHÍ'){
                 btn.addEventListener('click', function() {
                     const planId = btn.getAttribute('data-plan-id');
                     const memberId = btn.getAttribute('data-member-id');

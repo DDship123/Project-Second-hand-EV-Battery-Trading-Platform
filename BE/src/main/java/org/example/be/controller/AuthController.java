@@ -36,6 +36,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<Member>> register(@RequestBody MemberRegisterRequest request) {
         ApiResponse<Member> response = memberService.register(request);
+        if(!response.getStatus().equals("SUCCESS")){
+            return ResponseEntity.status(400).body(response);
+        }
+
         MembershipPlan defaultPlan = membershipPlanService.getMembershipPlanById(1).orElse(null);
         if (defaultPlan != null) {
             memberPlanUsageService.registerPackage(response.getPayload(), defaultPlan);
@@ -52,7 +56,7 @@ public class AuthController {
             return ResponseEntity.ok(response);
         } else {
             ApiResponse<MemberResponse> response = new ApiResponse<>();
-            response.error(Map.of("message", "Invalid username or password"));
+            response.error(Map.of("message", "Sai tên đăng nhập hoặc mật khẩu"));
             return ResponseEntity.ok(response);
         }
     }
