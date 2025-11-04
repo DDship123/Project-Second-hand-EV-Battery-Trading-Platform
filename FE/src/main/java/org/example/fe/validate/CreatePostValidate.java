@@ -36,13 +36,12 @@ public class CreatePostValidate {
             hasErrors = true;
         }
 
-
-        try{
-            Integer.parseInt(batteryCapacity);
-        }catch (NumberFormatException e){
-            model.addAttribute("vehicleBatteryCapacity", "Dung tích pin phải là số");
-            hasErrors = true;
-        }
+//        try{
+//            Integer.parseInt(batteryCapacity);
+//        }catch (NumberFormatException e){
+//            model.addAttribute("vehicleBatteryCapacity", "Dung tích pin phải là số");
+//            hasErrors = true;
+//        }
         try {
             BigDecimal price = new BigDecimal(priceInput);
             post.setPrice(price);

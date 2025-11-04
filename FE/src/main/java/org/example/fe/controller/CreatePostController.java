@@ -43,7 +43,7 @@ public class CreatePostController {
         int numberOfActivePosts = postService.countPostByMemberId(user.getMemberId()).getPayload();
         MembershipPlanResponse membershipPlan = membershipPlanService.getMembershipPlanByMemberId(user.getMemberId()).getPayload();
         if (membershipPlan.getMaxPosts() < numberOfActivePosts + 1) {
-            model.addAttribute("planError", "You have reached the maximum number of posts for your membership plan. Please upgrade your plan to create more posts.");
+            model.addAttribute("planError", "Bạn đã đạt đến giới hạn bài đăng cho gói hiện tại. Vui lòng nâng cấp gói của bạn để tạo thêm bài đăng.");
         }
 
         model.addAttribute("user", user);
@@ -81,8 +81,6 @@ public class CreatePostController {
             model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
            return "createPostPage";
         }
-
-
 
 
         post.setTitle(postTitle);
@@ -128,7 +126,7 @@ public class CreatePostController {
         vehicle.setRegistrationYear((year));
         vehicle.setOrigin(origin);
         vehicle.setMileage(mileage);
-        vehicle.setBatteryCapacity(batteryCapacity);
+        vehicle.setBatteryCapacity(batteryCapacity +" kWh");
         vehicle.setBrand(vehicleBrand);
         vehicle.setCondition(vehicleCondition);
         vehicle.setName(productName);
@@ -140,7 +138,7 @@ public class CreatePostController {
         if (apiResponse.getStatus().equals("SUCCESS")) {
             return "redirect:/home/store"; // Redirect to home page after successful post creation
         } else {
-            model.addAttribute("postError", apiResponse.getError());
+            model.addAttribute("postError", "Tạo bài đăng thất bại. Vui lòng thử lại.");
         }
         return "createPostPage"; // For now, just return to the form page
     }

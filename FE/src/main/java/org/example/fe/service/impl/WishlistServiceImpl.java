@@ -6,11 +6,10 @@ import org.example.fe.response.MemberResponse;
 import org.example.fe.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -113,32 +112,19 @@ public class WishlistServiceImpl implements WishlistService {
     public ApiResponse<FavoriteResponse> addWishlist(int memberId, int postId) {
         ApiResponse<FavoriteResponse> response = new ApiResponse<>();
         Map<String, String> errs = new HashMap<>();
-//
-//        // Validate input
-//        if (memberId <= 0) {
-//            errs.put("memberId", "Invalid member ID");
-//            response.error(errs);
-//            return response;
-//        }
-//
-//        if (postId <= 0) {
-//            errs.put("postId", "Invalid post ID");
-//            response.error(errs);
-//            return response;
-//        }
 
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", "application/json");
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//            headers.set("Content-Type", "application/json");
 
             // Create request body
-            Map<String, Integer> requestBody = new HashMap<>();
-            requestBody.put("memberId", memberId);
-            requestBody.put("postId", postId);
-
+            MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+            requestBody.add("memberId", String.valueOf(memberId));
+            requestBody.add("postId", String.valueOf(postId));
             // Create request entity
-            HttpEntity<Map<String, Integer>> requestEntity = new HttpEntity<>(requestBody, headers);
+            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
 
             // Make API call to backend
             ResponseEntity<ApiResponse<FavoriteResponse>> apiResponse = restTemplate.exchange(

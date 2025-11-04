@@ -91,6 +91,7 @@
         <button class="tabs__item">Đã bán</button>
       </div>
 
+      <h3 th:if="${noPostMessage != null}" th:text="${noPostMessage}"></h3>
       <div class="product-list active">
         <!-- Product Card 1 -->
         <article class="product-card" th:each="post : ${posts}">

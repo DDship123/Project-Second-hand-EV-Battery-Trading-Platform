@@ -33,7 +33,7 @@
 
     <!-- Transaction List -->
     <div class="transaction__list">
-        <h3 th:if="${noTransactions == true}">No transactions</h3>
+        <h3 th:if="${noTransactions == true}">Chưa có giao dịch nào</h3>
         <!-- Transaction Item 1 -->
         <div th:each="transaction :${transactions}" class="transaction__item">
             <!-- Status Block (Absolute Position) -->

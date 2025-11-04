@@ -2,6 +2,9 @@ package org.example.be.controller;
 
 import org.example.be.dto.response.ApiResponse;
 import org.example.be.dto.request.FavoriteRequest;
+import org.example.be.dto.response.FavoriteResponse;
+import org.example.be.dto.response.MemberResponse;
+import org.example.be.dto.response.PostResponse;
 import org.example.be.entity.Favorite;
 import org.example.be.entity.Member;
 import org.example.be.entity.Post;
@@ -29,19 +32,32 @@ public class FavoriteController {
 
     // ------------------- CREATE -------------------
     @PostMapping
-    public ResponseEntity<ApiResponse<Favorite>> createFavorite(@RequestBody FavoriteRequest request) {
-        ApiResponse<Favorite> response = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<FavoriteResponse>> createFavorite(@RequestParam Integer memberId, @RequestParam Integer postId) {
+        ApiResponse<FavoriteResponse> response = new ApiResponse<>();
         try {
             Favorite favorite = new Favorite();
-            favorite.setMember(memberService.getMemberById(request.getMemberId()));
-            favorite.setPost(postService.getPostById(request.getPostId()).orElse(null));
+            favorite.setMember(memberService.getMemberById(memberId));
+            favorite.setPost(postService.getPostById(postId).orElse(null));
 
             Favorite created = favoriteService.createFavorite(favorite);
+
+            FavoriteResponse createdResponse = new FavoriteResponse();
+            createdResponse.setFavoritesId(created.getFavoritesId());
+
+            MemberResponse memberResponse = new MemberResponse();
+            memberResponse.setMemberId(created.getMember().getMemberId());
+            memberResponse.setUsername(created.getMember().getUsername());
+            createdResponse.setMember(memberResponse);
+
+            PostResponse postResponse = new PostResponse();
+            postResponse.setPostsId(created.getPost().getPostsId());
+            postResponse.setTitle(created.getPost().getTitle());
+            createdResponse.setPost(postResponse);
 
             Map<String, Object> metadata = new HashMap<>();
             metadata.put("timestamp", LocalDateTime.now());
 
-            response.ok(created, (HashMap<String, Object>) metadata);
+            response.ok(createdResponse, (HashMap<String, Object>) metadata);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();

@@ -33,6 +33,9 @@ public class StorePageController {
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<List<PostResponse>> response = postService.getAllPostByMemberId(user.getMemberId());
+        if (response.getPayload() == null || response.getPayload().isEmpty()) {
+            model.addAttribute("noPostMessage", "Bạn chưa có bài đăng nào. Hãy tạo bài đăng để bắt đầu bán hàng!");
+        }
         model.addAttribute("posts", response.getPayload());
         List<ReviewResponse> reviews = reviewService.FindAllReviewBySellerId(user.getMemberId()).getPayload();
         double averageRating = 0.0;

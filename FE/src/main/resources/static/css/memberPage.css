@@ -20,8 +20,8 @@ body {
     margin: 0 auto;
 }
 .sideBar__avatar img {
-    width: 30%;
-    height: auto;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
 }
 .sideBar__menu {
