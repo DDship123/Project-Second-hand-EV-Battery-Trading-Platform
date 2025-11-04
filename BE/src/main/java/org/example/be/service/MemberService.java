@@ -51,24 +51,24 @@ public class MemberService {
         Optional<Member> existingUsername = memberRepository.findByUsername(memberDetails.getUsername());
         if(existingUsername.isPresent() && !existingUsername.get().getMemberId().equals(id)) {
 
-            error.put("username", "This username is already in use");
+            error.put("username", "Tên đăng nhập này đã được sử dụng");
 
         }
 
         Optional<Member> existingEmail = memberRepository.findByEmail(memberDetails.getEmail());
         if(existingEmail.isPresent() && !existingEmail.get().getMemberId().equals(id)) {
 
-            error.put("email", "This email is already in use");
+            error.put("email", "Email này đã được sử dụng");
 
         }
 
 
         Optional<Member> existingPhone = memberRepository.findByPhone(memberDetails.getPhone());
-        if(member.getPhone().matches("^\\d{8,9}$")){
-            error.put("phone", "Invalid phone number format!");
+        if(member.getPhone().matches("^\\d{10,11}$")){
+            error.put("phone", "Định dạng số điện thoại không hợp lệ");
         }else if(existingPhone.isPresent() && !existingPhone.get().getMemberId().equals(id)){
 
-            error.put("phone", "This phone number is already in use");
+            error.put("phone", "Số điện thoại này đã được sử dụng");
 
         }
 
@@ -140,7 +140,7 @@ public class MemberService {
 
         // Phone Exists and Phone number format
         if(!request.getPhone().matches("^\\d{10,11}$")){
-            error.put("phone", "Invalid phone number format!");
+            error.put("phone", "Định dạng số điện thoại không hợp lệ");
             response.error(error);
         } else if (memberRepository.findByPhone(request.getPhone()).isPresent()) {
 
@@ -151,7 +151,7 @@ public class MemberService {
         // Username Exists
         if (memberRepository.findByUsername(request.getUsername()).isPresent()) {
 
-            error.put("username", "Ten đăng nhập này đã được sử dụng");
+            error.put("username", "Tên đăng nhập này đã được sử dụng");
             response.error(error);
         }
         if (!error.isEmpty()) {
