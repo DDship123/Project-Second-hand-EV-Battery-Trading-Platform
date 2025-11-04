@@ -169,6 +169,10 @@ public class CreatePostController {
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         boolean hasErrors = validate.errorBattery(model,mainImage,subImages,batteryVoltage,batteryYearOfManufacture, post,priceInput);
 
+        if (batteryVoltage.contains("kWh")) {
+            batteryVoltage = batteryVoltage.replace("V", "").trim();
+        }
+
 
         if(hasErrors){
             model.addAttribute("user", user);

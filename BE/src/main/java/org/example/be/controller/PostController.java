@@ -177,7 +177,7 @@ public class PostController {
                 battery.setCondition(postRequest.getProduct().getBattery().getCondition());
                 battery.setBrand(postRequest.getProduct().getBattery().getBrand());
                 battery.setCapacityAh(postRequest.getProduct().getBattery().getCapacity());
-                battery.setVoltageV(postRequest.getProduct().getBattery().getVoltage());
+                battery.setVoltageV(postRequest.getProduct().getBattery().getVoltage()+ " V");
                 battery.setYearAt(postRequest.getProduct().getBattery().getYearOfManufacture());
                 battery.setOrigin(postRequest.getProduct().getBattery().getOrigin());
                 battery.setName(postRequest.getProduct().getBattery().getName());
@@ -369,14 +369,14 @@ public class PostController {
             vehicle.setMileage(post.getProduct().getVehicle().getMileage());
             vehicle.setRegisterYear(post.getProduct().getVehicle().getRegistrationYear());
             vehicle.setOrigin(post.getProduct().getVehicle().getOrigin());
-            vehicle.setBatteryCapacity(post.getProduct().getVehicle().getBatteryCapacity());
+            vehicle.setBatteryCapacity(post.getProduct().getVehicle().getBatteryCapacity() + " kWh");
             vehicleService.updateVehicle(vehicle.getVehicleId(), vehicle);
         } else if (existingPost.getProduct().getProductType().equals("BATTERY") && existingPost.getProduct().getBattery() != null) {
             Battery battery = existingPost.getProduct().getBattery();
             battery.setCondition(post.getProduct().getBattery().getCondition());
             battery.setBrand(post.getProduct().getBattery().getBrand());
             battery.setCapacityAh(post.getProduct().getBattery().getCapacity());
-            battery.setVoltageV(post.getProduct().getBattery().getVoltage());
+            battery.setVoltageV(post.getProduct().getBattery().getVoltage()+ " V");
             battery.setYearAt(post.getProduct().getBattery().getYearOfManufacture());
             battery.setOrigin(post.getProduct().getBattery().getOrigin());
             battery.setName(post.getProduct().getBattery().getName());
