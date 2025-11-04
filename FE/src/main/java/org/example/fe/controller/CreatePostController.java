@@ -43,7 +43,7 @@ public class CreatePostController {
         int numberOfActivePosts = postService.countPostByMemberId(user.getMemberId()).getPayload();
         MembershipPlanResponse membershipPlan = membershipPlanService.getMembershipPlanByMemberId(user.getMemberId()).getPayload();
         if (membershipPlan.getMaxPosts() < numberOfActivePosts + 1) {
-            model.addAttribute("planError", "You have reached the maximum number of posts for your membership plan. Please upgrade your plan to create more posts.");
+            model.addAttribute("planError", "Bạn đã đạt đến giới hạn bài đăng cho gói hiện tại. Vui lòng nâng cấp gói của bạn để tạo thêm bài đăng.");
         }
 
         model.addAttribute("user", user);
@@ -72,6 +72,9 @@ public class CreatePostController {
         PostResponse post = new PostResponse();
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
+        if (batteryCapacity.contains("kWh")) {
+            batteryCapacity = batteryCapacity.replace("kWh", "").trim();
+        }
 
         boolean hasErrors = validate.errorVehicle(model,mainImage,subImages,year,batteryCapacity,post,priceInput);
 
@@ -81,8 +84,6 @@ public class CreatePostController {
             model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
            return "createPostPage";
         }
-
-
 
 
         post.setTitle(postTitle);
@@ -140,7 +141,7 @@ public class CreatePostController {
         if (apiResponse.getStatus().equals("SUCCESS")) {
             return "redirect:/home/store"; // Redirect to home page after successful post creation
         } else {
-            model.addAttribute("postError", apiResponse.getError());
+            model.addAttribute("postError", "Tạo bài đăng thất bại. Vui lòng thử lại.");
         }
         return "createPostPage"; // For now, just return to the form page
     }
@@ -168,7 +169,7 @@ public class CreatePostController {
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         boolean hasErrors = validate.errorBattery(model,mainImage,subImages,batteryVoltage,batteryYearOfManufacture, post,priceInput);
 
-
+        
         if(hasErrors){
             model.addAttribute("user", user);
             model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
@@ -225,7 +226,7 @@ public class CreatePostController {
         if (apiResponse.getStatus().equals("SUCCESS")) {
             return "redirect:/home/store"; // Redirect to home page after successful post creation
         } else {
-            model.addAttribute("postError", apiResponse.getError());
+            model.addAttribute("postError", "Tạo bài đăng thất bại. Vui lòng thử lại.");
         }
         return "createPostPage"; // For now, just return to the form page
     }

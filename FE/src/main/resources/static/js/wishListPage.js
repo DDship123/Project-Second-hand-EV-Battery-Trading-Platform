@@ -149,4 +149,11 @@ window.addEventListener('DOMContentLoaded', function() {
         }
         );
     });
+    const windowUrl = new URL(window.location.href);
+    if (windowUrl.searchParams.get("successMessage") !== null) {
+        alert(windowUrl.searchParams.get("successMessage"));
+    }
+    if (windowUrl.searchParams.get("errorMessage") !== null) {
+        alert(windowUrl.searchParams.get("errorMessage"));
+    }
 });

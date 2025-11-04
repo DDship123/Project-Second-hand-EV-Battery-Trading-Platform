@@ -38,10 +38,11 @@
             <span class="registration__header__breadcrumb-current">Đăng tin</span>
         </div>
         <h1 class="registration__title">ĐĂNG TIN</h1>
-        <div class="registration__divider" th:if="${planError != null}" th:text="${planError}"></div>
     </div>
 
     <form th:action="@{/home/postForm/submit/vehicle}" method="post" enctype="multipart/form-data" class="registration__content">
+<!--        <h1 style="text-align: center" th:if="${planError != null}" th:text="${planError}"></h1>-->
+<!--        <h1 style="text-align: center" th:if="${postError != null}" th:text="${postError}"></h1>-->
         <div class="registration__left">
             <div class="registration__upload-section">
                 <label class="registration__label">
@@ -232,7 +233,7 @@
                             <input
                                     type="text"
                                     class="registration__input"
-                                    placeholder="Dung tích pin *"
+                                    placeholder="Dung tích pin(kWh) *"
                                     required
                                     name="vehicleBatteryCapacity"
                             />
@@ -374,6 +375,8 @@
             </div>
         </div>
         <input th:if="${planError == null}" type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
+        <p th:if="${planError != null}" th:text="${planError}"></p>
+        <p th:if="${postError != null}" th:text="${postError}"></p>
 <!--        <button type="submit" class="registration__submit-button">-->
 <!--            ĐĂNG TIN-->
 <!--        </button>-->

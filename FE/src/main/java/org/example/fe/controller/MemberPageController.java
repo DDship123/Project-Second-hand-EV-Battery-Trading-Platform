@@ -50,7 +50,7 @@ public class MemberPageController {
         ApiResponse<MemberResponse> response = memberService.updateMember(updatedUser);
 
         if (response.getStatus().equals("SUCCESS")) {
-            model.addAttribute("successMessage", "Profile updated successfully");
+            model.addAttribute("successMessage", "Hồ sơ đã được cập nhật thành công");
             session.setAttribute("user", response.getPayload());
         } else {
             Map<String, String> errorMap = response.getError();
@@ -59,7 +59,7 @@ public class MemberPageController {
             UpdatePersonalInformationValidate validate = new UpdatePersonalInformationValidate();
             validate.error(model, errorMap, updatedUser, session);
 
-                model.addAttribute("errorMessage", "Failed to update profile");
+                model.addAttribute("errorMessage", "Ho sơ cập nhật thất bại. Vui lòng kiểm tra lại thông tin.");
                 model.addAttribute("user", currentUser);
                 return "personalInformationPage";
             }
@@ -112,9 +112,9 @@ public class MemberPageController {
 
         model.addAttribute("user", user);
         if (response.getStatus().equals("SUCCESS")) {
-            model.addAttribute("successMessage", "Password updated successfully");
+            model.addAttribute("successMessage", "Cập nhật mật khẩu thành công");
         } else {
-            model.addAttribute("errorMessage", "Failed to update password");
+            model.addAttribute("errorMessage", "Cập nhật mật khẩu thất bại");
             model.addAttribute("user", user);
             return "securityPage";
         }

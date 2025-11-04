@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -21,7 +22,14 @@ public class WishListController {
     @Autowired
     private WishlistService wishlistService;
     @GetMapping
-    public String getWishList(Model model, HttpSession session) {
+    public String getWishList(Model model, HttpSession session, @RequestParam(value = "successMessage", required = false) String successMessage,
+                              @RequestParam(value = "errorMessage", required = false) String errorMessage) {
+        if (successMessage != null) {
+            model.addAttribute("successMessage", successMessage);
+        }
+        if (errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+        }
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         if (memberResponse == null) {
             return "redirect:/login";
@@ -37,9 +45,9 @@ public class WishListController {
     public String deleteWishList(@PathVariable Integer favoriteId, RedirectAttributes redirectAttributes) {
         boolean deleted = wishlistService.deleteWishlist(favoriteId).getPayload();
         if (deleted) {
-            redirectAttributes.addFlashAttribute("successMessage", "Deleted from wishlist successfully!");
+            redirectAttributes.addAttribute("successMessage", "Xóa khỏi danh sách yêu thích thành công!");
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete from wishlist.");
+            redirectAttributes.addAttribute("errorMessage", "Xóa khỏi danh sách yêu thích thất bại!");
         }
         return "redirect:/home/wishList";
     }
@@ -49,10 +57,10 @@ public class WishListController {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         ApiResponse<FavoriteResponse> apiResponse = wishlistService.addWishlist(memberResponse.getMemberId(), postId);
         if (apiResponse.getPayload() != null) {
-            redirectAttributes.addFlashAttribute("successMessage", "Added to wishlist successfully!");
+            redirectAttributes.addAttribute("successMessage", "Thêm vào danh sách yêu thích thành công!");
             session.setAttribute("firstFavorite", apiResponse.getPayload());
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to add to wishlist. " + apiResponse.getError().get("message"));
+            redirectAttributes.addAttribute("errorMessage", "Thêm vào danh sách yêu thích thất bại!");
         }
         return "redirect:/home";
     }

@@ -139,4 +139,11 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = `/home/product/detail/${productId}`;
         });
     });
+    const windowUrl = new URL(window.location.href);
+    if (windowUrl.searchParams.get("successMessage") !== null) {
+        alert(windowUrl.searchParams.get("successMessage"));
+    }
+    if (windowUrl.searchParams.get("errorMessage") !== null) {
+        alert(windowUrl.searchParams.get("errorMessage"));
+    }
 });

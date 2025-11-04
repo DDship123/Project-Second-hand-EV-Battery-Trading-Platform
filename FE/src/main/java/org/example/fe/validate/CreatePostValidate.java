@@ -36,7 +36,6 @@ public class CreatePostValidate {
             hasErrors = true;
         }
 
-
         try{
             Integer.parseInt(batteryCapacity);
         }catch (NumberFormatException e){
