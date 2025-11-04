@@ -165,7 +165,7 @@ public class PostController {
                 vehicle.setMileage(postRequest.getProduct().getVehicle().getMileage());
                 vehicle.setRegisterYear(postRequest.getProduct().getVehicle().getRegistrationYear());
                 vehicle.setOrigin(postRequest.getProduct().getVehicle().getOrigin());
-                vehicle.setBatteryCapacity(postRequest.getProduct().getVehicle().getBatteryCapacity());
+                vehicle.setBatteryCapacity(postRequest.getProduct().getVehicle().getBatteryCapacity()+" kWh");
                 vehicle.setCondition(postRequest.getProduct().getVehicle().getCondition());
                 vehicle.setName(postRequest.getProduct().getVehicle().getName());
                 product.setVehicle(vehicleService.createVehicle(vehicle));

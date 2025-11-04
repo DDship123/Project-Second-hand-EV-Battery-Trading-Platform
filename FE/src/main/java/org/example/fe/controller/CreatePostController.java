@@ -72,6 +72,9 @@ public class CreatePostController {
         PostResponse post = new PostResponse();
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
+        if (batteryCapacity.contains("kWh")) {
+            batteryCapacity = batteryCapacity.replace("kWh", "").trim();
+        }
 
         boolean hasErrors = validate.errorVehicle(model,mainImage,subImages,year,batteryCapacity,post,priceInput);
 
@@ -126,7 +129,7 @@ public class CreatePostController {
         vehicle.setRegistrationYear((year));
         vehicle.setOrigin(origin);
         vehicle.setMileage(mileage);
-        vehicle.setBatteryCapacity(batteryCapacity +" kWh");
+        vehicle.setBatteryCapacity(batteryCapacity);
         vehicle.setBrand(vehicleBrand);
         vehicle.setCondition(vehicleCondition);
         vehicle.setName(productName);
@@ -166,7 +169,7 @@ public class CreatePostController {
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         boolean hasErrors = validate.errorBattery(model,mainImage,subImages,batteryVoltage,batteryYearOfManufacture, post,priceInput);
 
-
+        
         if(hasErrors){
             model.addAttribute("user", user);
             model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
@@ -223,7 +226,7 @@ public class CreatePostController {
         if (apiResponse.getStatus().equals("SUCCESS")) {
             return "redirect:/home/store"; // Redirect to home page after successful post creation
         } else {
-            model.addAttribute("postError", apiResponse.getError());
+            model.addAttribute("postError", "Tạo bài đăng thất bại. Vui lòng thử lại.");
         }
         return "createPostPage"; // For now, just return to the form page
     }

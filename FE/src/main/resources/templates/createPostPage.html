@@ -375,6 +375,8 @@
             </div>
         </div>
         <input th:if="${planError == null}" type="submit" class="registration__submit-button" value="ĐĂNG TIN" />
+        <p th:if="${planError != null}" th:text="${planError}"></p>
+        <p th:if="${postError != null}" th:text="${postError}"></p>
 <!--        <button type="submit" class="registration__submit-button">-->
 <!--            ĐĂNG TIN-->
 <!--        </button>-->
