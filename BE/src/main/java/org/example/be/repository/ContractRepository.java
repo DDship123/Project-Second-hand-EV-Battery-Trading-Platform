@@ -16,4 +16,6 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     Optional<Contract> findByTransactionsId(@Param("transactionId") Integer transactionId);
 
     boolean existsByTransaction_TransactionsId(Integer transactionId);
+
+    Optional<Contract> findByTransaction_TransactionsId(Integer transactionId);
 }

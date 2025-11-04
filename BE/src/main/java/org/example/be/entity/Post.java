@@ -123,14 +123,14 @@ public class Post {
         this.comments = comments;
     }
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Transaction>  transactions = new ArrayList<>();
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
-    }
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Transaction>  transactions = new ArrayList<>();
+//    public List<Transaction> getTransactions() {
+//        return transactions;
+//    }
+//    public void setTransactions(List<Transaction> transactions) {
+//        this.transactions = transactions;
+//    }
 
     @OneToMany(mappedBy = "post",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Favorite> favorites = new ArrayList<>();
