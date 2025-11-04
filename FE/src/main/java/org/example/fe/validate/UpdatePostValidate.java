@@ -18,7 +18,7 @@ public class UpdatePostValidate {
             VehicleResponse vehicle = post.getProduct().getVehicle();
             VehicleResponse newVehicle = updatedPost.getProduct().getVehicle();
             boolean yearChange = !vehicle.getRegistrationYear().equals(newVehicle.getRegistrationYear());
-            boolean vehicleBatteryCapacity = vehicle.getBatteryCapacity().equals(newVehicle.getBatteryCapacity());
+            boolean vehicleBatteryCapacity = !vehicle.getBatteryCapacity().equals(newVehicle.getBatteryCapacity());
 
             try{
                 //kiểm tra user có thay đỏi năm không
