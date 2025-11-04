@@ -93,4 +93,8 @@ public class ContractService {
         contract.setSignedAt(LocalDateTime.now());
         return contractRepository.save(contract);
     }
+
+    public Contract getContractByTransactionId(Integer transactionId) {
+        return contractRepository.findByTransaction_TransactionsId(transactionId).orElse(null);
+    }
 }

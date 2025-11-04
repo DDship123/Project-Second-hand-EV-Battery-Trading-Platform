@@ -15,8 +15,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const deleteButtons = document.querySelectorAll(".deleteBtn");
     deleteButtons.forEach((button) => {
         button.addEventListener("click", (event) => {
+            event.preventDefault();
             if (confirm("Are you sure you want to delete this product?")) {
-                window.location.href += button.getAttribute("href")
+                window.location.href = button.getAttribute("href"); 
             }
         });
     });

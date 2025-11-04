@@ -35,6 +35,18 @@ public class PostController {
     @Autowired
     private VehicleService vehicleService;
 
+    @Autowired
+    private TransactionService transactionService;
+
+    @Autowired
+    private ContractService contractService;
+
+    @Autowired
+    private CommissionService commissionService;
+
+    @Autowired
+    private ReviewService reviewService;
+
     private PostResponse mapToResponse(Post post) {
         if (post == null) {
             return null;
@@ -420,6 +432,29 @@ public class PostController {
             List<PostImage> postImages = postImageService.getPostImagesByPostId(id);
             for (PostImage postImage : postImages) {
                 postImageService.deletePostImage(postImage.getPostImagesId());
+            }
+
+            // Xóa tất cả transaction liên quan đến post
+            List<Transaction> transactions = transactionService.getTransactionsByPostId(id);
+            for (Transaction transaction : transactions) {
+                // Xóa contract liên quan đến transaction
+                Contract contract = contractService.getContractByTransactionId(transaction.getTransactionsId());
+                if (contract != null) {
+                    contractService.deleteContract(contract.getContractsId());
+                }
+                // Xóa commission liên quan đến transaction
+                Commission commission = commissionService.getCommissionByTransactionId(transaction.getTransactionsId());
+                if( commission != null){
+                    commissionService.deleteCommission(commission.getCommissionsId());
+                }
+                //Xóa review liên quan đến transaction
+                Review review = reviewService.getReviewByTransactionId(transaction.getTransactionsId());
+                if(review != null){
+                    reviewService.deleteReview(review.getReviewsId());
+                }
+
+                //Xóa transaction
+                transactionService.deleteTransaction(transaction.getTransactionsId());
             }
 
             if (post.getProduct() != null) {
