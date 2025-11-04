@@ -93,7 +93,7 @@
                         <span class="container__body__item__rating__score" th:text="${transaction.getReview().getRating()}">4.5</span>
                         <i class="fa-solid fa-star"></i>
                     </p>
-                    <button th:if="${transaction.getReview() == null}"
+                    <button th:if="${transaction.getReview() == null || transaction.getReview().getReviewer().getMemberId() != user.getMemberId()}"
                             class="container__body__item__rating__btn"
                             th:attr="data-transaction-id=${transaction.getTransactionId()},
                             data-seller-id=${transaction.getSeller().getMemberId()}"

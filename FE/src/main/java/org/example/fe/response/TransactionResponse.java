@@ -84,6 +84,14 @@ public class TransactionResponse {
         this.postTitle = postTitle;
     }
 
+    public String getFormattedPrice() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(',');
+        DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
+        String formattedPrice = decimalFormat.format(price);
+        return formattedPrice;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }

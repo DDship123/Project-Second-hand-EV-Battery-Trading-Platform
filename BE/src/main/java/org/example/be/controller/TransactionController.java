@@ -67,6 +67,10 @@ public class TransactionController {
         if (review != null) {
             ReviewResponse reviewResponse = new ReviewResponse();
             reviewResponse.setReviewId(review.getReviewsId());
+            MemberResponse reviewer = new MemberResponse();
+            reviewer.setMemberId(review.getReviewer().getMemberId());
+            reviewer.setUsername(review.getReviewer().getUsername());
+            reviewResponse.setReviewer(reviewer);
             reviewResponse.setRating(review.getRating());
             reviewResponse.setComment(review.getComment());
             reviewResponse.setCreatedAt(review.getCreatedAt());
@@ -204,6 +208,12 @@ public class TransactionController {
                 reviewResponse.setRating(review.getRating());
                 reviewResponse.setComment(review.getComment());
                 reviewResponse.setCreatedAt(review.getCreatedAt());
+
+                MemberResponse reviewer = new MemberResponse();
+                reviewer.setMemberId(review.getReviewer().getMemberId());
+                reviewer.setUsername(review.getReviewer().getUsername());
+                reviewResponse.setReviewer(reviewer);
+
                 tr.setReview(reviewResponse);
             }
         }
@@ -266,6 +276,12 @@ public class TransactionController {
                 reviewResponse.setRating(review.getRating());
                 reviewResponse.setComment(review.getComment());
                 reviewResponse.setCreatedAt(review.getCreatedAt());
+
+                MemberResponse reviewer = new MemberResponse();
+                reviewer.setMemberId(review.getReviewer().getMemberId());
+                reviewer.setUsername(review.getReviewer().getUsername());
+                reviewResponse.setReviewer(reviewer);
+
                 tr.setReview(reviewResponse);
             }
         }
@@ -357,6 +373,14 @@ public class TransactionController {
         if ("ERROR".equals(serviceResponse.getStatus())) {
             response.error(serviceResponse.getError());
             return ResponseEntity.status(404).body(response);
+        }
+
+        if (serviceResponse.getPayload().getStatus().equals("COMPLETED")) {
+            Post post = postService.getPostById(serviceResponse.getPayload().getPost().getPostsId()).orElse(null);
+            if (post != null) {
+                post.setStatus("SOLD");
+                postService.updatePost(post.getPostsId(), post);
+            }
         }
 
         TransactionResponse transactionResponse = mapToResponse(serviceResponse.getPayload());

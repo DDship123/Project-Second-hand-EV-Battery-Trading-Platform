@@ -29,7 +29,7 @@ public class memberOrderPageController {
 
     @GetMapping
     public String getTransactionPage(Model model, HttpSession session,
-                                     @RequestParam(name = "transactionStatus",required = false) String statusTransaction,
+                                     @RequestParam(name = "transactionStatus",required = false) String transactionStatus,
                                      @RequestParam(name = "status", required = false, defaultValue = "REQUESTED") String status,
                                      @RequestParam(name = "successMessage", required = false) String successMessage,
                                      @RequestParam(name = "errorMessage", required = false) String errorMessage) {
@@ -39,12 +39,12 @@ public class memberOrderPageController {
         }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
-        if (statusTransaction != null && statusTransaction.equals("SUCCESS")) {
+        if (transactionStatus != null && transactionStatus.equals("SUCCESS")) {
             int transactionId = (int) session.getAttribute("id");
             transactionService.updateTransactionStatus(transactionId, "PAID");
             session.removeAttribute("id");
             session.removeAttribute("transactionType");
-        } else if (statusTransaction != null && statusTransaction.equals("FAILED")) {
+        } else if (transactionStatus != null && transactionStatus.equals("FAILED")) {
             // Xử lý khi thanh toán thất bại nếu cần
             session.removeAttribute("id");
             session.removeAttribute("transactionType");

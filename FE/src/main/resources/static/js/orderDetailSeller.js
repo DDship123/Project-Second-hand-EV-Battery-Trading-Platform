@@ -1,6 +1,5 @@
 window.addEventListener('load', function() {
     const actionButtons = document.querySelectorAll('.action-buttons button');
-    console.log(actionButtons);
     actionButtons[0].addEventListener('click', function() {
         if (confirm('Bạn có chắc chắn muốn chấp nhận đơn hàng này không?')) {
             const transactionId = this.getAttribute('data-transaction-id');
