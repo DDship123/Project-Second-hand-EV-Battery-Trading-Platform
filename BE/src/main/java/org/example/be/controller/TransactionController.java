@@ -381,6 +381,15 @@ public class TransactionController {
                 post.setStatus("SOLD");
                 postService.updatePost(post.getPostsId(), post);
             }
+        }else if (serviceResponse.getPayload().getStatus().equals("ACCEPTED")) {
+            List<Transaction> otherTransactions = transactionService.findOtherTransactionsWithPostId(
+                    serviceResponse.getPayload().getPost().getPostsId(),
+                    serviceResponse.getPayload().getTransactionsId()
+            );
+            for (Transaction t : otherTransactions) {
+                t.setStatus("CANCELLED");
+                transactionService.updateTransaction(t.getTransactionsId(), t);
+            }
         }
 
         TransactionResponse transactionResponse = mapToResponse(serviceResponse.getPayload());

@@ -120,6 +120,10 @@ public class TransactionService {
         return transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, status);
     }
 
+    public List<Transaction> findOtherTransactionsWithPostId(Integer postId, Integer transactionId) {
+        return transactionRepository.findOthersWithPostId(postId, transactionId);
+    }
+
     // Cập Nhật Transaction status(Tân)
     public ApiResponse<Transaction> updateTransactionStatus(Integer transactionId, String status) {
         ApiResponse<Transaction> response = new ApiResponse<>();
