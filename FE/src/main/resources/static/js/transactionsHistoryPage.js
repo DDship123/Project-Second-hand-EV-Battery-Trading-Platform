@@ -22,10 +22,19 @@ document.addEventListener("DOMContentLoaded", function () {
             e.stopPropagation();
 
             // Cập nhật text của span với text của mục được chọn
-            statusSpan.textContent = this.textContent;
-
+            // statusSpan.textContent = this.textContent;
+            let currentUrl = new URL(window.location.href);
+            if (this.innerText === "Tất cả") {
+                currentUrl.searchParams.set('status', 'C-C-ALL');
+            }else if (this.innerText === "Giao dịch thành công") {
+                currentUrl.searchParams.set('status', 'COMPLETED');
+            }else {
+                currentUrl.searchParams.set('status', 'CANCELLED');
+            }
             // Đóng dropdown sau khi chọn
             closeDropdown();
+
+            window.location.href = currentUrl.toString();
         });
     });
 

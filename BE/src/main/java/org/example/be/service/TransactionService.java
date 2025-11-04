@@ -65,7 +65,7 @@ public class TransactionService {
         return transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "COMPLETED");
     }
     public List<Transaction> getAllSellTransactions(Integer sellerId) {
-        return transactionRepository.findByPost_Seller_MemberId(sellerId);
+        return transactionRepository.findBySeller_MemberIdAndStatus(sellerId, "COMPLETED");
     }
 
     // Lấy tất cả transaction theo trạng thái (yêu cầu giao dịch, chấp nhận, chuyển tiền cho admin, giao, hoàn thành)(Tân)
@@ -78,7 +78,15 @@ public class TransactionService {
         return transactionRepository.findAllByStatusInOrderByCreatedAtDesc(statuses);
     }
     public List<Transaction> getAllBuyTransactionsByStatus(Integer buyerId, String status) {
-        if (!status.equals("REQUESTED") && !status.equals("CANCELLED") && !status.equals("COMPLETED")) {
+        if (status.equals("C-C-ALL"))
+        {
+            List<Transaction> result = new ArrayList<>();
+            List<Transaction> completed = transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "COMPLETED");
+            List<Transaction> cancelled = transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "CANCELLED");
+            result.addAll(completed);
+            result.addAll(cancelled);
+            return result;
+        }else if (!status.equals("REQUESTED") && !status.equals("CANCELLED") && !status.equals("COMPLETED")) {
             List<Transaction> result = new ArrayList<>();
             List<Transaction> delivered = transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "DELIVERED");
             List<Transaction> paid = transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, "PAID");
@@ -91,7 +99,15 @@ public class TransactionService {
         return transactionRepository.findByBuyer_MemberIdAndStatus(buyerId, status);
     }
     public List<Transaction> getAllSellTransactionsByStatus(Integer sellerId, String status) {
-        if (!status.equals("REQUESTED") && !status.equals("CANCELLED") && !status.equals("COMPLETED")) {
+        if (status.equals("C-C-ALL"))
+        {
+            List<Transaction> result = new ArrayList<>();
+            List<Transaction> completed = transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "COMPLETED");
+            List<Transaction> cancelled = transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "CANCELLED");
+            result.addAll(completed);
+            result.addAll(cancelled);
+            return result;
+        }else if (!status.equals("REQUESTED") && !status.equals("CANCELLED") && !status.equals("COMPLETED")) {
             List<Transaction> result = new ArrayList<>();
             List<Transaction> delivered = transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "DELIVERED");
             List<Transaction> paid = transactionRepository.findByPost_Seller_MemberIdAndStatus(sellerId, "PAID");
