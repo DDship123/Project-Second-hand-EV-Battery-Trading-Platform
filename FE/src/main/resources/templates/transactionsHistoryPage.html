@@ -40,7 +40,6 @@
                 <ul class="container__header__category__status__List">
                     <li>Tất cả</li>
                     <li>Giao dịch thành công</li>
-                    <li>Đang chờ xử lý</li>
                     <li>Giao dịch thất bại</li>
                 </ul>
             </div>
@@ -54,7 +53,7 @@
     <!-- Transaction List -->
     <div class="container__body">
         <!-- Transaction Item 1 -->
-        <h2 class="container__body__empty" th:if="${noTransactions == false}">Không có giao dịch</h2>
+        <h2 class="container__body__empty" th:if="${noTransactions == true}">Không có giao dịch</h2>
         <div th:each="transaction: ${transactions}" class="container__body__item">
             <div class="container__body__item__header">
                 <div th:text="${transaction.getTransactionId()}" class="container__body__item__id">#039876547</div>

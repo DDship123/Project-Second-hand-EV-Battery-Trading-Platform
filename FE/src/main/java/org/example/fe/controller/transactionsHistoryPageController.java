@@ -30,14 +30,19 @@ public class transactionsHistoryPageController {
     @GetMapping
     public String getTransactionsHistory(Model model, HttpSession session,
                                          @RequestParam(value = "successMessage", required = false) String successMessage,
-                                         @RequestParam(value = "errorMessage", required = false) String errorMessage) {
+                                         @RequestParam(value = "errorMessage", required = false) String errorMessage,
+                                         @RequestParam(name = "status", required = false) String status) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         if (memberResponse == null) {
             return "redirect:/login";
         }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
-        ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllBuyTransaction(memberResponse.getMemberId());
+        if (status == null || status.isEmpty()) {
+            status = "C-C-ALL";
+        }
+        ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllBuyTransaction(memberResponse.getMemberId(), status);
+//        ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllBuyTransaction(memberResponse.getMemberId());
         if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {
             model.addAttribute("noTransactions", true);
         } else {
@@ -52,15 +57,21 @@ public class transactionsHistoryPageController {
         }
         return "transactionsHistoryPage";
     }
+
     @GetMapping("/seller")
-    public String getSellTransactionsHistory(Model model, HttpSession session) {
+    public String getSellTransactionsHistory(Model model, HttpSession session,
+                                             @RequestParam(name = "status", required = false) String status) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         if (memberResponse == null) {
             return "redirect:/login";
         }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
-        ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllSellTransaction(memberResponse.getMemberId());
+        if (status == null || status.isEmpty()) {
+            status = "C-C-ALL";
+        }
+        ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllSellTransaction(memberResponse.getMemberId(), status);
+//        ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllSellTransaction(memberResponse.getMemberId());
         if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {
             model.addAttribute("noTransactions", true);
         } else {
