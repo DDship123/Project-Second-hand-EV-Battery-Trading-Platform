@@ -1,6 +1,7 @@
 package org.example.fe.response;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
@@ -124,7 +125,11 @@ public class PostResponse {
         for (CommentResponse comment : comments) {
             sum += comment.getRating();
         }
-        return sum / comments.size();
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        String formatted = df.format(sum / comments.size());
+        double result = Double.parseDouble(formatted);
+        return result;
     }
 
     public List<String> getImages() {

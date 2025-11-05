@@ -7,10 +7,9 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet" />
-
+    <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <link
           rel="stylesheet"
@@ -124,7 +123,8 @@
           />
           <p class="battery__item__details__seller__name" th:text="${post.getSeller().getUsername()}">Nguyễn Văn An</p>
           <p class="battery__item__details__seller__rating">
-            <span th:text="${post.getAverageRating()}"></span> <i class="fas fa-star"></i>
+            <span th:if="${post.getAverageRating() > 0}" th:text="${post.getAverageRating()}" >5</span> <i class="fas fa-star"></i>
+            <span th:if="${post.getAverageRating() == 0}">Chưa có đánh giá</span>
           </p>
         </div>
       </div>
