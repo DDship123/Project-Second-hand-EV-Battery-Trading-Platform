@@ -1,11 +1,12 @@
-vehiclePage.css* {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
 }
 body {
-    background-color: #e2e4eb;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    min-height: 100vh;
 }
 
 .search {
@@ -29,10 +30,11 @@ body {
     gap: 0;
     background: white;
     padding: 0.5rem 1rem;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    border: 1px solid #e0e0e0;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     margin: 0 auto;
+    backdrop-filter: blur(10px);
 }
 
 /* Search Input Styles */
@@ -50,32 +52,46 @@ body {
     border: none;
     font-size: 1rem;
     outline: none;
+    color: #1a1a1a;
+}
+
+.search__input input::placeholder {
+    color: #9ca3af;
 }
 
 .search__btn {
     background: none;
     border: none;
     font-size: 1.2rem;
-    color: #666;
+    color: #6b7280;
     cursor: pointer;
     padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.search__btn:hover {
+    color: #1cc8ad;
+    transform: scale(1.1);
 }
 
 .search__post-btn {
-    background: #1cc8ad;
+    background: linear-gradient(135deg, #1cc8ad 0%, #17a085 100%);
     color: white;
     border: none;
     padding: 1rem 2.5rem;
-    border-radius: 10px;
+    border-radius: 14px;
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     margin-left: 0.5rem;
+    box-shadow: 0 4px 12px rgba(28, 200, 173, 0.3);
 }
 
 .search__post-btn:hover {
-    background: #36c7b8;
+    background: linear-gradient(135deg, #17a085 0%, #149978 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(28, 200, 173, 0.4);
 }
 
 /* =====================================================
@@ -96,7 +112,7 @@ body {
     right: -10%;
     width: 1.5px;
     height: 58px;
-    background-color: #eaeaea;
+    background: linear-gradient(180deg, transparent 0%, #e5e7eb 20%, #e5e7eb 80%, transparent 100%);
 }
 
 .dropdown-selected {
@@ -106,20 +122,27 @@ body {
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    color: black;
+    color: #1a1a1a;
     display: flex;
     align-items: center;
     justify-content: space-between;
     user-select: none;
+    transition: all 0.3s ease;
+}
+
+.dropdown-selected:hover {
+    color: #1cc8ad;
 }
 
 .dropdown-arrow {
     font-size: 0.8rem;
     transition: transform 0.3s ease;
+    color: #6b7280;
 }
 
 .dropdown-selected.active .dropdown-arrow {
     transform: rotate(180deg);
+    color: #1cc8ad;
 }
 
 .dropdown-options {
@@ -128,14 +151,15 @@ body {
     left: 0;
     right: 0;
     background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
     max-height: 0;
     overflow: hidden;
     opacity: 0;
     transition: all 0.3s ease;
     z-index: 1000;
+    margin-top: 8px;
 }
 
 .dropdown-options.show {
@@ -147,8 +171,8 @@ body {
     padding: 0.8rem 1.5rem;
     cursor: pointer;
     font-size: 1rem;
-    border-bottom: 1px solid #f0f0f0;
-    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #f5f5f5;
+    transition: all 0.2s ease;
 }
 
 .dropdown-option:last-child {
@@ -156,13 +180,14 @@ body {
 }
 
 .dropdown-option:hover {
-    background-color: #f8f9fa;
+    background: linear-gradient(90deg, #f0fdf9 0%, #f8f9fa 100%);
+    color: #1cc8ad;
 }
 
 .dropdown-option.selected {
-    background-color: #e3f2fd;
-    color: #1976d2;
-    font-weight: 500;
+    background: linear-gradient(90deg, #d1fae5 0%, #e3f2fd 100%);
+    color: #17a085;
+    font-weight: 600;
 }
 
 /* Location Dropdown Styles */
@@ -179,16 +204,17 @@ body {
     cursor: pointer;
     user-select: none;
     font-size: 1rem;
-    color: black;
+    color: #1a1a1a;
+    transition: all 0.3s ease;
 }
 
 .location-dropdown .dropdown-selected:hover {
     background-color: #f8f9fa;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .location-dropdown .dropdown-selected .fas.fa-map-marker-alt {
-    color: #17bac1;
+    color: #1cc8ad;
     font-size: 1rem;
 }
 
@@ -198,14 +224,15 @@ body {
     left: 0;
     right: 0;
     background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
     max-height: 0;
     overflow: hidden;
     opacity: 0;
     transition: all 0.3s ease;
     z-index: 1000;
+    margin-top: 8px;
 }
 
 .location-dropdown .dropdown-options.show {
@@ -219,43 +246,67 @@ body {
 .battery {
     width: 94vw;
     margin: 100px auto 50px auto;
-    background-color: white;
-    padding: 40px;
-    border-radius: 20px;
+    background: white;
+    padding: 50px;
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .battery__title {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
-    margin-bottom: 30px;
-    color: #333;
+    margin-bottom: 50px;
+    color: #1a1a1a;
+    background: linear-gradient(135deg, #1a1a1a 0%, #4a5568 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .battery__item {
     display: flex;
-    gap: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0;
+    gap: 30px;
+    padding: 30px;
+    border-bottom: none;
     position: relative;
     min-height: 240px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     cursor: pointer;
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 .battery__item:last-child {
     border-bottom: none;
 }
 
+.battery__item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    border-color: #1cc8ad;
+}
+
 .battery__item__image {
     width: 20%;
     height: 100%;
+    overflow: hidden;
+    border-radius: 16px;
 }
 
 .battery__item__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 16px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battery__item:hover .battery__item__image img {
+    transform: scale(1.08);
 }
 
 .battery__item__details {
@@ -268,44 +319,64 @@ body {
 }
 
 .battery__item__details__title {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     margin-bottom: 0;
-    color: #333;
+    color: #1a1a1a;
+    transition: color 0.3s ease;
+}
+
+.battery__item:hover .battery__item__details__title {
+    color: #1cc8ad;
 }
 
 .battery__item__details__brand {
     font-size: 16px;
-    color: #666;
+    color: #6b7280;
     margin-bottom: 0;
+    font-weight: 500;
 }
 
 .battery__item__details__brand span {
     color: #1cc8ad;
-    font-weight: 600;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1cc8ad 0%, #17a085 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .battery__item__details__capacity {
     font-size: 16px;
-    color: #666;
+    color: #6b7280;
     margin-bottom: 0;
+    font-weight: 500;
 }
 
 .battery__item__details__capacity span {
     color: #ff6b35;
-    font-weight: 600;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .battery__item__details__price {
-    font-size: 20px;
+    font-size: 28px;
     color: #ff2d2d;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 0;
+    background: linear-gradient(135deg, #ff2d2d 0%, #ff6b6b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
 }
 
 .battery__item__details__location {
     font-size: 16px;
-    color: #555;
+    color: #6b7280;
     margin-bottom: 0;
     display: flex;
     align-items: center;
@@ -314,6 +385,7 @@ body {
 
 .battery__item__details__location i {
     color: #1cc8ad;
+    font-size: 16px;
 }
 
 .battery__item__details__seller {
@@ -324,15 +396,21 @@ body {
 }
 
 .battery__item__details__seller img {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid #1cc8ad;
+    transition: transform 0.3s ease;
+}
+
+.battery__item:hover .battery__item__details__seller img {
+    transform: scale(1.1);
 }
 
 .battery__item__details__seller__name {
-    font-weight: 500;
-    color: #333;
+    font-weight: 600;
+    color: #1a1a1a;
 }
 
 .battery__item__details__seller__rating {
@@ -340,30 +418,41 @@ body {
     align-items: center;
     gap: 4px;
     font-weight: 600;
-    color: #333;
+    color: #1a1a1a;
 }
 
 .battery__item__details__seller__rating i {
-    color: #ffb400;
+    color: #fbbf24;
     font-size: 14px;
+    filter: drop-shadow(0 1px 2px rgba(251, 191, 36, 0.3));
 }
 
 .battery__item__actions {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 30px;
+    right: 30px;
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .battery__item__actions a {
-    color: black;
-    padding: 10px 15px;
-    border-radius: 8px;
+    color: #1a1a1a;
+    padding: 12px 20px;
+    border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
-    border: 1px solid #ddd;
-    transition: all 0.3s ease;
+    border: 2px solid #e5e7eb;
+    background: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 15px;
+}
+
+.battery__item__actions a:hover {
+    background: linear-gradient(135deg, #1cc8ad 0%, #17a085 100%);
+    color: white;
+    border-color: #1cc8ad;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(28, 200, 173, 0.3);
 }
 
 /* =====================================================
@@ -373,8 +462,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    margin-top: 40px;
+    gap: 10px;
+    margin-top: 50px;
     padding: 20px 0;
 }
 
@@ -382,36 +471,37 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     text-decoration: none;
     font-weight: 600;
     font-size: 16px;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    background-color: white;
-    color: #333;
-    transition: all 0.3s ease;
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
+    background: white;
+    color: #4b5563;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .battery__page a:hover {
-    background-color: #1cc8ad;
+    background: linear-gradient(135deg, #1cc8ad 0%, #17a085 100%);
     color: white;
     border-color: #1cc8ad;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(28, 200, 173, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(28, 200, 173, 0.35);
 }
 
 .battery__page a.active {
-    background-color: #1cc8ad;
+    background: linear-gradient(135deg, #1cc8ad 0%, #17a085 100%);
     color: white;
     border-color: #1cc8ad;
-    box-shadow: 0 2px 8px rgba(28, 200, 173, 0.4);
+    box-shadow: 0 4px 16px rgba(28, 200, 173, 0.4);
 }
 
 .battery__page a.active:hover {
-    transform: none;
-    box-shadow: 0 2px 8px rgba(28, 200, 173, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(28, 200, 173, 0.5);
 }
 
 /* Arrow buttons styling */
@@ -423,5 +513,5 @@ body {
 
 .battery__page a:first-child:hover,
 .battery__page a:last-child:hover {
-    background-color: #17a085;
+    background: linear-gradient(135deg, #17a085 0%, #149978 100%);
 }
