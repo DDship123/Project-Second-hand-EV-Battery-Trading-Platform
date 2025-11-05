@@ -268,18 +268,18 @@ public class AuthController {
 
 **Định nghĩa:**
 ```java
-//@GetMapping("/users/{id}")
-//public ResponseEntity<User> getUserById(@PathVariable Long id) {
-//    // URL: /users/123 -> id = 123
-//    User user = userService.findById(id);
-//    return ResponseEntity.ok(user);
-//}
-//
-//@GetMapping("/posts/{postId}/comments/{commentId}")
-//public ResponseEntity<Comment> getComment(@PathVariable Long postId, 
-//                                        @PathVariable Long commentId) {
-//    // URL: /posts/456/comments/789 -> postId = 456, commentId = 789
-//}
+@GetMapping("/users/{id}")
+public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    // URL: /users/123 -> id = 123
+    User user = userService.findById(id);
+    return ResponseEntity.ok(user);
+}
+
+@GetMapping("/posts/{postId}/comments/{commentId}")
+public ResponseEntity<Comment> getComment(@PathVariable Long postId, 
+                                        @PathVariable Long commentId) {
+    // URL: /posts/456/comments/789 -> postId = 456, commentId = 789
+}
 ```
 
 **Chức năng:**
@@ -290,37 +290,37 @@ public class AuthController {
 
 **Ví dụ trong VnpayController:**
 ```java
-//@GetMapping("/transaction/{txnRef}")
-//public ResponseEntity<Transaction> getTransaction(@PathVariable String txnRef) {
-//    // URL: /api/v1/payments/vnpay/transaction/VNP123456
-//    // txnRef = "VNP123456"
-//}
+@GetMapping("/transaction/{txnRef}")
+public ResponseEntity<Transaction> getTransaction(@PathVariable String txnRef) {
+    // URL: /api/v1/payments/vnpay/transaction/VNP123456
+    // txnRef = "VNP123456"
+}
 ```
 
 **Tùy chọn nâng cao:**
 ```java
-//// Tên biến khác tên trong URL
-//@GetMapping("/users/{userId}")
-//public User getUser(@PathVariable("userId") Long id) { }
-//
-//// Optional PathVariable  
-//@GetMapping({"/products", "/products/{category}"})
-//public List<Product> getProducts(@PathVariable(required = false) String category) {
-//    // URL: /products hoặc /products/battery
-//}
+// Tên biến khác tên trong URL
+@GetMapping("/users/{userId}")
+public User getUser(@PathVariable("userId") Long id) { }
+
+// Optional PathVariable  
+@GetMapping({"/products", "/products/{category}"})
+public List<Product> getProducts(@PathVariable(required = false) String category) {
+    // URL: /products hoặc /products/battery
+}
 ```
 
 ### 7. @RequestParam
 
 **Định nghĩa:**
 ```java
-//@GetMapping("/search")
-//public ResponseEntity<List<Post>> searchPosts(@RequestParam String keyword,
-//                                            @RequestParam(defaultValue = "0") int page,
-//                                            @RequestParam(defaultValue = "10") int size) {
-//    // URL: /search?keyword=battery&page=1&size=20
-//    // keyword = "battery", page = 1, size = 20
-//}
+@GetMapping("/search")
+public ResponseEntity<List<Post>> searchPosts(@RequestParam String keyword,
+                                            @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size) {
+    // URL: /search?keyword=battery&page=1&size=20
+    // keyword = "battery", page = 1, size = 20
+}
 ```
 
 **Chức năng:**
@@ -331,45 +331,45 @@ public class AuthController {
 
 **Ví dụ trong VnpayController:**
 ```java
-//@GetMapping("/return")
-//public RedirectView returnUrl(HttpServletRequest request,
-//                            @RequestParam(required = false) String vnp_ResponseCode,
-//                            @RequestParam(required = false) String vnp_TransactionStatus) {
-//    // URL: /return?vnp_ResponseCode=00&vnp_TransactionStatus=00
-//    // Tuy nhiên trong code thực tế dùng HttpServletRequest để lấy tất cả params
-//}
+@GetMapping("/return")
+public RedirectView returnUrl(HttpServletRequest request,
+                            @RequestParam(required = false) String vnp_ResponseCode,
+                            @RequestParam(required = false) String vnp_TransactionStatus) {
+    // URL: /return?vnp_ResponseCode=00&vnp_TransactionStatus=00
+    // Tuy nhiên trong code thực tế dùng HttpServletRequest để lấy tất cả params
+}
 ```
 
 **Các tùy chọn:**
 ```java
-//// Required parameter (mặc định)
-//@RequestParam String keyword
-//
-//// Optional với default value
-//@RequestParam(defaultValue = "all") String category
-//
-//// Optional không có default (có thể null)
-//@RequestParam(required = false) String filter
-//
-//// Nhận array/list
-//@RequestParam List<String> tags
-//// URL: /search?tags=battery&tags=vehicle
-//
-//// Nhận tất cả parameters
-//@RequestParam Map<String, String> allParams
+// Required parameter (mặc định)
+@RequestParam String keyword
+
+// Optional với default value
+@RequestParam(defaultValue = "all") String category
+
+// Optional không có default (có thể null)
+@RequestParam(required = false) String filter
+
+// Nhận array/list
+@RequestParam List<String> tags
+// URL: /search?tags=battery&tags=vehicle
+
+// Nhận tất cả parameters
+@RequestParam Map<String, String> allParams
 ```
 
 ### 8. HttpServletRequest
 
 **Định nghĩa:**
 ```java
-//@GetMapping("/return")
-//public RedirectView returnUrl(HttpServletRequest request) {
-//    // Truy cập toàn bộ thông tin HTTP request
-//    String userAgent = request.getHeader("User-Agent");
-//    String clientIP = request.getRemoteAddr();
-//    Map<String, String> params = extractParams(request);
-//}
+@GetMapping("/return")
+public RedirectView returnUrl(HttpServletRequest request) {
+    // Truy cập toàn bộ thông tin HTTP request
+    String userAgent = request.getHeader("User-Agent");
+    String clientIP = request.getRemoteAddr();
+    Map<String, String> params = extractParams(request);
+}
 ```
 
 **Chức năng:**
@@ -381,40 +381,40 @@ public class AuthController {
 
 **Trong VnpayController - extractParams method:**
 ```java
-//private static Map<String, String> extractParams(HttpServletRequest request) {
-//    Map<String, String> map = new HashMap<>();
-//    Enumeration<String> e = request.getParameterNames();
-//    while (e.hasMoreElements()) {
-//        String name = e.nextElement();
-//        String val = request.parameter(name);
-//        if (val != null) val = URLDecoder.decode(val, StandardCharsets.UTF_8);
-//        map.put(name, val);
-//    }
-//    return map;
-//}
+private static Map<String, String> extractParams(HttpServletRequest request) {
+    Map<String, String> map = new HashMap<>();
+    Enumeration<String> e = request.getParameterNames();
+    while (e.hasMoreElements()) {
+        String name = e.nextElement();
+        String val = request.parameter(name);
+        if (val != null) val = URLDecoder.decode(val, StandardCharsets.UTF_8);
+        map.put(name, val);
+    }
+    return map;
+}
 ```
 
 **Các method hữu ích:**
 ```java
-// Headers
-//request.getHeader("Authorization")
-//request.getHeader("Content-Type")
-//request.getHeader("X-FORWARDED-FOR")
-//
-//// Parameters  
-//request.getParameter("vnp_ResponseCode")
-//request.getParameterNames() // Enumeration<String>
-//request.getParameterMap()   // Map<String, String[]>
-//
-//// Client Info
-//request.getRemoteAddr()     // IP client
-//request.getRemoteHost()     // hostname client
-//request.getSession()        // HTTP session
-//
-//// Request Info
-//request.getMethod()         // GET, POST, PUT...
-//request.getRequestURI()     // /api/v1/payments/vnpay/return
-//request.getQueryString()    // vnp_ResponseCode=00&vnp_TransactionStatus=00
+ Headers
+request.getHeader("Authorization")
+request.getHeader("Content-Type")
+request.getHeader("X-FORWARDED-FOR")
+
+// Parameters  
+request.getParameter("vnp_ResponseCode")
+request.getParameterNames() // Enumeration<String>
+request.getParameterMap()   // Map<String, String[]>
+
+// Client Info
+request.getRemoteAddr()     // IP client
+request.getRemoteHost()     // hostname client
+request.getSession()        // HTTP session
+
+// Request Info
+request.getMethod()         // GET, POST, PUT...
+request.getRequestURI()     // /api/v1/payments/vnpay/return
+request.getQueryString()    // vnp_ResponseCode=00&vnp_TransactionStatus=00
 ```
 
 **Khi nào dùng HttpServletRequest:**
@@ -428,16 +428,16 @@ public class AuthController {
 
 **Định nghĩa:**
 ```java
-//@GetMapping("/return")
-//public RedirectView returnUrl(HttpServletRequest request) {
-//    // Xử lý payment result từ VNPAY
-//    Map<String, String> params = extractParams(request);
-//    String status = processPaymentResult(params);
-//    
-//    // Redirect về frontend với kết quả
-//    String url = "http://localhost:8888/home/vnpay-redirect?transactionStatus=" + status;
-//    return new RedirectView(url);
-//}
+@GetMapping("/return")
+public RedirectView returnUrl(HttpServletRequest request) {
+    // Xử lý payment result từ VNPAY
+    Map<String, String> params = extractParams(request);
+    String status = processPaymentResult(params);
+    
+    // Redirect về frontend với kết quả
+    String url = "http://localhost:8888/home/vnpay-redirect?transactionStatus=" + status;
+    return new RedirectView(url);
+}
 ```
 
 **Chức năng:**
@@ -460,80 +460,80 @@ public class AuthController {
 
 **Các tùy chọn RedirectView:**
 ```java
-//// Basic redirect
-//return new RedirectView("http://example.com");
-//
-//// Với custom status code
-//RedirectView redirectView = new RedirectView("http://example.com");
-//redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY); // 301
-//return redirectView;
-//
-//// Relative URL (trong cùng domain)
-//return new RedirectView("/success");
-//
-//// Với context path
-//RedirectView redirectView = new RedirectView("/success");
-//redirectView.setContextRelative(true);
-//return redirectView;
+// Basic redirect
+return new RedirectView("http://example.com");
+
+// Với custom status code
+RedirectView redirectView = new RedirectView("http://example.com");
+redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY); // 301
+return redirectView;
+
+// Relative URL (trong cùng domain)
+return new RedirectView("/success");
+
+// Với context path
+RedirectView redirectView = new RedirectView("/success");
+redirectView.setContextRelative(true);
+return redirectView;
 ```
 
 **So sánh các cách redirect:**
 ```java
-//// 1. RedirectView (recommended cho @Controller)
-//@GetMapping("/old-url")
-//public RedirectView redirect() {
-//    return new RedirectView("/new-url");
-//}
-//
-//// 2. ResponseEntity với HTTP 302
-//@GetMapping("/old-url")
-//public ResponseEntity<Void> redirect() {
-//    HttpHeaders headers = new HttpHeaders();
-//    headers.setLocation(URI.create("/new-url"));
-//    return new ResponseEntity<>(headers, HttpStatus.FOUND);
-//}
-//
-//// 3. String với "redirect:" prefix (chỉ work với view resolver)
-//@GetMapping("/old-url")
-//public String redirect() {
-//    return "redirect:/new-url";  // Chỉ work khi có view resolver
-//}
+// 1. RedirectView (recommended cho @Controller)
+@GetMapping("/old-url")
+public RedirectView redirect() {
+    return new RedirectView("/new-url");
+}
+
+// 2. ResponseEntity với HTTP 302
+@GetMapping("/old-url")
+public ResponseEntity<Void> redirect() {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setLocation(URI.create("/new-url"));
+    return new ResponseEntity<>(headers, HttpStatus.FOUND);
+}
+
+// 3. String với "redirect:" prefix (chỉ work với view resolver)
+@GetMapping("/old-url")
+public String redirect() {
+    return "redirect:/new-url";  // Chỉ work khi có view resolver
+}
 ```
 
 ## VNPAY Payment Flow - Ví dụ thực tế
 
 **1. Create Payment:**
 ```java
-//@PostMapping("/create")
-//public ResponseEntity<ApiResponse<PaymentUrlResponse>> create(
-//    @RequestBody CreatePaymentRequest req,    // JSON từ client
-//    HttpServletRequest http) {                // Lấy client IP
-//    
-//    String clientIp = VnpayUtil.clientIp(
-//        http.getHeader("X-FORWARDED-FOR"), 
-//        http.getRemoteAddr());
-//        
-//    // Tạo URL thanh toán VNPAY
-//    String paymentUrl = service.buildPaymentUrl(...);
-//    return ResponseEntity.ok(response);
-//}
+@PostMapping("/create")
+public ResponseEntity<ApiResponse<PaymentUrlResponse>> create(
+    @RequestBody CreatePaymentRequest req,    // JSON từ client
+    HttpServletRequest http) {                // Lấy client IP
+    
+    String clientIp = VnpayUtil.clientIp(
+        http.getHeader("X-FORWARDED-FOR"), 
+        http.getRemoteAddr());
+        
+    // Tạo URL thanh toán VNPAY
+    String paymentUrl = service.buildPaymentUrl(...);
+    return ResponseEntity.ok(response);
+}
 ```
 
 **2. Handle Return:**
 ```java
-//@GetMapping("/return")  
-//public RedirectView returnUrl(HttpServletRequest request) {
-//    // VNPAY gửi user về đây với các parameters
-//    // URL: /return?vnp_ResponseCode=00&vnp_TransactionStatus=00&vnp_SecureHash=...
-//    
-//    Map<String, String> params = extractParams(request);  // Lấy tất cả params
-//    boolean valid = VnpayUtil.verify(...);                // Verify chữ ký
-//    String status = determineStatus(valid, params);       // Xác định trạng thái
-//    
-//    // Redirect về frontend với kết quả  
-//    String frontendUrl = "http://localhost:8888/home/vnpay-redirect?transactionStatus=" + status;
-//    return new RedirectView(frontendUrl);
-//}
+@GetMapping("/return")  
+public RedirectView returnUrl(HttpServletRequest request) {
+    // VNPAY gửi user về đây với các parameters
+    // URL: /return?vnp_ResponseCode=00&vnp_TransactionStatus=00&vnp_SecureHash=...
+    
+    Map<String, String> params = extractParams(request);  // Lấy tất cả params
+    boolean valid = VnpayUtil.verify(...);                // Verify chữ ký
+    String status = determineStatus(valid, params);       // Xác định trạng thái
+    
+    // Redirect về frontend với kết quả  
+    String frontendUrl = "http://localhost:8888/home/vnpay-redirect?transactionStatus=" + status;
+    return new RedirectView(frontendUrl);
+}
 ```
 
 **3. Complete Flow:**
