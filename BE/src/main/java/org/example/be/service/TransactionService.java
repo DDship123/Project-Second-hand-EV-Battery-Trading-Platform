@@ -149,4 +149,8 @@ public class TransactionService {
             return response;
         }
     }
+
+    public List<Transaction> getTransactionsByPostId(Integer postId) {
+        return transactionRepository.findByPost_PostsId(postId);
+    }
 }
