@@ -64,7 +64,7 @@ public class MemberService {
 
 
         Optional<Member> existingPhone = memberRepository.findByPhone(memberDetails.getPhone());
-        if(member.getPhone().matches("^\\d{10,11}$")){
+        if(!member.getPhone().matches("^\\d{9,10}$")){
             error.put("phone", "Định dạng số điện thoại không hợp lệ");
         }else if(existingPhone.isPresent() && !existingPhone.get().getMemberId().equals(id)){
 
@@ -139,7 +139,7 @@ public class MemberService {
         }
 
         // Phone Exists and Phone number format
-        if(!request.getPhone().matches("^\\d{10,11}$")){
+        if(!request.getPhone().matches("^\\d{9,10}$")){
             error.put("phone", "Định dạng số điện thoại không hợp lệ");
             response.error(error);
         } else if (memberRepository.findByPhone(request.getPhone()).isPresent()) {
