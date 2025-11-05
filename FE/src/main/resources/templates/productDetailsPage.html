@@ -37,7 +37,10 @@
             <a href="" th:if="${post.getProduct().getProductType().equals('VEHICLE')}">Xe điện</a>
             <a href="" th:if="${post.getProduct().getProductType().equals('BATTERY')}">Pin</a>
             <span>/</span>
-            <a href="#" class="href--active">Xe máy điện Thành Phố Hồ Chí Minh</a>
+            <a href="#" class="href--active"  th:if="${post.getProduct().getProductType().equals('BATTERY')}"
+               th:text="'Pin '+${post.getSeller().getCity()}" >Xe máy điện Thành Phố Hồ Chí Minh</a>
+            <a href="#" class="href--active"  th:if="${post.getProduct().getProductType().equals('VEHICLE')}"
+               th:text="'Xe '+${post.getSeller().getCity()}" >Xe máy điện Thành Phố Hồ Chí Minh</a>
         </div>
         <h2 class="container__header__title">Thông tin xe</h2>
     </div>
