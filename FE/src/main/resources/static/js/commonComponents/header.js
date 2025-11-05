@@ -113,4 +113,9 @@ window.addEventListener('DOMContentLoaded', function() {
     if (!windowHref.includes("home") || windowHref.length > 26) {
         header.style.marginBottom = "30px";
     }
+
+    const headerLogo = document.querySelector(".header__logo");
+    headerLogo.addEventListener("click", function() {
+        window.location.href = "/home";
+    });
 });

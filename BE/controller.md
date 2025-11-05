@@ -14,11 +14,11 @@
 
 **Định nghĩa:**
 ```java
-//@RestController
-//@RequestMapping("/api/auth")
-//public class AuthController {
-//    // ...
-//}
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+    // ...
+}
 ```
 
 **Chức năng:**
@@ -29,39 +29,39 @@
 
 **So sánh:**
 ```java
-// Với @Controller (truyền thống)
-//@Controller
-//public class WebController {
-//    @RequestMapping("/user")
-//    @ResponseBody  // Cần thêm @ResponseBody để trả JSON
-//    public User getUser() {
-//        return new User();
-//    }
-//}
-//
-//// Với @RestController (hiện đại)
-//@RestController  
-//public class ApiController {
-//    @RequestMapping("/user")
-//    public User getUser() {  // Tự động trả JSON
-//        return new User();
-//    }
-//}
+ Với @Controller (truyền thống)
+@Controller
+public class WebController {
+    @RequestMapping("/user")
+    @ResponseBody  // Cần thêm @ResponseBody để trả JSON
+    public User getUser() {
+        return new User();
+    }
+}
+
+// Với @RestController (hiện đại)
+@RestController  
+public class ApiController {
+    @RequestMapping("/user")
+    public User getUser() {  // Tự động trả JSON
+        return new User();
+    }
+}
 ```
 
 ### 2. @RequestMapping
 
 **Định nghĩa:**
 ```java
-//@RestController
-//@RequestMapping("/api/auth")  // Base URL cho toàn controller
-//public class AuthController {
-//    
-//    @PostMapping("/login")    // Tương đương @RequestMapping(value="/login", method=POST)
-//    public ResponseEntity<?> login() {
-//        // URL cuối cùng: /api/auth/login
-//    }
-//}
+@RestController
+@RequestMapping("/api/auth")  // Base URL cho toàn controller
+public class AuthController {
+    
+    @PostMapping("/login")    // Tương đương @RequestMapping(value="/login", method=POST)
+    public ResponseEntity<?> login() {
+        // URL cuối cùng: /api/auth/login
+    }
+}
 ```
 
 **Chức năng:**
@@ -72,26 +72,26 @@
 
 **Các biến thể:**
 ```java
-//@RequestMapping(value = "/api/auth", method = RequestMethod.POST)
-//@PostMapping("/api/auth")        // Shortcut cho POST
-//@GetMapping("/api/auth")         // Shortcut cho GET  
-//@PutMapping("/api/auth")         // Shortcut cho PUT
-//@DeleteMapping("/api/auth")      // Shortcut cho DELETE
+@RequestMapping(value = "/api/auth", method = RequestMethod.POST)
+@PostMapping("/api/auth")        // Shortcut cho POST
+@GetMapping("/api/auth")         // Shortcut cho GET  
+@PutMapping("/api/auth")         // Shortcut cho PUT
+@DeleteMapping("/api/auth")      // Shortcut cho DELETE
 ```
 
 ### 3. @Autowired
 
 **Định nghĩa:**
 ```java
-//@RestController
-//public class AuthController {
-//    
-//    @Autowired
-//    private MemberService memberService;  // Dependency Injection
-//    
-//    @Autowired
-//    private MemberPlanUsageService memberPlanUsageService;
-//}
+@RestController
+public class AuthController {
+    
+    @Autowired
+    private MemberService memberService;  // Dependency Injection
+    
+    @Autowired
+    private MemberPlanUsageService memberPlanUsageService;
+}
 ```
 
 **Chức năng:**
@@ -102,28 +102,28 @@
 
 **Các cách inject:**
 ```java
-//public class AuthController {
-//    
-//    // 1. Field Injection (đang dùng)
-//    @Autowired
-//    private MemberService memberService;
-//    
-//    // 2. Constructor Injection (recommended)
-//    private final MemberService memberService;
-//    
-//    @Autowired
-//    public AuthController(MemberService memberService) {
-//        this.memberService = memberService;
-//    }
-//    
-//    // 3. Setter Injection
-//    private MemberService memberService;
-//    
-//    @Autowired
-//    public void setMemberService(MemberService memberService) {
-//        this.memberService = memberService;
-//    }
-//}
+public class AuthController {
+    
+    // 1. Field Injection (đang dùng)
+    @Autowired
+    private MemberService memberService;
+    
+    // 2. Constructor Injection (recommended)
+    private final MemberService memberService;
+    
+    @Autowired
+    public AuthController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+    
+    // 3. Setter Injection
+    private MemberService memberService;
+    
+    @Autowired
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
+    }
+}
 ```
 
 **Constructor Injection được khuyến nghị vì:**
@@ -136,15 +136,15 @@
 
 **Định nghĩa:**
 ```java
-//@PostMapping("/register")
-//public ResponseEntity<ApiResponse<Member>> register(@RequestBody MemberRegisterRequest request) {
-//    // Xử lý HTTP POST request tới /register
-//}
-//
-//@PostMapping("/login")  
-//public ResponseEntity<ApiResponse<?>> login(@RequestBody LoginRequest request) {
-//    // Xử lý HTTP POST request tới /login
-//}
+@PostMapping("/register")
+public ResponseEntity<ApiResponse<Member>> register(@RequestBody MemberRegisterRequest request) {
+    // Xử lý HTTP POST request tới /register
+}
+
+@PostMapping("/login")  
+public ResponseEntity<ApiResponse<?>> login(@RequestBody LoginRequest request) {
+    // Xử lý HTTP POST request tới /login
+}
 ```
 
 **Chức năng:**
@@ -155,26 +155,26 @@
 
 **Các HTTP Methods khác:**
 ```java
-//@GetMapping("/users")       // Lấy dữ liệu - SELECT
-//@PostMapping("/users")      // Tạo mới - INSERT  
-//@PutMapping("/users/{id}")  // Cập nhật toàn bộ - UPDATE
-//@PatchMapping("/users/{id}") // Cập nhật một phần - PARTIAL UPDATE
-//@DeleteMapping("/users/{id}") // Xóa - DELETE
+@GetMapping("/users")       // Lấy dữ liệu - SELECT
+@PostMapping("/users")      // Tạo mới - INSERT  
+@PutMapping("/users/{id}")  // Cập nhật toàn bộ - UPDATE
+@PatchMapping("/users/{id}") // Cập nhật một phần - PARTIAL UPDATE
+@DeleteMapping("/users/{id}") // Xóa - DELETE
 ```
 
 ### 5. @RequestBody
 
 **Định nghĩa:**
 ```java
-//@PostMapping("/login")
-//public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-//    // request được deserialize từ JSON trong HTTP body
-//}
-//
-//@PostMapping("/register")  
-//public ResponseEntity<?> register(@RequestBody MemberRegisterRequest request) {
-//    // request được tạo từ JSON payload
-//}
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    // request được deserialize từ JSON trong HTTP body
+}
+
+@PostMapping("/register")  
+public ResponseEntity<?> register(@RequestBody MemberRegisterRequest request) {
+    // request được tạo từ JSON payload
+}
 ```
 
 **Chức năng:**
@@ -187,72 +187,72 @@
 
 **HTTP Request:**
 ```bash
-#POST /api/auth/login
-#Content-Type: application/json
-#
-#{
-#    "username": "user123",
-#    "password": "password123"
-#}
+POST /api/auth/login
+Content-Type: application/json
+
+{
+    "username": "user123",
+    "password": "password123"
+}
 ```
 
 **Java Object:**
 ```java
-//public class LoginRequest {
-//    private String username;
-//    private String password;
-//    
-//    // getters và setters
-//}
-//
-//@PostMapping("/login")
-//public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-//    // request.getUsername() = "user123"
-//    // request.getPassword() = "password123"
-//}
+public class LoginRequest {
+    private String username;
+    private String password;
+    
+    // getters và setters
+}
+
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    // request.getUsername() = "user123"
+    // request.getPassword() = "password123"
+}
 ```
 
 **So sánh với các annotation khác:**
 ```java
-//// @RequestBody - Từ HTTP body (JSON)
-//@PostMapping("/login")
-//public ResponseEntity<?> login(@RequestBody LoginRequest request) { }
-//
-//// @RequestParam - Từ URL parameters  
-//@GetMapping("/search")
-//public List<User> search(@RequestParam String keyword) {
-//    // URL: /search?keyword=john
-//}
-//
-//// @PathVariable - Từ URL path
-//@GetMapping("/users/{id}")
-//public User getUser(@PathVariable Long id) {
-//    // URL: /users/123 -> id = 123
-//}
-//
-//// @RequestHeader - Từ HTTP headers
-//@PostMapping("/upload")
-//public String upload(@RequestHeader("Authorization") String token) { }
+// @RequestBody - Từ HTTP body (JSON)
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody LoginRequest request) { }
+
+// @RequestParam - Từ URL parameters  
+@GetMapping("/search")
+public List<User> search(@RequestParam String keyword) {
+    // URL: /search?keyword=john
+}
+
+// @PathVariable - Từ URL path
+@GetMapping("/users/{id}")
+public User getUser(@PathVariable Long id) {
+    // URL: /users/123 -> id = 123
+}
+
+// @RequestHeader - Từ HTTP headers
+@PostMapping("/upload")
+public String upload(@RequestHeader("Authorization") String token) { }
 ```
 
 ## Tóm tắt workflow trong AuthController
 
 ```java
-//@RestController                    // 1. Đánh dấu đây là REST API controller
-//@RequestMapping("/api/auth")       // 2. Base URL cho tất cả endpoints
-//public class AuthController {
-//    
-//    @Autowired                     // 3. Inject service dependencies
-//    private MemberService memberService;
-//    
-//    @PostMapping("/login")         // 4. Handle POST /api/auth/login
-//    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-//        //                         // 5. Convert JSON body thành LoginRequest object
-//        Optional<Member> user = memberService.login(request);
-//        // 6. Trả về JSON response
-//        return ResponseEntity.ok(response);
-//    }
-//}
+@RestController                    // 1. Đánh dấu đây là REST API controller
+@RequestMapping("/api/auth")       // 2. Base URL cho tất cả endpoints
+public class AuthController {
+    
+    @Autowired                     // 3. Inject service dependencies
+    private MemberService memberService;
+    
+    @PostMapping("/login")         // 4. Handle POST /api/auth/login
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        //                         // 5. Convert JSON body thành LoginRequest object
+        Optional<Member> user = memberService.login(request);
+        // 6. Trả về JSON response
+        return ResponseEntity.ok(response);
+    }
+}
 ```
 
 **Request Flow:**

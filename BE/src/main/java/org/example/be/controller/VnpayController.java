@@ -62,8 +62,6 @@ public class VnpayController {
         if (valid) status = "00".equals(txnStatus) ? "SUCCESS" : "FAILED";
         else status = "INVALID_SIGNATURE";
 
-//        ReturnUrlResponse body = new ReturnUrlResponse(valid, txnStatus, responseCode, status);
-//        String url = "http://localhost:8888/home/order?status=ACCEPTED&transactionStatus=" + status;
         String url = "http://localhost:8888/home/vnpay-redirect?transactionStatus=" + status;
         return new RedirectView(url);
     }

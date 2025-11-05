@@ -1,6 +1,6 @@
 // adminPage.js
 
-const submenuItems = document.querySelectorAll('.submenu-item');
+
 
 const permissionMenu = document.getElementById('permissionMenu');
 const submenu = document.getElementById('submenu');
@@ -9,64 +9,64 @@ const submenuItems = document.querySelectorAll('.submenu-item');
 const contentSections = document.querySelectorAll('.content-section');
 const notification = document.getElementById('notification');
 
-// window.addEventListener('DOMContentLoaded', () => {
-//   submenu.classList.add('open');
-//   dropdownArrow.classList.add('open');
-//   permissionMenu.classList.add('active');
-//
-//   if (window.location.pathname.includes('post-manage')) {
-//     submenuItems[0].classList.add('active');
-//   }else if (window.location.pathname.includes('transaction-manage')) {
-//     submenuItems[1].classList.add('active');
-//   }else if (window.location.pathname.includes('member-manage')) {
-//     submenuItems[2].classList.add('active');
-//   }else if (window.location.pathname.includes('comment-review-manage')) {
-//     submenuItems[3].classList.add('active');
-//   }else if (window.location.pathname.includes('fee-manage')) {
-//     submenuItems[4].classList.add('active');
-//   } else {
-//     // Default to first submenu item
-//     submenuItems[0].classList.add('active');
-//   }
-// });
+window.addEventListener('DOMContentLoaded', () => {
+  submenu.classList.add('open');
+  dropdownArrow.classList.add('open');
+  permissionMenu.classList.add('active');
+
+  if (window.location.pathname.includes('post-manage')) {
+    submenuItems[0].classList.add('active');
+  }else if (window.location.pathname.includes('transaction-manage')) {
+    submenuItems[1].classList.add('active');
+  }else if (window.location.pathname.includes('member-manage')) {
+    submenuItems[2].classList.add('active');
+  }else if (window.location.pathname.includes('comment-review-manage')) {
+    submenuItems[3].classList.add('active');
+  }else if (window.location.pathname.includes('fee-manage')) {
+    submenuItems[4].classList.add('active');
+  } else {
+    // Default to first submenu item
+    submenuItems[0].classList.add('active');
+  }
+});
 
 
-// function deactivateAllMenus() {
-//   document.querySelectorAll('.menu-item.active').forEach(el => el.classList.remove('active'));
-//   document.querySelectorAll('.submenu-item.active').forEach(el => el.classList.remove('active'));
-//   submenu.classList.remove('open');
-//   dropdownArrow.classList.remove('open');
-// }
+function deactivateAllMenus() {
+  document.querySelectorAll('.menu-item.active').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.submenu-item.active').forEach(el => el.classList.remove('active'));
+  submenu.classList.remove('open');
+  dropdownArrow.classList.remove('open');
+}
 
 // Toggle dropdown menu
-// permissionMenu.addEventListener('click', function () {
-//   const wasOpen = submenu.classList.contains('open');
-//   submenu.classList.toggle('open');
-//   dropdownArrow.classList.toggle('open');
-//   const nowOpen = submenu.classList.contains('open');
-//
-//   if (nowOpen) {
-//     // If no active submenu item, select the first one (Post Management)
-//     if (!submenu.querySelector('.submenu-item.active') && !wasOpen) {
-//       deactivateAllMenus();
-//       const firstSub = submenuItems[0];
-//       firstSub.classList.add('active');
-//       permissionMenu.classList.add('active');
-//       submenu.classList.add('open');
-//       dropdownArrow.classList.add('open');
-//
-//       // Show the content
-//       const sectionToShow = firstSub.getAttribute('data-submenu');
-//       contentSections.forEach(section => section.classList.remove('active'));
-//       const targetSection = document.querySelector(`[data-section="${sectionToShow}"]`);
-//       if (targetSection) {
-//         targetSection.classList.add('active');
-//       }
-//     }
-//   } else {
-//     // If closing, do not change active if a sub was selected, but since we're only highlighting selected, keep content
-//   }
-// });
+permissionMenu.addEventListener('click', function () {
+  const wasOpen = submenu.classList.contains('open');
+  submenu.classList.toggle('open');
+  dropdownArrow.classList.toggle('open');
+  const nowOpen = submenu.classList.contains('open');
+
+  if (nowOpen) {
+    // If no active submenu item, select the first one (Post Management)
+    if (!submenu.querySelector('.submenu-item.active') && !wasOpen) {
+      deactivateAllMenus();
+      const firstSub = submenuItems[0];
+      firstSub.classList.add('active');
+      permissionMenu.classList.add('active');
+      submenu.classList.add('open');
+      dropdownArrow.classList.add('open');
+
+      // Show the content
+      const sectionToShow = firstSub.getAttribute('data-submenu');
+      contentSections.forEach(section => section.classList.remove('active'));
+      const targetSection = document.querySelector(`[data-section="${sectionToShow}"]`);
+      if (targetSection) {
+        targetSection.classList.add('active');
+      }
+    }
+  } else {
+    // If closing, do not change active if a sub was selected, but since we're only highlighting selected, keep content
+  }
+});
 
 // Handle submenu item clicks and switch content
 submenuItems.forEach(item => {
@@ -114,29 +114,29 @@ submenuItems.forEach(item => {
   });
 });
 
-// // Set initial active menu based on active content
-// const activeSectionEl = document.querySelector('.content-section.active');
-// if (activeSectionEl) {
-//   const activeSection = activeSectionEl.getAttribute('data-section');
-//   const activeSubItem = document.querySelector(`.submenu-item[data-submenu="${activeSection}"]`);
-//   if (activeSubItem) {
-//     deactivateAllMenus();
-//     activeSubItem.classList.add('active');
-//     permissionMenu.classList.add('active');
-//     submenu.classList.add('open');
-//     dropdownArrow.classList.add('open');
-//   }
-// }
-//
-// // Show notification
-// function showNotification(message) {
-//   notification.innerHTML = '<i class="fa-solid fa-check"></i> ' + message;
-//   notification.classList.add('show');
-//   setTimeout(() => {
-//     notification.classList.remove('show');
-//   }, 3000); // Notification disappears after 3 seconds
-// }
-//
+// Set initial active menu based on active content
+const activeSectionEl = document.querySelector('.content-section.active');
+if (activeSectionEl) {
+  const activeSection = activeSectionEl.getAttribute('data-section');
+  const activeSubItem = document.querySelector(`.submenu-item[data-submenu="${activeSection}"]`);
+  if (activeSubItem) {
+    deactivateAllMenus();
+    activeSubItem.classList.add('active');
+    permissionMenu.classList.add('active');
+    submenu.classList.add('open');
+    dropdownArrow.classList.add('open');
+  }
+}
+
+// Show notification
+function showNotification(message) {
+  notification.innerHTML = '<i class="fa-solid fa-check"></i> ' + message;
+  notification.classList.add('show');
+  setTimeout(() => {
+    notification.classList.remove('show');
+  }, 3000); // Notification disappears after 3 seconds
+}
+
 // // Post Modal functionality
 // const postModal = document.getElementById('postDetailModal');
 // const postCloseBtn = postModal ? postModal.querySelector('.close') : null;

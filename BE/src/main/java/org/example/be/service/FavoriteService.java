@@ -18,6 +18,10 @@ public class FavoriteService {
     private FavoriteRepository favoriteRepository;
 
     public Favorite createFavorite(Favorite favorite) {
+        Favorite existingFavorite = favoriteRepository.findByMemberAndPost(favorite.getMember(), favorite.getPost());
+        if (existingFavorite != null) {
+            return existingFavorite; // Return existing favorite if it already exists
+        }
         return favoriteRepository.save(favorite);
     }
 

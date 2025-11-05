@@ -24,4 +24,7 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
     // Hàm lấy 1 Favorite đầu tiên (có ID thấp nhất) theo memberId
     @Query("SELECT f FROM Favorite f WHERE f.member.memberId = :memberId ORDER BY f.favoritesId ASC limit 1")
     Optional<Favorite> findFirstByMemberId(@Param("memberId") int memberId);
+
+    @Query("SELECT f FROM Favorite f WHERE f.member = :member AND f.post = :post")
+    Favorite findByMemberAndPost(Member member, Post post);
 }

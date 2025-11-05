@@ -104,6 +104,9 @@
             <div class="details-container">
                 <div th:if="${postDetail.getProduct().getProductType().equals('VEHICLE')}" class="vehicle-details">
                     <h3>Thông tin xe</h3>
+                    <p><strong>ID:</strong>
+                        <span id="vehicleID"
+                              th:text="${postDetail.getPostsId()}"></span></p>
                     <p><strong>Tên:</strong>
                         <span id="vehicleName"
                               th:text="${postDetail.getProduct().getVehicle().getName()}"></span></p>
@@ -135,6 +138,9 @@
                 </div>
                 <div th:if="${postDetail.getProduct().getProductType().equals('BATTERY')}" class="vehicle-details">
                     <h3>Thông tin xe</h3>
+                    <p><strong>ID:</strong>
+                        <span id="batteryID"
+                              th:text="${postDetail.getPostsId()}"></span></p>
                     <p><strong>Tên:</strong>
                         <span id="batteryName"
                               th:text="${postDetail.getProduct().getBattery().getName()}"></span></p>
