@@ -169,7 +169,7 @@ public class CreatePostController {
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         boolean hasErrors = validate.errorBattery(model,mainImage,subImages,batteryVoltage,batteryYearOfManufacture, post,priceInput);
 
-        if (batteryVoltage.contains("kWh")) {
+        if (batteryVoltage.contains("V")) {
             batteryVoltage = batteryVoltage.replace("V", "").trim();
         }
 
