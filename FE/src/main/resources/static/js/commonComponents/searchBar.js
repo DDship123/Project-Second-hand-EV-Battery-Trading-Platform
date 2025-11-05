@@ -110,9 +110,6 @@
         let productTypeInputValue = productTypeInput.textContent.trim();
         let postTitleValue = postTitle.value.trim();
         let locationInputValue = locationInput.textContent.trim();
-        console.log("Product Type:", productTypeInputValue);
-        console.log("Post Title:", postTitleValue);
-        console.log("Location:", locationInputValue);
 
         let searchUrl = "/home";
         const params = new URLSearchParams();

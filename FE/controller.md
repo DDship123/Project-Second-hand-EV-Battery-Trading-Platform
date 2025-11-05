@@ -31,21 +31,21 @@ public class MemberController {
 
 **Cách sử dụng**:
 ```java
-//@Controller
-//@RequestMapping("/account") // Class-level mapping
-//public class MemberController {
-//    
-//    @RequestMapping(value = "/personalInformation", method = RequestMethod.GET)
-//    public String getPersonalInfo(Model model) {
-//        return "personalInformationPage";
-//    }
-//    
-//    @RequestMapping(value = "/personalInformation", method = RequestMethod.POST)
-//    public String updatePersonalInfo(@ModelAttribute MemberResponse user) {
-//        // Logic xử lý
-//        return "redirect:/account/personalInformation";
-//    }
-//}
+@Controller
+@RequestMapping("/account") // Class-level mapping
+public class MemberController {
+    
+    @RequestMapping(value = "/personalInformation", method = RequestMethod.GET)
+    public String getPersonalInfo(Model model) {
+        return "personalInformationPage";
+    }
+    
+    @RequestMapping(value = "/personalInformation", method = RequestMethod.POST)
+    public String updatePersonalInfo(@ModelAttribute MemberResponse user) {
+        // Logic xử lý
+        return "redirect:/account/personalInformation";
+    }
+}
 ```
 
 **Shortcuts phổ biến**:
@@ -61,17 +61,17 @@ public class MemberController {
 
 **Ví dụ**:
 ```java
-//@PostMapping("/personalInformation")
-//public String updateProfile(@ModelAttribute MemberResponse user, 
-//                          RedirectAttributes redirectAttributes) {
-//    try {
-//        memberService.updateMember(user);
-//        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thành công!");
-//    } catch (Exception e) {
-//        redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật thất bại!");
-//    }
-//    return "redirect:/account/personalInformation";
-//}
+@PostMapping("/personalInformation")
+public String updateProfile(@ModelAttribute MemberResponse user, 
+                          RedirectAttributes redirectAttributes) {
+    try {
+        memberService.updateMember(user);
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thành công!");
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật thất bại!");
+    }
+    return "redirect:/account/personalInformation";
+}
 ```
 
 **Lưu ý**: Flash attributes sẽ tự động bị xóa sau khi sử dụng, tránh duplicate submissions.
@@ -92,23 +92,23 @@ public class MemberController {
 
 **Ví dụ**:
 ```java
-//@GetMapping("/login")
-//public String login(@RequestParam String username, 
-//                   @RequestParam String password,
-//                   HttpSession session) {
-//    if (authService.authenticate(username, password)) {
-//        session.setAttribute("currentUser", user);
-//        session.setAttribute("isLoggedIn", true);
-//        return "redirect:/home";
-//    }
-//    return "loginIn";
-//}
-//
-//@GetMapping("/logout")
-//public String logout(HttpSession session) {
-//    session.invalidate(); // Xóa toàn bộ session
-//    return "redirect:/login";
-//}
+@GetMapping("/login")
+public String login(@RequestParam String username, 
+                   @RequestParam String password,
+                   HttpSession session) {
+    if (authService.authenticate(username, password)) {
+        session.setAttribute("currentUser", user);
+        session.setAttribute("isLoggedIn", true);
+        return "redirect:/home";
+    }
+    return "loginIn";
+}
+
+@GetMapping("/logout")
+public String logout(HttpSession session) {
+    session.invalidate(); // Xóa toàn bộ session
+    return "redirect:/login";
+}
 ```
 
 ### 5. Model
@@ -126,25 +126,25 @@ public class MemberController {
 
 **Ví dụ**:
 ```java
-//@GetMapping("/personalInformation")
-//public String getPersonalInfo(Model model, HttpSession session) {
-//    MemberResponse user = (MemberResponse) session.getAttribute("currentUser");
-//    
-//    model.addAttribute("user", user);
-//    model.addAttribute("pageTitle", "Thông tin cá nhân");
-//    model.addAttribute("cities", cityService.getAllCities());
-//    
-//    return "personalInformationPage"; // Trả về template name
-//}
+@GetMapping("/personalInformation")
+public String getPersonalInfo(Model model, HttpSession session) {
+    MemberResponse user = (MemberResponse) session.getAttribute("currentUser");
+    
+    model.addAttribute("user", user);
+    model.addAttribute("pageTitle", "Thông tin cá nhân");
+    model.addAttribute("cities", cityService.getAllCities());
+    
+    return "personalInformationPage"; // Trả về template name
+}
 ```
 
 **Sử dụng trong Thymeleaf**:
 ```html
-<!--<h1 th:text="${pageTitle}"></h1>-->
-<!--<input th:field="${user.username}" type="text" />-->
-<!--<select th:field="${user.address}">-->
-<!--    <option th:each="city : ${cities}" th:value="${city}" th:text="${city}"></option>-->
-<!--</select>-->
+<h1 th:text="${pageTitle}"></h1>
+<input th:field="${user.username}" type="text" />
+<select th:field="${user.address}">
+    <option th:each="city : ${cities}" th:value="${city}" th:text="${city}"></option>
+</select>
 ```
 
 ### 6. @PathVariable
@@ -154,22 +154,22 @@ public class MemberController {
 
 **Ví dụ**:
 ```java
-//// URL: /posts/123/comments/456
-//@GetMapping("/posts/{postId}/comments/{commentId}")
-//public String getComment(@PathVariable("postId") Long postId,
-//                        @PathVariable("commentId") Long commentId,
-//                        Model model) {
-//    Comment comment = commentService.getComment(postId, commentId);
-//    model.addAttribute("comment", comment);
-//    return "commentDetails";
-//}
-//
-//// URL: /wishlist/delete/789
-//@GetMapping("/wishlist/delete/{id}")
-//public String deleteWishlistItem(@PathVariable Long id) {
-//    wishlistService.deleteItem(id);
-//    return "redirect:/home/wishlist";
-//}
+// URL: /posts/123/comments/456
+@GetMapping("/posts/{postId}/comments/{commentId}")
+public String getComment(@PathVariable("postId") Long postId,
+                        @PathVariable("commentId") Long commentId,
+                        Model model) {
+    Comment comment = commentService.getComment(postId, commentId);
+    model.addAttribute("comment", comment);
+    return "commentDetails";
+}
+
+// URL: /wishlist/delete/789
+@GetMapping("/wishlist/delete/{id}")
+public String deleteWishlistItem(@PathVariable Long id) {
+    wishlistService.deleteItem(id);
+    return "redirect:/home/wishlist";
+}
 ```
 
 **Lưu ý**: Tên biến trong URL {} phải match với parameter name hoặc sử dụng value attribute.
@@ -184,74 +184,74 @@ public class MemberController {
 
 **Ví dụ**:
 ```java
-//// URL: /search?keyword=battery&category=electric&page=1
-//@GetMapping("/search")
-//public String search(@RequestParam("keyword") String keyword,
-//                    @RequestParam(value = "category", required = false) String category,
-//                    @RequestParam(value = "page", defaultValue = "1") int page,
-//                    Model model) {
-//    
-//    List<Post> posts = postService.search(keyword, category, page);
-//    model.addAttribute("posts", posts);
-//    model.addAttribute("currentPage", page);
-//    
-//    return "searchResults";
-//}
-//
-//// Form submission
-//@PostMapping("/contact")
-//public String submitContact(@RequestParam("email") String email,
-//                           @RequestParam("message") String message,
-//                           RedirectAttributes redirectAttributes) {
-//    contactService.sendMessage(email, message);
-//    redirectAttributes.addFlashAttribute("successMessage", "Tin nhắn đã được gửi!");
-//    return "redirect:/contact";
-//}
+// URL: /search?keyword=battery&category=electric&page=1
+@GetMapping("/search")
+public String search(@RequestParam("keyword") String keyword,
+                    @RequestParam(value = "category", required = false) String category,
+                    @RequestParam(value = "page", defaultValue = "1") int page,
+                    Model model) {
+    
+    List<Post> posts = postService.search(keyword, category, page);
+    model.addAttribute("posts", posts);
+    model.addAttribute("currentPage", page);
+    
+    return "searchResults";
+}
+
+// Form submission
+@PostMapping("/contact")
+public String submitContact(@RequestParam("email") String email,
+                           @RequestParam("message") String message,
+                           RedirectAttributes redirectAttributes) {
+    contactService.sendMessage(email, message);
+    redirectAttributes.addFlashAttribute("successMessage", "Tin nhắn đã được gửi!");
+    return "redirect:/contact";
+}
 ```
 
 ## Tổng kết và Best Practices
 
 ### Kết hợp các Annotation
 ```java
-//@Controller
-//@RequestMapping("/transactions")
-//public class TransactionController {
-//    
-//    @GetMapping("/{transactionId}")
-//    public String getTransaction(@PathVariable Long transactionId,
-//                               @RequestParam(value = "view", defaultValue = "details") String viewType,
-//                               Model model,
-//                               HttpSession session) {
-//        
-//        MemberResponse currentUser = (MemberResponse) session.getAttribute("currentUser");
-//        Transaction transaction = transactionService.getById(transactionId);
-//        
-//        model.addAttribute("transaction", transaction);
-//        model.addAttribute("user", currentUser);
-//        model.addAttribute("viewType", viewType);
-//        
-//        return "transactionDetails";
-//    }
-//    
-//    @PostMapping("/{transactionId}/rate")
-//    public String rateTransaction(@PathVariable Long transactionId,
-//                                @RequestParam("rating") double rating,
-//                                @RequestParam("reviewText") String reviewText,
-//                                HttpSession session,
-//                                RedirectAttributes redirectAttributes) {
-//        
-//        MemberResponse currentUser = (MemberResponse) session.getAttribute("currentUser");
-//        
-//        try {
-//            reviewService.createReview(transactionId, currentUser.getId(), rating, reviewText);
-//            redirectAttributes.addFlashAttribute("successMessage", "Đánh giá thành công!");
-//        } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("errorMessage", "Đánh giá thất bại!");
-//        }
-//        
-//        return "redirect:/transactions/" + transactionId;
-//    }
-//}
+@Controller
+@RequestMapping("/transactions")
+public class TransactionController {
+    
+    @GetMapping("/{transactionId}")
+    public String getTransaction(@PathVariable Long transactionId,
+                               @RequestParam(value = "view", defaultValue = "details") String viewType,
+                               Model model,
+                               HttpSession session) {
+        
+        MemberResponse currentUser = (MemberResponse) session.getAttribute("currentUser");
+        Transaction transaction = transactionService.getById(transactionId);
+        
+        model.addAttribute("transaction", transaction);
+        model.addAttribute("user", currentUser);
+        model.addAttribute("viewType", viewType);
+        
+        return "transactionDetails";
+    }
+    
+    @PostMapping("/{transactionId}/rate")
+    public String rateTransaction(@PathVariable Long transactionId,
+                                @RequestParam("rating") double rating,
+                                @RequestParam("reviewText") String reviewText,
+                                HttpSession session,
+                                RedirectAttributes redirectAttributes) {
+        
+        MemberResponse currentUser = (MemberResponse) session.getAttribute("currentUser");
+        
+        try {
+            reviewService.createReview(transactionId, currentUser.getId(), rating, reviewText);
+            redirectAttributes.addFlashAttribute("successMessage", "Đánh giá thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Đánh giá thất bại!");
+        }
+        
+        return "redirect:/transactions/" + transactionId;
+    }
+}
 ```
 
 ### Những điều cần nhớ

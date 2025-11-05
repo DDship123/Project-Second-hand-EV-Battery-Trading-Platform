@@ -7,4 +7,4 @@ window.addEventListener('DOMContentLoaded', () => {
             imageInputs[index].classList.toggle("active");
         });
     });
-}
+});
