@@ -51,6 +51,21 @@ public class AuthController {
     public ResponseEntity<ApiResponse<?>> login(@RequestBody LoginRequest request) {
         Optional<Member> user = memberService.login(request);
         if (user.isPresent()) {
+            //Nếu người dùng bị banned
+            Member member = user.get();
+            if(member.getStatus().equals("BANNED")){
+                ApiResponse<MemberResponse> response = new ApiResponse<>();
+                response.error(Map.of("message", "Tài khoản của bạn đã bị khóa."));
+                return ResponseEntity.ok(response);
+            }
+
+            if(member.getStatus().equals("SUSPENDED"))
+            {
+                ApiResponse<MemberResponse> response = new ApiResponse<>();
+                response.error(Map.of("message", "Tài khoản của bạn đang bị tạm khóa."));
+                return ResponseEntity.ok(response);
+            }
+
             ApiResponse<Member> response = new ApiResponse<>();
             response.ok(user.get());
             return ResponseEntity.ok(response);
