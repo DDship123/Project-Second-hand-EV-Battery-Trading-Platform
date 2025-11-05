@@ -43,7 +43,9 @@ window.addEventListener("load", function () {
         let prevIndex = (currentIndex - 1 + imageList.length) % imageList.length;
 
         // Cập nhật src của ảnh chính thành ảnh trước đó
+        let imageSrc = mainImage.src;
         mainImage.src = imageList[prevIndex].src;
+        imageList[prevIndex].src = imageSrc;
     });
 
     // === SỰ KIỆN CLICK NÚT PHẢI (NEXT) ===
@@ -59,7 +61,9 @@ window.addEventListener("load", function () {
         let nextIndex = (currentIndex + 1) % imageList.length;
 
         // Cập nhật src của ảnh chính thành ảnh tiếp theo
+        let imageSrc = mainImage.src;
         mainImage.src = imageList[nextIndex].src;
+        imageList[nextIndex].src = imageSrc;
     });
 
     /*

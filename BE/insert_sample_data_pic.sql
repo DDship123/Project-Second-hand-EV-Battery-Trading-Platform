@@ -217,21 +217,28 @@ VALUES
     (15, 'https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/577446275_1477813600164681_6863714725651480238_n.jpg?stp=cp6_dst-jpegr_tt6&_nc_cat=111&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=MuK_M0oTSY8Q7kNvwEY7rNh&_nc_oc=AdnGrx57fEVY5DVADj-T-H5n81wc-Dd_Q8DKvwRsfeBeBkE9Gt98FnSqv5L_RnllISg&_nc_zt=23&se=-1&_nc_ht=scontent.fsgn5-11.fna&_nc_gid=nPneBr-hMuSyPdjiTxBYaQ&oh=00_AfhbMVw5c9DD1-vtdSjc6Io_P_v8S4D5qPuxDF_E5h8DVw&oe=691114D0'),
 
     -- Battery Posts (16-30)
-    (16, 'https://i.pravatar.cc/300'), (16, 'https://i.pravatar.cc/300'),
-    (17, 'https://i.pravatar.cc/300'),
-    (18, 'https://i.pravatar.cc/300'), (18, 'https://i.pravatar.cc/300'),
-    (19, 'https://i.pravatar.cc/300'),
-    (20, 'https://i.pravatar.cc/300'),
-    (21, 'https://i.pravatar.cc/300'), (21, 'https://i.pravatar.cc/300'),
-    (22, 'https://i.pravatar.cc/300'), (22, 'https://i.pravatar.cc/300'),
-    (23, 'https://i.pravatar.cc/300'),
-    (24, 'https://i.pravatar.cc/300'),
-    (25, 'https://i.pravatar.cc/300'), (25, 'https://i.pravatar.cc/300'),
-    (26, 'https://i.pravatar.cc/300'),
-    (27, 'https://i.pravatar.cc/300'), (27, 'https://i.pravatar.cc/300'),
-    (28, 'https://i.pravatar.cc/300'),
-    (29, 'https://i.pravatar.cc/300'), (29, 'https://i.pravatar.cc/300'),
-    (30, 'https://i.pravatar.cc/300'), (30, 'https://i.pravatar.cc/300');
+    (16, 'https://evbattery.vn/wp-content/uploads/2025/07/PIN-Xe-May-Dien-Feliz-S-EVO-72V-30AH-LFP-Bo-Cop-Tien-Dung-001-510x510.jpg'),
+    (16, 'https://evbattery.vn/wp-content/uploads/2025/07/PIN-Xe-May-Dien-Feliz-S-EVO-72V-30AH-LFP-Bo-Cop-Tien-Dung-003-510x510.jpg'),
+    (17, 'https://evbattery.vn/wp-content/uploads/2025/07/PIN-Xe-May-Dien-Feliz-S-72V-45AH-LFP-Bo-Cop-Tien-Dung-01-510x510.jpg'),
+    (18, 'https://evbattery.vn/wp-content/uploads/2025/02/006-60V-95AH-NCM-Klara-A2-2019-1-510x510.jpg'),
+    (18, 'https://evbattery.vn/wp-content/uploads/2025/02/006-60V-95AH-NCM-Klara-A2-2019-2-1-510x510.jpg'),
+    (19, 'https://evbattery.vn/wp-content/uploads/2025/02/005-60V-62AH-NCM-Klara-A2-2019-1-510x510.jpg'),
+    (20, 'https://evbattery.vn/wp-content/uploads/2025/02/004-60V-50AH-NCM-Klara-A2-2019-1-510x510.jpg'),
+    (21, 'https://evbattery.vn/wp-content/uploads/2025/02/003-60V-40AH-NCM-Klara-A2-2019-1-510x510.jpg'),
+    (22, 'https://evbattery.vn/wp-content/uploads/2025/02/003-60V-40AH-NCM-Klara-A2-2019-2-1-510x510.jpg'),
+    (22, 'https://evbattery.vn/wp-content/uploads/2025/02/003-60V-40AH-NCM-Klara-A2-2019-1-510x510.jpg'),
+    (23, 'https://evbattery.vn/wp-content/uploads/2025/02/002-60V-30AH-NCM-Klara-A2-2019-1-510x510.jpg'),
+    (24, 'https://evbattery.vn/wp-content/uploads/2025/02/001-60V-30AH-LFP-Klara-A2-2019-1-510x510.jpg'),
+    (25, 'https://evbattery.vn/wp-content/uploads/2024/09/Do-PIN-Xe-May-Dien-Feliz-S-72V-105AH-1-510x510.jpg'),
+    (25, 'https://evbattery.vn/wp-content/uploads/2024/09/Do-PIN-Xe-May-Dien-Feliz-S-72V-105AH-3-510x510.jpg'),
+    (26, 'https://evbattery.vn/wp-content/uploads/2024/09/PIN-Xe-Dien-Theon-48V-140AH-NCM-1-510x510.jpg'),
+    (27, 'https://evbattery.vn/wp-content/uploads/2024/09/PIN-Xe-Dien-Theon-48V-140AH-NCM-3-510x510.jpg'),
+    (27, 'https://evbattery.vn/wp-content/uploads/2024/09/PIN-Xe-Dien-Theon-48V-140AH-NCM-4-510x510.jpg'),
+    (28, 'https://evbattery.vn/wp-content/uploads/2024/08/Do-PIN-Xe-May-Dien-Theon-S-72V-140AH-19s-NCM-tang-kem-sac-84V-15A-4-510x510.jpg'),
+    (29, 'https://evbattery.vn/wp-content/uploads/2024/08/EVBattery-Do-PIN-Xe-May-Dien-cho-Feliz-S-VinFast-PIN-Sat-72V-100AH-LFP-tang-kem-sac-84V-10A-4-510x510.jpg'),
+    (29, 'https://evbattery.vn/wp-content/uploads/2024/08/EVBattery-Do-PIN-Xe-May-Dien-cho-Feliz-S-VinFast-PIN-Sat-72V-100AH-LFP-tang-kem-sac-84V-10A-2-510x510.jpg'),
+    (30, 'https://evbattery.vn/wp-content/uploads/2024/08/PIN-Xe-Dien-Feliz-72V-30AH-NCM-4-510x510.jpg'),
+    (30, 'https://evbattery.vn/wp-content/uploads/2024/08/PIN-Xe-Dien-Feliz-72V-30AH-NCM-2-510x510.jpg');
 
 -- =============================================
 -- 9. FAVORITES
