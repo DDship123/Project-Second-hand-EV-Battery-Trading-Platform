@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.time.Year;
 import java.util.List;
 
 @Component
@@ -30,16 +31,21 @@ public class CreatePostValidate {
         }
 
         try{
-            Integer.parseInt(year);
+            int yearCurrent = Year.now().getValue();
+            int yearInput = Integer.parseInt(year);
+            if(yearInput >  yearCurrent){
+                model.addAttribute("yearError", "Năm sản xuất không được lớn hơn năm hiện tại");
+                hasErrors = true;
+            }
         }catch (NumberFormatException e){
-            model.addAttribute("yearError", "Năm sản xuất phải là số nguyên");
+            model.addAttribute("yearError", "Vui lòng nhập số");
             hasErrors = true;
         }
 
         try{
             Integer.parseInt(batteryCapacity);
         }catch (NumberFormatException e){
-            model.addAttribute("vehicleBatteryCapacity", "Dung tích pin phải là số");
+            model.addAttribute("vehicleBatteryCapacity", "Vui lòng nhập số");
             hasErrors = true;
         }
         try {
@@ -78,7 +84,12 @@ public class CreatePostValidate {
         }
 
         try {
-            Integer.parseInt(batteryYearOfManufacture);
+            int yearCurrent = Year.now().getValue();
+            int yearInput = Integer.parseInt(batteryYearOfManufacture);
+            if(yearInput >  yearCurrent){
+                model.addAttribute("yearError", "Năm sản xuất không được lớn hơn năm hiện tại");
+                hasErrors = true;
+            }
         }catch (NumberFormatException e){
             model.addAttribute("batteryYearError","Vui lòng nhập số");
             hasErrors = true;
