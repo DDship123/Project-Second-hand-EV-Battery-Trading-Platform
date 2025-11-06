@@ -1,57 +1,68 @@
 window.addEventListener("DOMContentLoaded", function () {
     const vehicleInfo = document.querySelector(".vehicle");
     const batteryInfo = document.querySelector(".battery");
-    const categorySelect = document.querySelector(".registration__select");
+    const categorySelect = document.querySelector("select[name='productType']");
     const form = document.querySelector(".registration__content");
 
-    categorySelect.addEventListener("change", function () {
+
+    function updateForm() {
         let actionUrl = form.getAttribute("action");
+
         if (categorySelect.value === "VEHICLE") {
+            // Hiển thị xe
             vehicleInfo.classList.add("active");
             batteryInfo.classList.remove("active");
 
-            const inputs = vehicleInfo.querySelectorAll("input, select, textarea");
-            console.log(inputs);
-            inputs.forEach(input => {
-                input.setAttribute("required", "required");
+            // Enable phần xe
+            vehicleInfo.querySelectorAll("input, select, textarea").forEach(input => {
                 input.removeAttribute("disabled");
-            });
-            const batteryInputs = batteryInfo.querySelectorAll("input, select, textarea");
-            console.log(batteryInputs);
-            batteryInputs.forEach(input => {
-                input.removeAttribute("required");
-                input.setAttribute("disabled", "disabled");
+                input.setAttribute("required", "required");
             });
 
+            // Disable phần pin
+            batteryInfo.querySelectorAll("input, select, textarea").forEach(input => {
+                input.setAttribute("disabled", "disabled");
+                input.removeAttribute("required");
+            });
+
+            // Cập nhật action
             if (actionUrl.includes("battery")) {
-                actionUrl = actionUrl.replace("battery", "vehicle");
-                form.setAttribute("action", actionUrl);
+                form.setAttribute("action", actionUrl.replace("battery", "vehicle"));
             }
+
         } else if (categorySelect.value === "BATTERY") {
+            // Hiển thị pin
             batteryInfo.classList.add("active");
             vehicleInfo.classList.remove("active");
 
-            const inputs = batteryInfo.querySelectorAll("input, select, textarea");
-            console.log(inputs);
-            inputs.forEach(input => {
-                input.setAttribute("required", "required");
+            // Enable phần pin
+            batteryInfo.querySelectorAll("input, select, textarea").forEach(input => {
                 input.removeAttribute("disabled");
+                input.setAttribute("required", "required");
             });
-            const vehicleInputs = vehicleInfo.querySelectorAll("input, select, textarea");
-            console.log(vehicleInputs);
-            vehicleInputs.forEach(input => {
 
-                input.removeAttribute("required");
+            // Disable phần xe
+            vehicleInfo.querySelectorAll("input, select, textarea").forEach(input => {
                 input.setAttribute("disabled", "disabled");
+                input.removeAttribute("required");
             });
 
+            // Cập nhật action
             if (actionUrl.includes("vehicle")) {
-                actionUrl = actionUrl.replace("vehicle", "battery");
-                form.setAttribute("action", actionUrl);
+                form.setAttribute("action", actionUrl.replace("vehicle", "battery"));
             }
         }
-    });
+    }
 
+    // Khi chọn lại loại sản phẩm
+    categorySelect.addEventListener("change", updateForm);
+
+    // ✅ Gọi ngay khi trang load để đảm bảo chỉ 1 phần active
+    updateForm();
+
+    // ===============================
+    // Xử lý nút thêm ảnh
+    // ===============================
     const uploadImageButtons = document.querySelectorAll(".registration__upload-button");
     const imageInputs = document.querySelectorAll(".registration__file-upload-form");
     uploadImageButtons.forEach((button, index) => {
@@ -60,5 +71,4 @@ window.addEventListener("DOMContentLoaded", function () {
             imageInputs[index].classList.toggle("active");
         });
     });
-
 });
