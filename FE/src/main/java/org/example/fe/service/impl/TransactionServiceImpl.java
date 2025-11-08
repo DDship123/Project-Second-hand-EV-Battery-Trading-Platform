@@ -346,6 +346,55 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public ApiResponse<List<TransactionResponse>> getTransactionsByStatus(String status) {
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Build URL with query parameter
+            String url = apiBaseUrl + "/api/transactions/status/" + status;
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<List<TransactionResponse>>> apiResponse = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<TransactionResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                ApiResponse<List<TransactionResponse>> body = apiResponse.getBody();
+
+                if ("SUCCESS".equals(body.getStatus())) {
+                    // Get transactions by status successful
+                    response.ok(body.getPayload());
+                } else {
+                    // API call thành công nhưng backend trả về lỗi
+                    Map<String, String> errorMap = body.getError();
+                    if (errorMap == null || errorMap.isEmpty()) {
+                        errorMap = new HashMap<>();
+                        errorMap.put("message", "Failed to get transactions by status");
+                    }
+                    response.error(errorMap);
+                }
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get transactions by status: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+    }
+
+    @Override
     public ApiResponse<TransactionResponse> getTransactionById(Integer transactionId) {
         ApiResponse<TransactionResponse> response = new ApiResponse<>();
 

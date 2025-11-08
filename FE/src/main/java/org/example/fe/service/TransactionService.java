@@ -15,6 +15,8 @@ public interface TransactionService {
 
     ApiResponse<List<TransactionResponse>> getAllTransactions();
 
+    ApiResponse<List<TransactionResponse>> getTransactionsByStatus(String status);
+
     ApiResponse<TransactionResponse> getTransactionById(Integer transactionId);
 
     ApiResponse<TransactionResponse> createTransaction(int buyerId, int postId);

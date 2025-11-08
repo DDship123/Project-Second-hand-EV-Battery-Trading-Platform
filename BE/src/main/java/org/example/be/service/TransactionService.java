@@ -70,6 +70,19 @@ public class TransactionService {
 
     // Lấy tất cả transaction theo trạng thái (yêu cầu giao dịch, chấp nhận, chuyển tiền cho admin, giao, hoàn thành)(Tân)
     public List<Transaction> getAllTransactionsByStatus(String status) {
+        if (status.equals("ALL"))
+        {
+            List<Transaction> result = new ArrayList<>();
+            List<Transaction> delivered = transactionRepository.findAllByStatusOrderByCreatedAtDesc("DELIVERED");
+            List<Transaction> paid = transactionRepository.findAllByStatusOrderByCreatedAtDesc("PAID");
+            List<Transaction> accepted = transactionRepository.findAllByStatusOrderByCreatedAtDesc("ACCEPTED");
+            List<Transaction> requested = transactionRepository.findAllByStatusOrderByCreatedAtDesc("REQUESTED");
+            result.addAll(delivered);
+            result.addAll(requested);
+            result.addAll(accepted);
+            result.addAll(paid);
+            return result;
+        }
         return transactionRepository.findAllByStatusOrderByCreatedAtDesc(status);
     }
 

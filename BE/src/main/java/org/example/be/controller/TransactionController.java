@@ -315,23 +315,23 @@ public class TransactionController {
     }
 
     // Hàm ADMIN: lấy transaction mang nhiều status
-    @GetMapping("/admin/statuses")
-    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatusesForAdmin(@RequestParam List<String> statuses) {
-        List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatuses(statuses).stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
-
-        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
-        if (transactions.isEmpty()) {
-            HashMap<String, String> error = new HashMap<>();
-            error.put("message", "No transactions found for statuses: " + statuses);
-            response.error(error);
-            return ResponseEntity.status(404).body(response);
-        } else {
-            response.ok(transactions);
-            return ResponseEntity.ok(response);
-        }
-    }
+//    @GetMapping("/admin/statuses")
+//    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatusesForAdmin(@RequestParam List<String> statuses) {
+//        List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatuses(statuses).stream()
+//                .map(this::mapToResponse)
+//                .collect(Collectors.toList());
+//
+//        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+//        if (transactions.isEmpty()) {
+//            HashMap<String, String> error = new HashMap<>();
+//            error.put("message", "No transactions found for statuses: " + statuses);
+//            response.error(error);
+//            return ResponseEntity.status(404).body(response);
+//        } else {
+//            response.ok(transactions);
+//            return ResponseEntity.ok(response);
+//        }
+//    }
     // Thêm vào TransactionController
     @GetMapping("/status/{status}")
     public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatus(@PathVariable String status) {

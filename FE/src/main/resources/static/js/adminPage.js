@@ -94,7 +94,7 @@ submenuItems.forEach(item => {
     }
     switch (item.textContent.trim()) {
       case 'Quản lí đăng bài':
-        window.location.href = '/home/admin/post-manage/PENDING';
+        window.location.href = '/home/admin/post-manage';
         break;
       case 'Quản lí giao dịch':
         window.location.href = '/home/admin/transaction-manage';

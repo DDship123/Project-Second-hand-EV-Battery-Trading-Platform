@@ -28,9 +28,23 @@ public class AdminPageController {
     @Autowired
     private TransactionService transactionService;
 
-    @GetMapping(value = {"", "/post-manage/{status}"})
-    public String dashboard(Model model, HttpSession session,
-                            @PathVariable(required = false) String status,
+    @GetMapping(value = {"", "/dashboard"})
+    public String adminDashboard(Model model, HttpSession session) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login";
+        }
+        model.addAttribute("admin", member);
+        return "adminDashboard";
+    }
+
+
+    @GetMapping("/post-manage")
+    public String postMange(Model model, HttpSession session,
+                            @RequestParam(required = false,defaultValue = "PENDING") String status,
                             @RequestParam(name = "successMessage", required = false) String successMessage,
                             @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
@@ -40,9 +54,9 @@ public class AdminPageController {
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/login";
         }
-        if (status == null || status.isEmpty()) {
-            status = "PENDING";
-        }
+//        if (status == null || status.isEmpty()) {
+//            status = "PENDING";
+//        }
         ApiResponse<List<PostResponse>> response = postService.getAllPostByStatus(status);
         model.addAttribute("posts", response.getPayload());
         model.addAttribute("admin", member);
@@ -94,7 +108,7 @@ public class AdminPageController {
         } else {
             redirectAttributes.addAttribute("errorMessage", "Cập nhật bài đăng thất bại.");
         }
-        return "redirect:/home/admin/post-manage/PENDING";
+        return "redirect:/home/admin/post-manage";
     }
 
     @GetMapping("/member-manage")
@@ -162,7 +176,7 @@ public class AdminPageController {
     }
 
     @GetMapping("/comment-review-manage")
-    public String commentManage(Model model, HttpSession session) {
+    public String commentManage(Model model, HttpSession session,@RequestParam(defaultValue = "PENDING") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
             return "redirect:/login";
@@ -170,7 +184,7 @@ public class AdminPageController {
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/login";
         }
-        ApiResponse<List<CommentResponse>> response = commentService.findAllCommentByStatus("PENDING");
+        ApiResponse<List<CommentResponse>> response = commentService.findAllCommentByStatus(status);
         model.addAttribute("comments", response.getPayload());
         model.addAttribute("admin", member);
         return "commentManage";
@@ -199,7 +213,7 @@ public class AdminPageController {
     }
 
     @GetMapping("/comment-review-manage/review")
-    public String reviewComments(Model model, HttpSession session)
+    public String reviewComments(Model model, HttpSession session,@RequestParam(defaultValue = "PENDING") String status)
                                  {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
@@ -209,7 +223,7 @@ public class AdminPageController {
             return "redirect:/login";
         }
         model.addAttribute("admin", member);
-        List<ReviewResponse> reviews = reviewService.findAllReviewByStatus("PENDING").getPayload();
+        List<ReviewResponse> reviews = reviewService.findAllReviewByStatus(status).getPayload();
         model.addAttribute("reviews", reviews);
         model.addAttribute("admin", member);
         return "commentManage";
@@ -242,7 +256,8 @@ public class AdminPageController {
 
     @GetMapping("/transaction-manage")
     public String transactionManage(Model model, HttpSession session,@RequestParam(name = "successMessage", required = false) String successMessage,
-                                    @RequestParam(name = "errorMessage", required = false) String errorMessage) {
+                                    @RequestParam(name = "errorMessage", required = false) String errorMessage,
+                                    @RequestParam(name = "status", required = false, defaultValue = "ALL") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
             return "redirect:/login";
@@ -251,7 +266,7 @@ public class AdminPageController {
             return "redirect:/login";
         }
         model.addAttribute("admin", member);
-        ApiResponse<List<TransactionResponse>> response = transactionService.getAllTransactions();
+        ApiResponse<List<TransactionResponse>> response = transactionService.getTransactionsByStatus(status);
         model.addAttribute("transactions", response.getPayload());
         if (successMessage != null) {
             model.addAttribute("successMessage", successMessage);
