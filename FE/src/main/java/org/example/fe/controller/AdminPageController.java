@@ -38,7 +38,7 @@ public class AdminPageController {
             return "redirect:/login";
         }
         model.addAttribute("admin", member);
-        return "adminDashboard";
+        return "dashboardAdmin";
     }
 
 
