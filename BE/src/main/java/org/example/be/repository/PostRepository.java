@@ -52,7 +52,10 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                                      Pageable pageable);
 
     @Query("SELECT COUNT(p) FROM Post p WHERE p.product.productType = :productType AND p.status = 'APPROVED'")
-    int countByStatus(@Param("productType") String productType);
+    int countByProductType(@Param("productType") String productType);
+
+    @Query("SELECT COUNT(p) FROM Post p WHERE p.status = :status")
+    int countByStatus(String status);
 
     @Query("SELECT COUNT(p) FROM Post p WHERE p.seller.city = :location " +
             "AND p.product.productType = :productType AND p.status = 'APPROVED'")

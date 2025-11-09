@@ -6,4 +6,6 @@ import org.example.fe.response.MemberPlanUsageResponse;
 public interface MemberPlanUsageService {
     public ApiResponse<MemberPlanUsageResponse> getMemberPlanUsageByMemberId(Integer memberId);
     public ApiResponse<MemberPlanUsageResponse> registerPackage(Integer memberId, Integer planId);
+
+    public ApiResponse<Double> getTotalRevenue();
 }

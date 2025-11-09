@@ -56,6 +56,10 @@ public class PostService {
         return false;
     }
 
+    public int countPostsByStatus(String status) {
+        return postRepository.countByStatus(status);
+    }
+
     // --- For You ---
 // Lấy các bài post mà chính member đó đăng (APPROVED)
     public List<Post> getPostsForYou(Integer memberId) {
@@ -100,7 +104,7 @@ public class PostService {
 
     // Đếm số lượng post theo productType và status APPROVED
     public int countApprovedPostsByProductType(String productType) {
-        return postRepository.countByStatus(productType);
+        return postRepository.countByProductType(productType);
     }
     // Đếm số lượng post theo location và status
     public int countPostsByLocationAndStatus(String location, String productType) {

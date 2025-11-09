@@ -27,6 +27,10 @@ public class AdminPageController {
     private MemberService memberService;
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private CommissionService commissionService;
+    @Autowired
+    private MemberPlanUsageService memberPlanUsageService;
 
     @GetMapping(value = {"", "/dashboard"})
     public String adminDashboard(Model model, HttpSession session) {
@@ -37,8 +41,78 @@ public class AdminPageController {
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/login";
         }
+        ApiResponse<Integer> userCountResponse = memberService.countUser();
+        if (userCountResponse.getPayload() != null) {
+            model.addAttribute("userCount", userCountResponse.getPayload());
+        } else {
+            model.addAttribute("userCount", "Lỗi đếm số lượng người dùng");
+        }
+
+        ApiResponse<Integer> postCountResponse = postService.countPostByStatus("APPROVED");
+        if (postCountResponse.getPayload() != null) {
+            model.addAttribute("postCount", postCountResponse.getPayload());
+        } else {
+            model.addAttribute("postCount", "Lỗi đếm số lượng bài đăng");
+        }
+
+        ApiResponse<Integer> postSoldCountResponse = postService.countPostByStatus("SOLD");
+        if (postSoldCountResponse.getPayload() != null) {
+            model.addAttribute("postSoldCount", postSoldCountResponse.getPayload());
+        } else {
+            model.addAttribute("postSoldCount", "Lỗi đếm số lượng bài đăng đã bán");
+        }
+
+        ApiResponse<Double> revenueResponse = commissionService.getTotalCommission();
+        if (revenueResponse.getPayload() != null) {
+            model.addAttribute("totalCommissionRevenue", revenueResponse.getPayload());
+        } else {
+            model.addAttribute("totalCommissionRevenue", "Lỗi tính tổng doanh thu phí hoa hồng");
+        }
+
+        ApiResponse<Double> totalMembershipRevenueResponse = memberPlanUsageService.getTotalRevenue();
+        if (totalMembershipRevenueResponse.getPayload() != null) {
+            model.addAttribute("totalMembershipRevenue", totalMembershipRevenueResponse.getPayload());
+        } else {
+            model.addAttribute("totalMembershipRevenue", "Lỗi tính tổng doanh thu từ gói thành viên");
+        }
+
+        ApiResponse<Integer> vehicleCountResponse = postService.countPostByProductType("VEHICLE");
+        if (vehicleCountResponse.getPayload() != null) {
+            model.addAttribute("vehicleCount", vehicleCountResponse.getPayload());
+        } else {
+            model.addAttribute("vehicleCount", "Lỗi đếm số lượng bài đăng loại phương tiện");
+        }
+
+        ApiResponse<Integer> batteryCountResponse = postService.countPostByProductType("BATTERY");
+        if (batteryCountResponse.getPayload() != null) {
+            model.addAttribute("batteryCount", batteryCountResponse.getPayload());
+        } else {
+            model.addAttribute("batteryCount", "Lỗi đếm số lượng bài đăng loại ắc quy");
+        }
+
+        ApiResponse<List<PostResponse>> getLatestPosts = postService.getLatestPost();
+        if (getLatestPosts.getPayload() != null) {
+            if (getLatestPosts.getPayload().size() > 5) {
+                model.addAttribute("latestPosts", getLatestPosts.getPayload().subList(0, 5));
+            } else {
+                model.addAttribute("latestPosts", getLatestPosts.getPayload());
+            }
+        } else {
+            model.addAttribute("latestPosts", "Lỗi tải danh sách bài đăng mới nhất");
+        }
+        ApiResponse<List<TransactionResponse>> getLatestTransactions = transactionService.getTransactionsForDashboard();
+        if (getLatestTransactions.getPayload() != null) {
+            if (getLatestTransactions.getPayload().size() > 5) {
+                model.addAttribute("latestTransactions", getLatestTransactions.getPayload().subList(0, 5));
+            } else {
+                model.addAttribute("latestTransactions", getLatestTransactions.getPayload());
+            }
+        } else {
+            model.addAttribute("latestTransactions", "Lỗi tải danh sách giao dịch mới nhất");
+        }
+
         model.addAttribute("admin", member);
-        return "dashboardAdmin";
+        return "dashboardAdmin-copy";
     }
 
 

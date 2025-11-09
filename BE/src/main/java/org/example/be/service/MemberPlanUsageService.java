@@ -42,6 +42,18 @@ public class MemberPlanUsageService {
         }
         return null;
     }
+
+    public double calculateTotalRevenue() {
+        List<MemberPlanUsage> usages = memberPlanUsageRepository.findAll();
+        double totalRevenue = 0.0;
+        for (MemberPlanUsage usage : usages) {
+            if (usage.getMembershipPlan() != null) {
+                totalRevenue += usage.getMembershipPlan().getPrice().doubleValue();
+            }
+        }
+        return totalRevenue;
+    }
+
 //    public MemberPlanUsage registerPackage(Member member, MembershipPlan plan) {
 //        MemberPlanUsage memberPlanUsage = memberPlanUsageRepository.findByMember_MemberId(member.getMemberId()).orElse(null);
 //        if (memberPlanUsage != null) {

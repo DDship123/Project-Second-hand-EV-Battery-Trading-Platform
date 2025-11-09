@@ -15,4 +15,6 @@ public interface MemberService {
     ApiResponse<List<MemberResponse>> getMemberByStatus(String status);
 
     ApiResponse<MemberResponse> updateStatus(MemberResponse member);
+
+    ApiResponse<Integer> countUser();
 }

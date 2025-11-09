@@ -17,6 +17,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     List<Member> getMembersByStatus(String status);
     Optional<Member> findByUsername(String username);
 
+    int countByRole(String role);//Tân
+
     List<Member> findAllByRoleAndStatus(String role, String status);//Tân
 
     @Query("SELECT m FROM Member m WHERE m.role = :role")

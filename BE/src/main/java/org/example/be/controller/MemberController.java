@@ -65,6 +65,26 @@ public class MemberController {
         }
     }
 
+    @GetMapping("/admin/count/user")
+    public ResponseEntity<ApiResponse<Integer>> countUsers() {
+        ApiResponse<Integer> response = new ApiResponse<>();
+        try {
+            int count = memberService.countMemberByRole("USER");
+
+            Map<String, Object> metadata = new HashMap<>();
+            metadata.put("timestamp", LocalDateTime.now());
+
+            response.ok(count, (HashMap<String, Object>) metadata);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
     // ------------------- GET BY ID -------------------
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Member>> getMemberById(@PathVariable Integer id) {

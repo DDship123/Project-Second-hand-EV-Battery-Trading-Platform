@@ -398,4 +398,38 @@ public class TransactionController {
         response.ok(transactionResponse, metadata);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/admin/dashboard" )
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getTransactionsForDashboard() {
+        List<TransactionResponse> transactions = transactionService.getTransactionsForDashboard().stream()
+                .map(this::mapToResponse).collect(Collectors.toList());
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (transactions.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No transactions found for dashboard");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            for (TransactionResponse tr : transactions) {
+                Post post = postService.getPostById(tr.getPost().getPostsId()).orElse(null);
+                if (post != null) {
+                    PostResponse postResponse = new PostResponse();
+                    postResponse.setPostsId(post.getPostsId());
+                    postResponse.setTitle(post.getTitle());
+
+                    Product product = post.getProduct();
+                    if (product != null) {
+                        ProductResponse productResponse = new ProductResponse();
+                        productResponse.setProductId(product.getProductsId());
+                        productResponse.setProductName(product.getName());
+                        productResponse.setProductType(product.getProductType());
+                        postResponse.setProduct(productResponse);
+                    }
+                    tr.setPost(postResponse);
+                }
+            }
+            response.ok(transactions);
+            return ResponseEntity.ok(response);
+        }
+    }
 }

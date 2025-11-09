@@ -52,6 +52,8 @@ public class MemberPlanUsageController {
         }
     }
 
+
+
     @GetMapping("/member/{memberId}")
     public ResponseEntity<ApiResponse<MemberPlanUsageResponse>> getMemberPlanUsageByMemberId(@PathVariable Integer memberId) {
         Optional<MemberPlanUsage> usage = memberPlanUsageService.getMemberPlanUsageByMemberId(memberId);
@@ -152,5 +154,13 @@ public class MemberPlanUsageController {
             response.error(error);
             return ResponseEntity.status(404).body(response);
         }
+    }
+
+    @GetMapping("/admin/total-revenue")
+    public ResponseEntity<ApiResponse<Double>> getTotalRevenue() {
+        Double totalRevenue = memberPlanUsageService.calculateTotalRevenue();
+        ApiResponse<Double> response = new ApiResponse<>();
+        response.ok(totalRevenue);
+        return ResponseEntity.ok(response);
     }
 }

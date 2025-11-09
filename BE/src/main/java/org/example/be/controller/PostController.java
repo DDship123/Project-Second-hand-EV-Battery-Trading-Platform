@@ -765,6 +765,23 @@ public class PostController {
         }
     }
 
+
+    @GetMapping("/admin/count/product-type/{productType}")
+    public ResponseEntity<ApiResponse<Integer>> countApprovedPostsByProductType(@PathVariable String productType) {
+        int count = postService.countApprovedPostsByProductType(productType);
+        ApiResponse<Integer> response = new ApiResponse<>();
+        response.ok(count);
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/admin/count/status/{status}")
+    public ResponseEntity<ApiResponse<Integer>> countPostsByStatus(@PathVariable String status) {
+        int count = postService.countPostsByStatus(status);
+        ApiResponse<Integer> response = new ApiResponse<>();
+        response.ok(count);
+        return ResponseEntity.ok(response);
+    }
+
+
     private Map<String, String> validatePost(PostResponse post) {
         Map<String, String> errors = new HashMap<>();
         if(post.getProduct() == null){

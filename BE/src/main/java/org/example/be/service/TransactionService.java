@@ -85,6 +85,9 @@ public class TransactionService {
         }
         return transactionRepository.findAllByStatusOrderByCreatedAtDesc(status);
     }
+    public List<Transaction> getTransactionsForDashboard() {
+        return transactionRepository.findAllByStatusOrderByCreatedAtDesc("REQUESTED");
+    }
 
     // Lấy tất cả transaction theo nhiều trạng thái (truyền danh sách)(Tân)
     public List<Transaction> getAllTransactionsByStatuses(List<String> statuses) {
