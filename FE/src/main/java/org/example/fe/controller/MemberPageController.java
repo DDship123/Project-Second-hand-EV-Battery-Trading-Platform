@@ -45,8 +45,6 @@ public class MemberPageController {
             return "redirect:/login";
         }
 
-
-
         ApiResponse<MemberResponse> response = memberService.updateMember(updatedUser);
 
         if (response.getStatus().equals("SUCCESS")) {
