@@ -30,9 +30,11 @@
         <div class="content-section active" data-section="post">
             <div class="content-header">
                 <div class="filter-tabs">
-                    <button class="tab-btn active">Đợi duyệt <span class="badge" th:text="${totalPosts}"></span></button>
+<!--                    <span class="badge" th:text="${totalPosts}"></span>-->
+                    <button class="tab-btn active">Đợi duyệt </button>
                     <button class="tab-btn">Đã duyệt</button>
-                    <button class="tab-btn">Từ chối <span class="badge"></span></button>
+                    <button class="tab-btn">Từ chối</button>
+                    <button class="tab-btn">Đã bán</button>
                 </div>
 <!--                <div class="result-info">Hiện 1 - 8 trên 100 kết quả</div>-->
             </div>
@@ -73,8 +75,8 @@
                         <td><a th:href="'/home/admin/post-manage/detail'+'?postId='+${post.getPostsId()}" class="link-text detail-link" >Chi tiết</a></td>
                         <td style="width: 25vw;" th:text="${post.getDescription()}">Xe đẹp, mới 99%</td>
                         <td>
-                            <button class="action-btn approve" th:attr="data-post-id=${post.getPostsId()}">Duyệt</button>
-                            <button class="action-btn reject" th:attr="data-post-id=${post.getPostsId()}">Từ chối</button>
+                            <button th:if="${post.getStatus().equals('PENDING')}" class="action-btn approve" th:attr="data-post-id=${post.getPostsId()}">Duyệt</button>
+                            <button th:if="${post.getStatus().equals('PENDING')}" class="action-btn reject" th:attr="data-post-id=${post.getPostsId()}">Từ chối</button>
                         </td>
                     </tr>
                     </tbody>

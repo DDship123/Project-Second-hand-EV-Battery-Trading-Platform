@@ -29,68 +29,69 @@
         </div>
         <ul class="sideBar__menu">
             <li>
-                <a th:href="@{/home/admin/dashboard}" style="text-decoration: none; color: inherit;">
-                    <div class="menu-item" id="dashboardMenu">
-                        <div class="menu-item-content">
-                            <i class="fa-solid fa-chart-line"></i>
-                            <p>Dashboard</p>
-                        </div>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <a style="text-decoration: none" th:href="@{/home/admin/dashboard}">
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <span>Dashboard</span>
+                        </a>
                     </div>
-                </a>
+                </div>
             </li>
             <li>
-                <a th:href="@{/home/admin/post-manage/PENDING}" style="text-decoration: none; color: inherit;">
-                    <div class="menu-item" id="postMenu">
-                        <div class="menu-item-content">
-                            <i class="fa-solid fa-border-all"></i>
-                            <p>Quản lý đăng bài</p>
-                        </div>
+                <div class="menu-item" id="permissionMenu">
+                    <div class="menu-item-content">
+                        <i class="fa-solid fa-table-cells"></i>
+                        <p>Quyền & Phạm vi</p>
                     </div>
-                </a>
+                    <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                </div>
+                <ul class="submenu" id="submenu">
+                    <li class="submenu-item" data-submenu="post">
+                        <i class="fa-solid fa-border-all"></i>
+                        <span>Quản lí đăng bài</span>
+                    </li>
+                    <li class="submenu-item" data-submenu="transaction">
+                        <i class="fa-solid fa-file-invoice"></i>
+                        <span>Quản lí giao dịch</span>
+                    </li>
+                    <li class="submenu-item" data-submenu="user">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>Quản lí người dùng</span>
+                    </li>
+                    <li class="submenu-item" data-submenu="comment">
+                        <i class="fa-solid fa-comments"></i>
+                        <span>Quản lí bình luận</span>
+                    </li>
+<!--                    <li class="submenu-item" data-submenu="fee">-->
+<!--                        <i class="fa-solid fa-dollar-sign"></i>-->
+<!--                        <span>Cấu hình phí & Hoa hồng</span>-->
+<!--                    </li>-->
+                </ul>
+            </li>
+            <li class="menu-divider">
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <p>Điều khoản</p>
+                    </div>
+                </div>
             </li>
             <li>
-                <a th:href="@{/home/admin/transaction-manage}" style="text-decoration: none; color: inherit;">
-                    <div class="menu-item" id="transactionMenu">
-                        <div class="menu-item-content">
-                            <i class="fa-solid fa-file-invoice"></i>
-                            <p>Quản lý giao dịch</p>
-                        </div>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fa-solid fa-gear"></i>
+                        <p>Cài đặt</p>
                     </div>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/home/admin/member-manage}" style="text-decoration: none; color: inherit;">
-                    <div class="menu-item" id="userMenu">
-                        <div class="menu-item-content">
-                            <i class="fa-solid fa-user-group"></i>
-                            <p>Quản lý người dùng</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/home/admin/comment-review-manage}" style="text-decoration: none; color: inherit;">
-                    <div class="menu-item" id="commentMenu">
-                        <div class="menu-item-content">
-                            <i class="fa-solid fa-comments"></i>
-                            <p>Quản lý bình luận</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/home/admin/fee-manage}" style="text-decoration: none; color: inherit;">
-                    <div class="menu-item" id="feeMenu">
-                        <div class="menu-item-content">
-                            <i class="fa-solid fa-dollar-sign"></i>
-                            <p>Cấu hình phí & Hoa hồng</p>
-                        </div>
-                    </div>
-                </a>
+                </div>
             </li>
         </ul>
     </div>
 </div>
+
+<!-- <script>
+
+</script> -->
 
 <script th:src="@{/js/adminPage.js}"></script>
 

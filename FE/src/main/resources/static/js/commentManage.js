@@ -1,5 +1,5 @@
 window.addEventListener('load', function() {
-    const selectionBtns = document.querySelectorAll(".filter-tabs .tab-btn");
+    const selectionBtns = document.querySelectorAll(".content-header.category .filter-tabs .tab-btn");
     selectionBtns.forEach(function(btn) {
         btn.addEventListener('click', function() {
             const selectedStatus = this.getAttribute('data-tab');
@@ -17,6 +17,49 @@ window.addEventListener('load', function() {
     }else {
         selectionBtns[1].classList.remove('active');
         selectionBtns[0].classList.add('active');
+    }
+
+
+    const filterTabs = document.querySelector(".tab-content .filter-tabs");
+    if (filterTabs) {
+        const tabBtn = filterTabs.querySelectorAll("button.tab-btn");
+        const windowUrl = new URL(window.location.href);
+        const currentStatus = windowUrl.searchParams.get("status");
+        if (currentStatus !== null) {
+            tabBtn.forEach(function(btn) {
+                if (currentStatus === "PENDING" && btn.innerText === "Đợi duyệt"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "APPROVED" && btn.innerText === "Đã duyệt"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "REJECTED" && btn.innerText === "Từ chối"){
+                    btn.classList.add("active");
+                }else {
+                    btn.classList.remove("active");
+                }
+            });
+        }
+
+        tabBtn.forEach(function(btn) {
+
+            btn.addEventListener("click", function(e) {
+                if (windowUrl.searchParams.has("successMessage")){
+                    windowUrl.searchParams.delete("successMessage");
+                }else if (windowUrl.searchParams.has("errorMessage")){
+                    windowUrl.searchParams.delete("errorMessage");
+                }
+
+                if (btn.innerText === "Đợi duyệt"){
+                    windowUrl.searchParams.set("status", "PENDING");
+                    window.location.href = windowUrl.toString();
+                }else if (btn.innerText === "Đã duyệt"){
+                    windowUrl.searchParams.set("status", "APPROVED");
+                    window.location.href = windowUrl.toString();
+                }else if (btn.innerText === "Từ chối"){
+                    windowUrl.searchParams.set("status", "REJECTED");
+                    window.location.href = windowUrl.toString();
+                }
+            });
+        });
     }
 
     commentBtns();

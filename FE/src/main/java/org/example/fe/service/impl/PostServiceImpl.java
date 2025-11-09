@@ -180,6 +180,43 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public ApiResponse<List<PostResponse>> getAllPostByMemberIdAndStatus(int memberId, String status) {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/member/" + memberId + "/status/" + status,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get posts by memberId and status successful
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+            } else {
+                // Get posts by memberId and status failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve posts for member id: " + memberId + " with status: " + status);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get posts for member id and status: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
+
+    @Override
     public ApiResponse<PostResponse> getPostDetail(int postID) {
         ApiResponse<PostResponse> response = new ApiResponse<>();
 
@@ -219,33 +256,33 @@ public class PostServiceImpl implements PostService {
 
     }
 
-    @Override
-    public ApiResponse<List<PostResponse>> getLatestPosts() {
-        ApiResponse<List<PostResponse>> apiResponse = new ApiResponse<>();
-        try {
-            ResponseEntity<ApiResponse<List<PostResponse>>> response = restTemplate.exchange(
-                    apiBaseUrl + "/api/posts/latest",
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>() {}
-            );
-            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-                apiResponse.ok(response.getBody().getPayload());
-                return apiResponse;
-            }else {
-                Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Failed to retrieve latest posts");
-                apiResponse.error(errorMap);
-                return apiResponse;
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-            Map<String, String> errorMap = new HashMap<>();
-            errorMap.put("message", "Failed to get latest posts: " + e.getMessage());
-            apiResponse.error(errorMap);
-            return apiResponse;
-        }
-    }
+//    @Override
+//    public ApiResponse<List<PostResponse>> getLatestPosts() {
+//        ApiResponse<List<PostResponse>> apiResponse = new ApiResponse<>();
+//        try {
+//            ResponseEntity<ApiResponse<List<PostResponse>>> response = restTemplate.exchange(
+//                    apiBaseUrl + "/api/posts/latest",
+//                    HttpMethod.GET,
+//                    null,
+//                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>() {}
+//            );
+//            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+//                apiResponse.ok(response.getBody().getPayload());
+//                return apiResponse;
+//            }else {
+//                Map<String, String> errorMap = new HashMap<>();
+//                errorMap.put("message", "Failed to retrieve latest posts");
+//                apiResponse.error(errorMap);
+//                return apiResponse;
+//            }
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//            Map<String, String> errorMap = new HashMap<>();
+//            errorMap.put("message", "Failed to get latest posts: " + e.getMessage());
+//            apiResponse.error(errorMap);
+//            return apiResponse;
+//        }
+//    }
 
     @Override
     public ApiResponse<List<PostResponse>> getLatestVehiclePosts() {
@@ -779,6 +816,78 @@ public class PostServiceImpl implements PostService {
             response.error(errorMap);
         }
 
+        return response;
+    }
+
+    @Override
+    public ApiResponse<Integer> countPostByStatus(String status) {
+        ApiResponse<Integer> response = new ApiResponse<>();
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<Integer>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/admin/count/status/" + status,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<Integer>>() {}
+            );
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get count successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Get count failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve post count for status: " + status);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get post count for status: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
+
+    @Override
+    public ApiResponse<Integer> countPostByProductType(String productType) {
+        ApiResponse<Integer> response = new ApiResponse<>();
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<Integer>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/admin/count/product-type/" + productType,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<Integer>>() {}
+            );
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get count successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                // Get count failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve post count for product type: " + productType);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get post count for product type: " + e.getMessage());
+            response.error(errorMap);
+        }
         return response;
     }
 

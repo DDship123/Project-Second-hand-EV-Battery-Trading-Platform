@@ -315,23 +315,23 @@ public class TransactionController {
     }
 
     // Hàm ADMIN: lấy transaction mang nhiều status
-    @GetMapping("/admin/statuses")
-    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatusesForAdmin(@RequestParam List<String> statuses) {
-        List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatuses(statuses).stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
-
-        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
-        if (transactions.isEmpty()) {
-            HashMap<String, String> error = new HashMap<>();
-            error.put("message", "No transactions found for statuses: " + statuses);
-            response.error(error);
-            return ResponseEntity.status(404).body(response);
-        } else {
-            response.ok(transactions);
-            return ResponseEntity.ok(response);
-        }
-    }
+//    @GetMapping("/admin/statuses")
+//    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatusesForAdmin(@RequestParam List<String> statuses) {
+//        List<TransactionResponse> transactions = transactionService.getAllTransactionsByStatuses(statuses).stream()
+//                .map(this::mapToResponse)
+//                .collect(Collectors.toList());
+//
+//        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+//        if (transactions.isEmpty()) {
+//            HashMap<String, String> error = new HashMap<>();
+//            error.put("message", "No transactions found for statuses: " + statuses);
+//            response.error(error);
+//            return ResponseEntity.status(404).body(response);
+//        } else {
+//            response.ok(transactions);
+//            return ResponseEntity.ok(response);
+//        }
+//    }
     // Thêm vào TransactionController
     @GetMapping("/status/{status}")
     public ResponseEntity<ApiResponse<List<TransactionResponse>>> getAllTransactionsByStatus(@PathVariable String status) {
@@ -397,5 +397,39 @@ public class TransactionController {
         metadata.put("updatedAt", LocalDateTime.now());
         response.ok(transactionResponse, metadata);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/admin/dashboard" )
+    public ResponseEntity<ApiResponse<List<TransactionResponse>>> getTransactionsForDashboard() {
+        List<TransactionResponse> transactions = transactionService.getTransactionsForDashboard().stream()
+                .map(this::mapToResponse).collect(Collectors.toList());
+        ApiResponse<List<TransactionResponse>> response = new ApiResponse<>();
+        if (transactions.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No transactions found for dashboard");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            for (TransactionResponse tr : transactions) {
+                Post post = postService.getPostById(tr.getPost().getPostsId()).orElse(null);
+                if (post != null) {
+                    PostResponse postResponse = new PostResponse();
+                    postResponse.setPostsId(post.getPostsId());
+                    postResponse.setTitle(post.getTitle());
+
+                    Product product = post.getProduct();
+                    if (product != null) {
+                        ProductResponse productResponse = new ProductResponse();
+                        productResponse.setProductId(product.getProductsId());
+                        productResponse.setProductName(product.getName());
+                        productResponse.setProductType(product.getProductType());
+                        postResponse.setProduct(productResponse);
+                    }
+                    tr.setPost(postResponse);
+                }
+            }
+            response.ok(transactions);
+            return ResponseEntity.ok(response);
+        }
     }
 }

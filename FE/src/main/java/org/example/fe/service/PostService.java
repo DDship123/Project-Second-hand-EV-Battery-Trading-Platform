@@ -10,8 +10,11 @@ public interface PostService {
     ApiResponse<List<PostResponse>> getLatestPost();
     ApiResponse<List<PostResponse>> getAllPostBatery();
     ApiResponse<List<PostResponse>> getAllPostVehicle();
+
+    ApiResponse<List<PostResponse>> getAllPostByMemberIdAndStatus(int memberId, String status);
+
     ApiResponse<PostResponse>getPostDetail(int postID);
-    ApiResponse<List<PostResponse>> getLatestPosts();
+//    ApiResponse<List<PostResponse>> getLatestPosts();
     ApiResponse<List<PostResponse>> getLatestVehiclePosts();
     ApiResponse<List<PostResponse>> getLatestBatteryPosts();
     ApiResponse<List<PostResponse>> findAllPostByMemberCity(String city);
@@ -30,5 +33,9 @@ public interface PostService {
     ApiResponse<PostResponse> delete (int postId);
     ApiResponse<List<PostResponse>> getAllPostByStatus(String status);
     ApiResponse<List<PostResponse>> findAllPostByProductTypeAndPostTitle(String productType,String postTitle);
+
+    ApiResponse<Integer> countPostByStatus(String status);
+
+    ApiResponse<Integer> countPostByProductType(String productType);
 
 }

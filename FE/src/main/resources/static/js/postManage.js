@@ -20,14 +20,6 @@ window.addEventListener('load', function() {
     approveButtons.forEach(function(button) {
         approvePost(button);
     });
-    // approveButtons.forEach(function(button) {
-    //     button.addEventListener('click', function() {
-    //         const postId = this.getAttribute('data-post-id');
-    //         if (confirm('Bạn có chắc chắn muốn duyệt bài viết này không?')) {
-    //             window.location.href = `/home/admin/post-manage/update-status?postId=${postId}&status=APPROVED`;
-    //         }
-    //     });
-    // });
 
     const rejectButtons = document.querySelectorAll('.action-btn.reject');
     rejectButtons.forEach(function(button) {
@@ -36,21 +28,63 @@ window.addEventListener('load', function() {
 
 
     const buttonDetails = document.querySelectorAll('#postDetailModal .action-btn');
-    buttonDetails[0].addEventListener('click', function() {
-        approvePost(buttonDetails[0]);
-    });
-    buttonDetails[1].addEventListener('click', function() {
-        rejectPost(buttonDetails[1]);
-    });
+    if (buttonDetails !== null && buttonDetails.length === 2){
+        buttonDetails[0].addEventListener('click', function() {
+            approvePost(buttonDetails[0]);
+        });
+        buttonDetails[1].addEventListener('click', function() {
+            rejectPost(buttonDetails[1]);
+        });
+    }
 
-    // rejectButtons.forEach(function(button) {
-    //     button.addEventListener('click', function() {
-    //         const postId = this.getAttribute('data-post-id');
-    //         if (confirm('Bạn có chắc chắn muốn từ chối bài viết này không?')) {
-    //             window.location.href = `/home/admin/post-manage/update-status?postId=${postId}&status=REJECTED`;
-    //         }
-    //     });
-    // });
+
+
+    const filterTabs = document.querySelector(".filter-tabs");
+    if (filterTabs) {
+        const tabBtn = filterTabs.querySelectorAll("button");
+        const windowUrl = new URL(window.location.href);
+        const currentStatus = windowUrl.searchParams.get("status");
+        if (currentStatus !== null) {
+            tabBtn.forEach(function(btn) {
+                if (currentStatus === "PENDING" && btn.innerText === "Đợi duyệt"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "APPROVED" && btn.innerText === "Đã duyệt"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "REJECTED" && btn.innerText === "Từ chối"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "SOLD" && btn.innerText === "Đã bán"){
+                    btn.classList.add("active");
+                }
+                else {
+                    btn.classList.remove("active");
+                }
+            });
+        }
+
+        tabBtn.forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                if (windowUrl.searchParams.has("successMessage")){
+                    windowUrl.searchParams.delete("successMessage");
+                }else if (windowUrl.searchParams.has("errorMessage")){
+                    windowUrl.searchParams.delete("errorMessage");
+                }
+
+                if (btn.innerText === "Đợi duyệt"){
+                    windowUrl.searchParams.set("status", "PENDING");
+                    window.location.href = windowUrl.toString();
+                }else if (btn.innerText === "Đã duyệt"){
+                    windowUrl.searchParams.set("status", "APPROVED");
+                    window.location.href = windowUrl.toString();
+                }else if (btn.innerText === "Từ chối"){
+                    windowUrl.searchParams.set("status", "REJECTED");
+                    window.location.href = windowUrl.toString();
+                }else if (btn.innerText === "Đã bán"){
+                    windowUrl.searchParams.set("status", "SOLD");
+                    window.location.href = windowUrl.toString();
+                }
+            });
+        });
+    }
 
     const urlParams = new URLSearchParams(window.location.search);
     const successMessage = urlParams.get('successMessage');

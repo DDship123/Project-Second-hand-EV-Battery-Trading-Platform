@@ -266,6 +266,41 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public ApiResponse<List<MemberResponse>> getMemberByStatus(String status) {
+        ApiResponse<List<MemberResponse>> response = new ApiResponse<>();
+        Map<String, String> errs = new HashMap<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<List<MemberResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/members/status/" + status,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<MemberResponse>>>() {}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get members by status successful
+                response.ok(apiResponse.getBody().getPayload());
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get members by status: " + e.getMessage());
+            response.error(errorMap);
+        }
+
+        return response;
+    }
+
+    @Override
     public ApiResponse<MemberResponse> updateStatus(MemberResponse member) {
 
         ApiResponse<MemberResponse> response = new ApiResponse<>();
@@ -302,6 +337,41 @@ public class MemberServiceImpl implements MemberService {
             errorMap.put("message", "Failed to update member status: " + e.getMessage());
             response.error(errorMap);
         }
+        return response;
+    }
+
+    @Override
+    public ApiResponse<Integer> countUser() {
+        ApiResponse<Integer> response = new ApiResponse<>();
+        Map<String, String> errs = new HashMap<>();
+
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<Integer>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/members/admin/count/user",
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<Integer>>() {}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get count user successful
+                response.ok(apiResponse.getBody().getPayload());
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get count user: " + e.getMessage());
+            response.error(errorMap);
+        }
+
         return response;
     }
 

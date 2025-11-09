@@ -52,4 +52,12 @@ public class CommissionService {
         return commissionRepository.findByTransaction_TransactionId(transactionId);
     }
 
+    public double calculateTotalCommission() {
+        List<Commission> commissions = commissionRepository.findAllComplete();
+        double totalCommission = 0.0;
+        for (Commission commission : commissions) {
+            totalCommission += commission.getAmount().doubleValue();
+        }
+        return totalCommission;
+    }
 }

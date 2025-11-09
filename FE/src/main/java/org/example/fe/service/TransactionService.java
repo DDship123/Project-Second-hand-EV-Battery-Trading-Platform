@@ -8,12 +8,16 @@ import java.util.List;
 public interface TransactionService {
     ApiResponse<List<TransactionResponse>> getAllBuyTransaction(int memberId);
     ApiResponse<List<TransactionResponse>> getAllSellTransaction(int memberId);
-    ApiResponse<List<TransactionResponse>> getAllByStatus(String status);
+//    ApiResponse<List<TransactionResponse>> getAllByStatus(String status);
     ApiResponse<TransactionResponse> update(Integer transactionId,String status);
     ApiResponse<List<TransactionResponse>> getAllBuyTransaction(int memberId ,String status);
     ApiResponse<List<TransactionResponse>> getAllSellTransaction(int memberId ,String status);
 
     ApiResponse<List<TransactionResponse>> getAllTransactions();
+
+    ApiResponse<List<TransactionResponse>> getTransactionsForDashboard();
+
+    ApiResponse<List<TransactionResponse>> getTransactionsByStatus(String status);
 
     ApiResponse<TransactionResponse> getTransactionById(Integer transactionId);
 

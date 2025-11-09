@@ -33,6 +33,47 @@ window.addEventListener('load', function() {
             });
         }
     })
+
+    const filterTabs = document.querySelector(".filter-tabs");
+    if (filterTabs) {
+        const tabBtn = filterTabs.querySelectorAll("button");
+        const windowUrl = new URL(window.location.href);
+        const currentStatus = windowUrl.searchParams.get("status");
+        if (currentStatus !== null) {
+            tabBtn.forEach(function(btn) {
+                if (currentStatus === "ALL" && btn.innerText === "Đợi duyệt"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "COMPLETED" && btn.innerText === "Hoàn thành"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "CANCELLED" && btn.innerText === "Thất bại"){
+                    btn.classList.add("active");
+                }else {
+                    btn.classList.remove("active");
+                }
+            });
+        }
+
+        tabBtn.forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                if (windowUrl.searchParams.has("successMessage")){
+                    windowUrl.searchParams.delete("successMessage");
+                }else if (windowUrl.searchParams.has("errorMessage")){
+                    windowUrl.searchParams.delete("errorMessage");
+                }
+
+                if (btn.innerText === "Đợi duyệt"){
+                    windowUrl.searchParams.set("status", "ALL");
+                    window.location.href = windowUrl.toString();
+                }else if (btn.innerText === "Hoàn thành"){
+                    windowUrl.searchParams.set("status", "COMPLETED");
+                    window.location.href = windowUrl.toString();
+                }else if (btn.innerText === "Thất bại"){
+                    windowUrl.searchParams.set("status", "CANCELLED");
+                    window.location.href = windowUrl.toString();
+                }
+            });
+        });
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const successMessage = urlParams.get('successMessage');
     if (successMessage) {

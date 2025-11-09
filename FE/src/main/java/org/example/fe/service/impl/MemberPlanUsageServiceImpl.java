@@ -81,4 +81,33 @@ public class MemberPlanUsageServiceImpl implements MemberPlanUsageService {
         }
         return response;
     }
+
+    @Override
+    public ApiResponse<Double> getTotalRevenue() {
+        ApiResponse<Double> response = new ApiResponse<>();
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            HttpEntity<Void> entity = new HttpEntity<>(headers);
+            // Simulate REST call to backend service
+            ResponseEntity<ApiResponse<Double>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/member-plan-usages/admin/total-revenue",
+                    HttpMethod.GET,
+                    entity,
+                    new org.springframework.core.ParameterizedTypeReference<ApiResponse<Double>>() {}
+            );
+            if (apiResponse.getBody() != null) {
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                HashMap<String, String> error = new HashMap<>();
+                error.put("message", "Failed to retrieve total revenue");
+                response.error(error);
+            }
+        }catch (Exception e) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Failed to get total revenue");
+            response.error(error);
+        }
+        return response;
+    }
 }

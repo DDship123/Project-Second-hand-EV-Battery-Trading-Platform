@@ -37,6 +37,10 @@ public class MemberService {
         return member.orElse(null);
     }
 
+    public int countMemberByRole(String role) {
+        return memberRepository.countByRole(role);
+    }
+
     public ApiResponse<Member> updateMember(Integer id, Member memberDetails) {
         Member member = getMemberById(id);
         ApiResponse<Member> response = new ApiResponse<>();
@@ -189,6 +193,10 @@ public class MemberService {
     public List<Member> getMembersByStatus(String status) {
         return memberRepository.getMembersByStatus(status);
     }
+    public int countAllMembers() {
+        return memberRepository.countByRole("USER");
+    }
+
     //(Tân)
     @Autowired
     private MemberPlanUsageRepository memberPlanUsageRepository;
