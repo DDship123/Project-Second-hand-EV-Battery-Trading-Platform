@@ -32,16 +32,13 @@ public class MemberServiceImpl implements MemberService {
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", "application/json");
-
+            headers.setContentType(MediaType.APPLICATION_JSON);
             // Create request body
             Map<String, String> requestBody = new HashMap<>();
             requestBody.put("username", userName);
             requestBody.put("password", password);
-
             // Create request entity
             HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
-
             // Make API call to backend
             ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/auth/login",
@@ -50,12 +47,11 @@ public class MemberServiceImpl implements MemberService {
                     new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {
                     }
             );
-
-            if (apiResponse.getBody().getStatus().equals("SUCCESS") && apiResponse.getBody() != null) {
+            if (apiResponse.getBody() != null && apiResponse.getBody().getStatus().equals("SUCCESS")) {
                 // Authentication successful
                 response.ok(apiResponse.getBody().getPayload());
             } else {
-                // Authentication failed
+                // Authentication failed ưu tiên nhận lỗi từ backend
                 Map<String, String> errorMap = apiResponse.getBody().getError();
                 if (errorMap == null) {
                     errorMap = new HashMap<>();
@@ -82,11 +78,9 @@ public class MemberServiceImpl implements MemberService {
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", "application/json");
-
+            headers.setContentType(MediaType.APPLICATION_JSON);
             // Create request entity
             HttpEntity<MemberResponse> requestEntity = new HttpEntity<>(registerMember, headers);
-
             // Make API call to backend
             ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/auth/register",
@@ -95,16 +89,11 @@ public class MemberServiceImpl implements MemberService {
                     new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {
                     }
             );
-
-            if (apiResponse.getBody().getStatus().equals("SUCCESS") && apiResponse.getBody() != null) {
+            if (apiResponse.getBody() != null && apiResponse.getBody().getStatus().equals("SUCCESS")) {
                 // Authentication successful
                 response.ok(apiResponse.getBody().getPayload());
             } else {
-                // Registration failed
-//                Map<String, String> errorMap = new HashMap<>();
-//                errorMap.put("message", "Registration failed");
-//                response.error(errorMap);
-
+                // Registration failed nhận lỗi từ backend
                 Map<String, String> errorMap = apiResponse.getBody().getError();
                 if (errorMap == null) {
                     errorMap = new HashMap<>();
@@ -113,12 +102,14 @@ public class MemberServiceImpl implements MemberService {
                 response.error(errorMap);
             }
         } catch (HttpClientErrorException e) {
-            //  Nếu backend trả lỗi 400 → parse JSON body
+            //  Nếu backend trả lỗi 400 → parse JSON body thành object để lấy error
             try {
+                //lấy body response dạng chuỗi
                 String responseBody = e.getResponseBodyAsString();
+                //tạo parse JSON string thành tree
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode root = mapper.readTree(responseBody);
-
+                //duyệt qua các lỗi và đưa vào map
                 JsonNode errorNode = root.path("error");
                 Map<String, String> errorMap = new HashMap<>();
                 if (errorNode.isObject()) {
@@ -137,10 +128,6 @@ public class MemberServiceImpl implements MemberService {
 
         } catch (Exception e) {
             // Handle exceptions
-//            Map<String, String> errorMap = new HashMap<>();
-//            errorMap.put("message", "Registration failed: " + e.getMessage());
-//            response.error(errorMap);
-
             Map<String, String> errorMap = new HashMap<>();
             errorMap.put("message", "Registration failed: " + e.getMessage());
             response.error(errorMap);
@@ -153,35 +140,23 @@ public class MemberServiceImpl implements MemberService {
     public ApiResponse<MemberResponse> getMemberInfo(int memberId) {
 
         ApiResponse<MemberResponse> response = new ApiResponse<>();
-        Map<String, String> errs = new HashMap<>();
-
-//        // Validate input
-//        if (memberId <= 0) {
-//            errs.put("memberId", "Invalid member ID");
-//            response.error(errs);
-//            return response;
-//        }
-
         try {
-            // Create headers
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", "application/json");
-
-            // Create request entity
-            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-
             // Make API call to backend
             ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/members/" + memberId,
                     HttpMethod.GET,
-                    requestEntity,
+                    null,
                     new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {
                     }
             );
-
-            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+            if (apiResponse.getBody() != null && apiResponse.getBody().getStatus().equals("SUCCESS")) {
                 // Get member info successful
                 response.ok(apiResponse.getBody().getPayload());
+            }
+            else {//body null
+                Map<String, String> err = new HashMap<>();
+                err.put("message", "Failed to retrieve member info");
+                response.error(err);
             }
         } catch (Exception e) {
             // Handle exceptions
@@ -200,8 +175,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", "application/json");
-
+            headers.setContentType(MediaType.APPLICATION_JSON);
             // Create request entity
             HttpEntity<MemberResponse> requestEntity = new HttpEntity<>(updatedMember, headers);
 
@@ -218,17 +192,22 @@ public class MemberServiceImpl implements MemberService {
                 response.ok(apiResponse.getBody().getPayload());
             } else {
                 // Update failed
-                Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Failed to update member");
+                Map<String, String> errorMap = apiResponse.getBody().getError();
+                if (errorMap == null) {
+                    errorMap = new HashMap<>();
+                    errorMap.put("message", "Failed to update member");
+                }
                 response.error(errorMap);
             }
         } catch (HttpClientErrorException e) {
-            //  Nếu backend trả lỗi 400 → parse JSON body
+            //  Nếu backend trả lỗi 400 → parse JSON body thành object để lấy error
             try {
+                //lấy body response dạng chuỗi
                 String responseBody = e.getResponseBodyAsString();
+                //parse JSON string thành tree
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode root = mapper.readTree(responseBody);
-
+                //duyệt qua các lỗi và đưa vào map
                 JsonNode errorNode = root.path("error");
                 Map<String, String> errorMap = new HashMap<>();
                 if (errorNode.isObject()) {
@@ -238,7 +217,6 @@ public class MemberServiceImpl implements MemberService {
                 } else {
                     errorMap.put("message", "Registration failed");
                 }
-
                 response.error(errorMap);
             } catch (Exception parseEx) {
                 errs.put("message", "Registration failed: " + e.getMessage());
@@ -261,24 +239,21 @@ public class MemberServiceImpl implements MemberService {
         Map<String, String> errs = new HashMap<>();
 
         try {
-            // Create headers
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", "application/json");
-
-            // Create request entity
-            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-
             // Make API call to backend
             ResponseEntity<ApiResponse<List<MemberResponse>>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/members/admin/users",
                     HttpMethod.GET,
-                    requestEntity,
+                    null,
                     new ParameterizedTypeReference<ApiResponse<List<MemberResponse>>>() {}
             );
 
             if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
                 // Get users by status successful
                 response.ok(apiResponse.getBody().getPayload());
+            }else{//body null
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to get users by status");
+                response.error(errorMap);
             }
         } catch (Exception e) {
             // Handle exceptions
@@ -335,12 +310,8 @@ public class MemberServiceImpl implements MemberService {
             // Create headers
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-
-            // Create request body - chỉ gửi memberId và status
-
             // Create request entity
             HttpEntity<MemberResponse> requestEntity = new HttpEntity<>(member, headers);
-
             // Make API call to backend
             ResponseEntity<ApiResponse<MemberResponse>> apiResponse = restTemplate.exchange(
                     apiBaseUrl + "/api/members/update-status",
@@ -349,32 +320,19 @@ public class MemberServiceImpl implements MemberService {
                     new ParameterizedTypeReference<ApiResponse<MemberResponse>>() {}
             );
 
-            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
-                ApiResponse<MemberResponse> body = apiResponse.getBody();
-
-                // Kiểm tra status trong response body
-                if ("SUCCESS".equals(body.getStatus())) {
-                    // Update status successful
-                    response.ok(body.getPayload());
-                } else {
-                    // API call thành công nhưng backend trả về lỗi
-                    Map<String, String> errorMap = body.getError();
-                    if (errorMap == null || errorMap.isEmpty()) {
-                        // Backend báo lỗi nhưng không cung cấp chi tiết
-                        errorMap = new HashMap<>();
-                        errorMap.put("message", "Failed to update member status");
-                    }
-                    // Dùng errorMap từ backend hoặc message mặc định
+            if (apiResponse.getBody() != null && apiResponse.getBody().getStatus().equals("SUCCESS") ) {
+                // Update member status successful
+                response.ok(apiResponse.getBody().getPayload());
+            } else {// Update failed ưu tiên nhận lỗi từ backend
+                Map<String, String> errorMap = apiResponse.getBody().getError();
+                if (errorMap == null) {
+                    errorMap = new HashMap<>();
+                    errorMap.put("message", "Failed to update member status");
+                }
                     response.error(errorMap);
                 }
-            } else {
-                // HTTP status code không thành công
-                Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("message", "Failed to update member status");
-                response.error(errorMap);
-            }
         } catch (Exception e) {
-            // Xử lý tất cả lỗi chung
+            // Handle exceptions
             Map<String, String> errorMap = new HashMap<>();
             errorMap.put("message", "Failed to update member status: " + e.getMessage());
             response.error(errorMap);
