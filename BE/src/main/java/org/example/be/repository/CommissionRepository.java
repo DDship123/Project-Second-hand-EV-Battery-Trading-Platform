@@ -19,4 +19,6 @@ public interface CommissionRepository extends JpaRepository<Commission, Integer>
             "ON c.transaction.transactionsId = t.transactionsId " +
             "WHERE t.status = 'COMPLETED'")
     List<Commission> findAllComplete();
+
+
 }

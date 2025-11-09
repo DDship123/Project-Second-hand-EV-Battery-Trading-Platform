@@ -112,7 +112,7 @@ public class AdminPageController {
         }
 
         model.addAttribute("admin", member);
-        return "dashboardAdmin-copy";
+        return "dashboardAdmin";
     }
 
 

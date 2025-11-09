@@ -34,106 +34,104 @@
         <!-- Statistics Cards -->
         <div class="stats-grid">
             <div class="stat-card">
+                <div class="stat-icon product-selling-icon">
+                    <i class="fa-solid fa-store"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Sản phẩm đang bán</h3>
+                    <p class="stat-number" th:text="${postCount}">1,250</p>
+<!--                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>-->
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon product-sold-icon">
+                    <i class="fa-solid fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Sản phẩm đã bán</h3>
+                    <p class="stat-number" th:text="${postSoldCount}">3,480</p>
+<!--                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>-->
+                </div>
+            </div>
+
+            <div class="stat-card">
                 <div class="stat-icon user-icon">
                     <i class="fa-solid fa-users"></i>
                 </div>
                 <div class="stat-info">
                     <h3>Tổng số người dùng</h3>
-                    <p class="stat-number">10,500+</p>
-                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    <p class="stat-number" th:text="${userCount}">10,500</p>
+<!--                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>-->
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon post-icon">
-                    <i class="fa-solid fa-file-alt"></i>
+                <div class="stat-icon commission-icon">
+                    <i class="fa-solid fa-percentage"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>Tổng số SP/DV</h3>
-                    <p class="stat-number">2,350+</p>
-                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    <h3>Doanh thu hoa hồng</h3>
+                    <p class="stat-number" th:text="${#numbers.formatDecimal(totalCommissionRevenue / 1000000, 1, 1)} + 'M VNĐ'">₫45.2M</p>
+<!--                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>-->
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon revenue-icon">
-                    <i class="fa-solid fa-dollar-sign"></i>
+                <div class="stat-icon package-revenue-icon">
+                    <i class="fa-solid fa-box"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>Doanh thu hôm nay</h3>
-                    <p class="stat-number">₫150M+</p>
-                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    <h3>Doanh thu gói phí</h3>
+                    <p class="stat-number" th:text="${#numbers.formatDecimal(totalMembershipRevenue / 1000000, 1, 1)} + 'M VNĐ'">₫28.7M</p>
+<!--                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>-->
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon order-icon">
-                    <i class="fa-solid fa-shopping-cart"></i>
+                <div class="stat-icon battery-post-icon">
+                    <i class="fa-solid fa-battery-full"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>Đơn hàng mới</h3>
-                    <p class="stat-number">45+</p>
-                    <a href="#" class="stat-link">Mới tăng lên <i class="fa-solid fa-arrow-right"></i></a>
+                    <h3>Bài bán pin</h3>
+                    <p class="stat-number" th:text="${batteryCount}">892</p>
+<!--                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>-->
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon vehicle-post-icon">
+                    <i class="fa-solid fa-motorcycle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Bài bán xe</h3>
+                    <p class="stat-number" th:text="${vehicleCount}">1,658</p>
+<!--                    <a href="#" class="stat-link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>-->
                 </div>
             </div>
         </div>
 
-        <!-- Charts Section -->
-        <div class="charts-section">
-            <div class="chart-card chart-large">
-                <div class="chart-header">
-                    <h3>Khu vực nội dung chính</h3>
-                </div>
-                <div class="chart-content">
-                    <canvas id="trendChart"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3>Biểu đồ tròn: SP Bán chạy</h3>
-                </div>
-                <div class="chart-content">
-                    <canvas id="pieChart"></canvas>
-                </div>
-            </div>
-        </div>
 
         <!-- Tables Section -->
         <div class="tables-section">
             <div class="table-card">
                 <div class="table-header">
-                    <h3>Bảng: Hoạt hàng gần đây</h3>
+                    <h3>Các bài đăng mới nhất cần duyệt:</h3>
                 </div>
                 <div class="data-table">
                     <table>
                         <thead>
                         <tr>
-                            <th>Loại HD</th>
-                            <th>Ai</th>
-                            <th>Khi nào</th>
+                            <th>ID</th>
+                            <th>Tên bài đăng</th>
+                            <th>Thời gian</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Đăng bài mới</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>5 phút trước</td>
-                        </tr>
-                        <tr>
-                            <td>Mua hàng</td>
-                            <td>Trần Thị B</td>
-                            <td>15 phút trước</td>
-                        </tr>
-                        <tr>
-                            <td>Đăng ký</td>
-                            <td>Lê Văn C</td>
-                            <td>30 phút trước</td>
-                        </tr>
-                        <tr>
-                            <td>Bình luận</td>
-                            <td>Phạm Thị D</td>
-                            <td>1 giờ trước</td>
+                        <tr th:each="post:${latestPosts}">
+                            <td th:text="${post.getPostsId()}">Đăng bài mới</td>
+                            <td th:text="${post.getTitle()}">Nguyễn Văn A</td>
+                            <td th:text="${#temporals.format(post.getCreatedAt(),'dd-MM-yyy')}">5 phút trước</td>
                         </tr>
                         </tbody>
                     </table>
@@ -142,42 +140,24 @@
 
             <div class="table-card">
                 <div class="table-header">
-                    <h3>Bảng: Đơn hàng gần đây</h3>
+                    <h3>Các giao dịch mới gần đây:</h3>
                 </div>
                 <div class="data-table">
                     <table>
                         <thead>
                         <tr>
-                            <th>Tên SP</th>
-                            <th>ID KH</th>
+                            <th>ID</th>
+                            <th>Loại sản phẩm</th>
                             <th>Ngày</th>
                             <th>Trạng thái</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Honda Wave Alpha</td>
-                            <td>#KH001</td>
-                            <td>08/11/2025</td>
-                            <td><span class="status-badge approved">Hoàn thành</span></td>
-                        </tr>
-                        <tr>
-                            <td>Yamaha Exciter</td>
-                            <td>#KH002</td>
-                            <td>08/11/2025</td>
-                            <td><span class="status-badge pending">Đang xử lý</span></td>
-                        </tr>
-                        <tr>
-                            <td>Honda Air Blade</td>
-                            <td>#KH003</td>
-                            <td>07/11/2025</td>
-                            <td><span class="status-badge approved">Hoàn thành</span></td>
-                        </tr>
-                        <tr>
-                            <td>Suzuki Raider</td>
-                            <td>#KH004</td>
-                            <td>07/11/2025</td>
-                            <td><span class="status-badge rejected">Đã hủy</span></td>
+                        <tr th:each="transaction : ${latestTransactions}">
+                            <td th:text="${transaction.getTransactionId()}">Honda Wave Alpha</td>
+                            <td th:text="${transaction.getPost().getProduct().getProductType()}">#KH001</td>
+                            <td th:text="${#temporals.format(transaction.getCreatedAt(),'dd-MM-yyy')}">08/11/2025</td>
+                            <td><span class="status-badge pending">Yêu cầu người mua chấp nhận</span></td>
                         </tr>
                         </tbody>
                     </table>
