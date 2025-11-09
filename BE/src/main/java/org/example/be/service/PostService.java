@@ -60,6 +60,10 @@ public class PostService {
         return postRepository.countByStatus(status);
     }
 
+    public List<Post> getPostsByMemberAndStatus(int memberId, String status) {
+        return postRepository.findAllBySeller_MemberIdAndStatus(memberId, status);
+    }
+
     // --- For You ---
 // Lấy các bài post mà chính member đó đăng (APPROVED)
     public List<Post> getPostsForYou(Integer memberId) {

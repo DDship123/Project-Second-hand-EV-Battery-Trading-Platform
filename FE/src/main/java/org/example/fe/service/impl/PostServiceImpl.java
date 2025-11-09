@@ -180,6 +180,43 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public ApiResponse<List<PostResponse>> getAllPostByMemberIdAndStatus(int memberId, String status) {
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        try {
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            // Create request entity
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            // Make API call to backend
+            ResponseEntity<ApiResponse<List<PostResponse>>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/posts/member/" + memberId + "/status/" + status,
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<List<PostResponse>>>(){}
+            );
+
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                // Get posts by memberId and status successful
+                response.ok((List<PostResponse>) apiResponse.getBody().getPayload());
+            } else {
+                // Get posts by memberId and status failed
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve posts for member id: " + memberId + " with status: " + status);
+                response.error(errorMap);
+            }
+        } catch (Exception e) {
+            // Handle exceptions
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get posts for member id and status: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
+
+    @Override
     public ApiResponse<PostResponse> getPostDetail(int postID) {
         ApiResponse<PostResponse> response = new ApiResponse<>();
 

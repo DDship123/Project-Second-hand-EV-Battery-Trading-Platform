@@ -46,8 +46,10 @@ public class StorePageController {
         model.addAttribute("averageRating", averageRating);
         model.addAttribute("reviews", reviews);
 
-        ApiResponse<List<TransactionResponse>> transactionResponse = transactionService.getAllSellTransaction(user.getMemberId());
-        model.addAttribute("transactions", transactionResponse.getPayload());
+        ApiResponse<List<PostResponse>> soldPosts = postService.getAllPostByMemberIdAndStatus(user.getMemberId(), "SOLD");
+        model.addAttribute("soldPosts", soldPosts.getPayload());
+//        ApiResponse<List<TransactionResponse>> transactionResponse = transactionService.getAllSellTransaction(user.getMemberId());
+//        model.addAttribute("transactions", transactionResponse.getPayload());
         return "storePage";
     }
 

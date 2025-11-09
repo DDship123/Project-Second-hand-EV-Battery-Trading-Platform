@@ -61,6 +61,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "AND p.product.productType = :productType AND p.status = 'APPROVED'")
     int countByLocationAndProductType(@Param("location")String location,@Param("productType") String productType);
 
+    List<Post> findAllBySeller_MemberIdAndStatus(int memberId, String status);
+
 
     // --- FILTER BY LOCATION ---
     @Query("SELECT p FROM Post p WHERE p.seller.city = :city AND p.status = 'APPROVED'")

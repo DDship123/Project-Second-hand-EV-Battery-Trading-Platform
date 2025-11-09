@@ -10,6 +10,9 @@ public interface PostService {
     ApiResponse<List<PostResponse>> getLatestPost();
     ApiResponse<List<PostResponse>> getAllPostBatery();
     ApiResponse<List<PostResponse>> getAllPostVehicle();
+
+    ApiResponse<List<PostResponse>> getAllPostByMemberIdAndStatus(int memberId, String status);
+
     ApiResponse<PostResponse>getPostDetail(int postID);
 //    ApiResponse<List<PostResponse>> getLatestPosts();
     ApiResponse<List<PostResponse>> getLatestVehiclePosts();
