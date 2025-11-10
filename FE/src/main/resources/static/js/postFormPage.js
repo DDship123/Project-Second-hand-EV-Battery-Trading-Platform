@@ -57,7 +57,7 @@ window.addEventListener("DOMContentLoaded", function () {
     // Khi chọn lại loại sản phẩm
     categorySelect.addEventListener("change", updateForm);
 
-    // ✅ Gọi ngay khi trang load để đảm bảo chỉ 1 phần active
+    // Gọi ngay khi trang load để đảm bảo chỉ 1 phần active
     updateForm();
 
     // ===============================
