@@ -6,12 +6,11 @@ import org.example.fe.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -377,7 +376,8 @@ public class AdminPageController {
     }
 
     @GetMapping("/fee-manage")
-    public String feeManage(Model model, HttpSession session) {
+    public String feeManage(Model model, HttpSession session,@RequestParam(name = "successMessage", required = false) String successMessage,
+                            @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
             return "redirect:/login?unauthorized=true";
@@ -388,6 +388,80 @@ public class AdminPageController {
         ApiResponse<List<CommissionSetupResponse>> response = commissionSetupService.getAllCommissionSetups();
         model.addAttribute("commissionSetups", response.getPayload());
         model.addAttribute("admin", member);
-        return "feeManage_BE";
+        return "feeManage";
     }
+
+    @GetMapping("/fee-manage/edit/{setupId}")
+    public String editFeeManage(Model model, HttpSession session, @PathVariable int setupId) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        ApiResponse<CommissionSetupResponse> response = commissionSetupService.getCommissionSetupById((long) setupId);
+        CommissionSetupResponse commissionSetup = response.getPayload();
+        model.addAttribute("commissionSetup", commissionSetup);
+        model.addAttribute("admin", member);
+        return "feeManageDetail";
+    }
+    @PostMapping("/fee-manage/update")
+    public String updateFeeManage(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                  @ModelAttribute CommissionSetupResponse commissionSetup,
+                                  @RequestParam(name = "minimum") double minimum,
+                                  @RequestParam(name = "maximum") double maximum) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        commissionSetup.setMinimum(minimum);
+        commissionSetup.setMaximum(maximum);
+        commissionSetup.setUpdatedAt(LocalDateTime.now());
+        ApiResponse<CommissionSetupResponse> response = commissionSetupService.updateCommissionSetup(commissionSetup.getId(), commissionSetup);
+        if (response.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Cập nhật phí hoa hồng thành công.");
+        } else {
+            redirectAttributes.addAttribute("errorMessage", "Cập nhật phí hoa hồng thất bại.");
+        }
+        return "redirect:/home/admin/fee-manage";
+    }
+    @GetMapping("/fee-manage/{status}/{setupId}")
+    public String inactiveFeeManage(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                    @PathVariable int setupId,@PathVariable String status) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        ApiResponse<CommissionSetupResponse> setupById = commissionSetupService.getCommissionSetupById((long) setupId);
+        CommissionSetupResponse commissionSetup = setupById.getPayload();
+//        if (commissionSetup.getStatus().equals("INACTIVE")) {
+//            redirectAttributes.addAttribute("errorMessage", "Phí hoa hồng đã được vô hiệu hóa trước đó.");
+//            return "redirect:/home/admin/fee-manage";
+//        }
+        commissionSetup.setStatus(status.toUpperCase());
+        commissionSetup.setUpdatedAt(LocalDateTime.now());
+        ApiResponse<CommissionSetupResponse> response = commissionSetupService.updateCommissionSetup(commissionSetup.getId(), commissionSetup);
+        if (response.getPayload() != null) {
+            if (status.equalsIgnoreCase("ACTIVE")) {
+                redirectAttributes.addAttribute("successMessage", "Kích hoạt phí hoa hồng thành công.");
+            } else{
+                redirectAttributes.addAttribute("successMessage", "Vô hiệu hóa phí hoa hồng thành công.");
+            }
+        } else {
+            if (status.equalsIgnoreCase("ACTIVE")) {
+                redirectAttributes.addAttribute("errorMessage", "Kích hoạt phí hoa hồng thất bại.");
+            } else{
+                redirectAttributes.addAttribute("errorMessage", "Vô hiệu hóa phí hoa hồng thất bại.");
+            }
+        }
+        return "redirect:/home/admin/fee-manage";
+    }
+
 }

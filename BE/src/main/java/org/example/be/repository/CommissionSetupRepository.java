@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CommissionSetupRepository extends JpaRepository<CommissionSetup, Long> {
     @Query("SELECT c FROM CommissionSetup c WHERE c.ProductType = :productType " +
@@ -15,5 +17,8 @@ public interface CommissionSetupRepository extends JpaRepository<CommissionSetup
     @Query("SELECT c FROM CommissionSetup c WHERE c.ProductType = :productType " +
             "AND c.status = 'DEFAULT'")
     public CommissionSetup getDefaultCommissionSetup(String productType);
+
+    @Query("SELECT c FROM CommissionSetup c WHERE c.ProductType = :productType AND c.status = 'ACTIVE'")
+    public List<CommissionSetup> findByProductType(String productType);
 
 }

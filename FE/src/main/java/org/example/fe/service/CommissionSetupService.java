@@ -13,6 +13,6 @@ public interface CommissionSetupService {
 
     public ApiResponse<CommissionSetupResponse>  saveCommissionSetup(CommissionSetupResponse commissionSetup);
 
-
+    public ApiResponse<CommissionSetupResponse>  updateCommissionSetup(Long id, CommissionSetupResponse commissionSetup);
 
 }

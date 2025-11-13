@@ -102,4 +102,31 @@ public class CommissionSetupServiceImpl implements CommissionSetupService {
         }
         return response;
     }
+
+    @Override
+    public ApiResponse<CommissionSetupResponse> updateCommissionSetup(Long id, CommissionSetupResponse commissionSetup) {
+        ApiResponse<CommissionSetupResponse> response = new  ApiResponse<>();
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            HttpEntity<CommissionSetupResponse> requestEntity = new HttpEntity<>(commissionSetup, headers);
+            // Implementation to call backend API and update commission setup
+            ResponseEntity<ApiResponse<CommissionSetupResponse>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/commission-setup/update/" + id,
+                    org.springframework.http.HttpMethod.PUT,
+                    requestEntity,
+                    new org.springframework.core.ParameterizedTypeReference<ApiResponse<CommissionSetupResponse>>() {}
+            );
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                response.error(apiResponse.getBody().getError());
+            }
+        }catch (Exception e) {
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Lỗi hệ thống: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
 }

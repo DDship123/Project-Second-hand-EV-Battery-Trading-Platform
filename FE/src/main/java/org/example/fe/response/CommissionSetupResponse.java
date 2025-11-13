@@ -1,5 +1,7 @@
 package org.example.fe.response;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
 public class CommissionSetupResponse {
@@ -10,6 +12,10 @@ public class CommissionSetupResponse {
     private double minimum;
 
     private double maximum;
+
+    private long minimumB;
+
+    private long maximumB;
 
     private String status;
 
@@ -40,6 +46,26 @@ public class CommissionSetupResponse {
 
     public double getMinimum() {
         return minimum;
+    }
+
+    public long getMinimumB() {
+        return minimumB;
+    }
+
+
+
+    public void setMinimumB(double minimumB) {
+        BigDecimal bd = new BigDecimal(minimumB);
+        this.minimumB = bd.longValue();
+    }
+
+    public long getMaximumB() {
+        return maximumB;
+    }
+
+    public void setMaximumB(double maximumB) {
+        BigDecimal bd = new BigDecimal(maximumB);
+        this.maximumB = bd.longValue();
     }
 
     public void setMinimum(double minimum) {

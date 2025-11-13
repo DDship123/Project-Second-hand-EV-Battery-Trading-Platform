@@ -44,6 +44,28 @@ public class CommissionSetupController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<CommissionSetupResponse>> getCommissionSetupById(@PathVariable Long id) {
+        ApiResponse<CommissionSetupResponse> apiResponse = new ApiResponse<>();
+        CommissionSetup commissionSetup = commissionSetupService.getCommissionSetupById(id);
+        if (commissionSetup == null) {
+            Map<String, String> error = Map.of("message", "Không tìm thấy cấu hình hoa hồng");
+            apiResponse.error(error);
+            return ResponseEntity.status(404).body(apiResponse);
+        }
+        CommissionSetupResponse response = new CommissionSetupResponse();
+        response.setId(commissionSetup.getId());
+        response.setProductType(commissionSetup.getProductType());
+        response.setMinimum(commissionSetup.getMinimum());
+        response.setMaximum(commissionSetup.getMaximum());
+        response.setCommissionRate(commissionSetup.getCommissionRate());
+        response.setStatus(commissionSetup.getStatus());
+        response.setCreatedAt(commissionSetup.getCreatedAt());
+        response.setUpdatedAt(commissionSetup.getUpdatedAt());
+        apiResponse.ok(response);
+        return ResponseEntity.ok(apiResponse);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<CommissionSetupResponse>> createCommissionSetup(@RequestBody CommissionSetupResponse commissionSetup) {
         ApiResponse<CommissionSetupResponse> apiResponse = new ApiResponse<>();
@@ -66,7 +88,7 @@ public class CommissionSetupController {
         ApiResponse<CommissionSetupResponse> apiResponse = new ApiResponse<>();
         CommissionSetup existing = commissionSetupService.getCommissionSetupById(id);
         if (existing == null) {
-            Map<String, String> error = Map.of("message", "Commission setup not found");
+            Map<String, String> error = Map.of("message", "Không tìm thấy cấu hình hoa hồng");
             apiResponse.error(error);
             return ResponseEntity.status(404).body(apiResponse);
         }
@@ -76,7 +98,7 @@ public class CommissionSetupController {
         existing.setCommissionRate(commissionSetup.getCommissionRate());
         existing.setStatus(commissionSetup.getStatus());
         existing.setUpdatedAt(commissionSetup.getUpdatedAt());
-        CommissionSetup updated = commissionSetupService.saveCommissionSetup(existing);
+        CommissionSetup updated = commissionSetupService.updateCommissionSetup(existing);
         commissionSetup.setId(updated.getId());
         apiResponse.ok(commissionSetup);
         return ResponseEntity.ok(apiResponse);

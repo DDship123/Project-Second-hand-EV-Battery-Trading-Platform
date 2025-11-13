@@ -15,5 +15,7 @@ public interface CommissionSetupService {
 
     public CommissionSetup getDefaultCommissionSetup(String productType);
 
+    public CommissionSetup updateCommissionSetup(CommissionSetup commissionSetup);
+
 
 }
