@@ -35,50 +35,29 @@
                 <h2>Cấu hình phí & Hoa hồng</h2>
             </div>
             <div class="fee-config-container">
-                <div class="fee-card">
+                <div class="fee-card" th:each="commissionSetup : ${commissionSetups}">
                     <h3>Phí giao dịch</h3>
-                    <div class="fee-input-group">
-                        <label>Phí cố định (VNĐ)</label>
-                        <input type="number" value="10000" class="fee-input">
-                    </div>
-                    <div class="form-group">
-                        <label>Phí theo % giao dịch</label>
-                        <input type="number" value="2.5" class="fee-input">
-                        <span class="input-suffix">%</span>
-                    </div>
-                    <button class="save-btn">Lưu thay đổi</button>
-                </div>
-
-                <div class="fee-card">
-                    <h3>Hoa hồng người giới thiệu</h3>
-                    <div class="fee-input-group">
-                        <label>Hoa hồng cấp 1 (%)</label>
-                        <input type="number" value="5" class="fee-input">
-                        <span class="input-suffix">%</span>
-                    </div>
-                    <div class="fee-input-group">
-                        <label>Hoa hồng cấp 2 (%)</label>
-                        <input type="number" value="3" class="fee-input">
-                        <span class="input-suffix">%</span>
-                    </div>
-                    <button class="save-btn">Lưu thay đổi</button>
-                </div>
-
-                <div class="fee-card">
-                    <h3>Phí đăng tin</h3>
-                    <div class="fee-input-group">
-                        <label>Gói cơ bản (VNĐ/tháng)</label>
-                        <input type="number" value="50000" class="fee-input">
-                    </div>
-                    <div class="fee-input-group">
-                        <label>Gói nâng cao (VNĐ/tháng)</label>
-                        <input type="number" value="100000" class="fee-input">
-                    </div>
-                    <div class="fee-input-group">
-                        <label>Gói VIP (VNĐ/tháng)</label>
-                        <input type="number" value="200000" class="fee-input">
-                    </div>
-                    <button class="save-btn">Lưu thay đổi</button>
+                    <p>
+                        <strong>ID:</strong>
+                        <span th:text="${commissionSetup.getId()}"></span>
+                    </p>
+                    <p th:if="${commissionSetup.getStatus().equals('DEFAULT')}" th:text="'Mặc định'"></p>
+                    <p th:if="${!commissionSetup.getStatus().equals('DEFAULT')}"
+                       th:text="${commissionSetup.getStatus().equals('ACTIVE') ? 'Hoạt động': 'Tạm ngưng hoạt động'}"></p>
+                    <p>
+                        <strong>Loại sản phẩm:</strong>
+                        <span th:text="${commissionSetup.getProductType()}"></span>
+                    </p>
+                    <p>
+                        <span th:text="'Gía sản phẩm từ : '+ ${#numbers.formatDecimal(commissionSetup.getMinimum(), 0, 'COMMA', 0, 'POINT')} +' VNĐ'"></span>
+                        <span th:text="' đến: '+ ${#numbers.formatDecimal(commissionSetup.getMaximum(), 0, 'COMMA', 0, 'POINT')} +' VNĐ'"></span>
+                    </p>
+                    <p>
+                        <strong>Phí hoa hồng:</strong>
+                        <span th:text="${commissionSetup.getCommissionRate()} + ' %'"></span>
+                    </p>
+                    <p th:text="'Ngày tạo: ' + ${#temporals.format(commissionSetup.getCreatedAt(),'dd/MM/yyyy - HH:mm')}"></p>
+                    <p th:text="'Cập nhật lần cuối: '+ ${#temporals.format(commissionSetup.getUpdatedAt(),'dd/MM/yyyy - HH:mm')}"></p>
                 </div>
             </div>
         </div>

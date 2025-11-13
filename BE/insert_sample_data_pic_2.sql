@@ -505,6 +505,33 @@ VALUES
     -- Transaction 10: Post 14, seller=4, buyer=14
     (4, 14, 10, 4, N'Porsche Taycan pin 93.4 kWh chạy tốt, giá hợp lý!', 'APPROVED', CAST('2024-04-12 11:20:00' AS DATETIME));
 
+INSERT INTO commission_setup (commission_rate, minimum, maximum, status, Product_type, created_at, updated_at)
+VALUES
+-- 1. Mặc định cho VEHICLE
+(0.00, 0, 0, 'DEFAULT', 'VEHICLE', GETDATE(), GETDATE()),
+
+-- 2. Mặc định cho BATTERY
+(0.00, 0, 0, 'DEFAULT', 'BATTERY', GETDATE(), GETDATE()),
+
+-- 3. Xe điện giá thấp (< 10 triệu)
+(0.08, 0, 10000000, 'ACTIVE', 'VEHICLE', GETDATE(), GETDATE()),
+
+-- 4. Xe điện tầm trung (10 - 30 triệu)
+(0.05, 10000000, 30000000, 'ACTIVE', 'VEHICLE', GETDATE(), GETDATE()),
+
+-- 5. Xe điện cao cấp (> 30 triệu)
+(0.03, 30000000, 99999999, 'ACTIVE', 'VEHICLE', GETDATE(), GETDATE()),
+
+-- 6. Pin xe điện giá thấp (< 3 triệu)
+(0.12, 0, 3000000, 'ACTIVE', 'BATTERY', GETDATE(), GETDATE()),
+
+-- 7. Pin tầm trung (3 - 6 triệu)
+(0.09, 3000000, 6000000, 'ACTIVE', 'BATTERY', GETDATE(), GETDATE()),
+
+-- 8. Pin cao cấp (> 6 triệu)
+(0.07, 6000000, 20000000, 'ACTIVE', 'BATTERY', GETDATE(), GETDATE());
+
+
 -- =============================================
 -- VERIFY DATA
 -- =============================================

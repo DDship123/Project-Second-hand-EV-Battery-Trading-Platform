@@ -111,6 +111,9 @@ submenuItems.forEach(item => {
       case 'Cấu hình phí & Hoa hồng':
         window.location.href = '/home/admin/fee-manage';
         break;
+      case 'Cấu hình phí Hoa hồng':
+        window.location.href = '/home/admin/fee-manage';
+        break;
       default:
         break;
     }

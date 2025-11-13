@@ -31,6 +31,8 @@ public class AdminPageController {
     private CommissionService commissionService;
     @Autowired
     private MemberPlanUsageService memberPlanUsageService;
+    @Autowired
+    private CommissionSetupService commissionSetupService;
 
     @GetMapping(value = {"", "/dashboard"})
     public String adminDashboard(Model model, HttpSession session) {
@@ -374,16 +376,18 @@ public class AdminPageController {
         return "redirect:/home/admin/transaction-manage";
     }
 
-//    @GetMapping("/fee-manage")
-//    public String feeManage(Model model, HttpSession session) {
-//        MemberResponse member = (MemberResponse) session.getAttribute("user");
-//        if (member == null) {
-//            return "redirect:/login";
-//        }
-//        if (!member.getRole().equals("ADMIN")) {
-//            return "redirect:/login";
-//        }
-//        model.addAttribute("admin", member);
-//        return "feeManage";
-//    }
+    @GetMapping("/fee-manage")
+    public String feeManage(Model model, HttpSession session) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        ApiResponse<List<CommissionSetupResponse>> response = commissionSetupService.getAllCommissionSetups();
+        model.addAttribute("commissionSetups", response.getPayload());
+        model.addAttribute("admin", member);
+        return "feeManage_BE";
+    }
 }
