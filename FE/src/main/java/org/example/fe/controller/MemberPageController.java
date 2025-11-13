@@ -31,7 +31,7 @@ public class MemberPageController {
     public String personalInformation(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         if(user == null){
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("user", user);
         return "personalInformationPage";
@@ -42,7 +42,7 @@ public class MemberPageController {
         MemberResponse currentUser = (MemberResponse) session.getAttribute("user");
 
         if (currentUser == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
 
         ApiResponse<MemberResponse> response = memberService.updateMember(updatedUser);
@@ -86,6 +86,9 @@ public class MemberPageController {
     @GetMapping("/security")
     public String security(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        if (user == null){
+            return "redirect:/login?unauthorized=true";
+        }
         model.addAttribute("user", user);
         return "securityPage";
     }
@@ -123,6 +126,9 @@ public class MemberPageController {
     @GetMapping("/transactionHistory")
     public String transactionHistoryBuyer(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        if (user == null){
+            return "redirect:/login?unauthorized=true";
+        }
         model.addAttribute("user", user);
         ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllBuyTransaction(user.getMemberId());
         if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {
@@ -136,6 +142,9 @@ public class MemberPageController {
     @GetMapping("/transactionHistory/seller")
     public String transactionHistorySeller(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
+        if (user == null){
+            return "redirect:/login?unauthorized=true";
+        }
         model.addAttribute("user", user);
         ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllSellTransaction(user.getMemberId());
         if (apiResponse.getPayload() == null || apiResponse.getPayload().isEmpty()) {

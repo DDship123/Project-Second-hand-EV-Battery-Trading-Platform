@@ -35,7 +35,7 @@ public class memberOrderPageController {
                                      @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         if (memberResponse == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
@@ -69,10 +69,17 @@ public class memberOrderPageController {
     @GetMapping("/detail/{transactionId}")
     public String getBuyTransactionDetail(Model model, HttpSession session, @PathVariable(name = "transactionId") Integer transactionId) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null)
+        {
+            return "redirect:/login?unauthorized=true";
+        }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<TransactionResponse> apiResponse = transactionService.getTransactionById(transactionId);
         ApiResponse<PostResponse> postApiResponse = postService.getPostDetail(apiResponse.getPayload().getPost().getPostsId());
+        if (memberResponse.getMemberId() != apiResponse.getPayload().getBuyer().getMemberId()) {
+            return "redirect:/login?unauthorized=true";
+        }
         if (apiResponse.getPayload() == null) {
             return "redirect:/home/order";
         } else {
@@ -87,6 +94,10 @@ public class memberOrderPageController {
             , defaultValue = "REQUESTED") String status, @RequestParam(name = "successMessage", required = false) String successMessage,
                                          @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null)
+        {
+            return "redirect:/login?unauthorized=true";
+        }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<List<TransactionResponse>> apiResponse = transactionService.getAllSellTransaction(memberResponse.getMemberId(), status);
@@ -110,15 +121,21 @@ public class memberOrderPageController {
     public String getSellTransactionDetail(Model model, HttpSession session,
                                            @PathVariable(name = "transactionId") Integer transactionId) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null)
+        {
+            return "redirect:/login?unauthorized=true";
+        }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<TransactionResponse> apiResponse = transactionService.getTransactionById(transactionId);
-
         if (apiResponse.getPayload() == null) {
             return "redirect:/home/order";
         } else {
             ApiResponse<PostResponse> postApiResponse = postService.getPostDetail(apiResponse.getPayload().getPost().getPostsId());
             ApiResponse<CommissionResponse> commissionApiResponse = commissionService.getCommissionByTransactionId(transactionId);
+            if (memberResponse.getMemberId() != postApiResponse.getPayload().getSeller().getMemberId()) {
+                return "redirect:/login?unauthorized=true";
+            }
             if (apiResponse.getPayload().getStatus().equals("DELIVERED")){
                 ApiResponse<ContractResponse> contractApiResponse = contractService.getContractByTransactionId(transactionId);
                 model.addAttribute("contract", contractApiResponse.getPayload());

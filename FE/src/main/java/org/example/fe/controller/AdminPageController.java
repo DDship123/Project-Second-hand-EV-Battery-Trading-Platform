@@ -36,10 +36,10 @@ public class AdminPageController {
     public String adminDashboard(Model model, HttpSession session) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         ApiResponse<Integer> userCountResponse = memberService.countUser();
         if (userCountResponse.getPayload() != null) {
@@ -123,10 +123,10 @@ public class AdminPageController {
                             @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
 //        if (status == null || status.isEmpty()) {
 //            status = "PENDING";
@@ -146,10 +146,10 @@ public class AdminPageController {
     public String postDetail(Model model, HttpSession session, @RequestParam(name = "postId",defaultValue = "0") int postId) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         ApiResponse<PostResponse> postResponse = postService.getPostDetail(postId);
         PostResponse post = postResponse.getPayload();
@@ -192,7 +192,7 @@ public class AdminPageController {
             return "redirect:/login";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         List<MemberResponse> users = memberService.getUser().getPayload();
         model.addAttribute("admin", member);
@@ -229,10 +229,10 @@ public class AdminPageController {
                                      @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (memberId == 0) {
             return "redirect:/home/admin/member-manage";
@@ -253,10 +253,10 @@ public class AdminPageController {
     public String commentManage(Model model, HttpSession session,@RequestParam(defaultValue = "PENDING") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         ApiResponse<List<CommentResponse>> response = commentService.findAllCommentByStatus(status);
         model.addAttribute("comments", response.getPayload());
@@ -269,10 +269,10 @@ public class AdminPageController {
                                    @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (commentId == 0) {
             return "redirect:/home/admin/comment-review-manage";
@@ -291,10 +291,10 @@ public class AdminPageController {
                                  {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("admin", member);
         List<ReviewResponse> reviews = reviewService.findAllReviewByStatus(status).getPayload();
@@ -308,10 +308,10 @@ public class AdminPageController {
                                      @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (reviewId == 0) {
             return "redirect:/home/admin/comment-review-manage/review";
@@ -334,10 +334,10 @@ public class AdminPageController {
                                     @RequestParam(name = "status", required = false, defaultValue = "ALL") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("admin", member);
         ApiResponse<List<TransactionResponse>> response = transactionService.getTransactionsByStatus(status);
@@ -357,10 +357,10 @@ public class AdminPageController {
                                    @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (transactionId == 0) {
             return "redirect:/home/admin/transaction-manage";
