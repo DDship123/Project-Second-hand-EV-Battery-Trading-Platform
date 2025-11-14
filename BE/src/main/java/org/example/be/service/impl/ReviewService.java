@@ -1,4 +1,4 @@
-package org.example.be.service;
+package org.example.be.service.impl;
 
 import org.example.be.dto.response.MemberResponse;
 import org.example.be.dto.response.ReviewResponse;

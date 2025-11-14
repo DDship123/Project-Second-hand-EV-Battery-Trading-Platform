@@ -3,6 +3,9 @@ package org.example.be.controller;
 import org.example.be.dto.response.*;
 import org.example.be.entity.*;
 import org.example.be.service.*;
+import org.example.be.service.CommentService;
+import org.example.be.service.MemberService;
+import org.example.be.service.impl.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -746,6 +749,25 @@ public class PostController {
         }
     }
 
+    @GetMapping("/member/{memberId}/status/{status}")
+    public ResponseEntity<ApiResponse<List<PostResponse>>> getPostsByMemberAndStatus(
+            @PathVariable Integer memberId,
+            @PathVariable String status) {
+        List<PostResponse> posts = postService.getPostsByMemberAndStatus(memberId, status).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+        ApiResponse<List<PostResponse>> response = new ApiResponse<>();
+        if (posts.isEmpty()) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "No posts found for this member with status: " + status);
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        } else {
+            response.ok(posts);
+            return ResponseEntity.ok(response);
+        }
+    }
+
     // --- ADMIN: GET ALL POSTS BY MULTIPLE STATUS ---(Tân)
     @GetMapping("/admin/statuses")
     public ResponseEntity<ApiResponse<List<PostResponse>>> getAllPostsByStatusesForAdmin(@RequestParam List<String> statuses) {
@@ -764,6 +786,23 @@ public class PostController {
             return ResponseEntity.ok(response);
         }
     }
+
+
+    @GetMapping("/admin/count/product-type/{productType}")
+    public ResponseEntity<ApiResponse<Integer>> countApprovedPostsByProductType(@PathVariable String productType) {
+        int count = postService.countApprovedPostsByProductType(productType);
+        ApiResponse<Integer> response = new ApiResponse<>();
+        response.ok(count);
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/admin/count/status/{status}")
+    public ResponseEntity<ApiResponse<Integer>> countPostsByStatus(@PathVariable String status) {
+        int count = postService.countPostsByStatus(status);
+        ApiResponse<Integer> response = new ApiResponse<>();
+        response.ok(count);
+        return ResponseEntity.ok(response);
+    }
+
 
     private Map<String, String> validatePost(PostResponse post) {
         Map<String, String> errors = new HashMap<>();

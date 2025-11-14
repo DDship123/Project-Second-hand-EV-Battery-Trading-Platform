@@ -11,5 +11,10 @@ public interface MemberService {
     ApiResponse<MemberResponse> getMemberInfo(int memberId);
     ApiResponse<MemberResponse> updateMember(MemberResponse updatedMember);
     ApiResponse<List<MemberResponse>> getUser();
+
+    ApiResponse<List<MemberResponse>> getMemberByStatus(String status);
+
     ApiResponse<MemberResponse> updateStatus(MemberResponse member);
+
+    ApiResponse<Integer> countUser();
 }

@@ -88,6 +88,9 @@ body {
   align-items: center;
   gap: 12px;
 }
+.menu-item-content a{
+  color: #696969;
+}
 
 .menu-item i {
   font-size: 18px;
@@ -99,6 +102,9 @@ body {
 
 .menu-item:hover {
   background-color: #e1e9f4;
+  color: #418bee;
+}
+.menu-item:hover a {
   color: #418bee;
 }
 

@@ -107,4 +107,12 @@ public class CommissionController {
             return ResponseEntity.status(404).body(response);
         }
     }
+
+    @GetMapping("/admin/total-commission")
+    public ResponseEntity<ApiResponse<Double>> getTotalCommission() {
+        Double totalCommission = commissionService.calculateTotalCommission();
+        ApiResponse<Double> response = new ApiResponse<>();
+        response.ok(totalCommission);
+        return ResponseEntity.ok(response);
+    }
 }

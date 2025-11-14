@@ -51,4 +51,34 @@ public class CommissionServiceImpl implements CommissionService {
         }
         return response;
     }
+
+    @Override
+    public ApiResponse<Double> getTotalCommission() {
+        ApiResponse<Double> response = new  ApiResponse<>();
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+            ResponseEntity<ApiResponse<Double>> apiResponse = restTemplate.exchange(
+                    apiBaseUrl + "/api/commissions/admin/total-commission",
+                    HttpMethod.GET,
+                    requestEntity,
+                    new ParameterizedTypeReference<ApiResponse<Double>>() {}
+            );
+            if (apiResponse.getStatusCode().is2xxSuccessful() && apiResponse.getBody() != null) {
+                response.ok(apiResponse.getBody().getPayload());
+            } else {
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("message", "Failed to retrieve total commission");
+                response.error(errorMap);
+            }
+
+        }catch (Exception e){
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", "Failed to get total commission: " + e.getMessage());
+            response.error(errorMap);
+        }
+        return response;
+    }
 }

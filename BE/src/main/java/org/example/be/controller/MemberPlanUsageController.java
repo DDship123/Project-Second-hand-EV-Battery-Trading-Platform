@@ -2,7 +2,6 @@ package org.example.be.controller;
 
 import org.example.be.dto.response.ApiResponse;
 import org.example.be.dto.response.MemberPlanUsageResponse;
-import org.example.be.dto.response.MemberResponse;
 import org.example.be.dto.response.MembershipPlanResponse;
 import org.example.be.entity.Member;
 import org.example.be.entity.MemberPlanUsage;
@@ -51,6 +50,8 @@ public class MemberPlanUsageController {
             return ResponseEntity.status(404).body(response);
         }
     }
+
+
 
     @GetMapping("/member/{memberId}")
     public ResponseEntity<ApiResponse<MemberPlanUsageResponse>> getMemberPlanUsageByMemberId(@PathVariable Integer memberId) {
@@ -152,5 +153,13 @@ public class MemberPlanUsageController {
             response.error(error);
             return ResponseEntity.status(404).body(response);
         }
+    }
+
+    @GetMapping("/admin/total-revenue")
+    public ResponseEntity<ApiResponse<Double>> getTotalRevenue() {
+        Double totalRevenue = memberPlanUsageService.calculateTotalRevenue();
+        ApiResponse<Double> response = new ApiResponse<>();
+        response.ok(totalRevenue);
+        return ResponseEntity.ok(response);
     }
 }

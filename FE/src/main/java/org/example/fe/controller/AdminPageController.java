@@ -6,12 +6,11 @@ import org.example.fe.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -27,22 +26,112 @@ public class AdminPageController {
     private MemberService memberService;
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private CommissionService commissionService;
+    @Autowired
+    private MemberPlanUsageService memberPlanUsageService;
+    @Autowired
+    private CommissionSetupService commissionSetupService;
 
-    @GetMapping(value = {"", "/post-manage/{status}"})
-    public String dashboard(Model model, HttpSession session,
-                            @PathVariable(required = false) String status,
+    @GetMapping(value = {"", "/dashboard"})
+    public String adminDashboard(Model model, HttpSession session) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        ApiResponse<Integer> userCountResponse = memberService.countUser();
+        if (userCountResponse.getPayload() != null) {
+            model.addAttribute("userCount", userCountResponse.getPayload());
+        } else {
+            model.addAttribute("userCount", "Lỗi đếm số lượng người dùng");
+        }
+
+        ApiResponse<Integer> postCountResponse = postService.countPostByStatus("APPROVED");
+        if (postCountResponse.getPayload() != null) {
+            model.addAttribute("postCount", postCountResponse.getPayload());
+        } else {
+            model.addAttribute("postCount", "Lỗi đếm số lượng bài đăng");
+        }
+
+        ApiResponse<Integer> postSoldCountResponse = postService.countPostByStatus("SOLD");
+        if (postSoldCountResponse.getPayload() != null) {
+            model.addAttribute("postSoldCount", postSoldCountResponse.getPayload());
+        } else {
+            model.addAttribute("postSoldCount", "Lỗi đếm số lượng bài đăng đã bán");
+        }
+
+        ApiResponse<Double> revenueResponse = commissionService.getTotalCommission();
+        if (revenueResponse.getPayload() != null) {
+            model.addAttribute("totalCommissionRevenue", revenueResponse.getPayload());
+        } else {
+            model.addAttribute("totalCommissionRevenue", "Lỗi tính tổng doanh thu phí hoa hồng");
+        }
+
+        ApiResponse<Double> totalMembershipRevenueResponse = memberPlanUsageService.getTotalRevenue();
+        if (totalMembershipRevenueResponse.getPayload() != null) {
+            model.addAttribute("totalMembershipRevenue", totalMembershipRevenueResponse.getPayload());
+        } else {
+            model.addAttribute("totalMembershipRevenue", "Lỗi tính tổng doanh thu từ gói thành viên");
+        }
+
+        ApiResponse<Integer> vehicleCountResponse = postService.countPostByProductType("VEHICLE");
+        if (vehicleCountResponse.getPayload() != null) {
+            model.addAttribute("vehicleCount", vehicleCountResponse.getPayload());
+        } else {
+            model.addAttribute("vehicleCount", "Lỗi đếm số lượng bài đăng loại phương tiện");
+        }
+
+        ApiResponse<Integer> batteryCountResponse = postService.countPostByProductType("BATTERY");
+        if (batteryCountResponse.getPayload() != null) {
+            model.addAttribute("batteryCount", batteryCountResponse.getPayload());
+        } else {
+            model.addAttribute("batteryCount", "Lỗi đếm số lượng bài đăng loại ắc quy");
+        }
+
+        ApiResponse<List<PostResponse>> getLatestPosts = postService.getLatestPost();
+        if (getLatestPosts.getPayload() != null) {
+            if (getLatestPosts.getPayload().size() > 5) {
+                model.addAttribute("latestPosts", getLatestPosts.getPayload().subList(0, 5));
+            } else {
+                model.addAttribute("latestPosts", getLatestPosts.getPayload());
+            }
+        } else {
+            model.addAttribute("latestPosts", "Lỗi tải danh sách bài đăng mới nhất");
+        }
+        ApiResponse<List<TransactionResponse>> getLatestTransactions = transactionService.getTransactionsForDashboard();
+        if (getLatestTransactions.getPayload() != null) {
+            if (getLatestTransactions.getPayload().size() > 5) {
+                model.addAttribute("latestTransactions", getLatestTransactions.getPayload().subList(0, 5));
+            } else {
+                model.addAttribute("latestTransactions", getLatestTransactions.getPayload());
+            }
+        } else {
+            model.addAttribute("latestTransactions", "Lỗi tải danh sách giao dịch mới nhất");
+        }
+
+        model.addAttribute("admin", member);
+        return "dashboardAdmin";
+    }
+
+
+    @GetMapping("/post-manage")
+    public String postMange(Model model, HttpSession session,
+                            @RequestParam(required = false,defaultValue = "PENDING") String status,
                             @RequestParam(name = "successMessage", required = false) String successMessage,
                             @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
-        if (status == null || status.isEmpty()) {
-            status = "PENDING";
-        }
+//        if (status == null || status.isEmpty()) {
+//            status = "PENDING";
+//        }
         ApiResponse<List<PostResponse>> response = postService.getAllPostByStatus(status);
         model.addAttribute("posts", response.getPayload());
         model.addAttribute("admin", member);
@@ -58,10 +147,10 @@ public class AdminPageController {
     public String postDetail(Model model, HttpSession session, @RequestParam(name = "postId",defaultValue = "0") int postId) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         ApiResponse<PostResponse> postResponse = postService.getPostDetail(postId);
         PostResponse post = postResponse.getPayload();
@@ -94,7 +183,7 @@ public class AdminPageController {
         } else {
             redirectAttributes.addAttribute("errorMessage", "Cập nhật bài đăng thất bại.");
         }
-        return "redirect:/home/admin/post-manage/PENDING";
+        return "redirect:/home/admin/post-manage";
     }
 
     @GetMapping("/member-manage")
@@ -104,7 +193,7 @@ public class AdminPageController {
             return "redirect:/login";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         List<MemberResponse> users = memberService.getUser().getPayload();
         model.addAttribute("admin", member);
@@ -141,10 +230,10 @@ public class AdminPageController {
                                      @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (memberId == 0) {
             return "redirect:/home/admin/member-manage";
@@ -162,15 +251,15 @@ public class AdminPageController {
     }
 
     @GetMapping("/comment-review-manage")
-    public String commentManage(Model model, HttpSession session) {
+    public String commentManage(Model model, HttpSession session,@RequestParam(defaultValue = "PENDING") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
-        ApiResponse<List<CommentResponse>> response = commentService.findAllCommentByStatus("PENDING");
+        ApiResponse<List<CommentResponse>> response = commentService.findAllCommentByStatus(status);
         model.addAttribute("comments", response.getPayload());
         model.addAttribute("admin", member);
         return "commentManage";
@@ -181,10 +270,10 @@ public class AdminPageController {
                                    @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (commentId == 0) {
             return "redirect:/home/admin/comment-review-manage";
@@ -199,17 +288,17 @@ public class AdminPageController {
     }
 
     @GetMapping("/comment-review-manage/review")
-    public String reviewComments(Model model, HttpSession session)
+    public String reviewComments(Model model, HttpSession session,@RequestParam(defaultValue = "PENDING") String status)
                                  {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("admin", member);
-        List<ReviewResponse> reviews = reviewService.findAllReviewByStatus("PENDING").getPayload();
+        List<ReviewResponse> reviews = reviewService.findAllReviewByStatus(status).getPayload();
         model.addAttribute("reviews", reviews);
         model.addAttribute("admin", member);
         return "commentManage";
@@ -220,10 +309,10 @@ public class AdminPageController {
                                      @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (reviewId == 0) {
             return "redirect:/home/admin/comment-review-manage/review";
@@ -242,16 +331,17 @@ public class AdminPageController {
 
     @GetMapping("/transaction-manage")
     public String transactionManage(Model model, HttpSession session,@RequestParam(name = "successMessage", required = false) String successMessage,
-                                    @RequestParam(name = "errorMessage", required = false) String errorMessage) {
+                                    @RequestParam(name = "errorMessage", required = false) String errorMessage,
+                                    @RequestParam(name = "status", required = false, defaultValue = "ALL") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("admin", member);
-        ApiResponse<List<TransactionResponse>> response = transactionService.getAllTransactions();
+        ApiResponse<List<TransactionResponse>> response = transactionService.getTransactionsByStatus(status);
         model.addAttribute("transactions", response.getPayload());
         if (successMessage != null) {
             model.addAttribute("successMessage", successMessage);
@@ -268,10 +358,10 @@ public class AdminPageController {
                                    @RequestParam(name = "status") String status) {
         MemberResponse member = (MemberResponse) session.getAttribute("user");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (!member.getRole().equals("ADMIN")) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         if (transactionId == 0) {
             return "redirect:/home/admin/transaction-manage";
@@ -285,16 +375,93 @@ public class AdminPageController {
         return "redirect:/home/admin/transaction-manage";
     }
 
-//    @GetMapping("/fee-manage")
-//    public String feeManage(Model model, HttpSession session) {
-//        MemberResponse member = (MemberResponse) session.getAttribute("user");
-//        if (member == null) {
-//            return "redirect:/login";
+    @GetMapping("/fee-manage")
+    public String feeManage(Model model, HttpSession session,@RequestParam(name = "successMessage", required = false) String successMessage,
+                            @RequestParam(name = "errorMessage", required = false) String errorMessage) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        ApiResponse<List<CommissionSetupResponse>> response = commissionSetupService.getAllCommissionSetups();
+        model.addAttribute("commissionSetups", response.getPayload());
+        model.addAttribute("admin", member);
+        return "feeManage";
+    }
+
+    @GetMapping("/fee-manage/edit/{setupId}")
+    public String editFeeManage(Model model, HttpSession session, @PathVariable int setupId) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        ApiResponse<CommissionSetupResponse> response = commissionSetupService.getCommissionSetupById((long) setupId);
+        CommissionSetupResponse commissionSetup = response.getPayload();
+        model.addAttribute("commissionSetup", commissionSetup);
+        model.addAttribute("admin", member);
+        return "feeManageDetail";
+    }
+    @PostMapping("/fee-manage/update")
+    public String updateFeeManage(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                  @ModelAttribute CommissionSetupResponse commissionSetup,
+                                  @RequestParam(name = "minimum") double minimum,
+                                  @RequestParam(name = "maximum") double maximum) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        commissionSetup.setMinimum(minimum);
+        commissionSetup.setMaximum(maximum);
+        commissionSetup.setUpdatedAt(LocalDateTime.now());
+        ApiResponse<CommissionSetupResponse> response = commissionSetupService.updateCommissionSetup(commissionSetup.getId(), commissionSetup);
+        if (response.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Cập nhật phí hoa hồng thành công.");
+        } else {
+            redirectAttributes.addAttribute("errorMessage", "Cập nhật phí hoa hồng thất bại.");
+        }
+        return "redirect:/home/admin/fee-manage";
+    }
+    @GetMapping("/fee-manage/{status}/{setupId}")
+    public String inactiveFeeManage(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                    @PathVariable int setupId,@PathVariable String status) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        ApiResponse<CommissionSetupResponse> setupById = commissionSetupService.getCommissionSetupById((long) setupId);
+        CommissionSetupResponse commissionSetup = setupById.getPayload();
+//        if (commissionSetup.getStatus().equals("INACTIVE")) {
+//            redirectAttributes.addAttribute("errorMessage", "Phí hoa hồng đã được vô hiệu hóa trước đó.");
+//            return "redirect:/home/admin/fee-manage";
 //        }
-//        if (!member.getRole().equals("ADMIN")) {
-//            return "redirect:/login";
-//        }
-//        model.addAttribute("admin", member);
-//        return "feeManage";
-//    }
+        commissionSetup.setStatus(status.toUpperCase());
+        commissionSetup.setUpdatedAt(LocalDateTime.now());
+        ApiResponse<CommissionSetupResponse> response = commissionSetupService.updateCommissionSetup(commissionSetup.getId(), commissionSetup);
+        if (response.getPayload() != null) {
+            if (status.equalsIgnoreCase("ACTIVE")) {
+                redirectAttributes.addAttribute("successMessage", "Kích hoạt phí hoa hồng thành công.");
+            } else{
+                redirectAttributes.addAttribute("successMessage", "Vô hiệu hóa phí hoa hồng thành công.");
+            }
+        } else {
+            if (status.equalsIgnoreCase("ACTIVE")) {
+                redirectAttributes.addAttribute("errorMessage", "Kích hoạt phí hoa hồng thất bại.");
+            } else{
+                redirectAttributes.addAttribute("errorMessage", "Vô hiệu hóa phí hoa hồng thất bại.");
+            }
+        }
+        return "redirect:/home/admin/fee-manage";
+    }
+
 }

@@ -32,7 +32,7 @@ public class WishListController {
         }
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         if (memberResponse == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
@@ -55,6 +55,9 @@ public class WishListController {
     @GetMapping("/add/{postId}")
     public String addWishList(@PathVariable Integer postId, HttpSession session, RedirectAttributes redirectAttributes) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
+        if (memberResponse == null) {
+            return "redirect:/login?unauthorized=true";
+        }
         ApiResponse<FavoriteResponse> apiResponse = wishlistService.addWishlist(memberResponse.getMemberId(), postId);
         if (apiResponse.getPayload() != null) {
             redirectAttributes.addAttribute("successMessage", "Thêm vào danh sách yêu thích thành công!");

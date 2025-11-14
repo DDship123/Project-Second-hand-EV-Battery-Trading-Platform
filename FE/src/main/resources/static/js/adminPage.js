@@ -12,8 +12,17 @@ const notification = document.getElementById('notification');
 window.addEventListener('DOMContentLoaded', () => {
   submenu.classList.add('open');
   dropdownArrow.classList.add('open');
-  permissionMenu.classList.add('active');
+  // permissionMenu.classList.add('active');
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const successMessage = urlParams.get('successMessage');
+  if (successMessage) {
+    alert(successMessage);
+  }
+  const errorMessage = urlParams.get('errorMessage');
+  if (errorMessage) {
+    alert(errorMessage);
+  }
   if (window.location.pathname.includes('post-manage')) {
     submenuItems[0].classList.add('active');
   }else if (window.location.pathname.includes('transaction-manage')) {
@@ -24,10 +33,11 @@ window.addEventListener('DOMContentLoaded', () => {
     submenuItems[3].classList.add('active');
   }else if (window.location.pathname.includes('fee-manage')) {
     submenuItems[4].classList.add('active');
-  } else {
-    // Default to first submenu item
-    submenuItems[0].classList.add('active');
   }
+  // else {
+  //   // Default to first submenu item
+  //   submenuItems[0].classList.add('active');
+  // }
 });
 
 
@@ -43,29 +53,29 @@ permissionMenu.addEventListener('click', function () {
   const wasOpen = submenu.classList.contains('open');
   submenu.classList.toggle('open');
   dropdownArrow.classList.toggle('open');
-  const nowOpen = submenu.classList.contains('open');
+  // const nowOpen = submenu.classList.contains('open');
 
-  if (nowOpen) {
-    // If no active submenu item, select the first one (Post Management)
-    if (!submenu.querySelector('.submenu-item.active') && !wasOpen) {
-      deactivateAllMenus();
-      const firstSub = submenuItems[0];
-      firstSub.classList.add('active');
-      permissionMenu.classList.add('active');
-      submenu.classList.add('open');
-      dropdownArrow.classList.add('open');
-
-      // Show the content
-      const sectionToShow = firstSub.getAttribute('data-submenu');
-      contentSections.forEach(section => section.classList.remove('active'));
-      const targetSection = document.querySelector(`[data-section="${sectionToShow}"]`);
-      if (targetSection) {
-        targetSection.classList.add('active');
-      }
-    }
-  } else {
-    // If closing, do not change active if a sub was selected, but since we're only highlighting selected, keep content
-  }
+  // if (nowOpen) {
+  //   // If no active submenu item, select the first one (Post Management)
+  //   if (!submenu.querySelector('.submenu-item.active') && !wasOpen) {
+  //     deactivateAllMenus();
+  //     const firstSub = submenuItems[0];
+  //     firstSub.classList.add('active');
+  //     permissionMenu.classList.add('active');
+  //     submenu.classList.add('open');
+  //     dropdownArrow.classList.add('open');
+  //
+  //     // Show the content
+  //     const sectionToShow = firstSub.getAttribute('data-submenu');
+  //     contentSections.forEach(section => section.classList.remove('active'));
+  //     const targetSection = document.querySelector(`[data-section="${sectionToShow}"]`);
+  //     if (targetSection) {
+  //       targetSection.classList.add('active');
+  //     }
+  //   }
+  // } else {
+  //   // If closing, do not change active if a sub was selected, but since we're only highlighting selected, keep content
+  // }
 });
 
 // Handle submenu item clicks and switch content
@@ -94,7 +104,7 @@ submenuItems.forEach(item => {
     }
     switch (item.textContent.trim()) {
       case 'Quản lí đăng bài':
-        window.location.href = '/home/admin/post-manage/PENDING';
+        window.location.href = '/home/admin/post-manage';
         break;
       case 'Quản lí giao dịch':
         window.location.href = '/home/admin/transaction-manage';
@@ -106,6 +116,9 @@ submenuItems.forEach(item => {
         window.location.href = '/home/admin/comment-review-manage';
         break;
       case 'Cấu hình phí & Hoa hồng':
+        window.location.href = '/home/admin/fee-manage';
+        break;
+      case 'Cấu hình phí Hoa hồng':
         window.location.href = '/home/admin/fee-manage';
         break;
       default:

@@ -34,7 +34,7 @@ public class transactionsHistoryPageController {
                                          @RequestParam(name = "status", required = false) String status) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         if (memberResponse == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
@@ -63,7 +63,7 @@ public class transactionsHistoryPageController {
                                              @RequestParam(name = "status", required = false) String status) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         if (memberResponse == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("user", memberResponse);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));

@@ -34,18 +34,27 @@
                 <i class="fa-solid fa-comments"></i>
                 <h2>Quản lí bình luận</h2>
             </div>
-            <div class="content-header">
+            <div class="content-header category">
                 <div class="filter-tabs">
                     <button class="tab-btn active" data-tab="comments">Bình luận</button>
                     <button class="tab-btn" data-tab="reviews">Đánh giá</button>
                 </div>
             </div>
+
             <div class="tab-content active" id="commentsTab">
                 <div class="content-toolbar">
                     <div class="search-box">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input type="text" placeholder="Tìm kiếm bình luận...">
                     </div>
+                </div>
+                <div class="content-header">
+                    <div class="filter-tabs">
+                        <button class="tab-btn active">Đợi duyệt </button>
+                        <button class="tab-btn">Đã duyệt</button>
+                        <button class="tab-btn">Từ chối</button>
+                    </div>
+                    <!--                <div class="result-info">Hiện 1 - 8 trên 100 kết quả</div>-->
                 </div>
                 <div th:if="${comments != null}" class="data-table">
                     <table>
@@ -67,10 +76,14 @@
                             <th><a th:href="'/home/product/detail/'+${comment.getPost().getPostsId()}">Xem sản phẩm</a></th>
                             <td th:text="${comment.getComment()}">Bình luận rất tốt về sản phẩm.</td>
                             <td th:text="${comment.getRating()}+'⭐'">5</td>
-                            <td><span class="status-badge pending">Chờ duyệt</span></td>
                             <td>
-                                <button class="action-btn-small success comment-approve-btn" th:attr="data-comment-id=${comment.getCommentId()}">Duyệt</button>
-                                <button class="action-btn-small danger comment-reject-btn" th:attr="data-comment-id=${comment.getCommentId()}">Từ chối</button>
+                                <span th:if="${comment.getStatus().equals('PENDING')}" class="status-badge pending">Chờ duyệt</span>
+                                <span th:if="${comment.getStatus().equals('APPROVED')}" class="status-badge pending">Đã duyệt</span>
+                                <span th:if="${comment.getStatus().equals('REJECTED')}" class="status-badge pending">Hủy</span>
+                            </td>
+                            <td>
+                                <button th:if="${comment.getStatus().equals('PENDING')}" class="action-btn-small success comment-approve-btn" th:attr="data-comment-id=${comment.getCommentId()}">Duyệt</button>
+                                <button th:if="${comment.getStatus().equals('PENDING')}" class="action-btn-small danger comment-reject-btn" th:attr="data-comment-id=${comment.getCommentId()}">Từ chối</button>
                             </td>
                         </tr>
                         </tbody>
@@ -102,10 +115,14 @@
                             <td th:text="${#temporals.format(review.getCreatedAt(),'dd-MM-yyyy')}">19/10/2025</td>
                             <td th:text="${review.getComment()}">Đánh giá 5 sao, sản phẩm tuyệt vời.</td>
                             <td th:text="${review.getSeller().getUsername()}">Tran Thi B</td>
-                            <td><span class="status-badge pending">Đang đợi</span></td>
                             <td>
-                                <button class="action-btn-small success review-approve-btn" th:attr="data-comment-id=${review.getReviewId()}">Duyệt</button>
-                                <button class="action-btn-small danger review-reject-btn" th:attr="data-comment-id=${review.getReviewId()}">Từ chối</button>
+                                <span th:if="${review.getStatus().equals('PENDING')}" class="status-badge pending">Chờ duyệt</span>
+                                <span th:if="${review.getStatus().equals('APPROVED')}" class="status-badge pending">Đã duyệt</span>
+                                <span th:if="${review.getStatus().equals('REJECTED')}" class="status-badge pending">Hủy</span>
+                            </td>
+                            <td>
+                                <button th:if="${review.getStatus().equals('PENDING')}" class="action-btn-small success review-approve-btn" th:attr="data-comment-id=${review.getReviewId()}">Duyệt</button>
+                                <button th:if="${review.getStatus().equals('PENDING')}" class="action-btn-small danger review-reject-btn" th:attr="data-comment-id=${review.getReviewId()}">Từ chối</button>
                             </td>
                         </tr>
                         </tbody>

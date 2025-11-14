@@ -3,11 +3,7 @@ package org.example.be.controller;
 import org.example.be.dto.response.ApiResponse;
 import org.example.be.dto.response.MemberResponse;
 import org.example.be.entity.Member;
-import org.example.be.entity.MemberPlanUsage;
-import org.example.be.entity.MembershipPlan;
-import org.example.be.service.MemberPlanUsageService;
 import org.example.be.service.MemberService;
-import org.example.be.service.MembershipPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +51,26 @@ public class MemberController {
             metadata.put("timestamp", LocalDateTime.now());
 
             response.ok(members, (HashMap<String, Object>) metadata);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+
+            response.error(error);
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @GetMapping("/admin/count/user")
+    public ResponseEntity<ApiResponse<Integer>> countUsers() {
+        ApiResponse<Integer> response = new ApiResponse<>();
+        try {
+            int count = memberService.countMemberByRole("USER");
+
+            Map<String, Object> metadata = new HashMap<>();
+            metadata.put("timestamp", LocalDateTime.now());
+
+            response.ok(count, (HashMap<String, Object>) metadata);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
