@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class MembershipPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "plan_id")
+    @Column(name = "plan_id", nullable = false, unique = true)
     private Integer planId;
 
     @Column(columnDefinition = "NVARCHAR(50)")

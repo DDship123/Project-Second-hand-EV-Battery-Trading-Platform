@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
+    @Column(name = "comment_id", nullable = false,unique = true)
     private Integer commentId;
 
     @ManyToOne

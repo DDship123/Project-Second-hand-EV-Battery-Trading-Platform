@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class Commission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comissions_id")
+    @Column(name = "comissions_id", unique = true, nullable = false)
     private Integer commissionsId;
 
     @OneToOne
