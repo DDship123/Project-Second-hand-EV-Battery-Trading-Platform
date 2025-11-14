@@ -5,7 +5,7 @@ import org.example.be.dto.response.MemberResponse;
 import org.example.be.dto.response.ReviewResponse;
 import org.example.be.entity.Review;
 import org.example.be.service.MemberService;
-import org.example.be.service.ReviewService;
+import org.example.be.service.impl.ReviewService;
 import org.example.be.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

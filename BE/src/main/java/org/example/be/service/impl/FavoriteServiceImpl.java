@@ -1,0 +1,106 @@
+package org.example.be.service.impl;
+
+import org.example.be.entity.Favorite;
+import org.example.be.entity.Member;
+import org.example.be.entity.Post;
+import org.example.be.entity.PostImage;
+import org.example.be.repository.FavoriteRepository;
+import org.example.be.service.FavoriteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class FavoriteServiceImpl implements FavoriteService {
+    @Autowired
+    private FavoriteRepository favoriteRepository;
+
+    @Override
+    public Favorite createFavorite(Favorite favorite) {
+        Favorite existingFavorite = favoriteRepository.findByMemberAndPost(favorite.getMember(), favorite.getPost());
+        if (existingFavorite != null) {
+            return existingFavorite; // Return existing favorite if it already exists
+        }
+        return favoriteRepository.save(favorite);
+    }
+
+    @Override
+    public List<Favorite> getAllFavorites() {
+        return favoriteRepository.findAll();
+    }
+
+    @Override
+    public Favorite getFavoriteById(Integer id) {
+        Optional<Favorite> favorite = favoriteRepository.findById(id);
+        return favorite.orElse(null);
+    }
+
+    @Override
+    public Favorite updateFavorite(Integer id, Favorite favoriteDetails) {
+        Favorite favorite = getFavoriteById(id);
+        if (favorite == null) {
+            return null;
+        }
+        favorite.setMember(favoriteDetails.getMember());
+        favorite.setPost(favoriteDetails.getPost());
+        return favoriteRepository.save(favorite);
+    }
+
+    @Override
+    public void deleteFavorite(Integer id) {
+        favoriteRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Post> getLatestFavoritesPosts(Member member){
+        return favoriteRepository.findLatestPostsByMember(member);
+    }
+
+    @Override
+    public Favorite getFistFavoriteByMemberID(int memberId){
+        Optional<Favorite> data = favoriteRepository.findFirstByMemberId(memberId);
+        return transferToFavorite(data);
+    }
+    @Override
+    public List<Favorite> getAllFavoriteByMemberID(int memberId){
+        List<Favorite> favorites = favoriteRepository.findAllByMemberId(memberId);
+        List<Favorite> result = new ArrayList<>();
+        for (Optional<Favorite> data : favorites.stream().map(Optional::of).toList()) {
+            result.add(transferToFavorite(data));
+        }
+        return result;
+    }
+
+    @Override
+    public Favorite transferToFavorite( Optional<Favorite> data) {
+        Member member = new Member();
+        member.setMemberId(data.get().getMember().getMemberId());
+
+        Post post = new Post();
+        post.setPostsId(data.get().getPost().getPostsId());
+        post.setTitle(data.get().getPost().getTitle());
+        post.setPrice(data.get().getPost().getPrice());
+
+        PostImage postImage = new PostImage();
+        postImage.setPostImagesId(data.get().getPost().getPostImages().get(0).getPostImagesId());
+        postImage.setImageUrl(data.get().getPost().getPostImages().get(0).getImageUrl());
+
+        List<PostImage> list = new ArrayList<>();
+        list.add(postImage);
+        post.setPostImages(list);
+
+        Member seller = new Member();
+        seller.setMemberId(data.get().getPost().getSeller().getMemberId());
+        seller.setUsername(data.get().getPost().getSeller().getUsername());
+
+        post.setSeller(seller);
+        Favorite favorite = new Favorite();
+        favorite.setFavoritesId(data.get().getFavoritesId());
+        favorite.setMember(member);
+        favorite.setPost(post);
+        return favorite;
+    }
+}
