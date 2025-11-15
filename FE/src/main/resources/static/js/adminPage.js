@@ -14,8 +14,15 @@ window.addEventListener('DOMContentLoaded', () => {
   dropdownArrow.classList.add('open');
   // permissionMenu.classList.add('active');
 
-
-
+  const urlParams = new URLSearchParams(window.location.search);
+  const successMessage = urlParams.get('successMessage');
+  if (successMessage) {
+    alert(successMessage);
+  }
+  const errorMessage = urlParams.get('errorMessage');
+  if (errorMessage) {
+    alert(errorMessage);
+  }
   if (window.location.pathname.includes('post-manage')) {
     submenuItems[0].classList.add('active');
   }else if (window.location.pathname.includes('transaction-manage')) {
@@ -109,6 +116,9 @@ submenuItems.forEach(item => {
         window.location.href = '/home/admin/comment-review-manage';
         break;
       case 'Cấu hình phí & Hoa hồng':
+        window.location.href = '/home/admin/fee-manage';
+        break;
+      case 'Cấu hình phí Hoa hồng':
         window.location.href = '/home/admin/fee-manage';
         break;
       default:

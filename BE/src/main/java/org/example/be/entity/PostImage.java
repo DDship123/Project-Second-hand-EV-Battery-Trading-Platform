@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class PostImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_images_id")
+    @Column(name = "post_images_id", unique = true, nullable = false)
     private Integer postImagesId;
 
     @ManyToOne

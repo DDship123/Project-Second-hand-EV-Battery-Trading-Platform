@@ -3,16 +3,15 @@ package org.example.be.controller;
 import org.example.be.dto.response.*;
 import org.example.be.entity.*;
 import org.example.be.service.*;
+import org.example.be.service.MemberService;
+import org.example.be.service.impl.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +30,8 @@ public class TransactionController {
     private PostService postService;
     @Autowired
     private ContractService contractService;
+    @Autowired
+    private CommissionSetupService commissionSetupService;
 
     private TransactionResponse mapToResponse(Transaction t) {
         TransactionResponse response = new TransactionResponse();
@@ -98,32 +99,57 @@ public class TransactionController {
 
         Commission commission = new Commission();
         commission.setTransaction(saved);
-        if (post.getProduct().getBattery() != null) {
-            if (post.getPrice().doubleValue() > 10000000) {
-                commission.setCommissionRate(BigDecimal.valueOf(0.03));
+        // LẤY CÁI CẤU HÌNH HOA HỒNG THEO LOẠI SẢN PHẨM VÀ MỨC GIÁ
+        CommissionSetup setup = commissionSetupService.findCommissionSetupByProductTypeAndPrice(
+                post.getProduct().getProductType(),
+                post.getPrice().doubleValue()
+        );
+        if (setup != null) {
+            commission.setCommissionRate(BigDecimal.valueOf(setup.getCommissionRate()));
+            commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+            commission.setCreatedAt(LocalDateTime.now());
+            commission.setStatus("PAID");
+        }else {
+            setup = commissionSetupService.getDefaultCommissionSetup(post.getProduct().getProductType());
+            if (setup != null) {
+                commission.setCommissionRate(BigDecimal.valueOf(setup.getCommissionRate()));
                 commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
                 commission.setCreatedAt(LocalDateTime.now());
                 commission.setStatus("PAID");
-
-            } else {
-                commission.setCommissionRate(BigDecimal.valueOf(0.02));
-                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
-                commission.setCreatedAt(LocalDateTime.now());
-                commission.setStatus("PAID");
-            }
-        } else if (post.getProduct().getVehicle() != null) {
-            if (post.getPrice().doubleValue() > 20000000) {
-                commission.setCommissionRate(BigDecimal.valueOf(0.04));
-                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
-                commission.setCreatedAt(LocalDateTime.now());
-                commission.setStatus("PAID");
-            } else {
-                commission.setCommissionRate(BigDecimal.valueOf(0.025));
-                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
-                commission.setCreatedAt(LocalDateTime.now());
-                commission.setStatus("PAID");
+            }else {
+                Map<String, String> error = new HashMap<>();
+                error.put("message", "No commission setup found for product type: " + post.getProduct().getProductType());
+                ApiResponse<TransactionResponse> response = new ApiResponse<>();
+                response.error(error);
+                return ResponseEntity.status(500).body(response);
             }
         }
+//        if (post.getProduct().getBattery() != null) {
+//            if (post.getPrice().doubleValue() > 10000000) {
+//                commission.setCommissionRate(BigDecimal.valueOf(0.03));
+//                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+//                commission.setCreatedAt(LocalDateTime.now());
+//                commission.setStatus("PAID");
+//
+//            } else {
+//                commission.setCommissionRate(BigDecimal.valueOf(0.02));
+//                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+//                commission.setCreatedAt(LocalDateTime.now());
+//                commission.setStatus("PAID");
+//            }
+//        } else if (post.getProduct().getVehicle() != null) {
+//            if (post.getPrice().doubleValue() > 20000000) {
+//                commission.setCommissionRate(BigDecimal.valueOf(0.04));
+//                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+//                commission.setCreatedAt(LocalDateTime.now());
+//                commission.setStatus("PAID");
+//            } else {
+//                commission.setCommissionRate(BigDecimal.valueOf(0.025));
+//                commission.setAmount(post.getPrice().multiply(commission.getCommissionRate()));
+//                commission.setCreatedAt(LocalDateTime.now());
+//                commission.setStatus("PAID");
+//            }
+//        }
         commissionService.createCommission(commission);
 
 

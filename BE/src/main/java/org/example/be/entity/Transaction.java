@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transactions_id")
+    @Column(name = "transactions_id", unique = true, nullable = false)
     private Integer transactionsId;
 
     @ManyToOne

@@ -1,7 +1,6 @@
 package org.example.be.controller;
 
 import org.example.be.dto.response.ApiResponse;
-import org.example.be.dto.request.FavoriteRequest;
 import org.example.be.dto.response.FavoriteResponse;
 import org.example.be.dto.response.MemberResponse;
 import org.example.be.dto.response.PostResponse;

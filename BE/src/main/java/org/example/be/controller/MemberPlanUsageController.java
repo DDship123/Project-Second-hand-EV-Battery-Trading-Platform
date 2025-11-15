@@ -2,7 +2,6 @@ package org.example.be.controller;
 
 import org.example.be.dto.response.ApiResponse;
 import org.example.be.dto.response.MemberPlanUsageResponse;
-import org.example.be.dto.response.MemberResponse;
 import org.example.be.dto.response.MembershipPlanResponse;
 import org.example.be.entity.Member;
 import org.example.be.entity.MemberPlanUsage;

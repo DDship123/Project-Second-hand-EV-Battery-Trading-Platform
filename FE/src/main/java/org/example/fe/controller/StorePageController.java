@@ -28,7 +28,7 @@ public class StorePageController {
     public String storePage(Model model, HttpSession session) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/login?unauthorized=true";
         }
         model.addAttribute("user", user);
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
