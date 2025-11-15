@@ -51,7 +51,7 @@ public class VnpayService {
 
         Map<String, String> signed = VnpayUtil.sign(params, props.getSecretKey());
 
-        // THÊM LOG GIÚP DEBUG:
+        // LOG để dubug lỗi mã hash nhận về :
         System.out.println("hashData (SIGN): " + signed.get("hashData"));
         System.out.println("secureHash (SIGN): " + signed.get("secureHash"));
 
