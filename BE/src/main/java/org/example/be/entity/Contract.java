@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "contracts_id")
+    @Column(name = "contracts_id", unique = true, nullable = false)
     private Integer contractsId;
 
     @OneToOne

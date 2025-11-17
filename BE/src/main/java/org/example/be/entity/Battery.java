@@ -1,34 +1,43 @@
 package org.example.be.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "battery")
 public class Battery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "battery_id")
+    @Column(name = "battery_id",unique = true, nullable = false)
     private Integer batteryId;
 
-    @Column(name = "name", columnDefinition = "NVARCHAR(100)")
+    @Column(name = "name", columnDefinition = "NVARCHAR(100)",nullable = false)
+    @NotBlank(message = "Name is required!")
     private String name;
 
-    @Column(name = "brand", columnDefinition = "NVARCHAR(50)")
+    @Column(name = "brand", columnDefinition = "NVARCHAR(50)",nullable = false)
+    @NotBlank(message = "Brand is required")
     private String brand;
 
-    @Column(name = "year_at", columnDefinition = "NVARCHAR(4)")
+    @Column(name = "year_at", columnDefinition = "NVARCHAR(4)", nullable = false)
+    @Size(max = 4, message = "Year length is 4")
     private String yearAt;
 
-    @Column(name = "voltage_v", columnDefinition = "NVARCHAR(10)")
+    @Column(name = "voltage_v", columnDefinition = "NVARCHAR(10)", nullable = false)
+    @NotBlank(message = "Voltage is required!")
     private String voltageV;
 
-    @Column(name = "capacity_ah")
+    @Column(name = "capacity_ah", nullable = false)
+    @NotBlank(message = "Capacity is required!")
     private Integer capacityAh;
 
-    @Column(name = "condition", columnDefinition = "NVARCHAR(20)")
+    @Column(name = "condition", columnDefinition = "NVARCHAR(20)",nullable = false)
+    @NotBlank(message = "Condition is required!")
     private String condition;
 
-    @Column(name = "origin", columnDefinition = "NVARCHAR(50)")
+    @Column(name = "origin", columnDefinition = "NVARCHAR(50)", nullable = false)
+    @NotBlank(message = "Origin is required!")
     private String origin;
 
     public Integer getBatteryId() {

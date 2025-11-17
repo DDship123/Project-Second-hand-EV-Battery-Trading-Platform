@@ -1,6 +1,8 @@
 package org.example.be.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.List;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "posts_id")
+    @Column(name = "posts_id", unique = true, nullable = false)
     private Integer postsId;
 
     @OneToOne
@@ -22,7 +24,8 @@ public class Post {
     @JoinColumn(name = "seller_id")
     private Member seller;
 
-    @Column(columnDefinition = "NVARCHAR(200)")
+    @Column(columnDefinition = "NVARCHAR(200)", nullable = false)
+    @NotBlank(message = "Title is required!")
     private String title;
 
     @Column(columnDefinition = "NTEXT")

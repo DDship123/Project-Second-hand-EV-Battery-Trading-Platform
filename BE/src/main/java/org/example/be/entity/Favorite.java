@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "favorites_id")
+    @Column(name = "favorites_id",unique = true, nullable = false)
     private int favoritesId;
 
     @ManyToOne
