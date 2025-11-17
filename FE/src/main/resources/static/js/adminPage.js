@@ -38,6 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
   //   // Default to first submenu item
   //   submenuItems[0].classList.add('active');
   // }
+
 });
 
 

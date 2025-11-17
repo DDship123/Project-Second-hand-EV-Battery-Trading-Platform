@@ -1,0 +1,512 @@
+<!-- feeManageCreate.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tạo mới cấu hình phí & Hoa hồng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/adminPage.css}" />
+    <style>
+        /* Fee Management Create Styles */
+        .create-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: #f8f9fa;
+            color: #666;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #e9ecef;
+            color: #418bee;
+        }
+
+        .create-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .create-header i {
+            font-size: 24px;
+            color: #28a745;
+        }
+
+        .create-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #418bee;
+            box-shadow: 0 0 0 3px rgba(65, 139, 238, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .required {
+            color: red;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 4px;
+        }
+
+        .form-info {
+            background-color: #e7f3ff;
+            border-left: 4px solid #418bee;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .form-info h4 {
+            margin: 0 0 8px 0;
+            color: #0c5460;
+            font-size: 14px;
+        }
+
+        .form-info p {
+            margin: 0;
+            font-size: 13px;
+            color: #0c5460;
+        }
+
+        /* Input validation styles */
+        .form-group input:invalid {
+            border-color: #dc3545;
+        }
+
+        .form-group input:valid {
+            border-color: #28a745;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .create-container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <!-- Sidebar inclusion -->
+    <section th:include="adminPage"></section>
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Notification Area -->
+        <div class="notification" id="notification"></div>
+
+        <!-- Back button -->
+        <a th:href="@{/home/admin/fee-manage}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Quay lại danh sách
+        </a>
+
+        <!-- Fee Management Create Content -->
+        <div class="create-container">
+            <!-- Success/Error Messages -->
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+            <div class="create-header">
+                <i class="fa-solid fa-plus-circle"></i>
+                <h1>Tạo mới cấu hình phí & Hoa hồng</h1>
+            </div>
+
+            <!-- Information Section -->
+            <div class="form-info">
+                <h4><i class="fas fa-info-circle"></i> Thông tin hướng dẫn</h4>
+                <p>Vui lòng điền đầy đủ thông tin để tạo mới cấu hình phí và hoa hồng cho hệ thống. Các trường có dấu (*) là bắt buộc.</p>
+            </div>
+
+            <!-- Create Form -->
+            <form th:action="@{/home/admin/fee-manage/create}"
+                  method="post"
+                  th:object="${commissionSetup}"
+                  id="createCommissionForm">
+
+                <!-- Product Type -->
+                <div class="form-group">
+                    <label for="productType">Loại sản phẩm <span class="required">*</span></label>
+                    <select id="productType" th:field="*{productType}" required>
+                        <option value="">-- Chọn loại sản phẩm --</option>
+                        <option value="VEHICLE">Xe điện</option>
+                        <option value="BATTERY">Pin xe điện</option>
+                    </select>
+                    <div class="help-text">Chọn loại sản phẩm mà cấu hình này sẽ áp dụng</div>
+                </div>
+
+                <!-- Price Range -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="minimum">Giá tối thiểu (VNĐ) <span class="required">*</span></label>
+                        <input type="number"
+                               id="minimum"
+                               name="minimum"
+                               value="0"
+                               min="0"
+                               required />
+                        <div class="help-text">Giá tối thiểu của sản phẩm (đơn vị: VNĐ)</div>
+                        <div class="error-message" id="minimumError">Vui lòng nhập giá tối thiểu hợp lệ</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="maximum">Giá tối đa (VNĐ) <span class="required">*</span></label>
+                        <input type="number"
+                               id="maximum"
+                               name="maximum"
+                               min="0"
+                               value="0"
+                               required />
+                        <div class="help-text">Giá tối đa của sản phẩm (đơn vị: VNĐ)</div>
+                        <div class="error-message" id="maximumError">Giá tối đa phải lớn hơn giá tối thiểu</div>
+                    </div>
+                </div>
+
+                <!-- Commission Rate -->
+                <div class="form-group">
+                    <label for="commissionRate">Phí hoa hồng (%) <span class="required">*</span></label>
+                    <input type="number"
+                           id="commissionRate"
+                           th:field="*{commissionRate}"
+                           min="0"
+                           max="100"
+                           required />
+                    <div class="help-text">Tỷ lệ phần trăm hoa hồng (từ 0% đến 100%)</div>
+                    <div class="error-message" id="commissionRateError">Vui lòng nhập tỷ lệ hoa hồng hợp lệ (0-100%)</div>
+                </div>
+
+                <!-- Status -->
+                <div class="form-group">
+                    <label for="status">Trạng thái <span class="required">*</span></label>
+                    <select id="status" th:field="*{status}" required>
+                        <option value="">-- Chọn trạng thái --</option>
+                        <option value="ACTIVE" selected>Hoạt động</option>
+                        <option value="INACTIVE">Tạm ngưng hoạt động</option>
+                    </select>
+                    <div class="help-text">Trạng thái hoạt động của cấu hình này</div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <a th:href="@{/home/admin/fee-manage}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>
+                        Hủy bỏ
+                    </a>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <i class="fas fa-plus"></i>
+                        Tạo mới
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/commonComponents/adminPage.js}"></script>
+<script>
+    // Form validation and interaction
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('createCommissionForm');
+        const minimumInput = document.getElementById('minimum');
+        const maximumInput = document.getElementById('maximum');
+        const commissionRateInput = document.getElementById('commissionRate');
+        const productTypeSelect = document.getElementById('productType');
+        const statusSelect = document.getElementById('status');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Validation functions
+        function validatePriceRange() {
+            const minimum = parseFloat(minimumInput.value) || 0;
+            const maximum = parseFloat(maximumInput.value) || 0;
+            const minimumError = document.getElementById('minimumError');
+            const maximumError = document.getElementById('maximumError');
+
+            // Reset error states
+            minimumError.style.display = 'none';
+            maximumError.style.display = 'none';
+            minimumInput.style.borderColor = '';
+            maximumInput.style.borderColor = '';
+
+            let isValid = true;
+
+            if (minimum < 0) {
+                minimumError.textContent = 'Giá tối thiểu không được âm';
+                minimumError.style.display = 'block';
+                minimumInput.style.borderColor = '#dc3545';
+                isValid = false;
+            }
+
+            if (maximum > 0 && minimum >= maximum) {
+                maximumError.textContent = 'Giá tối đa phải lớn hơn giá tối thiểu';
+                maximumError.style.display = 'block';
+                maximumInput.style.borderColor = '#dc3545';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function validateCommissionRate() {
+            const rate = parseFloat(commissionRateInput.value);
+            const error = document.getElementById('commissionRateError');
+
+            error.style.display = 'none';
+            commissionRateInput.style.borderColor = '';
+
+            if (isNaN(rate) || rate < 0 || rate > 100) {
+                error.textContent = 'Tỷ lệ hoa hồng phải từ 0% đến 100%';
+                error.style.display = 'block';
+                commissionRateInput.style.borderColor = '#dc3545';
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateForm() {
+            const isPriceValid = validatePriceRange();
+            const isRateValid = validateCommissionRate();
+            const isProductTypeValid = productTypeSelect.value !== '';
+            const isStatusValid = statusSelect.value !== '';
+
+            const isFormValid = isPriceValid && isRateValid && isProductTypeValid && isStatusValid;
+
+            // Enable/disable submit button
+            submitBtn.disabled = !isFormValid;
+
+            return isFormValid;
+        }
+
+        // Event listeners
+        minimumInput.addEventListener('input', function() {
+            validatePriceRange();
+            validateForm();
+        });
+
+        maximumInput.addEventListener('input', function() {
+            validatePriceRange();
+            validateForm();
+        });
+
+        commissionRateInput.addEventListener('input', function() {
+            validateCommissionRate();
+            validateForm();
+        });
+
+        productTypeSelect.addEventListener('change', validateForm);
+        statusSelect.addEventListener('change', validateForm);
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            if (!validateForm()) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Show notification
+                showNotification('Vui lòng kiểm tra lại thông tin đã nhập', 'error');
+            } else {
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tạo...';
+                submitBtn.disabled = true;
+            }
+        });
+
+        // Format number inputs
+        // function formatNumberInput(input) {
+        //     input.addEventListener('blur', function() {
+        //         const value = parseInt(this.value);
+        //         if (!isNaN(value)) {
+        //             this.value = value.toLocaleString('vi-VN');
+        //         }
+        //     });
+        //
+        //     input.addEventListener('focus', function() {
+        //         this.value = this.value.replace(/[.,]/g, '');
+        //     });
+        // }
+        //
+        // // Apply number formatting
+        // formatNumberInput(minimumInput);
+        // formatNumberInput(maximumInput);
+
+        // Initial validation
+        validateForm();
+    });
+
+    // Notification function
+    function showNotification(message, type = 'info') {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = `notification ${type} show`;
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
+
+    // Success/Error message auto-hide
+    document.addEventListener('DOMContentLoaded', function() {
+        const successAlert = document.querySelector('.alert-success');
+        const errorAlert = document.querySelector('.alert-error');
+
+        if (successAlert) {
+            setTimeout(() => {
+                successAlert.style.opacity = '0';
+                setTimeout(() => successAlert.remove(), 300);
+            }, 3000);
+        }
+
+        if (errorAlert) {
+            setTimeout(() => {
+                errorAlert.style.opacity = '0';
+                setTimeout(() => errorAlert.remove(), 300);
+            }, 5000);
+        }
+    });
+</script>
+
+</body>
+</html>
