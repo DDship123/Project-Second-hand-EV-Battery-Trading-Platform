@@ -60,42 +60,26 @@ public class MemberPlanUsageServiceImpl implements MemberPlanUsageService {
         return totalRevenue;
     }
 
-//    public MemberPlanUsage registerPackage(Member member, MembershipPlan plan) {
-//        MemberPlanUsage memberPlanUsage = memberPlanUsageRepository.findByMember_MemberId(member.getMemberId()).orElse(null);
-//        if (memberPlanUsage != null) {
-//            memberPlanUsageRepository.delete(memberPlanUsage);
-//        }
-//        MemberPlanUsage newMemberPlanUsage = new MemberPlanUsage();
-//        newMemberPlanUsage.setMember(member);
-//        newMemberPlanUsage.setStatus("ACTIVE");
-//        newMemberPlanUsage.setStartDate(LocalDateTime.now());
-//        newMemberPlanUsage.setEndDate(LocalDateTime.now().plusYears(1));
-//        newMemberPlanUsage.setMembershipPlan(plan);
-//        return memberPlanUsageRepository.save(newMemberPlanUsage);
-//    }
-@Override
-public MemberPlanUsage registerPackage(Member member, MembershipPlan plan) {
-    MemberPlanUsage memberPlanUsage = memberPlanUsageRepository.findByMember_MemberId(member.getMemberId()).orElse(null);
-    if (memberPlanUsage != null) {
-        memberPlanUsage.setMember(member);
-        memberPlanUsage.setStatus("ACTIVE");
-        memberPlanUsage.setStartDate(LocalDateTime.now());
-        memberPlanUsage.setEndDate(LocalDateTime.now().plusYears(1));
-        memberPlanUsage.setMembershipPlan(plan);
-    }else {
-        memberPlanUsage = new MemberPlanUsage();
-        memberPlanUsage.setMember(member);
-        memberPlanUsage.setStatus("ACTIVE");
-        memberPlanUsage.setStartDate(LocalDateTime.now());
-        memberPlanUsage.setEndDate(null);
-        memberPlanUsage.setMembershipPlan(plan);
+    @Override
+    public MemberPlanUsage registerPackage(Member member, MembershipPlan plan) {
+        List<MemberPlanUsage> existingUsages = memberPlanUsageRepository.findPlanesByMemberId(member.getMemberId());
+        for (MemberPlanUsage usage : existingUsages) {
+            usage.setStatus("INACTIVE");
+            memberPlanUsageRepository.save(usage);
+        }
+        MemberPlanUsage newMemberPlanUsage = new MemberPlanUsage();
+        newMemberPlanUsage.setMember(member);
+        newMemberPlanUsage.setStatus("ACTIVE");
+        newMemberPlanUsage.setStartDate(LocalDateTime.now());
+        newMemberPlanUsage.setEndDate(LocalDateTime.now().plusYears(1));
+        newMemberPlanUsage.setMembershipPlan(plan);
+        return memberPlanUsageRepository.save(newMemberPlanUsage);
     }
-    return memberPlanUsageRepository.save(memberPlanUsage);
-}
+
 
     @Override
     public Optional<MemberPlanUsage> getMemberPlanUsageByMemberId(Integer memberId) {
-        return memberPlanUsageRepository.findByMember_MemberId(memberId);
+        return Optional.ofNullable(memberPlanUsageRepository.findPlaneByMemberId(memberId));
     }
 
     @Override
