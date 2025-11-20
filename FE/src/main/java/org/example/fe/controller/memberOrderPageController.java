@@ -133,7 +133,7 @@ public class memberOrderPageController {
         } else {
             ApiResponse<PostResponse> postApiResponse = postService.getPostDetail(apiResponse.getPayload().getPost().getPostsId());
             ApiResponse<CommissionResponse> commissionApiResponse = commissionService.getCommissionByTransactionId(transactionId);
-            if (memberResponse.getMemberId() != postApiResponse.getPayload().getSeller().getMemberId()) {
+            if (memberResponse.getMemberId() != postApiResponse.getPayload().getSeller().getMemberId() && !memberResponse.getRole().equals("ADMIN")) {
                 return "redirect:/login?unauthorized=true";
             }
             if (apiResponse.getPayload().getStatus().equals("DELIVERED")){
