@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
 
 
         Optional<Member> existingPhone = memberRepository.findByPhone(memberDetails.getPhone());
-        if(!member.getPhone().matches("^\\d{9,10}$")){
+        if(!memberDetails.getPhone().matches("^\\d{9,10}$")){
             error.put("phone", "Định dạng số điện thoại không hợp lệ");
         }else if(existingPhone.isPresent() && !existingPhone.get().getMemberId().equals(id)){
 
