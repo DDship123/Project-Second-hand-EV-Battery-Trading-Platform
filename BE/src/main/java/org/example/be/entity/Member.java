@@ -1,6 +1,8 @@
 package org.example.be.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDateTime;
 
 
@@ -9,31 +11,36 @@ import java.time.LocalDateTime;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "members_id")
+    @Column(name = "members_id",unique = true, nullable = false)
     private Integer memberId;
 
     @Column(name = "username", length = 20, nullable = false, columnDefinition = "NVARCHAR(20)")
+    @NotBlank(message = "Username is required!")
     private String username;
 
     @Column(name = "address", length = 50, columnDefinition = "NVARCHAR(50)")
     private String address;
 
     @Column(name = "email", length = 50, nullable = false, unique = true, columnDefinition = "NVARCHAR(50)")
+    @NotBlank(message = "Email is required!")
     private String email;
 
-    @Column(name = "phone", length = 15, unique = true, columnDefinition = "NVARCHAR(15)")
+    @Column(name = "phone", length = 15, unique = true, nullable = false, columnDefinition = "NVARCHAR(15)")
+    @NotBlank(message = "Phone is reuqired!")
     private String phone;
 
     @Column(name = "city", length = 30, columnDefinition = "NVARCHAR(30)")
     private String city;
 
     @Column(name = "password", length = 100, nullable = false, columnDefinition = "NVARCHAR(100)")
+    @NotBlank(message = "Password is required!")
     private String password;
 
     @Column(name = "role", length = 20, nullable = false, columnDefinition = "NVARCHAR(20)")
     private String role;
 
     @Column(name = "status", length = 20, nullable = false, columnDefinition = "NVARCHAR(20)")
+    @NotBlank(message = "Status is required!")
     private String status;
 
     @Column(name = "avatar_url", columnDefinition = "NVARCHAR(500)")

@@ -1,6 +1,7 @@
 package org.example.be.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reviews_id")
+    @Column(name = "reviews_id",unique = true, nullable = false)
     private Integer reviewsId;
 
     @ManyToOne
@@ -30,7 +31,8 @@ public class Review {
     @Column(name = "comment", length = 1000, columnDefinition = "NVARCHAR(1000)")
     private String comment;
 
-    @Column(name = "status", length = 20, columnDefinition = "NVARCHAR(20)")
+    @Column(name = "status", length = 20, columnDefinition = "NVARCHAR(20)",nullable = false)
+    @NotBlank(message = "Status is required!")
     private String status;
 
     @Column(name = "created_at")

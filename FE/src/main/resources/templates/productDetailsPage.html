@@ -52,8 +52,8 @@
                             th:src="${post.getImages()[0]}"
                             alt="IMPES Scooter"
                     />
-                    <i class="fa-solid fa-angle-left"></i>
-                    <i class="fa-solid fa-angle-right"></i>
+<!--                    <i class="fa-solid fa-angle-left"></i>-->
+<!--                    <i class="fa-solid fa-angle-right"></i>-->
                 </div>
                 <div class="container__item__infor__image__list" th:if="${post.getImages().size() > 1}">
                     <img th:each="image, start : ${post.getImages()}"

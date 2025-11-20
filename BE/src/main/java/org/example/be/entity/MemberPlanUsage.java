@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class MemberPlanUsage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usage_id")
+    @Column(name = "usage_id",nullable = false, unique = true)
     private Integer usageId;
 
     @ManyToOne

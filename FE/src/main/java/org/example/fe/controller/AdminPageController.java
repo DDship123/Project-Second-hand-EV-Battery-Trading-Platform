@@ -406,6 +406,46 @@ public class AdminPageController {
         model.addAttribute("admin", member);
         return "feeManageDetail";
     }
+    @GetMapping("/fee-manage/create")
+    public String createFeeManageForm(Model model, HttpSession session) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        CommissionSetupResponse commissionSetup = new CommissionSetupResponse();
+        commissionSetup.setCommissionRate(0.0);
+        model.addAttribute("commissionSetup", commissionSetup);
+        model.addAttribute("admin", member);
+        return "feeManageCreate";
+    }
+    @PostMapping("/fee-manage/create")
+    public String createFeeManage(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+                                  @ModelAttribute CommissionSetupResponse commissionSetup,
+                                  @RequestParam(name = "minimum") double minimum,
+                                  @RequestParam(name = "maximum") double maximum) {
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+        if (!member.getRole().equals("ADMIN")) {
+            return "redirect:/login?unauthorized=true";
+        }
+        commissionSetup.setMinimum(minimum);
+        commissionSetup.setMaximum(maximum);
+//        commissionSetup.setStatus("ACTIVE");
+        commissionSetup.setCreatedAt(LocalDateTime.now());
+        commissionSetup.setUpdatedAt(LocalDateTime.now());
+        ApiResponse<CommissionSetupResponse> response = commissionSetupService.saveCommissionSetup(commissionSetup);
+        if (response.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Tạo phí hoa hồng thành công.");
+        } else {
+            redirectAttributes.addAttribute("errorMessage", "Tạo phí hoa hồng thất bại.");
+        }
+        return "redirect:/home/admin/fee-manage";
+    }
     @PostMapping("/fee-manage/update")
     public String updateFeeManage(Model model, HttpSession session, RedirectAttributes redirectAttributes,
                                   @ModelAttribute CommissionSetupResponse commissionSetup,
@@ -441,10 +481,6 @@ public class AdminPageController {
         }
         ApiResponse<CommissionSetupResponse> setupById = commissionSetupService.getCommissionSetupById((long) setupId);
         CommissionSetupResponse commissionSetup = setupById.getPayload();
-//        if (commissionSetup.getStatus().equals("INACTIVE")) {
-//            redirectAttributes.addAttribute("errorMessage", "Phí hoa hồng đã được vô hiệu hóa trước đó.");
-//            return "redirect:/home/admin/fee-manage";
-//        }
         commissionSetup.setStatus(status.toUpperCase());
         commissionSetup.setUpdatedAt(LocalDateTime.now());
         ApiResponse<CommissionSetupResponse> response = commissionSetupService.updateCommissionSetup(commissionSetup.getId(), commissionSetup);
