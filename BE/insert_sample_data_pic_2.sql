@@ -183,9 +183,10 @@ VALUES
 INSERT INTO post_images (post_id, image_url)
 VALUES
     -- Vehicle Posts (1-15)
-    (1, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/577120807_1569830467510934_3319337389530102889_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=if5HLlg_fiUQ7kNvwFiD8_d&_nc_oc=Adm7AMx0gDmYWgXToK63DgzuqHOa2joHDZhOc2ZPRl_lgfGvTTlN79ZKgP5m04bwrzE&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=DYf8oV5n82nq9nmKuccIWw&oh=00_AfjF3CbHo1LjFKUGr9MccuDK4m9GsuhTFigWglCvix82-A&oe=6911130F
-'), (1, 'https://i.pravatar.cc/300'), (1, 'https://i.pravatar.cc/300'),
-    (2, 'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/574402052_25163778806641911_7369394568771902538_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=VchdVS3yJywQ7kNvwHq0Vvz&_nc_oc=AdkIjkqWNqAwxI6xaPbR_wLdSbOuDYoI7YGfQ4s02HfMRTxc83pXP4W-693KjEKRZMI&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=FN6wHBG3rG2ZyJ5WWuccQA&oh=00_Afjpb9TBLMWVddwYNirDVZA5SofYR6pONsqwEpzYcJVA1A&oe=69110EF4'),
+    (1, 'https://carshop.vn/wp-content/uploads/2022/07/hinh-anh-xe-o-to-dien-vinfast-25.jpg'),
+    (1, 'https://xedientanmai.vn/wp-content/uploads/2023/12/tong-hop-mau-xe-dien-vinfast-nho-gon-dep-nhat-2023-4.jpg'),
+    (1, 'https://cdn.tuoitre.vn/471584752817336320/2023/6/8/149755789e054f5b1614-1932028-2read-only-16862412338251915413054.jpg'),
+    (2, 'https://storage.googleapis.com/f1-cms/2021/05/edb3d949-20210528_030114.jpg'),
     (2, 'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/577314544_25163779473308511_2522452078127447000_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=4Jqbcm-l0fUQ7kNvwH1L-AQ&_nc_oc=AdmhC6M6VY7uKKs9nsf1EMYFpjGIPLXwd-JkZ2aptq33SM7nVYIXekJXxbx42TTrtNI&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=7CF2peD7oWRnuaUwUbVSSw&oh=00_AfiL3zFxUysg2lYRqyEjSbQH05HTPXOFMUOaG9M2FHEmzQ&oe=69111923'),
     (3, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/574576710_4162172634024588_6830645290375897516_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=102&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=tlF2JCGnBbkQ7kNvwHocYWZ&_nc_oc=AdkTuLnbXWLFUnhDDRlw8nQYjRFYPdSWvbdlkyvke8DgmtdYF1fik4FRWqLp6eUPiCU&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=TDbeKjOnDR85zTc2P_fwkA&oh=00_Afjo8yKkzLwRHCPgjtsTCoKao7yX1KGLlsla8gOXtZLNMQ&oe=69111528'),
     (3, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/574571357_4162172854024566_4788697729131629808_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=dlm2bwm71xMQ7kNvwHTk-2B&_nc_oc=AdmJmehERubcqi_xuExb_kfFJwvVSBg2WV7XmkW1MwGvGogksEGDXZbk3i5KCtTI5us&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=CQcHjwtlBliPYyKbpZ4Ttw&oh=00_Afgzj4wM9tgZCkjYkmPgZ6dcswxutGGJkWZubd54yT3V_A&oe=69112C36'),

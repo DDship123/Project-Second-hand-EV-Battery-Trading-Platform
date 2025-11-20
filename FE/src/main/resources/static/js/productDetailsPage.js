@@ -8,14 +8,14 @@ window.addEventListener("load", function () {
     // === LẤY CÁC ELEMENT CẦN THIẾT ===
 
     // Lấy nút mũi tên trái (previous image)
-    let leftImagebtn = document.querySelector(
-        ".container__item__infor__image__main i:nth-child(2)"
-    );
-
-    // Lấy nút mũi tên phải (next image)
-    let rightImagebtn = document.querySelector(
-        ".container__item__infor__image__main i:last-child"
-    );
+    // let leftImagebtn = document.querySelector(
+    //     ".container__item__infor__image__main i:nth-child(2)"
+    // );
+    //
+    // // Lấy nút mũi tên phải (next image)
+    // let rightImagebtn = document.querySelector(
+    //     ".container__item__infor__image__main i:last-child"
+    // );
 
     // Lấy ảnh chính (ảnh lớn đang hiển thị)
     let mainImage = document.querySelector(
@@ -27,62 +27,18 @@ window.addEventListener("load", function () {
         ".container__item__infor__image__list img"
     );
 
-    // === SỰ KIỆN CLICK NÚT TRÁI (PREVIOUS) ===
-    leftImagebtn.addEventListener("click", function () {
-        // Tìm vị trí (index) của ảnh hiện tại trong danh sách
-        // Array.from() chuyển NodeList thành Array để sử dụng findIndex()
-        // findIndex() tìm index của ảnh có src giống với ảnh chính
-        let currentIndex = Array.from(imageList).findIndex(
-            (img) => img.src === mainImage.src
-        );
-
-        // Tính index của ảnh trước đó với wrap-around
-        // - Trừ 1 để lùi về ảnh trước
-        // - Cộng imageList.length để tránh số âm
-        // - Modulo để wrap-around: từ ảnh đầu (0) quay về ảnh cuối
-        let prevIndex = (currentIndex - 1 + imageList.length) % imageList.length;
-
-        // Cập nhật src của ảnh chính thành ảnh trước đó
-        let imageSrc = mainImage.src;
-        mainImage.src = imageList[prevIndex].src;
-        imageList[prevIndex].src = imageSrc;
+    imageList.forEach(function (image) {
+        image.addEventListener("click", function () {
+            // Lấy src của ảnh nhỏ được click
+            let newSrc = this.src;
+            let currentSrc = mainImage.src;
+            // Đổi src của ảnh chính thành src của ảnh nhỏ được click
+            mainImage.src = newSrc;
+            this.src = currentSrc;
+        });
     });
 
-    // === SỰ KIỆN CLICK NÚT PHẢI (NEXT) ===
-    rightImagebtn.addEventListener("click", function () {
-        // Tìm vị trí (index) của ảnh hiện tại trong danh sách
-        let currentIndex = Array.from(imageList).findIndex(
-            (img) => img.src === mainImage.src
-        );
 
-        // Tính index của ảnh tiếp theo với wrap-around
-        // - Cộng 1 để tiến tới ảnh sau
-        // - Modulo để wrap-around: từ ảnh cuối quay về ảnh đầu (0)
-        let nextIndex = (currentIndex + 1) % imageList.length;
-
-        // Cập nhật src của ảnh chính thành ảnh tiếp theo
-        let imageSrc = mainImage.src;
-        mainImage.src = imageList[nextIndex].src;
-        imageList[nextIndex].src = imageSrc;
-    });
-
-    /*
-     * CÁCH HOẠT ĐỘNG:
-     *
-     * Ví dụ có 4 ảnh: [Ảnh0, Ảnh1, Ảnh2, Ảnh3]
-     *
-     * Nếu đang ở Ảnh2 (index = 2):
-     * - Click trái: prevIndex = (2-1+4) % 4 = 1 → Ảnh1
-     * - Click phải: nextIndex = (2+1) % 4 = 3 → Ảnh3
-     *
-     * Nếu đang ở Ảnh0 (index = 0):
-     * - Click trái: prevIndex = (0-1+4) % 4 = 3 → Ảnh3 (wrap to end)
-     * - Click phải: nextIndex = (0+1) % 4 = 1 → Ảnh1
-     *
-     * Nếu đang ở Ảnh3 (index = 3):
-     * - Click trái: prevIndex = (3-1+4) % 4 = 2 → Ảnh2
-     * - Click phải: nextIndex = (3+1) % 4 = 0 → Ảnh0 (wrap to start)
-     */
 
     const transactionBtn = document.querySelector(".container__item__infor__details__action");
     transactionBtn.addEventListener("click", function () {
@@ -102,3 +58,4 @@ window.addEventListener("load", function () {
         alert(errorMessage);
     }
 });
+
