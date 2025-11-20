@@ -77,7 +77,7 @@ public class memberOrderPageController {
         model.addAttribute("firstFavorite", session.getAttribute("firstFavorite"));
         ApiResponse<TransactionResponse> apiResponse = transactionService.getTransactionById(transactionId);
         ApiResponse<PostResponse> postApiResponse = postService.getPostDetail(apiResponse.getPayload().getPost().getPostsId());
-        if (memberResponse.getMemberId() != apiResponse.getPayload().getBuyer().getMemberId()) {
+        if (memberResponse.getMemberId() != apiResponse.getPayload().getBuyer().getMemberId() && !memberResponse.getRole().equals("ADMIN")) {
             return "redirect:/login?unauthorized=true";
         }
         if (apiResponse.getPayload() == null) {
