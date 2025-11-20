@@ -25,7 +25,7 @@ public class HomePageController {
     public String homePage(Model model, HttpSession session) {
         MemberResponse memberResponse = (MemberResponse) session.getAttribute("user");
         if (memberResponse == null) {
-            return "redirect:/login";
+            return "redirect:/";
         }
         model.addAttribute("user", memberResponse);
         model.addAttribute("guest", "false");
