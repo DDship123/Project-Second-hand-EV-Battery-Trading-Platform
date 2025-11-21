@@ -25,8 +25,18 @@ public class MemberPlanUsage {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
+    private double amount;
+
     //bỏ post usage
 
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
     @Column(columnDefinition = "NVARCHAR(20)")
     private String status;

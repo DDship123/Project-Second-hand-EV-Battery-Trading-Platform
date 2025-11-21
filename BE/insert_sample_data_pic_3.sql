@@ -29,11 +29,11 @@ VALUES
 -- =============================================
 -- 2. MEMBERSHIP_PLANS (3 plans theo yêu cầu)
 -- =============================================
-INSERT INTO membership_plans (name, price, duration, max_posts, priority)
+INSERT INTO membership_plans (name, price, duration, max_posts, priority, status)
 VALUES
-    ('Free', 0.00, 12, 5, 'LOW'),
-    ('Basic', 99000.00, 12, 15, 'MEDIUM'),
-    ('Premium', 299000.00, 15, 100, 'HIGH');
+    ('Free', 0.00, 12, 5, 'LOW', 'ACTIVE'),
+    ('Basic', 99000.00, 12, 15, 'MEDIUM', 'ACTIVE'),
+    ('Premium', 299000.00, 15, 100, 'HIGH', 'ACTIVE');
 
 -- =============================================
 -- 3. VEHICLE (15 vehicles - battery_capacity là số + kWh)
@@ -80,23 +80,23 @@ VALUES
 -- =============================================
 -- 5. MEMBER_PLAN_USAGE (Mỗi member có 1 plan)
 -- =============================================
-INSERT INTO member_plan_usage (member_id, plan_id, start_date, end_date, status)
+INSERT INTO member_plan_usage (member_id, plan_id, start_date, end_date, status, amount)
 VALUES
-    (1, 3, CAST('2024-01-01 00:00:00' AS DATETIME), CAST('2025-04-01 23:59:59' AS DATETIME), 'ACTIVE'),
-    (2, 2, CAST('2024-01-15 00:00:00' AS DATETIME), CAST('2025-01-15 23:59:59' AS DATETIME), 'ACTIVE'),
-    (3, 1, CAST('2024-02-01 00:00:00' AS DATETIME), CAST('2025-02-01 23:59:59' AS DATETIME), 'ACTIVE'),
-    (4, 3, CAST('2024-02-10 00:00:00' AS DATETIME), CAST('2025-05-10 23:59:59' AS DATETIME), 'ACTIVE'),
-    (5, 1, CAST('2024-03-05 00:00:00' AS DATETIME), CAST('2025-03-05 23:59:59' AS DATETIME), 'ACTIVE'),
-    (6, 2, CAST('2024-03-15 00:00:00' AS DATETIME), CAST('2025-03-15 23:59:59' AS DATETIME), 'ACTIVE'),
-    (7, 1, CAST('2024-03-20 00:00:00' AS DATETIME), CAST('2025-03-20 23:59:59' AS DATETIME), 'ACTIVE'),
-    (8, 3, CAST('2024-03-15 00:00:00' AS DATETIME), CAST('2025-06-15 23:59:59' AS DATETIME), 'ACTIVE'),
-    (9, 3, CAST('2024-03-22 00:00:00' AS DATETIME), CAST('2025-06-22 23:59:59' AS DATETIME), 'ACTIVE'),
-    (10, 2, CAST('2024-03-25 00:00:00' AS DATETIME), CAST('2025-03-25 23:59:59' AS DATETIME), 'ACTIVE'),
-    (11, 2, CAST('2024-03-28 00:00:00' AS DATETIME), CAST('2025-03-28 23:59:59' AS DATETIME), 'ACTIVE'),
-    (12, 3, CAST('2024-03-29 00:00:00' AS DATETIME), CAST('2025-06-29 23:59:59' AS DATETIME), 'ACTIVE'),
-    (13, 2, CAST('2024-04-01 00:00:00' AS DATETIME), CAST('2025-04-01 23:59:59' AS DATETIME), 'ACTIVE'),
-    (14, 1, CAST('2024-04-02 00:00:00' AS DATETIME), CAST('2025-04-02 23:59:59' AS DATETIME), 'ACTIVE'),
-    (15, 1, CAST('2024-04-03 00:00:00' AS DATETIME), CAST('2025-04-03 23:59:59' AS DATETIME), 'ACTIVE');
+    (1, 3, CAST('2024-01-01 00:00:00' AS DATETIME), CAST('2025-04-01 23:59:59' AS DATETIME), 'ACTIVE', 299000.00),
+    (2, 2, CAST('2024-01-15 00:00:00' AS DATETIME), CAST('2025-01-15 23:59:59' AS DATETIME), 'ACTIVE', 99000.00),
+    (3, 1, CAST('2024-02-01 00:00:00' AS DATETIME), CAST('2025-02-01 23:59:59' AS DATETIME), 'ACTIVE', 0.00),
+    (4, 3, CAST('2024-02-10 00:00:00' AS DATETIME), CAST('2025-05-10 23:59:59' AS DATETIME), 'ACTIVE', 299000.00),
+    (5, 1, CAST('2024-03-05 00:00:00' AS DATETIME), CAST('2025-03-05 23:59:59' AS DATETIME), 'ACTIVE', 0.00),
+    (6, 2, CAST('2024-03-15 00:00:00' AS DATETIME), CAST('2025-03-15 23:59:59' AS DATETIME), 'ACTIVE', 99000.00),
+    (7, 1, CAST('2024-03-20 00:00:00' AS DATETIME), CAST('2025-03-20 23:59:59' AS DATETIME), 'ACTIVE', 0.00),
+    (8, 3, CAST('2024-03-15 00:00:00' AS DATETIME), CAST('2025-06-15 23:59:59' AS DATETIME), 'ACTIVE', 299000.00),
+    (9, 3, CAST('2024-03-22 00:00:00' AS DATETIME), CAST('2025-06-22 23:59:59' AS DATETIME), 'ACTIVE', 299000.00),
+    (10, 2, CAST('2024-03-25 00:00:00' AS DATETIME), CAST('2025-03-25 23:59:59' AS DATETIME), 'ACTIVE', 99000.00),
+    (11, 2, CAST('2024-03-28 00:00:00' AS DATETIME), CAST('2025-03-28 23:59:59' AS DATETIME), 'ACTIVE', 99000.00),
+    (12, 3, CAST('2024-03-29 00:00:00' AS DATETIME), CAST('2025-06-29 23:59:59' AS DATETIME), 'ACTIVE', 299000.00),
+    (13, 2, CAST('2024-04-01 00:00:00' AS DATETIME), CAST('2025-04-01 23:59:59' AS DATETIME), 'ACTIVE', 99000.00),
+    (14, 1, CAST('2024-04-02 00:00:00' AS DATETIME), CAST('2025-04-02 23:59:59' AS DATETIME), 'ACTIVE', 0.00),
+    (15, 1, CAST('2024-04-03 00:00:00' AS DATETIME), CAST('2025-04-03 23:59:59' AS DATETIME), 'ACTIVE', 0.00);
 
 -- =============================================
 -- 6. PRODUCTS (30: 15 VEHICLE + 15 BATTERY)
@@ -144,38 +144,38 @@ VALUES
 INSERT INTO posts (product_id, seller_id, title, description, status, price, created_at)
 VALUES
     -- VEHICLE POSTS (15)
-    (1, 2, N'Bán VinFast VF e34 2022', N'VinFast VF e34 đời 2022, pin 42 kWh, đi 15,000km. Xe zin chưa té ngã, máy êm ru.', 'APPROVED', 650000000.00, CAST('2024-03-10 10:00:00' AS DATETIME)),
+    (1, 2, N'Bán VinFast VF e34 2022', N'VinFast VF e34 đời 2022, pin 42 kWh, đi 15,000km. Xe zin chưa té ngã, máy êm ru.', 'SOLD', 650000000.00, CAST('2024-03-10 10:00:00' AS DATETIME)),
     (2, 3, N'Tesla Model 3 2021 nhập Mỹ', N'Tesla Model 3 nhập Mỹ, pin 60 kWh. Xe đẹp máy ngon, Autopilot. Cần bán gấp.', 'PENDING', 1250000000.00, CAST('2024-03-12 11:30:00' AS DATETIME)),
     (3, 4, N'Hyundai Kona Electric 2020', N'Hyundai Kona Electric 2020, pin 64 kWh, đi 30,000km. Xe như mới.', 'REJECTED', 580000000.00, CAST('2024-03-18 09:45:00' AS DATETIME)),
-    (4, 6, N'VinFast VF 8 2023', N'VinFast VF 8 2023, pin 87.7 kWh, màu xám bạc. Xe cao cấp.', 'APPROVED', 1050000000.00, CAST('2024-03-22 08:30:00' AS DATETIME)),
-    (5, 7, N'Nissan Leaf 2019 giá rẻ', N'Nissan Leaf 2019, pin 40 kWh, chỉ đi 45,000km. Xe nhập khẩu.', 'APPROVED', 480000000.00, CAST('2024-03-24 10:15:00' AS DATETIME)),
+    (4, 6, N'VinFast VF 8 2023', N'VinFast VF 8 2023, pin 87.7 kWh, màu xám bạc. Xe cao cấp.', 'SOLD', 1050000000.00, CAST('2024-03-22 08:30:00' AS DATETIME)),
+    (5, 7, N'Nissan Leaf 2019 giá rẻ', N'Nissan Leaf 2019, pin 40 kWh, chỉ đi 45,000km. Xe nhập khẩu.', 'SOLD', 480000000.00, CAST('2024-03-24 10:15:00' AS DATETIME)),
     (6, 9, N'BMW i3 2020 sang trọng', N'BMW i3 2020, pin 42.2 kWh màu xanh mint. Xe Đức nhập khẩu.', 'APPROVED', 780000000.00, CAST('2024-03-27 15:20:00' AS DATETIME)),
     (7, 10, N'Chevrolet Bolt EV 2021', N'Chevrolet Bolt EV 2021, pin 66 kWh. Xe điện Mỹ chất lượng.', 'REJECTED', 550000000.00, CAST('2024-03-28 11:00:00' AS DATETIME)),
     (8, 12, N'VinFast VF 9 2023', N'VinFast VF 9 2023, pin 123 kWh, màu trắng đen, sporty.', 'APPROVED', 1550000000.00, CAST('2024-03-30 09:20:00' AS DATETIME)),
     (9, 13, N'Audi e-tron 2022 cao cấp', N'Audi e-tron 2022, pin 95 kWh phiên bản cao cấp, full option.', 'APPROVED', 2200000000.00, CAST('2024-04-01 16:40:00' AS DATETIME)),
     (10, 15, N'Kia EV6 2023 mới', N'Kia EV6 2023, pin 77.4 kWh mới ra mắt, thiết kế trẻ trung.', 'PENDING', 1350000000.00, CAST('2024-04-03 10:50:00' AS DATETIME)),
-    (11, 7, N'Mercedes EQC 2022', N'Mercedes EQC 2022, pin 80 kWh màu đỏ, xe gia đình.', 'APPROVED', 2500000000.00, CAST('2024-04-05 11:10:00' AS DATETIME)),
+    (11, 7, N'Mercedes EQC 2022', N'Mercedes EQC 2022, pin 80 kWh màu đỏ, xe gia đình.', 'SOLD', 2500000000.00, CAST('2024-04-05 11:10:00' AS DATETIME)),
     (12, 8, N'Peugeot e-208 2021', N'Peugeot e-208 2021, pin 50 kWh màu xanh dương, trẻ trung.', 'PENDING', 680000000.00, CAST('2024-04-06 14:45:00' AS DATETIME)),
     (13, 10, N'MG ZS EV 2022 giá tốt', N'MG ZS EV 2022, pin 44.5 kWh thiết kế đẹp, giá tốt.', 'REJECTED', 520000000.00, CAST('2024-04-08 15:55:00' AS DATETIME)),
-    (14, 4, N'Porsche Taycan 2023', N'Porsche Taycan 2023, pin 93.4 kWh màu xanh, chạy xa.', 'APPROVED', 4500000000.00, CAST('2024-04-09 10:30:00' AS DATETIME)),
+    (14, 4, N'Porsche Taycan 2023', N'Porsche Taycan 2023, pin 93.4 kWh màu xanh, chạy xa.', 'SOLD', 4500000000.00, CAST('2024-04-09 10:30:00' AS DATETIME)),
     (15, 6, N'Hyundai Ioniq 5 2023', N'Hyundai Ioniq 5 2023, pin 72.6 kWh đời 2023.', 'APPROVED', 1280000000.00, CAST('2024-04-10 13:20:00' AS DATETIME)),
 
-    -- BATTERY POSTS (15)
-    (16, 4, N'Pin LG 60V 28Ah chính hãng', N'Pin Lithium LG 60V 28Ah mới 100%, bảo hành 2 năm.', 'APPROVED', 12000000.00, CAST('2024-03-15 14:20:00' AS DATETIME)),
-    (17, 2, N'Pin Panasonic 48V giá rẻ', N'Pin Panasonic 48V 20Ah đã dùng 1 năm, còn tốt.', 'PENDING', 3500000.00, CAST('2024-03-20 16:10:00' AS DATETIME)),
-    (18, 8, N'Pin Samsung SDI 60V', N'Pin Samsung SDI 60V 32Ah mới 100%, chất lượng cao.', 'APPROVED', 15000000.00, CAST('2024-03-25 13:45:00' AS DATETIME)),
-    (19, 11, N'Pin CATL 72V dung lượng lớn', N'Pin CATL 72V 40Ah dung lượng lớn, phù hợp xe cao cấp.', 'PENDING', 18000000.00, CAST('2024-03-29 14:30:00' AS DATETIME)),
-    (20, 14, N'Pin BYD 60V chính hãng', N'Pin BYD 60V 20Ah chính hãng, bảo hành dài hạn.', 'REJECTED', 7000000.00, CAST('2024-04-02 12:15:00' AS DATETIME)),
-    (21, 6, N'Pin VinFast 72V VN', N'Pin VinFast 72V 28Ah made in Vietnam, chất lượng cao.', 'APPROVED', 20000000.00, CAST('2024-04-04 13:25:00' AS DATETIME)),
-    (22, 9, N'Pin Bosch 48V Đức', N'Pin Bosch 48V 25Ah tầm xa, chất lượng Đức.', 'APPROVED', 11000000.00, CAST('2024-04-07 09:35:00' AS DATETIME)),
-    (23, 2, N'Pin Tesla 60V giá tốt', N'Pin Tesla 60V 35Ah đã qua sử dụng, còn tốt 80%.', 'APPROVED', 9000000.00, CAST('2024-04-08 11:00:00' AS DATETIME)),
-    (24, 5, N'Pin Pega 60V chất lượng', N'Pin Pega 60V 30Ah chất lượng cao, bền bỉ.', 'PENDING', 8000000.00, CAST('2024-04-09 14:30:00' AS DATETIME)),
-    (25, 8, N'Pin Yadea 72V tầm xa', N'Pin Yadea 72V 45Ah High Performance, chạy xa.', 'APPROVED', 13000000.00, CAST('2024-04-10 10:15:00' AS DATETIME)),
-    (26, 11, N'Pin Honda 12V chính hãng', N'Pin Honda 12V 9Ah chính hãng, phù hợp xe ga Honda.', 'REJECTED', 800000.00, CAST('2024-04-11 09:00:00' AS DATETIME)),
-    (27, 13, N'Pin Yamaha 12V Original', N'Pin Yamaha 12V 8Ah original, chất lượng Nhật Bản.', 'APPROVED', 850000.00, CAST('2024-04-12 15:20:00' AS DATETIME)),
-    (28, 14, N'Pin ProMax 48V giá rẻ', N'Pin Lithium Pro Max 48V 22Ah giá rẻ cho sinh viên.', 'PENDING', 4500000.00, CAST('2024-04-13 11:45:00' AS DATETIME)),
-    (29, 15, N'Pin SuperPower 60V mới', N'Pin SuperPower 60V 38Ah mới 100%, bảo hành 1 năm.', 'APPROVED', 14000000.00, CAST('2024-04-14 13:10:00' AS DATETIME)),
-    (30, 12, N'Pin EcoTech 72V xanh', N'Pin EcoTech Green Battery 72V 42Ah, thân thiện môi trường.', 'APPROVED', 16000000.00, CAST('2024-04-15 16:30:00' AS DATETIME));
+    -- BATTERY POSTS (15) - vehicle_id = NULL
+    (16, 4, N'Pin LG 60V 28Ah chính hãng', N'Pin Lithium LG 60V 28Ah mới 100%, bảo hành 2 năm', 'SOLD', 12000000.00, CAST('2024-03-15 14:20:00' AS DATETIME)),
+    (17, 2, N'Pin Panasonic 48V giá rẻ', N'Pin Panasonic 48V 20Ah đã dùng 1 năm, còn tốt', 'PENDING', 3500000.00, CAST('2024-03-20 16:10:00' AS DATETIME)),
+    (18, 8, N'Pin Samsung SDI 60V', N'Pin Samsung SDI 60V 32Ah mới 100%, chất lượng cao', 'SOLD', 15000000.00, CAST('2024-03-25 13:45:00' AS DATETIME)),
+    (19, 11, N'Pin CATL 72V dung lượng lớn', N'Pin CATL 72V 40Ah dung lượng lớn, phù hợp xe cao cấp', 'SOLD', 18000000.00, CAST('2024-03-29 14:30:00' AS DATETIME)),
+    (20, 14, N'Pin BYD 60V chính hãng', N'Pin BYD 60V 20Ah chính hãng, bảo hành dài hạn', 'REJECTED', 7000000.00, CAST('2024-04-02 12:15:00' AS DATETIME)),
+    (21, 6, N'Pin VinFast 72V VN', N'Pin VinFast 72V 28Ah made in Vietnam, chất lượng cao', 'SOLD', 20000000.00, CAST('2024-04-04 13:25:00' AS DATETIME)),
+    (22, 9, N'Pin Bosch 48V Đức', N'Pin Bosch 48V 25Ah tầm xa, chất lượng Đức', 'SOLD', 11000000.00, CAST('2024-04-07 09:35:00' AS DATETIME)),
+    (23, 2, N'Pin Tesla 60V giá tốt', N'Pin Tesla 60V 35Ah đã qua sử dụng, còn tốt 80%', 'APPROVED', 9000000.00, CAST('2024-04-08 11:00:00' AS DATETIME)),
+    (24, 5, N'Pin Pega 60V chất lượng', N'Pin Pega 60V 30Ah chất lượng cao, bền bỉ', 'PENDING', 8000000.00, CAST('2024-04-09 14:30:00' AS DATETIME)),
+    (25, 8, N'Pin Yadea 72V tầm xa', N'Pin Yadea 72V 45Ah High Performance, chạy xa', 'APPROVED', 13000000.00, CAST('2024-04-10 10:15:00' AS DATETIME)),
+    (26, 11, N'Pin Honda 12V chính hãng', N'Pin Honda 12V 9Ah chính hãng, phù hợp xe ga Honda', 'REJECTED', 800000.00, CAST('2024-04-11 09:00:00' AS DATETIME)),
+    (27, 13, N'Pin Yamaha 12V Original', N'Pin Yamaha 12V 8Ah original, chất lượng Nhật', 'APPROVED', 850000.00, CAST('2024-04-12 15:20:00' AS DATETIME)),
+    (28, 14, N'Pin ProMax 48V giá rẻ', N'Pin Lithium Pro Max 48V 22Ah giá rẻ', 'APPROVED', 4500000.00, CAST('2024-04-13 11:45:00' AS DATETIME)),
+    (29, 15, N'Pin SuperPower 60V mới', N'Pin SuperPower 60V 38Ah mới 100%', 'APPROVED', 14000000.00, CAST('2024-04-14 13:10:00' AS DATETIME)),
+    (30, 12, N'Pin EcoTech 72V xanh', N'Pin EcoTech Green Battery 72V 42Ah', 'APPROVED', 16000000.00, CAST('2024-04-15 16:30:00' AS DATETIME));
 
 -- =============================================
 -- 8. POST_IMAGES (Mỗi post có ít nhất 1 hình)
@@ -183,38 +183,39 @@ VALUES
 INSERT INTO post_images (post_id, image_url)
 VALUES
     -- Vehicle Posts (1-15)
-    (1, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/577120807_1569830467510934_3319337389530102889_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=if5HLlg_fiUQ7kNvwFiD8_d&_nc_oc=Adm7AMx0gDmYWgXToK63DgzuqHOa2joHDZhOc2ZPRl_lgfGvTTlN79ZKgP5m04bwrzE&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=DYf8oV5n82nq9nmKuccIWw&oh=00_AfjF3CbHo1LjFKUGr9MccuDK4m9GsuhTFigWglCvix82-A&oe=6911130F
-'), (1, 'https://i.pravatar.cc/300'), (1, 'https://i.pravatar.cc/300'),
-    (2, 'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/574402052_25163778806641911_7369394568771902538_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=VchdVS3yJywQ7kNvwHq0Vvz&_nc_oc=AdkIjkqWNqAwxI6xaPbR_wLdSbOuDYoI7YGfQ4s02HfMRTxc83pXP4W-693KjEKRZMI&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=FN6wHBG3rG2ZyJ5WWuccQA&oh=00_Afjpb9TBLMWVddwYNirDVZA5SofYR6pONsqwEpzYcJVA1A&oe=69110EF4'),
-    (2, 'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/577314544_25163779473308511_2522452078127447000_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=4Jqbcm-l0fUQ7kNvwH1L-AQ&_nc_oc=AdmhC6M6VY7uKKs9nsf1EMYFpjGIPLXwd-JkZ2aptq33SM7nVYIXekJXxbx42TTrtNI&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=7CF2peD7oWRnuaUwUbVSSw&oh=00_AfiL3zFxUysg2lYRqyEjSbQH05HTPXOFMUOaG9M2FHEmzQ&oe=69111923'),
-    (3, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/574576710_4162172634024588_6830645290375897516_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=102&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=tlF2JCGnBbkQ7kNvwHocYWZ&_nc_oc=AdkTuLnbXWLFUnhDDRlw8nQYjRFYPdSWvbdlkyvke8DgmtdYF1fik4FRWqLp6eUPiCU&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=TDbeKjOnDR85zTc2P_fwkA&oh=00_Afjo8yKkzLwRHCPgjtsTCoKao7yX1KGLlsla8gOXtZLNMQ&oe=69111528'),
-    (3, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/574571357_4162172854024566_4788697729131629808_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=dlm2bwm71xMQ7kNvwHTk-2B&_nc_oc=AdmJmehERubcqi_xuExb_kfFJwvVSBg2WV7XmkW1MwGvGogksEGDXZbk3i5KCtTI5us&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=CQcHjwtlBliPYyKbpZ4Ttw&oh=00_Afgzj4wM9tgZCkjYkmPgZ6dcswxutGGJkWZubd54yT3V_A&oe=69112C36'),
-    (4, 'https://scontent.fsgn5-12.fna.fbcdn.net/v/t39.30808-6/577681947_3723136587820079_1169236147960725602_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=kbitsppAKu4Q7kNvwHyCAqo&_nc_oc=Adk9iYceLJdx6VhlJnxt_Wz8iYmpcZ_7uL5NI4HreIfwCsO2in7R-IGJ1VZMxNmOzyU&_nc_zt=23&_nc_ht=scontent.fsgn5-12.fna&_nc_gid=DKOqAR0JcnCtNkquKULDZQ&oh=00_AfjBMQEG5XmTQYZmn7A65gTpgA870qnQwdgdwLlvCbjlbw&oe=69111CA1'),
-    (4, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/577826030_3723136737820064_5717350483886352199_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=oixtdsBSSWAQ7kNvwHgxBNY&_nc_oc=AdlDCjbAkS8iOaB0s0x-YkuRK7HGkgwMKxBIpSKR4332drP4MKOdRTzIgV8OSlMqP9E&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=F6LVLrXbISttmCrVYUfI1Q&oh=00_Afg54LQV-obBSHImD4fn2kVmsJUhq128k8MafzFr3I5zIg&oe=6911169A'),
-    (5, 'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/577800903_811260371884169_6590700867106216785_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=OTKoEeRBNgIQ7kNvwGEI1bt&_nc_oc=AdlTJyXTmrIjcu4Fc-EqBgEJ_9Nbsm973ZJLmGqlmOLdmophY90RFAFtrzWaPq78M7s&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=SNyHmWYeiArFOMhEPMpg8A&oh=00_Afj0lWnTGLzlJWp6Z-tffeVbSw_drg93_V-OdtKTrhbnTw&oe=6911259E'),
-    (5, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/577071481_811260525217487_4372119941302352518_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=8hcAU66MnOAQ7kNvwE-8hte&_nc_oc=Admsfdpn2hXbvyWCECx97zq-MfR4o87wn5fhCgvEOhV9XGfCLkdkGkYb5urwaJ3QONY&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=cx1CTOqVamrutcy3Yg8xDg&oh=00_AfjYoaYNd2XbTQNvHRuv4ojQ8HfyaViiXVtstqNKx-kTEw&oe=69110997'),
-    (6, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/577304648_25167546279598497_2274224230535192165_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=n_2kf7wkSmgQ7kNvwFRrxsu&_nc_oc=Adm91Hqg9XKvmhIQRCXAPtPwo5rzfQeSw44rPm_nNziOuBcTOAI-zo-v4wurM9_SH84&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=5WHfYNwvgZFp6TAbsR-rlA&oh=00_AfjBG_16E-w88TpYrg7q-szAe_8TYVb_-7oc8tH2O-Vc9w&oe=69110C78'),
-    (6, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/574370086_25167547232931735_1370379648409090580_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=NDVLSprisGwQ7kNvwFY-Giy&_nc_oc=AdkNiEFsvg-8K0lUtga8XQaiix7HatRwsIPSlny-8mF0Chti0hDM_rTwXWEX-HMPUag&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=HwY9TCz1_IjRxVcSJajI1A&oh=00_AfhtSJ1cRzJ-8sp8gQLqUabqsMkdXzhH9yLg0JzdDE0Meg&oe=69111F27'),
-    (7, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/574862505_1370256024814835_6102765605495124038_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=2APxptHl6SQQ7kNvwHle_7Q&_nc_oc=Adncne4crg_wYCdr9J4KpiCLlavYPzAPdIg2iE1dETrUK7n0bsJexzLHboef65-xdQ0&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=TmczVIe1sl5CtE6jmEEMrQ&oh=00_Afhnv4CMR64s1OMJewUbRnVYumurwZU6TmPumt5mQz454w&oe=69111F8D'),
-    (7, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/574276437_1370256071481497_1121513412604557178_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=WNTeHre7KBcQ7kNvwER73TA&_nc_oc=AdlpeIk8Nm48BzhxemnlS3ZhNtedO4ayk3xr4s-ytn96kJbWi93x8uyU6VFxmY7oCnU&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=ipE3LiuW9DpHKrGeUumLgQ&oh=00_AfgF_sBynFDY5tTolAXVioDflGJ1LpT8tiG5rGQrD6aMHw&oe=691128D9'),
-    (8, 'https://scontent.fsgn5-3.fna.fbcdn.net/v/t39.30808-6/574366101_1988618015221623_2774854879451930826_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=xMSsfNn1yDQQ7kNvwGutofX&_nc_oc=AdlcVDqmbwPJR7wjQutSz4cRqPNKpLW_57-s4wK9g6DF2XDhfZx5V3Gdkyz6xvKF-Z0&_nc_zt=23&_nc_ht=scontent.fsgn5-3.fna&_nc_gid=oVg9XnQ1AU5-HjTdLw9Zdw&oh=00_AfhipTrrneJZfTvGf4tn_zAHMVSZbyW5VLEt-UYkWth2Eg&oe=691136FA'),
-    (8, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/576664857_1988618038554954_850588882628688747_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=101&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=6yzYCySmr4kQ7kNvwG7bTSw&_nc_oc=AdlgdjBovYJIbI0n8PWQKzGlDvgbcRGLMJ8_jzE8rZG0h8_ShLHe6P90Pb2E1rQXKt4&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=j4sJOzxiU4yldwFyx_Q7eA&oh=00_AfiKut5293e8vejS_qJssD3f9ybSUMd2NlKpF2fzEGNmdQ&oe=69110880'),
-    (8, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/573059231_1988618021888289_849364233536971976_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=fCmQ2lDj-VAQ7kNvwFV9ns0&_nc_oc=AdnL10u8pbeWtX7G5_QIfELie3VnCdKus2c44JHHLSGx-HtN61Eyquhflxv_pbpZiOk&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=AkdLusZAQmdMwjUVW2PgbQ&oh=00_Afjm6qiojOKArRjcQ7i83FVoQsZIJWsHYCfnrTQa60JNqw&oe=69112687'),
-    (9, 'https://scontent.fsgn5-3.fna.fbcdn.net/v/t39.30808-6/576532237_809704035373136_5141972148732905453_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=U0q2bjWIU50Q7kNvwH90qgv&_nc_oc=AdklY86TqCxnu2qZVJJl80rBu6EwbEs-S-U6GCu4snJ0jbvYYdhpveJj2l85lrztmMM&_nc_zt=23&_nc_ht=scontent.fsgn5-3.fna&_nc_gid=4WSsl35-8dqwpIErCqkm5g&oh=00_AfhMxC2NKTHGp3DTjPgZ3UIEPeU2DgjQpENKFiOWQyEWdA&oe=69112637'),
-    (9, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/576369554_809704558706417_6034476598626247732_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=Tdi8pm_mr1sQ7kNvwFmu5QB&_nc_oc=Admxe7GFAD4eE8Pb0t7q9gst0hQY1XIMsVK_MPY1SfmHx7fGmmD7saNVI_8k7UCcpPw&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=JBxj5QDQg4tegg2bWMGz3A&oh=00_Afgiw57h66PqBvNCZ8pbCTSbaj01qxkwIOU71ePZ9hO8Jw&oe=69111676'),
-    (10, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/573046861_2237260383421353_9014583291988152523_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=5yipzRyXCo0Q7kNvwFtA7Yx&_nc_oc=AdkWmrwCwwxdhpZ1yvow_YhldYo9JPbgp4yqubq2E-l99IRpVlh-JqZdFh0yzfUAbkA&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=m6fyeL5cmXxheYjk-I__fQ&oh=00_AfiJvmVH6yr2YoeGnR_vlmEwYtauRd66WE_j_Y5bxt_W9Q&oe=69110C6F'),
-    (10, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/573892260_2237260356754689_9136409281280769876_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=Kw6Zc9ojCs8Q7kNvwHJi1ce&_nc_oc=AdkCBeFRNEz2pAfbeJxjp1sK_PIwp7YkwpuYjywzByNLix_wJqrMnXqgoKYhcnNu8b0&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=WsfYqvBBXWr8d9HVZSTS-g&oh=00_Afjan3QSiuMl1ZPMsCj4lAyyXcIj5PVusq38uucdhVcqTQ&oe=69110C8F'),
-    (11, 'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/573517664_4127224747543945_7585593994940860355_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=108&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=2496DqT3pJ4Q7kNvwEuHccP&_nc_oc=AdnWs_I3wVmizsY_DE365M1bwPO72a1UgPbA4G7Rd65U5BDTza49RBUkdq5CNdqHL1c&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=YxzzCtoKtOg8sJQr9liG0g&oh=00_AfhsUtezeYudvAnwQKoQmhLvMPaLOzsqhYGN65GBjDFu3A&oe=691105C2'),
-    (11, 'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/574278989_4127224814210605_4347833137157806467_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=2JmWuNpIi2EQ7kNvwF2gzHw&_nc_oc=AdlyiSmaOjZKex7N7qbfHljZahFvCeGmxyGgRgAztK9n7FnANbnd2FE0a3750ZhCZ5Y&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=jBpvUKn_CKeOPmkKVJySVg&oh=00_Afg7mPXT_lWoc7fC_jV3LfbNdQN3kB_E9NU0frlkTCSGqQ&oe=691122C8'),
-    (12, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/577337313_25161926550160470_1308385093924027660_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=frCRrNvd-qUQ7kNvwEfXpdV&_nc_oc=AdkE5k11nr4KRX62pb9GHvh-c1YIFeVkTJgi4XIUBEvkRDaHH5N3wp06xzrxWh5s4js&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=h09qZJuKJTiSZ4OCryUgrA&oh=00_Afi-1C_vCm0e1gUSpdPA3tKa70aNSbXbFLelqcWYCHVdMg&oe=69113745'),
-    (12, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/577316862_25161927176827074_4605139691861438067_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=JJw21Vd0joEQ7kNvwExUXi1&_nc_oc=AdmSlobzqnDaycWPw040XlYn5V6GveOpFNtbUxxz0msnyGwY_sqj_VYCkc0s9Mya0sI&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=GIW6nrx8hPP6geEUcwIFpw&oh=00_AfjxaFBl2C_AzwaaXanY-5c0AwaHjiIreTZaB9k3yqWV7w&oe=69112BB7'),
-    (13, 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/575086337_1512032463280929_1832408448629343382_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=SyHzqVvhpDQQ7kNvwGBgWJq&_nc_oc=Adk361MC6TEXlAnr7mGnRSMt-c9eRVHjwZnCRSsA5fFIsG24Akgxp0M0AiSJh_WRyTE&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=bs28qmkem4TQ6Zihg_Nahg&oh=00_AfgWsRD3gjGAM2sh0VWVzL0fvLs-xef4WX1Q6UqN4WJ0tw&oe=691126F3'),
-    (13, 'https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/576924871_1512029796614529_966014428521171447_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=IZH6Yr6sg50Q7kNvwFl5rsS&_nc_oc=AdmckRjS9pWvCMsrQy1WO-4Bw6E2jetpogiMC_3Jrzqc6Sxfyl-Tqag8C5zSqUZM4jw&_nc_zt=23&_nc_ht=scontent.fsgn5-11.fna&_nc_gid=_n1jmLai1muEVpIF-WyLyg&oh=00_Afj-UetTtgtKxwMit7lANUFFdOgVe4NSdnBev4jFWdcwAA&oe=6911324A'),
-    (14, 'https://scontent.fsgn5-12.fna.fbcdn.net/v/t39.30808-6/575121135_2312389712611174_4354494860869610955_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=V2RO9KiskHAQ7kNvwENREwj&_nc_oc=AdmXWMMu7WlKJ4fdYT8wMVdX3cAXhQNkgcEGVXtIsqhDsL0pW5T1J1qYGJBz0QR_YtQ&_nc_zt=23&_nc_ht=scontent.fsgn5-12.fna&_nc_gid=zEzrZkV3wlVSoXc2o4SIIA&oh=00_Afj7sGp6lUxRDQph3Vjgb9qC1LpE5sWNfNtPPltcPUNQSA&oe=69110660'),
-    (14, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/575165881_2312389835944495_3688426437720183569_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=lBctl3C15BoQ7kNvwHqzokZ&_nc_oc=AdlHdeq6G0Rkqbf-qKXgZyetfl0YzS4vynTxvfC0p-hkzmB4HG2ZQCNwgVXJnSg-GR0&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=DuRaOAeRwFhvgKEeMHjt6g&oh=00_Afi9prZK3SEL94yS2GxE2o7doqc4VsuRHfF2aLsF1rDo2A&oe=691130C4'),
-    (14, 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/576076273_2312389719277840_6277388169642864525_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=3m_anHx99UgQ7kNvwHoapnt&_nc_oc=Adnbjn_P-sfalt6CkFYWIKlwyoce-GadVgG48-LVsNnqtXoYXCG4X8q4yDdZkicOsNY&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=qHq3qNYxG-NZSYi9R9Tp5g&oh=00_AfgI3CpvsWCD6PJXe1XS6XIaCqG2NMEc7dYmuBOTvCi31g&oe=69112E1F'),
-    (15, 'https://scontent.fsgn5-8.fna.fbcdn.net/v/t39.30808-6/576511080_1477813486831359_1576378729043426845_n.jpg?stp=cp6_dst-jpegr_tt6&_nc_cat=109&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=jLd011aHRf4Q7kNvwGsswPS&_nc_oc=AdlgBhONM0FPnjNmoAKDG2zq6_x7gwJgCufbrLh9T8jzesdrc65hg6o_Ca1v5NxWElE&_nc_zt=23&se=-1&_nc_ht=scontent.fsgn5-8.fna&_nc_gid=yAkLhMhp61hoOUOnCujRBw&oh=00_Afhj8leLKvxaPKLusKoTz8H0mDITWyaibjeItUuVOsDBZg&oe=69110B32'),
-    (15, 'https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/577446275_1477813600164681_6863714725651480238_n.jpg?stp=cp6_dst-jpegr_tt6&_nc_cat=111&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=MuK_M0oTSY8Q7kNvwEY7rNh&_nc_oc=AdnGrx57fEVY5DVADj-T-H5n81wc-Dd_Q8DKvwRsfeBeBkE9Gt98FnSqv5L_RnllISg&_nc_zt=23&se=-1&_nc_ht=scontent.fsgn5-11.fna&_nc_gid=nPneBr-hMuSyPdjiTxBYaQ&oh=00_AfhbMVw5c9DD1-vtdSjc6Io_P_v8S4D5qPuxDF_E5h8DVw&oe=691114D0'),
+    (1, 'https://carshop.vn/wp-content/uploads/2022/07/hinh-anh-xe-o-to-dien-vinfast-25.jpg'),
+    (1, 'https://xedientanmai.vn/wp-content/uploads/2023/12/tong-hop-mau-xe-dien-vinfast-nho-gon-dep-nhat-2023-4.jpg'),
+    (1, 'https://cdn.tuoitre.vn/471584752817336320/2023/6/8/149755789e054f5b1614-1932028-2read-only-16862412338251915413054.jpg'),
+    (2, 'https://storage.googleapis.com/f1-cms/2021/05/edb3d949-20210528_030114.jpg'),
+    (2, 'https://carshop.vn/wp-content/uploads/2022/07/hinh-nen-o-to-69.jpg'),
+    (3, 'https://toigingiuvedep.vn/wp-content/uploads/2022/05/anh-sieu-xe-xe-hoi-o-to-1.jpeg'),
+    (3, 'https://recmiennam.com/wp-content/uploads/2018/01/hinh-nen-xe-oto-dep-1.jpg'),
+    (4, 'https://carshop.vn/wp-content/uploads/2022/07/hinh-nen-xe-oto-dep-7.jpg'),
+    (4, 'https://static.automotor.vn/images/upload/2022/12/04/light-year-one-autonews7.png'),
+    (5, 'http://vinfast-chevrolet.net/upload/images/VF33_frontview_2(1).jpg'),
+    (5, 'https://luxuryboutiquemagazine.com/wp-content/uploads/2021/04/Pininfarina-photo-1.jpg'),
+    (6, 'https://carsguide-res.cloudinary.com/image/upload/c_fit,h_726,w_1290,f_auto,t_cg_base/v1/editorial/BMW-i3-2014-australia-(14).jpg'),
+    (6, 'https://images.hgmsites.net/hug/mercedes-benz-eq-electric-car-concept-photo-axel-harries_100597897_h.jpg'),
+    (7, 'https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_cg__marking_background__sm_/v1/editorial/2024-SKoda-Enyaq-vRS-1001x565p.jpg'),
+    (7, 'https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_cg_hero_large/v1/editorial/2021-Hyundai-Kona-Electric-SUV-blue-1001x565-1.jpg'),
+    (8, 'https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_default/v1/editorial/listicle/hero_image/2021-Kia-EV6-GT-Line-SUV-red-1001x565-1.jpg'),
+    (8, 'https://images.carexpert.com.au/resize/3000/-/app/uploads/2021/07/2020IONIQElectricPremium-09.jpg'),
+    (8, 'https://www.whichelectriccar.com.au/wp-content/uploads/jagipaceconceptdynamic150317010.jpg'),
+    (9, 'https://xedapdienlinhvuong.com/wp-content/uploads/2023/04/Xe-May-Dien-Vinfast-Evo200-5.jpg'),
+    (9, 'https://sudospaces.com/xedapdientroluc/2023/02/z4099070148533-5a047794dd70db5c54c51df0957c3cad.jpg'),
+    (10, 'https://cafebiz.cafebizcdn.vn/162123310254002176/2021/4/13/photo-1-161829386324596823726.jpg'),
+    (10, 'https://xedapdiencuvietcuong.com/wp-content/uploads/z2887154729655_af413a4bd0eb704da4adfb186c84a903-min.jpghttps://xedapdiencuvietcuong.com/wp-content/uploads/z2887154729655_af413a4bd0eb704da4adfb186c84a903-min.jpg'),
+    (11, 'https://xedienvietcuong.com/wp-content/uploads/2021/10/z2635490676422_48a8f41ffb8ad1d1a887f3ade7472e64-min.jpg'),
+    (11, 'https://xedapdiencuvietcuong.com/wp-content/uploads/2019/02/viet-cuong-9.jpg'),
+    (12, 'https://vnn-imgs-f.vgcloud.vn/2021/11/07/10/o-to-dien-150-trieu-dong-ban-chay-nhat-trung-quoc-bat-ngo-xuat-hien-tai-viet-nam.jpg'),
+    (12, 'https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/7/31/1075199/Nguon-Liputan6.Com-01.jpg'),
+    (13, 'https://cdn-img.thethao247.vn/upload/theanh/2020/02/25/kinh-nghiem-mua-xe-o-to-cu.jpg'),
+    (13, 'https://chootoso1hanoi.com/images/products/2023/05/18/ban-xe-o-to-cu-hyundai-santafe-2022-may-dau-ban-full-267.jpg'),
+    (14, 'https://chootoso1hanoi.com/images/upload/images/Ban-o-to-cu-Hyundai-Accent-2020-mau-trang-xe-chat-gia-re-2-min.jpeg'),
+    (14, 'https://cdn-img.thethao247.vn/upload/thoatrinh/2018/05/05/Xe-o-to-cu-gia-re-dang-mua-nhat-Toyota-Vios.jpg'),
+    (14, 'https://phucvietauto.com/wp-content/uploads/2022/12/oto-duoi-100-trieu-deawoo-matiz-2006-mt-0.8-10-768x576.jpg'),
+    (15, 'https://katavina.com/uploaded/tin-tuc/anh%20tin%20tuc/Xe-o-to-cu-nao-nen-mua-500-700-trieu-altis.jpg'),
+    (15, 'https://danchoioto.vn/wp-content/uploads/2021/09/trong-cac-dong-xe-o-to-cu-tam-500-trieu-hien-mazda-3-2017-2019-duoc-danh-gia-la-lua-chon-rat-hap-dan.jpeg'),
 
     -- Battery Posts (16-30)
     (16, 'https://evbattery.vn/wp-content/uploads/2025/07/PIN-Xe-May-Dien-Feliz-S-EVO-72V-30AH-LFP-Bo-Cop-Tien-Dung-001-510x510.jpg'),
@@ -413,6 +414,19 @@ VALUES
     -- Transaction 4: Post 16 (BATTERY, 12M) -> 3%
     (4, 0.03, 360000.00, 'PAID', CAST('2024-03-16 12:00:00' AS DATETIME)),
     -- Transaction 5: Post 21 (BATTERY, 20M) -> 3%
+    (5, 0.03, 600000.00, 'PAID', CAST('2024-04-05 15:30:00' AS DATETIME)),
+    -- Transaction 6: Post 22 (BATTERY, 11M) -> 3%
+    (6, 0.03, 330000.00, 'PAID', CAST('2024-04-08 10:45:00' AS DATETIME)),
+    -- Transaction 7: Post 4 (VEHICLE, 1050M) -> 4%
+    (7, 0.04, 42000000.00, 'PAID', CAST('2024-03-23 17:00:00' AS DATETIME)),
+    -- Transaction 8: Post 5 (VEHICLE, 480M) -> 4%
+    (8, 0.04, 19200000.00, 'PAID', CAST('2024-03-27 12:30:00' AS DATETIME)),
+    -- Transaction 9: Post 19 (BATTERY, 18M) -> 3%
+    (9, 0.03, 540000.00, 'PAID', CAST('2024-04-03 18:00:00' AS DATETIME)),
+    -- Transaction 10: Post 14 (VEHICLE, 4500M) -> 4%
+    (10, 0.04, 180000000.00, 'PAID', CAST('2024-04-11 11:30:00' AS DATETIME)),
+    -- Transaction 11: Post 4 (VEHICLE, 1050M) -> 4%
+    (11, 0.04, 42000000.00, 'PAID', CAST('2024-03-28 12:30:00' AS DATETIME)),
     -- Transaction 12: Post 9 (VEHICLE, 2200M) -> 4%
     (12, 0.04, 88000000.00, 'PAID', CAST('2024-04-05 14:00:00' AS DATETIME)),
     -- Transaction 13: Post 5 (VEHICLE, 480M) -> 4%
@@ -465,9 +479,9 @@ VALUES
     (34, 0.04, 22000000.00, 'PAID', CAST('2024-03-25 15:30:00' AS DATETIME)),
     -- Transaction 35: Post 12 (VEHICLE, 680M) -> 4%
     (35, 0.04, 27200000.00, 'PAID', CAST('2024-04-06 17:30:00' AS DATETIME));
+
 -- =============================================
--- 14. REVIEWS (rating 0-5, status: APPROVED/PENDING/REJECTED)
--- Chỉ review cho các transactions COMPLETED
+-- 14. REVIEWS (chỉ cho các transactions COMPLETED, rating: 0-5)
 -- =============================================
 INSERT INTO reviews (seller_id, reviewer_id, transaction_id, rating, comment, status, created_at)
 VALUES
@@ -491,6 +505,33 @@ VALUES
     (11, 12, 9, 3, N'Pin CATL 72V dung lượng lớn, giao đúng hẹn.', 'REJECTED', CAST('2024-04-04 17:45:00' AS DATETIME)),
     -- Transaction 10: Post 14, seller=4, buyer=14
     (4, 14, 10, 4, N'Porsche Taycan pin 93.4 kWh chạy tốt, giá hợp lý!', 'APPROVED', CAST('2024-04-12 11:20:00' AS DATETIME));
+
+INSERT INTO commission_setup (commission_rate, minimum, maximum, status, Product_type, created_at, updated_at)
+VALUES
+-- 1. Mặc định cho VEHICLE
+(0.00, 0, 0, 'DEFAULT', 'VEHICLE', GETDATE(), GETDATE()),
+
+-- 2. Mặc định cho BATTERY
+(0.00, 0, 0, 'DEFAULT', 'BATTERY', GETDATE(), GETDATE()),
+
+-- 3. Xe điện giá thấp (< 10 triệu)
+(0.08, 0, 10000000, 'ACTIVE', 'VEHICLE', GETDATE(), GETDATE()),
+
+-- 4. Xe điện tầm trung (10 - 30 triệu)
+(0.05, 10000000, 30000000, 'ACTIVE', 'VEHICLE', GETDATE(), GETDATE()),
+
+-- 5. Xe điện cao cấp (> 30 triệu)
+(0.03, 30000000, 99999999, 'ACTIVE', 'VEHICLE', GETDATE(), GETDATE()),
+
+-- 6. Pin xe điện giá thấp (< 3 triệu)
+(0.12, 0, 3000000, 'ACTIVE', 'BATTERY', GETDATE(), GETDATE()),
+
+-- 7. Pin tầm trung (3 - 6 triệu)
+(0.09, 3000000, 6000000, 'ACTIVE', 'BATTERY', GETDATE(), GETDATE()),
+
+-- 8. Pin cao cấp (> 6 triệu)
+(0.07, 6000000, 20000000, 'ACTIVE', 'BATTERY', GETDATE(), GETDATE());
+
 
 -- =============================================
 -- VERIFY DATA
@@ -540,3 +581,4 @@ SELECT 'Reviews', COUNT(*) FROM reviews;
 -- 35 Contracts (MỖI TRANSACTION CÓ 1 CONTRACT, status: SIGNED / UNSIGN)
 -- 35 Commissions (MỖI TRANSACTION CÓ 1 COMMISSION, BATTERY >10M=3% else 2%, VEHICLE >20M=4% else 2.5%)
 -- 10 Reviews (chỉ cho transactions COMPLETED, rating: 0-5)
+
