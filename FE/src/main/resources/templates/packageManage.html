@@ -1,0 +1,138 @@
+<!-- packageManage.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý gói thành viên</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/adminPage.css}" />
+    <link rel="stylesheet" th:href="@{/css/packageManage.css}" />
+</head>
+
+<body>
+<div class="container">
+    <!-- Sidebar inclusion -->
+    <section th:include="adminPage"></section>
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Notification Area -->
+        <div class="notification" id="notification"></div>
+
+<!--        &lt;!&ndash; Success/Error Messages &ndash;&gt;-->
+<!--        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>-->
+<!--        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>-->
+
+        <!-- Quản lý gói thành viên Content -->
+        <div class="content-section active" data-section="package">
+            <div class="section-title">
+                <i class="fa-solid fa-crown"></i>
+                <h2>Quản lý gói thành viên</h2>
+            </div>
+            <a class="add-new-btn" th:href="@{/home/admin/package-manage/create}">Thêm gói thành viên mới</a>
+
+            <div class="package-config-container">
+                <div class="package-card" th:each="membershipPlan : ${membershipPlans}">
+
+                    <h3 th:text="${membershipPlan.getName()}">Tên gói</h3>
+
+                    <p class="package-id">
+                        <strong>ID:</strong>
+                        <span th:text="${membershipPlan.getPlanId()}"></span>
+                    </p>
+
+                    <p class="status-badge"
+                       th:classappend="${membershipPlan.getStatus().equals('ACTIVE')} ? 'status-active' : 'status-inactive'"
+                       th:text="${membershipPlan.getStatus().equals('ACTIVE') ? 'Hoạt động' : 'Tạm ngưng'}">
+                    </p>
+
+                    <div class="package-price">
+                        <p>
+                            <strong>Giá gói:</strong>
+                        </p>
+                        <p class="price-amount" th:text="${#numbers.formatDecimal(membershipPlan.getPrice(), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
+                    </div>
+
+                    <p class="package-duration">
+                        <strong>Thời hạn:</strong>
+                        <span th:if="${membershipPlan.getPlanId() != 1}" th:text="${membershipPlan.getDuration()} + ' tháng'"></span>
+                        <span th:if="${membershipPlan.getPlanId() == 1}">Miễn phí</span>
+                    </p>
+
+                    <p class="package-type" th:if="${membershipPlan.getMaxPosts() != null}">
+                        <strong>Số lượng bài đăng tối đa:</strong>
+                        <span th:text="${membershipPlan.getMaxPosts()}"></span>
+                    </p>
+
+<!--                    <div class="package-benefits" th:if="${membershipPlan.getPriority() != null}">-->
+<!--                        <p><strong>Quyền lợi:</strong></p>-->
+<!--                        <p th:text="${membershipPlan.getPriority()}"></p>-->
+<!--                    </div>-->
+
+
+<!--                    <p class="package-dates" th:if="${membershipPlan.getCreatedAt() != null}"-->
+<!--                       th:text="'Ngày tạo: ' + ${#temporals.format(membershipPlan.getCreatedAt(),'dd/MM/yyyy - HH:mm')}">-->
+<!--                    </p>-->
+
+<!--                    <p class="package-dates" th:if="${membershipPlan.getUpdatedAt() != null}"-->
+<!--                       th:text="'Cập nhật lần cuối: '+ ${#temporals.format(membershipPlan.getUpdatedAt(),'dd/MM/yyyy - HH:mm')}">-->
+<!--                    </p>-->
+
+                    <div class="package-card-actions">
+                        <button class="edit-btn">
+                            <a th:href="@{'/home/admin/package-manage/edit/' + ${membershipPlan.getPlanId()}}"
+                               style="color: inherit; text-decoration: none;">
+                                Chỉnh sửa
+                            </a>
+                        </button>
+
+                        <button th:if="${membershipPlan.getPlanId() != 1}" class="status-btn"
+                                th:classappend="${membershipPlan.getStatus().equals('INACTIVE')} ? 'inactive' : ''">
+                            <a th:if="${membershipPlan.getStatus().equals('ACTIVE')}"
+                               th:href="@{'/home/admin/package-manage/inactive/' + ${membershipPlan.getPlanId()}}"
+                               style="color: inherit; text-decoration: none;">
+                                Tạm ngưng
+                            </a>
+                            <a th:if="${membershipPlan.getStatus().equals('INACTIVE')}"
+                               th:href="@{'/home/admin/package-manage/active/' + ${membershipPlan.getPlanId()}}"
+                               style="color: inherit; text-decoration: none;">
+                                Kích hoạt
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/commonComponents/adminPage.js}"></script>
+<script th:src="@{/js/packageManage.js}"></script>
+<!--<script>-->
+<!--    // Auto hide success/error messages after 2.5 seconds-->
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--        const alerts = document.querySelectorAll('.alert');-->
+<!--        alerts.forEach(alert => {-->
+<!--            setTimeout(() => {-->
+<!--                alert.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';-->
+<!--                alert.style.opacity = '0';-->
+<!--                alert.style.transform = 'translateY(-20px)';-->
+<!--                setTimeout(() => {-->
+<!--                    alert.remove();-->
+<!--                }, 500);-->
+<!--            }, 2500);-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+</body>
+</html>

@@ -20,7 +20,14 @@ public class MembershipPlanController {
     private MembershipPlanService membershipPlanService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<MembershipPlan>> createMembershipPlan(@RequestBody MembershipPlan plan) {
+    public ResponseEntity<ApiResponse<MembershipPlan>> createMembershipPlan(@RequestBody MembershipPlanResponse planResponse) {
+        MembershipPlan plan = new MembershipPlan();
+        plan.setName(planResponse.getName());
+        plan.setPrice(planResponse.getPrice());
+        plan.setDuration(planResponse.getDuration());
+        plan.setMaxPosts(planResponse.getMaxPosts());
+        plan.setPriority(planResponse.getPriority());
+        plan.setStatus(planResponse.getStatus());
         MembershipPlan saved = membershipPlanService.createMembershipPlan(plan);
         ApiResponse<MembershipPlan> response = new ApiResponse<>();
         response.ok(saved);
@@ -29,11 +36,21 @@ public class MembershipPlanController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<MembershipPlan>> getMembershipPlanById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<MembershipPlanResponse>> getMembershipPlanById(@PathVariable Integer id) {
         Optional<MembershipPlan> plan = membershipPlanService.getMembershipPlanById(id);
-        ApiResponse<MembershipPlan> response = new ApiResponse<>();
+        ApiResponse<MembershipPlanResponse> response = new ApiResponse<>();
         if (plan.isPresent()) {
-            response.ok(plan.get());
+            MembershipPlan p = plan.get();
+            MembershipPlanResponse planResponse = new MembershipPlanResponse(
+                    p.getPlanId(),
+                    p.getName(),
+                    p.getPrice(),
+                    p.getDuration(),
+                    p.getMaxPosts(),
+                    p.getPriority(),
+                    p.getStatus()
+            );
+            response.ok(planResponse);
             return ResponseEntity.ok(response);
         } else {
             HashMap<String, String> error = new HashMap<>();
@@ -55,7 +72,8 @@ public class MembershipPlanController {
                     p.getPrice(),
                     p.getDuration(),
                     p.getMaxPosts(),
-                    p.getPriority()
+                    p.getPriority(),
+                    p.getStatus()
             );
             response.ok(planResponse);
             return ResponseEntity.ok(response);
@@ -77,7 +95,8 @@ public class MembershipPlanController {
                         plan.getPrice(),
                         plan.getDuration(),
                         plan.getMaxPosts(),
-                        plan.getPriority()
+                        plan.getPriority(),
+                        plan.getStatus()
                 ))
                 .toList();
         ApiResponse<List<MembershipPlanResponse>> apiResponse = new ApiResponse<>();
@@ -92,11 +111,54 @@ public class MembershipPlanController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<MembershipPlan>> updateMembershipPlan(@PathVariable Integer id, @RequestBody MembershipPlan plan) {
-        MembershipPlan updated = membershipPlanService.updateMembershipPlan(id, plan);
-        ApiResponse<MembershipPlan> response = new ApiResponse<>();
-        if (updated != null) {
-            response.ok(updated);
+    public ResponseEntity<ApiResponse<MembershipPlanResponse>> updateMembershipPlan(@PathVariable Integer id, @RequestBody MembershipPlanResponse planResponse) {
+        Optional<MembershipPlan> updated = membershipPlanService.getMembershipPlanById(id);
+        ApiResponse<MembershipPlanResponse> response = new ApiResponse<>();
+        if (updated.isPresent()) {
+            MembershipPlan plan = updated.get();
+            plan.setName(planResponse.getName());
+            plan.setPrice(planResponse.getPrice());
+            plan.setDuration(planResponse.getDuration());
+            plan.setMaxPosts(planResponse.getMaxPosts());
+            plan.setPriority(planResponse.getPriority());
+            plan.setStatus(planResponse.getStatus());
+            membershipPlanService.createMembershipPlan(plan); // Save the updated plan
+            MembershipPlanResponse updatedResponse = new MembershipPlanResponse(
+                    plan.getPlanId(),
+                    plan.getName(),
+                    plan.getPrice(),
+                    plan.getDuration(),
+                    plan.getMaxPosts(),
+                    plan.getPriority(),
+                    plan.getStatus()
+            );
+            response.ok(updatedResponse);
+            return ResponseEntity.ok(response);
+        } else {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "MembershipPlan not found");
+            response.error(error);
+            return ResponseEntity.status(404).body(response);
+        }
+    }
+    @PutMapping("/status/{id}")
+    public ResponseEntity<ApiResponse<MembershipPlanResponse>> updateMembershipPlanStatus(@PathVariable Integer id, @RequestBody String status) {
+        Optional<MembershipPlan> updated = membershipPlanService.getMembershipPlanById(id);
+        ApiResponse<MembershipPlanResponse> response = new ApiResponse<>();
+        if (updated.isPresent()) {
+            MembershipPlan plan = updated.get();
+            plan.setStatus(status);
+            membershipPlanService.createMembershipPlan(plan); // Save the updated plan
+            MembershipPlanResponse planResponse = new MembershipPlanResponse(
+                    plan.getPlanId(),
+                    plan.getName(),
+                    plan.getPrice(),
+                    plan.getDuration(),
+                    plan.getMaxPosts(),
+                    plan.getPriority(),
+                    plan.getStatus()
+            );
+            response.ok(planResponse);
             return ResponseEntity.ok(response);
         } else {
             HashMap<String, String> error = new HashMap<>();

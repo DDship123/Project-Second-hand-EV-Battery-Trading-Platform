@@ -1,0 +1,511 @@
+<!-- updatePackage.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cập nhật gói thành viên</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/adminPage.css}" />
+    <style>
+        /* Package Update Styles */
+        .update-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: #f8f9fa;
+            color: #666;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #e9ecef;
+            color: #418bee;
+            text-decoration: none;
+        }
+
+        .back-btn::before {
+            content: '\f060';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+
+        .update-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .update-header i {
+            font-size: 24px;
+            color: #418bee;
+        }
+
+        .update-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .package-id-info {
+            background-color: #e3f2fd;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .package-id-info strong {
+            color: #1976d2;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #418bee;
+            box-shadow: 0 0 0 3px rgba(65, 139, 238, 0.1);
+        }
+
+        .form-group input:disabled {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #418bee, #357abd);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #357abd, #2c5f8a);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(65, 139, 238, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #418bee;
+        }
+
+        .form-section h3 {
+            margin: 0 0 15px 0;
+            color: #418bee;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .readonly-field {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            color: #6c757d;
+        }
+
+        .warning-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .warning-box i {
+            color: #856404;
+            margin-right: 8px;
+        }
+
+        .warning-box p {
+            margin: 0;
+            color: #856404;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+            .update-container {
+                margin: 10px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <!-- Sidebar inclusion -->
+    <section th:include="adminPage"></section>
+
+    <!-- Main content -->
+    <div class="main-content" id="mainContent">
+        <!-- Notification Area -->
+        <div class="notification" id="notification"></div>
+
+        <!-- Success/Error Messages -->
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+        <div class="update-container">
+            <a th:href="@{/home/admin/package-manage}" class="back-btn">Quay lại danh sách</a>
+
+            <div class="update-header">
+                <i class="fa-solid fa-edit"></i>
+                <h1>Cập nhật gói thành viên</h1>
+            </div>
+
+            <div class="package-id-info">
+                <strong>ID Gói:</strong> <span th:text="${membershipPlan.planId}"></span>
+                <span class="status-indicator"
+                      th:classappend="${membershipPlan.status.equals('ACTIVE')} ? 'status-active' : 'status-inactive'"
+                      th:text="${membershipPlan.status.equals('ACTIVE') ? 'Hoạt động' : 'Tạm ngưng'}">
+                </span>
+            </div>
+
+            <!-- Warning for default package -->
+            <div th:if="${membershipPlan.planId == 1}" class="warning-box">
+                <i class="fa-solid fa-exclamation-triangle"></i>
+                <p><strong>Lưu ý:</strong> Đây là gói mặc định của hệ thống. Một số thông tin không thể chỉnh sửa để đảm bảo tính ổn định.</p>
+            </div>
+
+            <form method="post" th:action="@{'/home/admin/package-manage/edit'}" th:object="${membershipPlan}">
+
+                <!-- Hidden field for planId -->
+                <input type="hidden" th:field="*{planId}" />
+
+                <div class="form-section">
+                    <h3>Thông tin cơ bản</h3>
+
+                    <div class="form-group">
+                        <label for="name">Tên gói <span class="required">*</span></label>
+                        <input type="text" id="name" th:field="*{name}" required
+                               th:disabled="${membershipPlan.planId == 1}"
+                               th:classappend="${membershipPlan.planId == 1} ? 'readonly-field' : ''"
+                               placeholder="Ví dụ: Gói Premium, Gói VIP..." />
+                        <div class="help-text" th:if="${membershipPlan.planId != 1}">Tên gói sẽ hiển thị cho người dùng khi họ chọn gói</div>
+                        <div class="help-text" th:if="${membershipPlan.planId == 1}" style="color: #856404;">Tên gói mặc định không thể thay đổi</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="price">Giá gói (VNĐ) <span class="required">*</span></label>
+                            <input type="number" id="price" th:field="*{price}"
+                                   min="0" required
+                                   th:disabled="${membershipPlan.planId == 1}"
+                                   th:classappend="${membershipPlan.planId == 1} ? 'readonly-field' : ''"
+                                   placeholder="0" />
+                            <div class="help-text" th:if="${membershipPlan.planId != 1}">Giá gói tính bằng VNĐ (nhập 0 cho gói miễn phí)</div>
+                            <div class="help-text" th:if="${membershipPlan.planId == 1}" style="color: #856404;">Gói mặc định luôn miễn phí</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="duration">Thời hạn (tháng) <span class="required">*</span></label>
+                            <input type="number" id="duration" th:field="*{duration}"
+                                   min="1" max="12" required
+                                   placeholder="1" />
+                            <div class="help-text">Thời hạn sử dụng gói tính bằng tháng</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Cài đặt gói</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="maxPosts">Số lượng bài đăng tối đa <span class="required">*</span></label>
+                            <input type="number" id="maxPosts" th:field="*{maxPosts}"
+                                   min="1" required
+                                   placeholder="10" />
+                            <div class="help-text">Số bài đăng tối đa người dùng có thể tạo trong gói này</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="priority">Độ ưu tiên</label>
+                            <select id="priority" th:field="*{priority}">
+                                <option th:value="${membershipPlan.getPriority()}" th:text="${membershipPlan.getPriority()}"></option>
+                                <option value="NORMAL">Bình thường</option>
+                                <option value="HIGH">Cao</option>
+                                <option value="HIGHEST">Cao nhất</option>
+                            </select>
+                          <div class="help-text">Độ ưu tiên hiển thị bài đăng của người dùng (cao hơn = ưu tiên hơn)</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:if="${membershipPlan.planId != 1}">
+                        <label for="status">Trạng thái <span class="required">*</span></label>
+                        <select id="status" th:field="*{status}" required>
+                            <option value="">-- Chọn trạng thái --</option>
+                            <option value="ACTIVE">Hoạt động</option>
+                            <option value="INACTIVE">Tạm ngưng</option>
+                        </select>
+                        <div class="help-text">Trạng thái của gói (chỉ gói hoạt động mới hiển thị cho người dùng)</div>
+                    </div>
+
+                    <!-- Hidden status field for default package -->
+                    <input th:if="${membershipPlan.planId == 1}" type="hidden" th:field="*{status}" />
+                </div>
+
+<!--                <div class="form-section">-->
+<!--                    <h3>Mô tả & Quyền lợi</h3>-->
+
+<!--                    <div class="form-group">-->
+<!--                        <label for="description">Mô tả gói</label>-->
+<!--                        <textarea id="description" th:field="*{description}"-->
+<!--                                  placeholder="Mô tả chi tiết về gói thành viên..."></textarea>-->
+<!--                        <div class="help-text">Mô tả chi tiết về các tính năng và quyền lợi của gói</div>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group">-->
+<!--                        <label for="benefits">Quyền lợi đặc biệt</label>-->
+<!--                        <textarea id="benefits" th:field="*{benefits}"-->
+<!--                                  placeholder="Ví dụ: Ưu tiên hiển thị bài đăng, Hỗ trợ khách hàng 24/7..."></textarea>-->
+<!--                        <div class="help-text">Các quyền lợi đặc biệt mà gói này mang lại</div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="form-actions">
+                    <a th:href="@{/home/admin/package-manage}" class="btn btn-secondary">
+                        <i class="fa-solid fa-times"></i>
+                        Hủy bỏ
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-save"></i>
+                        Cập nhật gói
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/commonComponents/adminPage.js}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Format price input with thousand separators (for non-default packages)
+        // const priceInput = document.getElementById('price');
+        // if (priceInput && !priceInput.disabled) {
+        //     // Format existing value
+        //     if (priceInput.value) {
+        //         priceInput.value = parseInt(priceInput.value).toLocaleString('vi-VN');
+        //     }
+        //
+        //     priceInput.addEventListener('input', function(e) {
+        //         let value = e.target.value.replace(/[^\d]/g, '');
+        //         if (value) {
+        //             // Add thousand separators for display
+        //             e.target.value = parseInt(value).toLocaleString('vi-VN');
+        //         }
+        //     });
+        //
+        //     // Remove formatting before form submission
+        //     priceInput.closest('form').addEventListener('submit', function() {
+        //         priceInput.value = priceInput.value.replace(/[^\d]/g, '');
+        //     });
+        // }
+
+        // Auto hide success/error messages after 3 seconds
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    alert.remove();
+                }, 500);
+            }, 3000);
+        });
+
+        // Confirmation for form submission
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const isDefaultPackage = [[${membershipPlan.planId == 1}]];
+                if (isDefaultPackage) {
+                    if (!confirm('Bạn có chắc chắn muốn cập nhật gói mặc định này không?')) {
+                        e.preventDefault();
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

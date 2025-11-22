@@ -69,7 +69,7 @@ public class MemberPlanUsageServiceImpl implements MemberPlanUsageService {
         newMemberPlanUsage.setMember(member);
         newMemberPlanUsage.setStatus("ACTIVE");
         newMemberPlanUsage.setStartDate(LocalDateTime.now());
-        newMemberPlanUsage.setEndDate(LocalDateTime.now().plusYears(1));
+        newMemberPlanUsage.setEndDate(LocalDateTime.now().plusMonths(plan.getDuration()));
         newMemberPlanUsage.setMembershipPlan(plan);
         newMemberPlanUsage.setAmount(plan.getPrice().doubleValue());
         return memberPlanUsageRepository.save(newMemberPlanUsage);

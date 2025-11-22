@@ -33,6 +33,8 @@ window.addEventListener('DOMContentLoaded', () => {
     submenuItems[3].classList.add('active');
   }else if (window.location.pathname.includes('fee-manage')) {
     submenuItems[4].classList.add('active');
+  }else if (window.location.pathname.includes('package-manage')) {
+    submenuItems[5].classList.add('active');
   }
   // else {
   //   // Default to first submenu item
@@ -121,6 +123,9 @@ submenuItems.forEach(item => {
         break;
       case 'Cấu hình phí Hoa hồng':
         window.location.href = '/home/admin/fee-manage';
+        break;
+      case 'Quản lí gói dịch vụ':
+        window.location.href = '/home/admin/package-manage';
         break;
       default:
         break;

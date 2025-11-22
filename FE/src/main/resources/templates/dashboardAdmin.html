@@ -155,9 +155,10 @@
                         <tbody>
                         <tr th:each="transaction : ${latestTransactions}">
                             <td th:text="${transaction.getTransactionId()}">Honda Wave Alpha</td>
-                            <td th:text="${transaction.getPost().getProduct().getProductType()}">#KH001</td>
+                            <td th:if="${transaction.getPost().getProduct().getProductType() == 'VEHICLE'}">Xe điện</td>
+                            <td th:if="${transaction.getPost().getProduct().getProductType() == 'BATTERY'}">Pin</td>
                             <td th:text="${#temporals.format(transaction.getCreatedAt(),'dd-MM-yyy')}">08/11/2025</td>
-                            <td><span class="status-badge pending">Yêu cầu người mua chấp nhận</span></td>
+                            <td><span class="status-badge pending" style="font-size: 10px">Yêu cầu người mua chấp nhận</span></td>
                         </tr>
                         </tbody>
                     </table>

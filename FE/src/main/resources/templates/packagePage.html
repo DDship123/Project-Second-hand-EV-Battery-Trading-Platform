@@ -38,7 +38,7 @@
 
     <div class="packages__wrapper">
 
-        <div class="packages__card" th:each="package : ${packages}">
+        <div class="packages__card" th:each="package : ${packages}" th:if="${package.getStatus().equals('ACTIVE')|| memberPlanUsage.getPlan().getPlanId() == package.getPlanId()} ">
             <h1 class="packages__card-title" th:text="'Gói '+${package.getName()}">GÓI MIỄN PHÍ</h1>
             <ul class="packages__features">
                 <li class="packages__feature">
