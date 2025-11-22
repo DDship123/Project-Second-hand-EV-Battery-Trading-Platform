@@ -25,7 +25,6 @@ public class Post {
     private Member seller;
 
     @Column(columnDefinition = "NVARCHAR(200)", nullable = false)
-    @NotBlank(message = "Title is required!")
     private String title;
 
     @Column(columnDefinition = "NTEXT")

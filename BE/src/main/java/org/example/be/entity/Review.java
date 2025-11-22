@@ -32,7 +32,6 @@ public class Review {
     private String comment;
 
     @Column(name = "status", length = 20, columnDefinition = "NVARCHAR(20)",nullable = false)
-    @NotBlank(message = "Status is required!")
     private String status;
 
     @Column(name = "created_at")
