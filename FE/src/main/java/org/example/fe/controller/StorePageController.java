@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class StorePageController {
     private TransactionService transactionService;
 
     @GetMapping
-    public String storePage(Model model, HttpSession session) {
+    public String storePage(Model model, HttpSession session, @RequestParam(name = "successMessage", required = false) String successMessage,
+                            @RequestParam(name = "errorMessage", required = false) String errorMessage) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login?unauthorized=true";
@@ -50,6 +52,8 @@ public class StorePageController {
         model.addAttribute("soldPosts", soldPosts.getPayload());
 //        ApiResponse<List<TransactionResponse>> transactionResponse = transactionService.getAllSellTransaction(user.getMemberId());
 //        model.addAttribute("transactions", transactionResponse.getPayload());
+        ApiResponse<List<PostResponse>> rejectedPosts = postService.getAllPostByMemberIdAndStatus(user.getMemberId(), "REJECTED");
+        model.addAttribute("rejectedPosts", rejectedPosts.getPayload());
         return "storePage";
     }
 

@@ -24,6 +24,15 @@ public class MembershipPlan {
     @Column(columnDefinition = "NVARCHAR(20)")
     private String priority;
 
+    private String status;
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
     public Integer getPlanId() {
         return planId;
     }

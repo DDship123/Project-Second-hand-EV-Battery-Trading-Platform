@@ -32,171 +32,45 @@
 <!-- Package Registration Section -->
 <div class="packages">
     <div class="packages__breadcrumb">
-        <a style="color: grey;text-decoration: none" th:href="@{/home}">Trang chủ</a> <span>/</span><span>Đăng ký gói thành viên</span>
-        <h1 class="packages__title">ĐĂNG KÝ GÓI THÀNH VIÊN</h1>
+        <a style="color: grey;text-decoration: none" th:href="@{/home}">Trang chủ</a> <span>/</span><span>Đăng ký gói cửa hàng</span>
+        <h1 class="packages__title">ĐĂNG KÝ GÓI CỬA HÀNG</h1>
     </div>
 
     <div class="packages__wrapper">
 
-        <div class="packages__card">
-            <h3 class="packages__card-title">GÓI MIỄN PHÍ</h3>
-            <p class="packages__card-description">
-                Dành cho người dùng mới bắt đầu, cá nhân bán lẻ với sản phẩm.
-            </p>
-
-<!--            <div class="packages__price-section">-->
-<!--                <span class="packages__price" th:text="${packages.get(0).getPriceFormated()+'VNĐ'}">160.000đ</span>-->
-<!--                <span class="packages__period">/ Năm</span>-->
-<!--            </div>-->
-
-<!--            <div class="packages__savings">-->
-<!--                Tiết kiệm hơn <strong>60.000đ</strong> so với đăng tin và đăng tin-->
-<!--                lẻ (*)-->
-<!--            </div>-->
-
+        <div class="packages__card" th:each="package : ${packages}" th:if="${package.getStatus().equals('ACTIVE')|| memberPlanUsage.getPlan().getPlanId() == package.getPlanId()} ">
+            <h1 class="packages__card-title" th:text="'Gói '+${package.getName()}">GÓI MIỄN PHÍ</h1>
             <ul class="packages__features">
                 <li class="packages__feature">
                     <i class="packages__feature-icon fas fa-check"></i>
-                    <span th:text="'Được phép đăng tối đa '+${packages.get(0).getDuration()}"></span>
+                    <span th:text="'Được phép đăng tối đa '+${package.getMaxPosts()}+' tin'"></span>
                 </li>
                 <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Tự nhập thù ở
-                    danh mục công khai.
-                </li>
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Quản lý, chỉnh
-                    sửa, xóa tin đăng trong trang cá nhân.
-                </li>
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Theo dõi liên
-                    trang giao dịch cơ bản (đăng chờ / hoàn tất).
+                    <i class="packages__feature-icon fas fa-check"></i>
+                    <span th:if="${package.getPrice()> 0}" th:text="'Gía '+${package.getPriceFormated()+'VNĐ'}"></span>
+                    <span th:if="${package.getPrice() == 0}">Miễn Phí</span>
                 </li>
             </ul>
 
-            <div th:if="${memberPlanUsage.getPlan().getPlanId() == packages.get(0).getPlanId()}" class="packages__currentUsed">
+            <div th:if="${memberPlanUsage.getPlan().getPlanId() == package.getPlanId()}" class="packages__currentUsed">
                 <h3>GÓI HIỆN ĐANG SỬ DỤNG</h3>
                 <p class="packages__currentUsed__date">
                     <span th:text="'Ngày đăng ký: '+${#temporals.format(memberPlanUsage.getStartDate(),'dd/MM/yyyy')}"></span>
                 </p>
-            </div>
-
-            <button th:if="${memberPlanUsage.getPlan().getPlanId() != packages.get(0).getPlanId()}"
-                    th:attr="data-plan-id=${packages.get(0).getPlanId()},data-member-id=${user.getMemberId()}"
-                    class="packages__button">Miễn Phí</button>
-        </div>
-
-
-        <div class="packages__card packages__card--featured">
-            <h3 class="packages__card-title">GÓI CƠ BẢN</h3>
-            <p class="packages__card-description">
-                Dành người bán thương xuyên hoặc của hàng nhỏ muốn tăng khả năng
-                tiếp cận.
-            </p>
-
-            <div class="packages__price-section">
-                <span class="packages__price"  th:text="${packages.get(1).getPriceFormated()+'VNĐ'}">360.000đ</span>
-                <span class="packages__period">/ Năm</span>
-            </div>
-
-<!--            <div class="packages__savings">-->
-<!--                Tiết kiệm hơn <strong>100.000đ</strong> so với đăng tin và đăng tin-->
-<!--                lẻ (*)-->
-<!--            </div>-->
-
-            <ul class="packages__features">
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i>
-                    <span th:text="'Được phép đăng tối đa '+${packages.get(1).getDuration()}"></span>
-                </li>
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Tín dụng ưu
-                    tiên hiển thị trên kết quả tìm kiếm và trang chủ.
-                </li>
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Tài liệu nhiều
-                    hình ảnh.
-                </li>
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Quản lý giao
-                    dịch, liệt kể mua bán chi tiết.
-                </li>
-<!--                <li class="packages__feature">-->
-<!--                    <i class="packages__feature-icon fas fa-check"></i> Giảm 2% phí-->
-<!--                    giao dịch.-->
-<!--                </li>-->
-            </ul>
-
-            <div th:if="${memberPlanUsage.getPlan().getPlanId() == packages.get(1).getPlanId()}" class="packages__currentUsed">
-                <h3>GÓI HIỆN ĐANG SỬ DỤNG</h3>
                 <p class="packages__currentUsed__date">
-                    <span th:text="'Ngày đăng ký: '+${#temporals.format(memberPlanUsage.getStartDate(),'dd/MM/yyyy')}"></span>
-                    <br>
-                    <span th:text="'Ngày kết thúc: '+${#temporals.format(memberPlanUsage.getEndDate(),'dd/MM/yyyy')}"></span>
+                    <span th:text="'Ngày hết hạn: '+${#temporals.format(memberPlanUsage.getEndDate(),'dd/MM/yyyy')}"></span>
                 </p>
             </div>
 
-            <button th:if="${memberPlanUsage.getPlan().getPlanId() != packages.get(1).getPlanId()}"
-                    th:attr="data-plan-id=${packages.get(1).getPlanId()}
-                    ,data-member-id=${user.getMemberId()}
-                    ,data-price=${packages.get(1).getPrice()}"
-                    class="packages__button">MUA NGAY</button>
-        </div>
-
-        <!-- Gói Doanh Nghiệp -->
-        <div class="packages__card packages__card--premium">
-            <h3 class="packages__card-title">GÓI DOANH NGHIỆP</h3>
-            <p class="packages__card-description">
-                Dành đại lý, doanh nghiệp hoặc người bán chuyên nghiệp cần nhiều sản
-                phẩm.
-            </p>
-
-            <div class="packages__price-section">
-                <span class="packages__price" th:text="${packages.get(2).getPriceFormated()+'VNĐ'}">460.000đ</span>
-                <span class="packages__period">/ Năm</span>
-            </div>
-
-<!--            <div class="packages__savings">-->
-<!--                Tiết kiệm hơn <strong>200.000đ</strong> so với đăng tin và đăng tin-->
-<!--                lẻ (*)-->
-<!--            </div>-->
-
-            <ul class="packages__features">
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i>
-                    <span th:text="'Được phép đăng tối đa '+${packages.get(2).getDuration()}"></span>
-                </li>
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Quản lý toàn
-                    bộ sản phẩm, giao dịch, hợp đồng số.
-                </li>
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Được cập quyển
-                    quảng cáo banner / sản phẩm nổi bật.
-                </li>
-                <li class="packages__feature">
-                    <i class="packages__feature-icon fas fa-check"></i> Hỗ trợ kỹ
-                    thuật ưu tiên 24/7.
-                </li>
-<!--                <li class="packages__feature">-->
-<!--                    <i class="packages__feature-icon fas fa-check"></i> Giảm 5% phí-->
-<!--                    giao dịch.-->
-<!--                </li>-->
-            </ul>
-
-            <div th:if="${memberPlanUsage.getPlan().getPlanId() == packages.get(2).getPlanId()}" class="packages__currentUsed">
-                <h3>GÓI HIỆN ĐANG SỬ DỤNG</h3>
-                <p class="packages__currentUsed__date">
-                    <span th:text="'Ngày đăng ký: '+${#temporals.format(memberPlanUsage.getStartDate(),'dd/MM/yyyy')}"></span>
-                    <br>
-                    <span th:text="'Ngày kết thúc: '+${#temporals.format(memberPlanUsage.getEndDate(),'dd/MM/yyyy')}"></span>
-                </p>
-            </div>
-
-            <button th:if="${memberPlanUsage.getPlan().getPlanId() != packages.get(2).getPlanId()}"
-                    th:attr="data-plan-id=${packages.get(2).getPlanId()}
-                    ,data-member-id=${user.getMemberId()}
-                    ,data-price=${packages.get(2).getPrice()}"
-                    class="packages__button">MUA NGAY</button>
+            <button th:if="${memberPlanUsage.getPlan().getPlanId() != package.getPlanId() && package.getPlanId() == 1}"
+                    th:attr="data-plan-id=${package.getPlanId()},data-member-id=${user.getMemberId()},data-price=0"
+                    class="packages__button">Miễn Phí
+            </button>
+            <button
+                    th:if="${memberPlanUsage.getPlan().getPlanId() != package.getPlanId() && package.getPlanId() != 1}"
+                    th:attr="data-plan-id=${package.getPlanId()},data-member-id=${user.getMemberId()},data-price=${package.getPrice()}"
+                    class="packages__button">MUA NGAY
+            </button>
         </div>
     </div>
 </div>

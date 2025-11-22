@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -43,7 +44,7 @@ public class updatePostController {
     @PostMapping("/store/updatePost")
     public String updatePost(Model model,
                              PostResponse updatedPost, HttpSession session, @RequestParam("mainImage") MultipartFile mainImage,
-                             @RequestParam(value = "subImages",required = false) List<MultipartFile> subImages) {
+                             @RequestParam(value = "subImages",required = false) List<MultipartFile> subImages, RedirectAttributes redirectAttributes) {
         PostResponse post = (PostResponse) session.getAttribute("postCurr");
         UpdatePostValidate validate = new UpdatePostValidate();
         boolean hasError = validate.errorUpdate(model, post, updatedPost);
@@ -81,11 +82,12 @@ public class updatePostController {
             return "updatePostPage";
         }
 
-        ApiResponse<PostResponse> response = postService.update( updatedPost);
+        ApiResponse<PostResponse> response = postService.update(updatedPost);
         if (response.getPayload() != null) {
+            redirectAttributes.addAttribute("successMessage", "Cập nhật bài đăng thành công!");
             return "redirect:/home/store";
         } else {
-            model.addAttribute("error", response.getError());
+            model.addAttribute("errorMessage", "Đã có lỗi xảy ra trong quá trình cập nhật bài đăng. Vui lòng thử lại.");
             model.addAttribute("post", updatedPost);
             MemberResponse user = (MemberResponse) session.getAttribute("user");
             model.addAttribute("user", user);

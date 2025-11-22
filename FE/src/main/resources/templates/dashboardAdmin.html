@@ -131,7 +131,7 @@
                         <tr th:each="post:${latestPosts}">
                             <td th:text="${post.getPostsId()}">Đăng bài mới</td>
                             <td th:text="${post.getTitle()}">Nguyễn Văn A</td>
-                            <td th:text="${#temporals.format(post.getCreatedAt(),'dd-MM-yyy')}">5 phút trước</td>
+                            <td th:text="${#temporals.format(post.getCreatedAt(),'dd-MM-yyyy')}">5 phút trước</td>
                         </tr>
                         </tbody>
                     </table>
@@ -156,7 +156,7 @@
                         <tr th:each="transaction : ${latestTransactions}">
                             <td th:text="${transaction.getTransactionId()}">Honda Wave Alpha</td>
                             <td th:text="${transaction.getPost().getProduct().getProductType()}">#KH001</td>
-                            <td th:text="${#temporals.format(transaction.getCreatedAt(),'dd-MM-yyy')}">08/11/2025</td>
+                            <td th:text="${#temporals.format(transaction.getCreatedAt(),'dd-MM-yyyy')}">08/11/2025</td>
                             <td><span class="status-badge pending">Yêu cầu người mua chấp nhận</span></td>
                         </tr>
                         </tbody>

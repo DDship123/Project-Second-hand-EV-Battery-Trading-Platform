@@ -10,16 +10,25 @@ public class MembershipPlanResponse {
     private Integer maxPosts;
     private String priority;
 
+    private String status;
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public MembershipPlanResponse() {
     }
 
-    public MembershipPlanResponse(Integer planId, String name, BigDecimal price, Integer duration, Integer maxPosts, String priority) {
+    public MembershipPlanResponse(Integer planId, String name, BigDecimal price, Integer duration, Integer maxPosts, String priority, String status) {
         this.planId = planId;
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.maxPosts = maxPosts;
         this.priority = priority;
+        this.status = status;
     }
 
     public Integer getPlanId() {

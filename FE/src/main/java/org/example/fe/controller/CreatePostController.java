@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -35,7 +36,7 @@ public class CreatePostController {
     private CloudinaryService cloudinaryService;
 
     @GetMapping
-    public String postForm(Model model, HttpSession session) {
+    public String postForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login"; // Redirect to login page if user is not logged in
@@ -43,7 +44,8 @@ public class CreatePostController {
         int numberOfActivePosts = postService.countPostByMemberId(user.getMemberId()).getPayload();
         MembershipPlanResponse membershipPlan = membershipPlanService.getMembershipPlanByMemberId(user.getMemberId()).getPayload();
         if (membershipPlan.getMaxPosts() < numberOfActivePosts + 1) {
-            model.addAttribute("planError", "Bạn đã đạt đến giới hạn bài đăng cho gói hiện tại. Vui lòng nâng cấp gói của bạn để tạo thêm bài đăng.");
+            redirectAttributes.addAttribute("errorMessage", "Bạn đã đạt đến giới hạn bài đăng cho gói hiện tại. Vui lòng nâng cấp gói của bạn để tạo thêm bài đăng.");
+            return "redirect:/home/store";
         }
 
         model.addAttribute("user", user);
@@ -66,7 +68,7 @@ public class CreatePostController {
                                  @RequestParam("vehicleOrigin") String origin,
                                  @RequestParam("VehicleMileage") Integer mileage,
                                  @RequestParam("vehicleBatteryCapacity") String batteryCapacity,
-                                 @RequestParam("productPrice") String priceInput) {
+                                 @RequestParam("productPrice") String priceInput,RedirectAttributes redirectAttributes) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         CreatePostValidate validate = new CreatePostValidate();
         PostResponse post = new PostResponse();
@@ -139,11 +141,11 @@ public class CreatePostController {
 
         ApiResponse<PostResponse> apiResponse = postService.create(post);
         if (apiResponse.getStatus().equals("SUCCESS")) {
-            return "redirect:/home/store"; // Redirect to home page after successful post creation
+            redirectAttributes.addAttribute("successMessage", "Tạo bài đăng thành công!");
         } else {
-            model.addAttribute("postError", "Tạo bài đăng thất bại. Vui lòng thử lại.");
+            redirectAttributes.addAttribute("postError", "Tạo bài đăng thất bại. Vui lòng thử lại.");
         }
-        return "createPostPage"; // For now, just return to the form page
+        return "redirect:/home/store";
     }
 
     @PostMapping("/submit/battery")
@@ -161,7 +163,8 @@ public class CreatePostController {
                                  @RequestParam("batteryVoltage") String batteryVoltage,
                                  @RequestParam("batteryManufactureYear") String batteryYearOfManufacture,
                                  @RequestParam("batteryOrigin") String batteryOrigin,
-                                 @RequestParam("productPrice") String priceInput) {
+                                 @RequestParam("productPrice") String priceInput,
+                                    RedirectAttributes redirectAttributes) {
         MemberResponse user = (MemberResponse) session.getAttribute("user");
         CreatePostValidate validate = new CreatePostValidate();
         PostResponse post = new PostResponse();
@@ -228,10 +231,10 @@ public class CreatePostController {
         post.setProduct(product);
         ApiResponse<PostResponse> apiResponse = postService.create(post);
         if (apiResponse.getStatus().equals("SUCCESS")) {
-            return "redirect:/home/store"; // Redirect to home page after successful post creation
+            redirectAttributes.addAttribute("successMessage", "Tạo bài đăng thành công!");
         } else {
-            model.addAttribute("postError", "Tạo bài đăng thất bại. Vui lòng thử lại.");
+            redirectAttributes.addAttribute("postError", "Tạo bài đăng thất bại. Vui lòng thử lại.");
         }
-        return "createPostPage"; // For now, just return to the form page
+        return "redirect:/home/store";
     }
 }

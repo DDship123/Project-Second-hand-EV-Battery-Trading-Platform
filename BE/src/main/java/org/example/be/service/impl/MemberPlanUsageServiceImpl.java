@@ -53,9 +53,7 @@ public class MemberPlanUsageServiceImpl implements MemberPlanUsageService {
         List<MemberPlanUsage> usages = memberPlanUsageRepository.findAll();
         double totalRevenue = 0.0;
         for (MemberPlanUsage usage : usages) {
-            if (usage.getMembershipPlan() != null) {
-                totalRevenue += usage.getMembershipPlan().getPrice().doubleValue();
-            }
+            totalRevenue += usage.getAmount();
         }
         return totalRevenue;
     }
@@ -71,8 +69,9 @@ public class MemberPlanUsageServiceImpl implements MemberPlanUsageService {
         newMemberPlanUsage.setMember(member);
         newMemberPlanUsage.setStatus("ACTIVE");
         newMemberPlanUsage.setStartDate(LocalDateTime.now());
-        newMemberPlanUsage.setEndDate(LocalDateTime.now().plusYears(1));
+        newMemberPlanUsage.setEndDate(LocalDateTime.now().plusMonths(plan.getDuration()));
         newMemberPlanUsage.setMembershipPlan(plan);
+        newMemberPlanUsage.setAmount(plan.getPrice().doubleValue());
         return memberPlanUsageRepository.save(newMemberPlanUsage);
     }
 
