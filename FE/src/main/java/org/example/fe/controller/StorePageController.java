@@ -52,6 +52,8 @@ public class StorePageController {
         model.addAttribute("soldPosts", soldPosts.getPayload());
 //        ApiResponse<List<TransactionResponse>> transactionResponse = transactionService.getAllSellTransaction(user.getMemberId());
 //        model.addAttribute("transactions", transactionResponse.getPayload());
+        ApiResponse<List<PostResponse>> rejectedPosts = postService.getAllPostByMemberIdAndStatus(user.getMemberId(), "REJECTED");
+        model.addAttribute("rejectedPosts", rejectedPosts.getPayload());
         return "storePage";
     }
 
