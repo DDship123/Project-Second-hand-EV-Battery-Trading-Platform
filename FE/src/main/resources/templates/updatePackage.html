@@ -348,7 +348,7 @@
                 <!-- Hidden field for planId -->
                 <input type="hidden" th:field="*{planId}" />
 
-                <div class="form-section">
+                <div class="form-section" th:if="${membershipPlan.planId != 1}">
                     <h3>Thông tin cơ bản</h3>
 
                     <div class="form-group">

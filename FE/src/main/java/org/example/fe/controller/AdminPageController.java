@@ -585,6 +585,14 @@ public class AdminPageController {
         if (!member.getRole().equals("ADMIN")) {
             return "redirect:/login?unauthorized=true";
         }
+        if (membershipPlan.getPlanId() == 1) {
+            ApiResponse<MembershipPlanResponse> response = membershipPlanService.getMembershipPlanById(membershipPlan.getPlanId());
+            MembershipPlanResponse defaultPlan = response.getPayload();
+            membershipPlan.setPrice(defaultPlan.getPrice());
+            membershipPlan.setName(defaultPlan.getName());
+            membershipPlan.setDuration(defaultPlan.getDuration());
+            membershipPlan.setStatus(defaultPlan.getStatus());;
+        }
         ApiResponse<MembershipPlanResponse> response = membershipPlanService.updateMembershipPlan(membershipPlan.getPlanId(), membershipPlan);
         if (response.getPayload() != null) {
             redirectAttributes.addAttribute("successMessage", "Cập nhật gói thành viên thành công.");

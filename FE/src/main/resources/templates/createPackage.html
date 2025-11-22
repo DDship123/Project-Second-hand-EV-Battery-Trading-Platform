@@ -361,6 +361,21 @@
         //         priceInput.value = priceInput.value.replace(/[^\d]/g, '');
         //     });
         // }
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            const statusSelect = document.getElementById('status');
+            if (statusSelect.value.toString().trim() === '') {
+                alert('Vui lòng chọn trạng thái cho gói thành viên.');
+                statusSelect.focus();
+                e.preventDefault();
+            }
+           const prioritySelect = document.getElementById('priority');
+            if (prioritySelect.value.toString().trim() === '') {
+                alert('Vui lòng chọn độ ưu tiên cho gói thành viên.');
+                prioritySelect.focus();
+                e.preventDefault();
+            }
+        });
 
         // Auto hide error messages after 3 seconds
         const alerts = document.querySelectorAll('.alert');

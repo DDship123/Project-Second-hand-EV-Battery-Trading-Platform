@@ -59,13 +59,14 @@
                         <p>
                             <strong>Giá gói:</strong>
                         </p>
-                        <p class="price-amount" th:text="${#numbers.formatDecimal(membershipPlan.getPrice(), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
+                        <p th:if="${membershipPlan.getPlanId() != 1}" class="price-amount" th:text="${#numbers.formatDecimal(membershipPlan.getPrice(), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
+                        <p th:if="${membershipPlan.getPlanId() == 1}" class="price-amount">Miễn phí</p>
                     </div>
 
                     <p class="package-duration">
                         <strong>Thời hạn:</strong>
                         <span th:if="${membershipPlan.getPlanId() != 1}" th:text="${membershipPlan.getDuration()} + ' tháng'"></span>
-                        <span th:if="${membershipPlan.getPlanId() == 1}">Miễn phí</span>
+                        <span th:if="${membershipPlan.getPlanId() == 1}">Vô hạn</span>
                     </p>
 
                     <p class="package-type" th:if="${membershipPlan.getMaxPosts() != null}">

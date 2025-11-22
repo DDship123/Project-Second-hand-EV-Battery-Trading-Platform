@@ -44,7 +44,7 @@
     <form th:action="@{/home/store/updatePost}" method="post" th:object="${post}"  enctype="multipart/form-data" class="registration__content">
         <input type="hidden" th:field="*{postsId}" />
         <input type="hidden" th:field="*{images}" />
-
+        <p th:if="${errorMessage != null}" style="color: red" th:text="${errorMessage}"></p>
         <div class="registration__left">
             <div class="registration__upload-section">
                 <label class="registration__label">
