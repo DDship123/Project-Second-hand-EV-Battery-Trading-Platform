@@ -384,6 +384,13 @@ public class PostController {
             vehicle.setMileage(post.getProduct().getVehicle().getMileage());
             vehicle.setRegisterYear(post.getProduct().getVehicle().getRegistrationYear());
             vehicle.setOrigin(post.getProduct().getVehicle().getOrigin());
+
+            String newCapacity = post.getProduct().getVehicle().getBatteryCapacity();
+            if (newCapacity != null && !newCapacity.trim().toUpperCase().endsWith("KWH")) {
+                // Loại bỏ khoảng trắng thừa trước khi thêm " kWh"
+                newCapacity = newCapacity.trim() + " kWh";
+            }
+            vehicle.setBatteryCapacity(newCapacity);
             vehicle.setBatteryCapacity(post.getProduct().getVehicle().getBatteryCapacity() + " kWh");
             vehicleService.updateVehicle(vehicle.getVehicleId(), vehicle);
         } else if (existingPost.getProduct().getProductType().equals("BATTERY") && existingPost.getProduct().getBattery() != null) {
@@ -391,7 +398,13 @@ public class PostController {
             battery.setCondition(post.getProduct().getBattery().getCondition());
             battery.setBrand(post.getProduct().getBattery().getBrand());
             battery.setCapacityAh(post.getProduct().getBattery().getCapacity());
-            battery.setVoltageV(post.getProduct().getBattery().getVoltage()+ " V");
+
+            String newVoltage = post.getProduct().getBattery().getVoltage();
+            if (newVoltage != null && !newVoltage.trim().toUpperCase().endsWith("V")) {
+                // Loại bỏ khoảng trắng thừa trước khi thêm " V"
+                newVoltage = newVoltage.trim() + " V";
+            }
+            battery.setVoltageV(newVoltage);
             battery.setYearAt(post.getProduct().getBattery().getYearOfManufacture());
             battery.setOrigin(post.getProduct().getBattery().getOrigin());
             battery.setName(post.getProduct().getBattery().getName());
