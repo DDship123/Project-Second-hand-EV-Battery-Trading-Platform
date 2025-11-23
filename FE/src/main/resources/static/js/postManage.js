@@ -3,21 +3,28 @@ window.addEventListener('load', function() {
     if (window.location.href.includes('detail')) {
         postDetailModal.style.display = 'block';
         const closeBtn = postDetailModal.querySelector('.close');
-        closeBtn.addEventListener('click', function() {
-            postDetailModal.style.display = 'none';
-            // // Tạo một đối tượng URL từ địa chỉ hiện tại của trang web
-            // const url = new URL(window.location.href);
-            // // Xóa tham số 'postId' ra khỏi phần query string của URL (nếu có)
-            // // url.searchParams.delete('postId');
-            // // Cập nhật lại URL trên thanh địa chỉ của trình duyệt
-            // // bằng URL mới (đã xóa 'postId') mà không tải lại trang
-            // window.history.replaceState({}, document.title, url.toString());
-            // // window.location.href = '/home/admin';
-            const windowUrl = new URL(window.location.href);
-            windowUrl.pathname = windowUrl.pathname.replace('/detail', '');
-            windowUrl.searchParams.delete("postId");
-            window.location.href = windowUrl.toString();
-        });
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+                postDetailModal.style.display = 'none';
+
+                // LẤY status từ URL hiện tại (trước khi đóng)
+                const currentUrl = new URL(window.location.href);
+                const currentStatus = currentUrl.searchParams.get('status');
+
+                // Tạo URL sạch: luôn về /post-manage + giữ nguyên status hiện tại
+                const cleanUrl = new URL('/home/admin/post-manage', window.location.origin);
+
+                // Nếu có status (đang ở tab nào thì giữ tab đó)
+                if (currentStatus) {
+                    cleanUrl.searchParams.set('status', currentStatus);
+                } else {
+                    cleanUrl.searchParams.set('status', 'PENDING'); // mặc định nếu không có
+                }
+
+                // Cập nhật URL mà không reload
+                window.history.replaceState({}, document.title, cleanUrl.toString());
+            });
+        }
     }
 
     const approveButtons = document.querySelectorAll('.action-btn.approve');
