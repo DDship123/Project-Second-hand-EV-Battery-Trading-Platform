@@ -1,75 +1,108 @@
 window.addEventListener('load', function() {
     const postDetailModal = document.getElementById('postDetailModal');
-
-    // Mở modal nếu đang ở trang chi tiết
-    if (window.location.pathname.includes('/detail') || window.location.href.includes('postId=')) {
+    if (window.location.href.includes('detail')) {
         postDetailModal.style.display = 'block';
-
         const closeBtn = postDetailModal.querySelector('.close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function () {
-                postDetailModal.style.display = 'none';
-
-                const newUrl = new URL(window.location.origin + '/home/admin/post-manage');
-                const currentStatus = new URL(window.location.href).searchParams.get('status');
-                if (currentStatus) {
-                    newUrl.searchParams.set('status', currentStatus);
-                }
-                window.history.replaceState({}, document.title, newUrl.toString());
-            });
-        }
+        closeBtn.addEventListener('click', function() {
+            postDetailModal.style.display = 'none';
+            // // Tạo một đối tượng URL từ địa chỉ hiện tại của trang web
+            // const url = new URL(window.location.href);
+            // // Xóa tham số 'postId' ra khỏi phần query string của URL (nếu có)
+            // // url.searchParams.delete('postId');
+            // // Cập nhật lại URL trên thanh địa chỉ của trình duyệt
+            // // bằng URL mới (đã xóa 'postId') mà không tải lại trang
+            // window.history.replaceState({}, document.title, url.toString());
+            // // window.location.href = '/home/admin';
+            const windowUrl = new URL(window.location.href);
+            windowUrl.pathname = windowUrl.pathname.replace('/detail', '');
+            windowUrl.searchParams.delete("postId");
+            window.location.href = windowUrl.toString();
+        });
     }
 
-    // Xử lý nút duyệt/từ chối
-    document.querySelectorAll('.action-btn.approve').forEach(approvePost);
-    document.querySelectorAll('.action-btn.reject').forEach(rejectPost);
+    const approveButtons = document.querySelectorAll('.action-btn.approve');
+    approveButtons.forEach(function(button) {
+        approvePost(button);
+    });
+
+    const rejectButtons = document.querySelectorAll('.action-btn.reject');
+    rejectButtons.forEach(function(button) {
+        rejectPost(button);
+    });
+
 
     const buttonDetails = document.querySelectorAll('#postDetailModal .action-btn');
-    if (buttonDetails.length === 2) {
-        approvePost(buttonDetails[0]);
-        rejectPost(buttonDetails[1]);
+    if (buttonDetails !== null && buttonDetails.length === 2){
+        buttonDetails[0].addEventListener('click', function() {
+            approvePost(buttonDetails[0]);
+        });
+        buttonDetails[1].addEventListener('click', function() {
+            rejectPost(buttonDetails[1]);
+        });
     }
 
-    // XỬ LÝ TAB – CHỈ MỘT LẦN, DÙNG URL SẠCH
+
+
     const filterTabs = document.querySelector(".filter-tabs");
     if (filterTabs) {
         const tabBtn = filterTabs.querySelectorAll("button");
+        const windowUrl = new URL(window.location.href);
+        const currentStatus = windowUrl.searchParams.get("status");
+        if (currentStatus !== null) {
+            tabBtn.forEach(function(btn) {
+                if (currentStatus === "PENDING" && btn.innerText === "Đợi duyệt"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "APPROVED" && btn.innerText === "Đã duyệt"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "REJECTED" && btn.innerText === "Từ chối"){
+                    btn.classList.add("active");
+                }else if (currentStatus === "SOLD" && btn.innerText === "Đã bán"){
+                    btn.classList.add("active");
+                }
+                else {
+                    btn.classList.remove("active");
+                }
+            });
+        }
 
-        // Highlight tab hiện tại
-        const currentStatus = new URL(window.location.href).searchParams.get("status") || "PENDING";
-        tabBtn.forEach(btn => {
-            btn.classList.remove("active");
-            const text = btn.innerText.trim();
-            if ((currentStatus === "PENDING" && text.includes("Đợi duyệt")) ||
-                (currentStatus === "APPROVED" && text.includes("Đã duyệt")) ||
-                (currentStatus === "REJECTED" && text.includes("Từ chối")) ||
-                (currentStatus === "SOLD" && text.includes("Đã bán"))) {
-                btn.classList.add("active");
-            }
-        });
+        tabBtn.forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                if (windowUrl.searchParams.has("successMessage")){
+                    windowUrl.searchParams.delete("successMessage");
+                }else if (windowUrl.searchParams.has("errorMessage")){
+                    windowUrl.searchParams.delete("errorMessage");
+                }
 
-        // Gắn sự kiện click – chỉ 1 lần, luôn dùng URL sạch
-        tabBtn.forEach(btn => {
-            btn.onclick = function() {
-                const baseUrl = new URL('/home/admin/post-manage', window.location.origin);
-                const text = this.innerText.trim();
-
-                if (text.includes("Đợi duyệt")) baseUrl.searchParams.set("status", "PENDING");
-                else if (text.includes("Đã duyệt")) baseUrl.searchParams.set("status", "APPROVED");
-                else if (text.includes("Từ chối")) baseUrl.searchParams.set("status", "REJECTED");
-                else if (text.includes("Đã bán")) baseUrl.searchParams.set("status", "SOLD");
-
-                window.location.href = baseUrl.toString();
-            };
+                if (windowUrl.searchParams.has("postId")){
+                    windowUrl.searchParams.delete("postId");
+                }
+                if (btn.innerText === "Đợi duyệt"){
+                    windowUrl.searchParams.set("status", "PENDING");
+                    window.location.href = windowUrl.toString().replaceAll("/detail","");
+                }else if (btn.innerText === "Đã duyệt"){
+                    windowUrl.searchParams.set("status", "APPROVED");
+                    window.location.href = windowUrl.toString().replaceAll("/detail","");
+                }else if (btn.innerText === "Từ chối"){
+                    windowUrl.searchParams.set("status", "REJECTED");
+                    window.location.href = windowUrl.toString().replaceAll("/detail","");
+                }else if (btn.innerText === "Đã bán"){
+                    windowUrl.searchParams.set("status", "SOLD");
+                    window.location.href = windowUrl.toString().replaceAll("/detail","");
+                }
+            });
         });
     }
 
-    // Hiển thị thông báo
     const urlParams = new URLSearchParams(window.location.search);
     const successMessage = urlParams.get('successMessage');
+    if (successMessage) {
+        alert(successMessage);
+    }
     const errorMessage = urlParams.get('errorMessage');
-    if (successMessage) alert(decodeURIComponent(successMessage));
-    if (errorMessage) alert(decodeURIComponent(errorMessage));
+    if (errorMessage) {
+        alert(errorMessage);
+    }
+
 });
 
 function approvePost(button) {

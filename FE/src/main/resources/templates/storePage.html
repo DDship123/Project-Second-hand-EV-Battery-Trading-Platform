@@ -133,6 +133,7 @@
       <div class="product-list tab-content" id="rejected">
             <article class="product-card" th:each="post : ${rejectedPosts}">
                 <a th:href="'/home/store/deletePost/'+${post.getPostsId()}" class="product-card__link deleteBtn">Xóa</a>
+                <a th:href="'/home/store/updatePost/' + ${post.getPostsId()}" class="product-card__link">Cập Nhật</a>
                 <img th:src="${post.getImages().size() == 0 ?
                         '/images/default-image.png' :
                         post.getImages().get(0)}"
