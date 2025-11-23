@@ -1,18 +1,33 @@
 window.addEventListener('load', function() {
     const postDetailModal = document.getElementById('postDetailModal');
+    const detailLinks = document.querySelectorAll('.detail-link');
+    detailLinks.forEach(function(link) {
+        let url = new URL(link.href);
+        const windowUrl = new URL(window.location.href);
+        if (windowUrl.searchParams.get("status") !== null) {
+            url.searchParams.set("status", windowUrl.searchParams.get("status"));
+        }else {
+            url.searchParams.set("status", windowUrl.searchParams.get("PENDING"));
+        }
+        link.href = url.toString();
+    });
     if (window.location.href.includes('detail')) {
         postDetailModal.style.display = 'block';
         const closeBtn = postDetailModal.querySelector('.close');
         closeBtn.addEventListener('click', function() {
             postDetailModal.style.display = 'none';
-            // Tạo một đối tượng URL từ địa chỉ hiện tại của trang web
-            const url = new URL(window.location.href);
-            // Xóa tham số 'postId' ra khỏi phần query string của URL (nếu có)
-            // url.searchParams.delete('postId');
-            // Cập nhật lại URL trên thanh địa chỉ của trình duyệt
-            // bằng URL mới (đã xóa 'postId') mà không tải lại trang
-            window.history.replaceState({}, document.title, url.toString());
-            // window.location.href = '/home/admin';
+            // // Tạo một đối tượng URL từ địa chỉ hiện tại của trang web
+            // const url = new URL(window.location.href);
+            // // Xóa tham số 'postId' ra khỏi phần query string của URL (nếu có)
+            // // url.searchParams.delete('postId');
+            // // Cập nhật lại URL trên thanh địa chỉ của trình duyệt
+            // // bằng URL mới (đã xóa 'postId') mà không tải lại trang
+            // window.history.replaceState({}, document.title, url.toString());
+            // // window.location.href = '/home/admin';
+            const windowUrl = new URL(window.location.href);
+            windowUrl.pathname = windowUrl.pathname.replace('/detail', '');
+            windowUrl.searchParams.delete("postId");
+            window.location.href = windowUrl.toString();
         });
     }
 
@@ -69,18 +84,21 @@ window.addEventListener('load', function() {
                     windowUrl.searchParams.delete("errorMessage");
                 }
 
+                if (windowUrl.searchParams.has("postId")){
+                    windowUrl.searchParams.delete("postId");
+                }
                 if (btn.innerText === "Đợi duyệt"){
                     windowUrl.searchParams.set("status", "PENDING");
-                    window.location.href = windowUrl.toString();
+                    window.location.href = windowUrl.toString().replaceAll("/detail","");
                 }else if (btn.innerText === "Đã duyệt"){
                     windowUrl.searchParams.set("status", "APPROVED");
-                    window.location.href = windowUrl.toString();
+                    window.location.href = windowUrl.toString().replaceAll("/detail","");
                 }else if (btn.innerText === "Từ chối"){
                     windowUrl.searchParams.set("status", "REJECTED");
-                    window.location.href = windowUrl.toString();
+                    window.location.href = windowUrl.toString().replaceAll("/detail","");
                 }else if (btn.innerText === "Đã bán"){
                     windowUrl.searchParams.set("status", "SOLD");
-                    window.location.href = windowUrl.toString();
+                    window.location.href = windowUrl.toString().replaceAll("/detail","");
                 }
             });
         });

@@ -183,7 +183,7 @@
                 </div>
             </div>
         </div>
-        <div th:if="${postDetail.getStatus() != 'SOLD'}" class="modal-actions">
+        <div th:if="${postDetail.getStatus() == 'PENDING'}" class="modal-actions">
             <button class="action-btn approve" id="modalApprove" th:attr="data-post-id=${postDetail.getPostsId()}">Duyệt</button>
             <button class="action-btn reject" id="modalReject"  th:attr="data-post-id=${postDetail.getPostsId()}">Từ chối</button>
         </div>
