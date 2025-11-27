@@ -59,6 +59,11 @@ public class CommissionSetupResponse {
         this.minimumB = bd.longValue();
     }
 
+    public String getCommissionRateFormatted() {
+        DecimalFormat formatter = new DecimalFormat("#");
+        return formatter.format(this.commissionRate*100);
+    }
+
     public long getMaximumB() {
         return maximumB;
     }
