@@ -384,6 +384,8 @@ public class PostController {
             vehicle.setMileage(post.getProduct().getVehicle().getMileage());
             vehicle.setRegisterYear(post.getProduct().getVehicle().getRegistrationYear());
             vehicle.setOrigin(post.getProduct().getVehicle().getOrigin());
+            vehicle.setCondition(post.getProduct().getVehicle().getCondition());
+            vehicle.setName(post.getProduct().getProductName());
 
             String newCapacity = post.getProduct().getVehicle().getBatteryCapacity();
             if (newCapacity != null && !newCapacity.trim().toUpperCase().endsWith("KWH")) {
@@ -398,6 +400,8 @@ public class PostController {
             battery.setCondition(post.getProduct().getBattery().getCondition());
             battery.setBrand(post.getProduct().getBattery().getBrand());
             battery.setCapacityAh(post.getProduct().getBattery().getCapacity());
+            battery.setName(post.getProduct().getProductName());
+            battery.setOrigin(post.getProduct().getBattery().getOrigin());
 
             String newVoltage = post.getProduct().getBattery().getVoltage();
             if (newVoltage != null && !newVoltage.trim().toUpperCase().endsWith("V")) {

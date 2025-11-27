@@ -43,7 +43,7 @@ public class CreatePostValidate {
         }
 
         try{
-            Integer.parseInt(batteryCapacity);
+            Double.parseDouble(batteryCapacity);
         }catch (NumberFormatException e){
             model.addAttribute("vehicleBatteryCapacity", "Vui lòng nhập số");
             hasErrors = true;

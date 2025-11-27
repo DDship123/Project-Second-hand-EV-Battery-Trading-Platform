@@ -72,8 +72,6 @@ public class updatePostController {
             e.printStackTrace();
         }
 
-
-
         if(hasError){
             model.addAttribute("post", updatedPost);
             MemberResponse user = (MemberResponse) session.getAttribute("user");

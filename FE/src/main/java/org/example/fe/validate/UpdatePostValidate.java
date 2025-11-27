@@ -33,7 +33,7 @@ public class UpdatePostValidate {
 
             try{
                 if(vehicleBatteryCapacity){
-                    Integer.parseInt(newVehicle.getBatteryCapacity());
+                    Double.parseDouble(newVehicle.getBatteryCapacity());
                 }
             }catch (NumberFormatException e){
                 model.addAttribute("batteryCapacityError","Vui lòng nhập số");
