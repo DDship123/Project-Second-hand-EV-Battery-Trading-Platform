@@ -1,8 +1,10 @@
 package org.example.be.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Min;
+
+import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "vehicle")
@@ -13,31 +15,29 @@ public class Vehicle {
     private Integer vehicleId;
 
     @Column(name = "name", columnDefinition = "NVARCHAR(100)",nullable = false)
-    @NotBlank(message = "Name is required!")
     private String name;
 
     @Column(name = "brand", columnDefinition = "NVARCHAR(50)",nullable = false)
-    @NotBlank(message = "Brand is required!")
     private String brand;
 
-    @Column(name = "model", columnDefinition = "NVARCHAR(50)", nullable = false)
-    @NotBlank(message = "Model is required!")
+    @Column(name = "model", columnDefinition = "NVARCHAR(50)")
     private String model;
 
-    @Column(name = "mileage",nullable = false)
+    @Column(name = "mileage")
+    @NotNull(message = "Mileage must not be null")
+    @Min(value = 1, message = "Mileage must be greater than 0")
     private Integer mileage;
 
     @Column(name = "condition", columnDefinition = "NVARCHAR(20)")
     private String condition;
 
-    @Column(name = "register_year", columnDefinition = "NVARCHAR(4)",nullable = false)
+    @Column(name = "register_year", columnDefinition = "NVARCHAR(4)")
     private String registerYear;
 
-    @Column(name = "battery_capacity", columnDefinition = "NVARCHAR(20)",nullable = false)
-    @NotBlank(message = "Battery Capacity is required!")
+    @Column(name = "battery_capacity", columnDefinition = "NVARCHAR(20)")
     private String batteryCapacity;
 
-    @Column(name = "origin", columnDefinition = "NVARCHAR(50)",nullable = false)
+    @Column(name = "origin", columnDefinition = "NVARCHAR(50)")
     private String origin;
 
     public Integer getVehicleId() {

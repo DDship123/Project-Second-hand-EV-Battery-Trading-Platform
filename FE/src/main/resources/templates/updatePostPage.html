@@ -152,7 +152,7 @@
                 <h2 class="registration__section-title">THÔNG TIN CHI TIẾT</h2>
 
                 <div class="registration__form-group">
-                    <select class="registration__select" th:field="*{product.productType}" required>
+                    <select class="registration__select product__type" th:field="*{product.productType}" required>
                         <option th:value="${post.getProduct().getProductType()}"
                                 th:text="${post.getProduct().getProductType().equals('VEHICLE') ? 'Xe cộ' : 'pin'}" >Xe cộ</option>
 <!--                        <option value="BATTERY">Pin</option>-->
@@ -222,7 +222,7 @@
                             <input
                                     type="number"
                                     class="registration__input"
-                                    placeholder="Số Km đã di *"
+                                    placeholder="Số Km đã đi *"
                                     th:field="*{product.vehicle.mileage}"
                                     required
                             />

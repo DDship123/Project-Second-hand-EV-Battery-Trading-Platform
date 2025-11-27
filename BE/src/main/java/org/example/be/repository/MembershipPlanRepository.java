@@ -12,6 +12,6 @@ public interface MembershipPlanRepository extends JpaRepository<MembershipPlan, 
 
     @Query("SELECT mp FROM MembershipPlan mp " +
             "JOIN MemberPlanUsage mpu on mp.planId = mpu.membershipPlan.planId" +
-            " WHERE mpu.member.memberId = :memberId " )
+            " WHERE mpu.member.memberId = :memberId AND mpu.status = 'ACTIVE'")
     Optional<MembershipPlan> findByMemberId(Integer memberId);
 }

@@ -352,7 +352,7 @@
                     </p>
                     <p>
                         <strong>Phí hoa hồng:</strong>
-                        <span th:text="${commissionSetup.getCommissionRate()} + ' %'"></span>
+                        <span th:text="${commissionSetup.getCommissionRate()} +' ('+ ${commissionSetup.getCommissionRateFormatted()}+'%'+')'"></span>
                     </p>
                     <p th:text="'Ngày tạo: ' + ${#temporals.format(commissionSetup.getCreatedAt(),'dd/MM/yyyy - HH:mm')}"></p>
                     <p th:text="'Cập nhật lần cuối: '+ ${#temporals.format(commissionSetup.getUpdatedAt(),'dd/MM/yyyy - HH:mm')}"></p>

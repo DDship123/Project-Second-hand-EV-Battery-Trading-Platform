@@ -112,39 +112,10 @@
           +' - '+${post.getSeller().getCity()}">9 giờ trước - Hồ Chí Minh</p>
                 <p class="product-card__status" th:if="${post.getStatus() == 'PENDING'}">Chờ duyệt</p>
                 <p class="product-card__status" th:if="${post.getStatus() == 'APPROVED'}">Đang bán</p>
-<!--          <a th:if="${post.getStatus() != 'REJECTED'}" th:href="'/home/store/updatePost/' + ${post.getPostsId()}" class="product-card__link">Cập Nhật</a>-->
-<!--          <a th:href="'/home/store/deletePost/'+${post.getPostsId()}" class="product-card__link deleteBtn">Xóa</a>-->
-<!--          <img-->
-<!--                  th:src="${post.getImages().size() == 0 ? '/images/default-image.png' : post.getImages().get(0)}"-->
-<!--                  alt="Feliz - biển MD"-->
-<!--                  class="product-card__image"-->
-<!--          />-->
-<!--          <h3 class="product-card__title" th:text="${post.getTitle()}">-->
-<!--            Feliz - biển MD. Giấy tờ đầy đủ-->
-<!--          </h3>-->
-<!--          <p class="product-card__price" th:text="${post.getPriceFormated()+'VNĐ'}">13.000.000 đ</p>-->
-<!--          <p class="product-card__location" th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}-->
-<!--          +' - '+${post.getSeller().getCity()}">9 giờ trước - Hồ Chí Minh</p>-->
-<!--          <p class="product-card__status" th:if="${post.getStatus() == 'PENDING'}">Chờ duyệt</p>-->
-<!--          <p class="product-card__status" th:if="${post.getStatus() == 'APPROVED'}">Đang bán</p>-->
-<!--          <p class="product-card__status" th:if="${post.getStatus() == 'REJECTED'}">Bị từ chối</p>-->
         </article>
         </div>
-        <div class="product-list" th:each="post : ${soldPosts}">
-          <!-- Product Card 1 -->
-          <article class="product-card">
-<!--            <img-->
-<!--                    th:src="${transaction.getImageUrl()}"-->
-<!--                    alt="Feliz - biển MD"-->
-<!--                    class="product-card__image"-->
-<!--            />-->
-<!--            <h3 class="product-card__title" th:text="${transaction.getPostTitle()}">-->
-<!--              Feliz - biển MD. Giấy tờ đầy đủwdbawjdwabjkwadjkawnawjkd-->
-<!--            </h3>-->
-<!--            <p class="product-card__price" th:text="${transaction.getPrice()}">13.000.000 đ</p>-->
-<!--            <p class="product-card__location" th:text="'Ngày khởi tạo: ' + ${transaction.getCreatedAt() != null ? #temporals.format(transaction.getCreatedAt(), 'dd-MM-yyyy') : 'N/A'}">9 giờ trước - Hồ Chí Minh</p>-->
-<!--            <p class="product-card__buyer" th:text="'Người mua: '+${transaction.getBuyer().getUsername()}">dawdaw</p>-->
-<!--            <p class="product-card__rating" th:text="'Đánh giá: '+${transaction.getReview().getRating()}+'⭐'">5⭐</p>-->
+      <div class="product-list">
+          <article th:each="post : ${soldPosts}" class="product-card">
             <img
                     th:src="${post.getImages().size() == 0 ? '/images/default-image.png' : post.getImages().get(0)}"
                     alt="Feliz - biển MD"
@@ -159,15 +130,17 @@
             <p class="product-card__status">Đã bán</p>
           </article>
         </div>
-        <div class="product-list tab-content" id="rejected">
+      <div class="product-list tab-content" id="rejected">
             <article class="product-card" th:each="post : ${rejectedPosts}">
                 <a th:href="'/home/store/deletePost/'+${post.getPostsId()}" class="product-card__link deleteBtn">Xóa</a>
+                <a th:href="'/home/store/updatePost/' + ${post.getPostsId()}" class="product-card__link">Cập Nhật</a>
                 <img th:src="${post.getImages().size() == 0 ?
                         '/images/default-image.png' :
                         post.getImages().get(0)}"
                      class="product-card__image" />
                 <h3 class="product-card__title" th:text="${post.getTitle()}"></h3>
                 <p class="product-card__price" th:text="${post.getPriceFormated()+' VNĐ'}"></p>
+                <p class="product-card__status">Bài đăng bị từ chối</p>
                 <p class="product-card__location" th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}
           +' - '+${post.getSeller().getCity()}">9 giờ trước - Hồ Chí Minh</p>
             </article>

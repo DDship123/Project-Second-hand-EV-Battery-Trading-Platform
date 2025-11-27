@@ -42,7 +42,7 @@
                         <option value="ACCEPTED">Giao dịch đã được chấp nhận</option>
                         <option value="CANCELLED">Giao dịch đã bị hủy</option>
                     </select>
-                    <div class="result-info">Tổng 10 đơn hàng</div>
+                    <div th:if="${transactions != null }" th:text="'Tổng '+ ${transactions.size()} +' đơn hàng'" class="result-info">Tổng 10 đơn hàng</div>
                 </div>
                 <div class="sub-tab-content active">
                     <div class="order-management__list">

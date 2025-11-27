@@ -91,9 +91,14 @@
                 </button>
             </div>
         </div>
-        <a  class="container__item__wishlist" style="color: grey" th:href="@{'/home/wishList/add/' + ${post.getPostsId()}}"  th:if="${guest.equals('false')}">
+        <a class="container__item__wishlist"
+           th:href="@{'/home/wishList/toggle/' + ${post.getPostsId()}}"
+           th:style="${isFavorite} ? 'color:red' : 'color:grey'">
             <i class="fas fa-heart"></i>
         </a>
+<!--        <a  class="container__item__wishlist" style="color: grey" th:href="@{'/home/wishList/add/' + ${post.getPostsId()}}"  th:if="${guest.equals('false')}">-->
+<!--            <i class="fas fa-heart"></i>-->
+<!--        </a>-->
 <!--        <div class="container__item__wishlist" style="color: grey">-->
 <!--            <i class="fa-solid fa-heart"></i>-->
 <!--        </div>-->

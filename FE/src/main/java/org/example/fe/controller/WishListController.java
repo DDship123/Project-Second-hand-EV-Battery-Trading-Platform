@@ -67,4 +67,42 @@ public class WishListController {
         }
         return "redirect:/home";
     }
+
+    @GetMapping("/toggle/{postId}")
+    public String toggleWishList(@PathVariable Integer postId,
+                                 HttpSession session,
+                                 RedirectAttributes redirectAttributes) {
+
+        MemberResponse member = (MemberResponse) session.getAttribute("user");
+        if (member == null) {
+            return "redirect:/login?unauthorized=true";
+        }
+
+        // Lấy toàn bộ wishlist user
+        ApiResponse<List<FavoriteResponse>> all = wishlistService.getAll(member.getMemberId());
+
+        // Kiểm tra post đã thích chưa
+        FavoriteResponse existed = all.getPayload().stream()
+                .filter(f -> f.getPost().getPostsId().equals(postId))
+                .findFirst()
+                .orElse(null);
+
+        if (existed != null) {
+            // Đã thích → bỏ thích
+            wishlistService.deleteWishlist(existed.getFavoritesId());
+            redirectAttributes.addFlashAttribute("successMessage", "Đã bỏ yêu thích!");
+        } else {
+            // Chưa thích → thêm
+            ApiResponse<FavoriteResponse> added =
+                    wishlistService.addWishlist(member.getMemberId(), postId);
+
+            if (added.getPayload() != null) {
+                redirectAttributes.addFlashAttribute("successMessage", "Đã thêm vào yêu thích!");
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi thêm yêu thích!");
+            }
+        }
+
+        return "redirect:/home/product/detail/" + postId;
+    }
 }

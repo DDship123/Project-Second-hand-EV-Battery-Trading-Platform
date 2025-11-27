@@ -322,8 +322,8 @@ body {
     position: absolute;
     padding: 10px 20px;
     top: 10px;
-    color: black;
-    background-color: white;
+    color: white;
+    background-color: #5AD0CA;
     z-index: 1000;
 }
 .product-card .product-card__link:nth-child(1) {

@@ -72,7 +72,7 @@
                         <td th:text="${post.getSeller().getUsername()}">Nguyen Tien Linh</td>
                         <td th:text="${post.getSeller().getEmail()}"></td>
                         <td th:text="${post.getProduct().getProductType()}">XE ĐIỆN</td>
-                        <td><a th:href="'/home/admin/post-manage/detail'+'?postId='+${post.getPostsId()}" class="link-text detail-link" >Chi tiết</a></td>
+                        <td><a th:href="@{/home/admin/post-manage/detail(postId=${post.getPostsId()}, status=${param.status ?: 'PENDING'})}" class="link-text detail-link" >Chi tiết</a></td>
                         <td style="width: 25vw;" th:text="${post.getDescription()}">Xe đẹp, mới 99%</td>
                         <td>
                             <button th:if="${post.getStatus().equals('PENDING')}" class="action-btn approve" th:attr="data-post-id=${post.getPostsId()}">Duyệt</button>
@@ -183,7 +183,7 @@
                 </div>
             </div>
         </div>
-        <div th:if="${postDetail.getStatus() != 'SOLD'}" class="modal-actions">
+        <div th:if="${postDetail.getStatus() == 'PENDING'}" class="modal-actions">
             <button class="action-btn approve" id="modalApprove" th:attr="data-post-id=${postDetail.getPostsId()}">Duyệt</button>
             <button class="action-btn reject" id="modalReject"  th:attr="data-post-id=${postDetail.getPostsId()}">Từ chối</button>
         </div>

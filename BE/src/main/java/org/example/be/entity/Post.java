@@ -1,7 +1,6 @@
 package org.example.be.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,8 +23,7 @@ public class Post {
     @JoinColumn(name = "seller_id")
     private Member seller;
 
-    @Column(columnDefinition = "NVARCHAR(200)", nullable = false)
-    @NotBlank(message = "Title is required!")
+    @Column(columnDefinition = "NVARCHAR(200)")
     private String title;
 
     @Column(columnDefinition = "NTEXT")
