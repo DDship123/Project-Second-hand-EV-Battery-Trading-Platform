@@ -20,10 +20,10 @@ public class Vehicle {
     @Column(name = "brand", columnDefinition = "NVARCHAR(50)",nullable = false)
     private String brand;
 
-    @Column(name = "model", columnDefinition = "NVARCHAR(50)", nullable = false)
+    @Column(name = "model", columnDefinition = "NVARCHAR(50)")
     private String model;
 
-    @Column(name = "mileage",nullable = false)
+    @Column(name = "mileage")
     @NotNull(message = "Mileage must not be null")
     @Min(value = 1, message = "Mileage must be greater than 0")
     private Integer mileage;
@@ -31,13 +31,13 @@ public class Vehicle {
     @Column(name = "condition", columnDefinition = "NVARCHAR(20)")
     private String condition;
 
-    @Column(name = "register_year", columnDefinition = "NVARCHAR(4)",nullable = false)
+    @Column(name = "register_year", columnDefinition = "NVARCHAR(4)")
     private String registerYear;
 
-    @Column(name = "battery_capacity", columnDefinition = "NVARCHAR(20)",nullable = false)
+    @Column(name = "battery_capacity", columnDefinition = "NVARCHAR(20)")
     private String batteryCapacity;
 
-    @Column(name = "origin", columnDefinition = "NVARCHAR(50)",nullable = false)
+    @Column(name = "origin", columnDefinition = "NVARCHAR(50)")
     private String origin;
 
     public Integer getVehicleId() {

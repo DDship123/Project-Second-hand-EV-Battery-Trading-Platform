@@ -23,7 +23,7 @@ public class Post {
     @JoinColumn(name = "seller_id")
     private Member seller;
 
-    @Column(columnDefinition = "NVARCHAR(200)", nullable = false)
+    @Column(columnDefinition = "NVARCHAR(200)")
     private String title;
 
     @Column(columnDefinition = "NTEXT")
