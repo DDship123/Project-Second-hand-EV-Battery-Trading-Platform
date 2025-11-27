@@ -393,7 +393,6 @@ public class PostController {
                 newCapacity = newCapacity.trim() + " kWh";
             }
             vehicle.setBatteryCapacity(newCapacity);
-            vehicle.setBatteryCapacity(post.getProduct().getVehicle().getBatteryCapacity() + " kWh");
             vehicleService.updateVehicle(vehicle.getVehicleId(), vehicle);
         } else if (existingPost.getProduct().getProductType().equals("BATTERY") && existingPost.getProduct().getBattery() != null) {
             Battery battery = existingPost.getProduct().getBattery();
